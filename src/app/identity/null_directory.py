@@ -1,4 +1,4 @@
-"""NullDirectory — replaced by ADU-03, class not shape. Resolves synthetic tokens so the contract unit can test auth."""
+"""NullDirectory — replaced by ADU-03, class not shape. Resolves synthetic tokens for the contract unit's auth."""
 
 from __future__ import annotations
 

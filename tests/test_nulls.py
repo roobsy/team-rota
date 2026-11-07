@@ -1,5 +1,5 @@
-"""ADU-16 arms 3–4: one test per Null — each test is deleted together with its Null by the retiring unit (its amends);
-the file goes with the last Null (ADU-07)."""
+"""ADU-16 arms 3–4: one test per Null — each test is deleted together with its Null by the retiring unit
+(its amends); the file goes with the last Null (ADU-07)."""
 
 from __future__ import annotations
 

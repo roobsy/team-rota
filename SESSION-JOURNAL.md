@@ -159,3 +159,6 @@ A recorded approval (hard rule 1, 4 or 6) is a paragraph in the block of the ses
 ## 2026-11-07 08:46 · ADU-16 closure · done
 **Done:** the gate re-run under the operator's hands (same machine in this example run): `28 passed in 5.45s`; ADU-16 ✅ with 28 tests; `## Now:` advanced to ADU-02 (the contract unit).
 **NEXT:** `adu handover ADU-02`, then the ADU-02 session (developer): the served contract, the golden pin, the composition root.
+
+## 2026-11-07 08:47 · ADU-16 lint follow-up · done
+**Done:** six over-long docstring lines in ADU-16's files reflowed; `uv run ruff check` clean; gate unchanged (28 passed). The ADU-16 commit went in with those six findings because the session's script printed the lint summary and carried on — the closure's "ruff clean" was asserted, not checked. Recorded as package feedback (the closure prompt should demand the lint's last line pasted beside the gate's, and the Stop hook should refuse a closure block without both).

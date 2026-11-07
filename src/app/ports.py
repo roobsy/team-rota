@@ -1,7 +1,8 @@
 """The five in-process protocols of design/INTERFACES.md (layer 2). Imports nothing of the product.
 
 A domain reaches another only through these; the composition root binds the Null implementations until each
-provider lands (class replaced, shape kept). Values are frozen dataclasses; events are self-contained payloads.
+provider lands (class replaced, shape kept). Values are frozen dataclasses; events are self-contained
+payloads.
 """
 
 from __future__ import annotations

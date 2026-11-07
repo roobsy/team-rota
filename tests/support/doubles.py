@@ -1,8 +1,8 @@
-"""Permanent test doubles for the five ports (ADU-16). Consumer units test against these, never against a Null.
+"""Permanent test doubles for the five ports (ADU-16). Consumer units test against these, never a Null.
 
 None of these round-trips its input as an oracle: a Fake answers what a test configured into it, and the test
-asserts the consumer's behaviour given that answer (rule 13). VACUOUS lists any double that would merely echo —
-there is none; a consumer test that asserts the configured value itself is vacuous and must say so.
+asserts the consumer's behaviour given that answer (rule 13). VACUOUS lists any double that would merely
+echo — there is none; a consumer test that asserts the configured value itself is vacuous and must say so.
 """
 
 from __future__ import annotations

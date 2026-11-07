@@ -1,4 +1,5 @@
-"""ADU-16 arms 1, 2, 5, 6: the five protocols, the doubles that satisfy them, the ports' isolation, no vacuous oracle."""
+"""ADU-16 arms 1, 2, 5, 6: the five protocols, the doubles that satisfy them, the ports' isolation, no vacuous
+oracle."""
 
 from __future__ import annotations
 
