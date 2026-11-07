@@ -32,3 +32,11 @@ A recorded approval (hard rule 1, 4 or 6) is a paragraph in the block of the ses
 **Deviations flagged:** none.
 **Tests at close:** none yet.
 **NEXT:** pm-lead session: /adu-lifecycle:write-stories (recruit pm-swaps first, --reason segregation) → 18 stories, four specs, `adu stories check` green.
+
+## 2026-11-07 06:20 · write-stories (pm-lead, pm-swaps) · done
+**Done:** `adu recruit swaps --reason segregation` (pm-swaps rendered to .claude/agents/pm-swaps.md, DOMAIN-REGISTER row, fence design/domains/swaps/**, stories/US-swaps-*.md — proven: an edit outside the fence is refused by the guard); 18 stories (one per journey step; 46 arms, one quantitative with its five parameters) and four domain specs (21 rules); four INTERFACE-REQUEST rows; `adu stories check` green: 18 stories cover 18 steps.
+**Recruited:** pm-swaps (segregation: approvers must not design the rules they approve under).
+**Decisions:** reason codes enumerated in R-swaps-07; the swap deadline is 24 h before the shift (R-swaps-01) — a design choice recorded in the spec, to be confirmed in review.
+**Deviations flagged:** none.
+**Tests at close:** none yet.
+**NEXT:** pm-lead session: /adu-lifecycle:review-design → architect and developer subagents in parallel, DESIGN-REVIEW-1.
