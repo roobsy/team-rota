@@ -9,7 +9,7 @@ roles: [admin, planner]
 data: [SwapRequest, Shift, Member]
 arms:
   - { arm: "every open accepted request is listed oldest first by answered_at then id ascending, each with its shift's date and start and both parties' names, the same list for any admin or planner; an accepted request whose deadline has passed is not listed (it shows expired in the parties' own lists)", kind: deterministic }
-  - { arm: "each row is the request row of R-swaps-09 with party computed per viewer by the server; rows the viewer is party to are marked swap-party, with no decide controls", kind: deterministic }
+  - { arm: "each row is the request row of R-swaps-09 with party true when the viewer is the requester or the counterpart, else false, computed by the server; rows with party true are marked swap-party, with no decide controls", kind: deterministic }
   - { arm: "a request whose party is inactive is still listed to deciders", kind: deterministic }
   - { arm: "a member calling the action is refused with reason forbidden", kind: deterministic }
 ---

@@ -8,7 +8,7 @@ step: 1
 roles: [admin, planner, member]
 data: [Week, Shift, Assignment]
 arms:
-  - { arm: "the board lists every shift of the week in date, start then shift id order, each holder as a holder-row ordered by assignment id ascending with assignment id, member id, name (an inactive holder still listed), pending (requested, accepted or absent) and requestable; requestable is true only for the caller's own row on a published week while now < the deadline by the injected clock and no request is open on it — computed by swaps (IR-07), never in the browser — and holder-request-swap is shown exactly on requestable rows", kind: deterministic }
+  - { arm: "the board is {start_date, state, shifts: [{id, date, start, end, slots, holders}]}, every shift of the week in date, start then shift id order, each holder as a holder-row ordered by assignment id ascending with assignment id, member id, name (an inactive holder still listed), pending (requested, accepted or absent) and requestable; requestable is true only for the caller's own row on a published week while now < the deadline by the injected clock and no request is open on it — computed by swaps (IR-07), never in the browser — and holder-request-swap is shown exactly on requestable rows", kind: deterministic }
   - { arm: "each holder-row shows its pending value as holder-pending-badge with the text requested or accepted; an assignment whose requests are all declined, refused, approved or expired shows none (open as defined once in R-swaps-06, answered by swaps)", kind: deterministic }
   - { arm: "the board of a draft week is returned to planners and admins only (board-draft shows Not published yet); a member is refused with reason week_draft", kind: deterministic }
   - { arm: "any signed-in caller lists the weeks, newest first by start_date, each with its state — members see published weeks only — together with the current week: the latest published week whose start_date is on or before today by the clock, or none (board-none shows No week yet); the browser never computes it; week-picker offers the listed weeks and selecting one shows its board", kind: deterministic }
@@ -24,5 +24,5 @@ The rules this story serves are in the scheduling domain spec, referenced by id 
 Week, Shift, Assignment (owned)
 
 ## Out of scope
-Month views, printing, colour themes.
+Month views, printing, colour themes. (This story carries two operations — the board and the weeks list with the current week — in one domain unit; the roles field describes both.)
 Anything the journey step does not name; no free text, no optimisation, no second team.

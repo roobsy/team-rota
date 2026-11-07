@@ -10,7 +10,7 @@ data: [SwapRequest, Shift, Member]
 arms:
   - { arm: "accept and decline are one answer operation with an outcome: accept moves the request to accepted with answered_at from the clock and no answer_reason; decline moves it to declined with answer_reason set to the reason code (required) and answered_at from the clock", kind: deterministic }
   - { arm: "anyone but the counterpart answering is refused with reason not_counterpart", kind: deterministic }
-  - { arm: "answering a request that is not in state requested is refused with reason wrong_state", kind: deterministic }
+  - { arm: "answering a request whose stored state is not requested is refused with reason wrong_state (an expired request's stored state is still requested: it answers past_deadline)", kind: deterministic }
   - { arm: "answering at or after the shift's deadline is refused with reason past_deadline", kind: deterministic }
   - { arm: "a decline without a reason code is refused with reason reason_required; one outside the enumerated codes, or a reason sent with outcome accept, with reason invalid_reason", kind: deterministic }
   - { arm: "the inbox shows swap-accept, swap-decline and swap-decline-reason only to the counterpart and only while the request is open in state requested", kind: deterministic }

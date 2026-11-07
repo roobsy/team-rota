@@ -75,3 +75,10 @@ A recorded approval (hard rule 1, 4 or 6) is a paragraph in the block of the ses
 **Deviations flagged:** none.
 **Tests at close:** design check, stories check and ledger lint green; no code yet.
 **NEXT:** round 6 — fresh reviewers on v1.5; both AGREED closes the gate and records D-02.
+
+## 2026-11-07 07:59 · review-design round 6 (pm-lead) · in progress
+**Done:** DESIGN-REVIEW-6 with fresh reviewers: developer `VERDICT: AGREED` (14 cosmetic findings), architect `VERDICT: CHANGES REQUIRED` (7, one blocking: deactivating an already inactive member); all 21 dispositioned and applied as PRODUCT-DESIGN v1.6, specs v1.6, IR-01/06/09 restated; checks green. Both repositories now have a GitHub remote; main is pushed after every commit.
+**Decisions:** a repeated deactivation is refused member_inactive and emits nothing; counterpart_overlap is checked at request time as well as at transfer; the API reads bodies leniently so that earlier buckets answer first.
+**Deviations flagged:** none.
+**Tests at close:** design check, stories check and ledger lint green; no code yet.
+**NEXT:** round 7 — fresh reviewers on v1.6; both AGREED closes the gate and records D-02.

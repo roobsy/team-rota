@@ -11,7 +11,7 @@ arms:
   - { arm: "a shift created with date, start, end and slots in the week named by its Monday start_date appears in that week, which comes into being in state draft with its first shift", kind: deterministic }
   - { arm: "a start_date that is not a Monday is refused with reason not_week_start", kind: deterministic }
   - { arm: "a shift whose date is not within the week's seven days is refused with reason outside_week", kind: deterministic }
-  - { arm: "a shift whose end is not after its start (times of day on the shift's date; a shift never crosses midnight) is refused with reason invalid_interval", kind: deterministic }
+  - { arm: "a shift whose end is not after its start (times of day on the shift's date, end at most 23:59; a shift never crosses midnight) is refused with reason invalid_interval", kind: deterministic }
   - { arm: "a shift with fewer than one slot is refused with reason invalid_slots", kind: deterministic }
   - { arm: "a member calling the action is refused with reason forbidden", kind: deterministic }
   - { arm: "the Week board's shift-create form submits and the shift appears on week-board in date and start order", kind: deterministic }

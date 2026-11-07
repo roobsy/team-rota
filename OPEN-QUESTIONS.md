@@ -14,7 +14,7 @@ Entry format:
 **Conflict:** the permissions matrix lets a planner approve swaps and lets a planner request swaps of their own assignments; nothing said who approves a swap the planner is party to.
 **Blocking:** no — relevant at the swaps stories.
 **Options:** (1) the admin approves such swaps (segregation of duties); (2) a second planner, if any; (3) the planner may approve their own.
-**Resolution:** option 1, the operator, 2026-11-07; the rule lives in design/domains/swaps/spec.md (R-swaps-05) and the permissions matrix ("allowed (not own)").
+**Resolution:** option 1, the operator, 2026-11-07; the rule lives in design/domains/swaps/spec.md (R-swaps-05) and the permissions matrix ("allowed (not party)" (generalised by DESIGN-REVIEW-1 A7)).
 
 ## Q-02 — Should deactivation end a member's open requests as counterpart? (raised by DESIGN-REVIEW-5 A13; not blocking)
 **Conflict:** a counterpart deactivated while a request is in state requested (allowed by R-identity-05, since they hold no future assignment) can neither sign in nor answer; nobody else may answer (not_counterpart); deciders may not act (wrong_state); the requester cannot withdraw (out of scope) nor re-request (request_open) until expiry, and after expiry past_deadline bars a new request — the shift cannot be handed over at all. The design shows the truth as it is (brief §4), so no contract guess is needed, but the outcome is a dead end the operator may not want.

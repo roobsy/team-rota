@@ -12,7 +12,7 @@ arms:
   - { arm: "refusing records one Decision with outcome refused and the reason code; the request mirrors refused; approve and refuse are one decide operation with an outcome; a caller who sends counterpart_overlap or counterpart_inactive as the reason, or any reason with outcome approve, gets invalid_reason", kind: deterministic }
   - { arm: "a decision by the requester or the counterpart, whether planner or admin, is refused with reason party_to_swap", kind: deterministic }
   - { arm: "an admin who is not a party decides a request a planner is party to", kind: deterministic }
-  - { arm: "deciding a request that is not in state accepted is refused with reason wrong_state", kind: deterministic }
+  - { arm: "deciding a request whose stored state is not accepted is refused with reason wrong_state (an expired accepted request answers past_deadline)", kind: deterministic }
   - { arm: "deciding at or after the shift's deadline is refused with reason past_deadline", kind: deterministic }
   - { arm: "when the transfer is refused (counterpart_overlap or counterpart_inactive) the approve operation still succeeds: the Decision is recorded refused with that reason, the decider is the member who attempted the approval, the request mirrors refused, and the response carries the decision — it is not a refusal, because state changed", kind: deterministic }
   - { arm: "a refusal without a reason code is refused with reason reason_required; one outside the enumerated codes with reason invalid_reason", kind: deterministic }

@@ -8,7 +8,7 @@ Scheme: `vMAJOR.MINOR` — a requirement changed (design-change loop, operator d
 |---|---|---|
 | CLAUDE.md | 1.0 | constitution |
 | design/PRODUCT-BRIEF.md | 1.0 | purpose (content-pinned, D-01) |
-| design/PRODUCT-DESIGN.md | 1.5 | product design |
+| design/PRODUCT-DESIGN.md | 1.6 | product design |
 | design/ARCHITECTURE.md | 0.1 | architecture contract |
 | contracts/openapi.yaml | 0.1 | API contract |
 | ADU-PLAN.md | 0.1 | the plan |
@@ -65,3 +65,11 @@ Scheme: `vMAJOR.MINOR` — a requirement changed (design-change loop, operator d
 | stories/ | 22 (108 arms) | 22 (108 arms) | the request row of R-swaps-09 everywhere; the assign order; unfilled rows; the timer boundary; email case at sign-in |
 | design/domains/*/spec.md | 1.4 | 1.5 | R-swaps-03/06/09, R-scheduling-03/05/07/09, R-identity-06 |
 | design/INTERFACE-REQUESTS.md | IR-07 | IR-07 restated | exact inputs and outputs; IR-06 without role; IR-01/IR-09 story columns complete |
+
+### 2026-11-07 — PRODUCT-DESIGN v1.6: DESIGN-REVIEW-6 — 21 findings (architect 7, one blocking; developer 14, none, AGREED) dispositioned, all accepted
+| Document | From | To | What changed |
+|---|---|---|---|
+| design/PRODUCT-DESIGN.md | 1.5 | 1.6 | lenient body read and invalid_request first within validation; the Reason codes table completed (repeated deactivation, counterpart_overlap at request, the seed's exit status) |
+| stories/ | 22 (108 arms) | 22 (109 arms) | repeated deactivation; counterpart_overlap at request; anchors named in the sign-in and swap-form arms; stored state vs expiry; the board's shape |
+| design/domains/*/spec.md | 1.5 | 1.6 | R-identity-04, R-scheduling-01/05, R-swaps-03/08/09, R-notifications-01/02 |
+| design/INTERFACE-REQUESTS.md | IR-01/06/09 | restated | the shift's representation, the intersecting-shift check, absent ids → not_found |
