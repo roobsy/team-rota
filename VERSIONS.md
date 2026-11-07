@@ -8,7 +8,7 @@ Scheme: `vMAJOR.MINOR` — a requirement changed (design-change loop, operator d
 |---|---|---|
 | CLAUDE.md | 1.0 | constitution |
 | design/PRODUCT-BRIEF.md | 1.0 | purpose (content-pinned, D-01) |
-| design/PRODUCT-DESIGN.md | 1.4 | product design |
+| design/PRODUCT-DESIGN.md | 1.5 | product design |
 | design/ARCHITECTURE.md | 0.1 | architecture contract |
 | contracts/openapi.yaml | 0.1 | API contract |
 | ADU-PLAN.md | 0.1 | the plan |
@@ -57,3 +57,11 @@ Scheme: `vMAJOR.MINOR` — a requirement changed (design-change loop, operator d
 | stories/ | 22 (108 arms) | 22 (108 arms) | holder-row fields incl. requestable; counterpart check order; swap_refused recipients; one answer operation; the week-picker; mine rows; the E2E's clock; Data touched corrected |
 | design/domains/*/spec.md | 1.3 | 1.4 | R-scheduling-05/09, R-swaps-03/06/07/08, R-notifications-01 |
 | design/INTERFACE-REQUESTS.md | IR-07 | IR-07 widened | pending and requestable per assignment; the third cycle named |
+
+### 2026-11-07 — PRODUCT-DESIGN v1.5: DESIGN-REVIEW-5 — 21 findings (architect 13, developer 8; three distinct blocking) dispositioned, all accepted; Q-02, Q-03 opened
+| Document | From | To | What changed |
+|---|---|---|---|
+| design/PRODUCT-DESIGN.md | 1.4 | 1.5 | invalid_request narrowed; role and reason codes as strings enumerated by the domain; the state bucket's leading codes named exactly; status per operation; Role an enumeration |
+| stories/ | 22 (108 arms) | 22 (108 arms) | the request row of R-swaps-09 everywhere; the assign order; unfilled rows; the timer boundary; email case at sign-in |
+| design/domains/*/spec.md | 1.4 | 1.5 | R-swaps-03/06/09, R-scheduling-03/05/07/09, R-identity-06 |
+| design/INTERFACE-REQUESTS.md | IR-07 | IR-07 restated | exact inputs and outputs; IR-06 without role; IR-01/IR-09 story columns complete |

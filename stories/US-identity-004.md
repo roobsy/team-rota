@@ -8,7 +8,7 @@ step: 5
 roles: [admin, planner, member]
 data: [Member]
 arms:
-  - { arm: "an active member who signs in with their email and passcode receives a token and who they are (id, name, role); every later operation carrying the token acts as that member; a new sign-in replaces the earlier token", kind: deterministic }
+  - { arm: "an active member who signs in with their email (matched case-insensitively, as R-identity-02 compares it) and passcode receives a token and who they are (id, name, role); every later operation carrying the token acts as that member; a new sign-in replaces the earlier token", kind: deterministic }
   - { arm: "a wrong passcode or an unknown email is refused with reason invalid_credentials (one reason for both); credentials are verified before the active check, so an inactive member with a wrong passcode gets invalid_credentials too", kind: deterministic }
   - { arm: "an inactive member is refused with reason member_inactive", kind: deterministic }
   - { arm: "each of identity's operations other than sign-in without a valid token is refused with reason unauthenticated; the rule holds for every operation of the product and is verified once by a test that walks the served route table", kind: deterministic }

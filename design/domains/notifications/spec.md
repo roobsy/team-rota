@@ -1,5 +1,5 @@
 # notifications — domain spec
-v1.4 · owned by pm-lead. The business rules of this domain, each testable, each naming the story it serves. v1.3 applied DESIGN-REVIEW-3; v1.4 applies DESIGN-REVIEW-4.
+v1.5 · owned by pm-lead. The business rules of this domain, each testable, each naming the story it serves. v1.3 applied DESIGN-REVIEW-3; v1.4 DESIGN-REVIEW-4; v1.5 applies DESIGN-REVIEW-5.
 
 ## Rules
 | Rule | Statement | Serves | Testable as |

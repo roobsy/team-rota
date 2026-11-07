@@ -68,3 +68,10 @@ A recorded approval (hard rule 1, 4 or 6) is a paragraph in the block of the ses
 **Deviations flagged:** three of the four blocking findings were created by round-3 fixes (the within-bucket order rule; the request control). Recorded for the retro: every rule added to settle one guess should be re-read against the arms it touches before the round closes.
 **Tests at close:** design check and stories check green; no code yet.
 **NEXT:** round 5 — fresh reviewers on v1.4; both AGREED closes the gate and records D-02.
+
+## 2026-11-07 07:35 · review-design round 5 (pm-lead) · in progress
+**Done:** DESIGN-REVIEW-5 with fresh reviewers: architect 13 (3 blocking), developer 8 (2 blocking), the three distinct blocking findings raised by both; both `VERDICT: CHANGES REQUIRED`; all 21 dispositioned and applied as PRODUCT-DESIGN v1.5, specs v1.5, IR-07 restated exactly; Q-02 and Q-03 opened as purpose questions for the operator (not blocking); checks green.
+**Decisions:** invalid_request only for an unreadable body, the domain enumerates role and reason codes; the state bucket leads with exactly week_published, week_draft (request), wrong_state; IR-07: scheduling passes facts, swaps computes pending and requestable; one request row (R-swaps-09) for every swap write and list.
+**Deviations flagged:** none.
+**Tests at close:** design check, stories check and ledger lint green; no code yet.
+**NEXT:** round 6 — fresh reviewers on v1.5; both AGREED closes the gate and records D-02.

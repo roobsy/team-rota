@@ -11,7 +11,7 @@ arms:
   - { arm: "an active member assigned to a shift with a free slot holds it", kind: deterministic }
   - { arm: "assigning a member twice to one shift is refused with reason already_assigned", kind: deterministic }
   - { arm: "assigning a member to a shift whose half-open interval [start, end) intersects one they hold on the same date is refused with reason overlapping_shift", kind: deterministic }
-  - { arm: "assigning to a shift whose slots are all held is refused with reason shift_full", kind: deterministic }
+  - { arm: "assigning to a shift whose slots are all held is refused with reason shift_full (the assign order is week_published, already_assigned, overlapping_shift, shift_full, member_inactive)", kind: deterministic }
   - { arm: "assigning an inactive member is refused with reason member_inactive", kind: deterministic }
   - { arm: "removing an assignment from a shift of a draft week frees the slot; in a published week it is refused with reason week_published", kind: deterministic }
   - { arm: "a member calling the action is refused with reason forbidden", kind: deterministic }
