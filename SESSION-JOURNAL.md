@@ -133,3 +133,7 @@ A recorded approval (hard rule 1, 4 or 6) is a paragraph in the block of the ses
 **Deviations flagged:** `uv.lock` appears outside the roster (Q-05, not blocking; left untracked). The qa-engineer subagent step was performed by hand: the templates are the criteria-first drafts for every arm.
 **Tests at close:** 10 passed under `uv run pytest tests/ -q -m "not timing"`; ruff clean.
 **NEXT:** the operator's gate; then `adu handover ADU-00 --closure` in a fresh session writes ✅ from the pasted gate line.
+
+## 2026-11-07 08:40 · ADU-00 closure · done
+**Done:** the gate re-run under the operator's hands — in this example run the same machine as the session, which is the one honest caveat of the record: on the user's own run the gate is theirs on their machine — last line `10 passed in 2.81s`; ADU-00 ✅ with 10 tests; `## Now:` advanced to ADU-01 (next in the derived order).
+**NEXT:** `adu handover ADU-00` is spent; run `adu handover ADU-01` and open the ADU-01 session (developer): the data model and the seeded fixture.
