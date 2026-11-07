@@ -155,3 +155,7 @@ A recorded approval (hard rule 1, 4 or 6) is a paragraph in the block of the ses
 **Deviations flagged:** none.
 **Tests at close:** 28 passed under `uv run pytest tests/ -q -m "not timing"` (12 of them this unit's); ruff clean; layering scan clean (the Nulls import only ports).
 **NEXT:** the operator's gate; then the closure prompt for ADU-16.
+
+## 2026-11-07 08:46 · ADU-16 closure · done
+**Done:** the gate re-run under the operator's hands (same machine in this example run): `28 passed in 5.45s`; ADU-16 ✅ with 28 tests; `## Now:` advanced to ADU-02 (the contract unit).
+**NEXT:** `adu handover ADU-02`, then the ADU-02 session (developer): the served contract, the golden pin, the composition root.
