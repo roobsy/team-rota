@@ -11,7 +11,7 @@ Scheme: `vMAJOR.MINOR` — a requirement changed (design-change loop, operator d
 | design/PRODUCT-DESIGN.md | 1.7 | product design (agreed, D-02) |
 | design/ARCHITECTURE.md | 1.1 | architecture contract |
 | contracts/openapi.yaml | 1.1 | API contract |
-| ADU-PLAN.md | 1.1 | the plan |
+| ADU-PLAN.md | 1.2 | the plan |
 
 ## History
 <!-- ### YYYY-MM-DD — DOC vX / DOC vY: <ID> — <summary>, then a table | Document | From | To | What changed | -->
@@ -110,3 +110,8 @@ Scheme: `vMAJOR.MINOR` — a requirement changed (design-change loop, operator d
 | Document | From | To | What changed |
 |---|---|---|---|
 | contracts/openapi.json | — | 1.1 | generated from openapi.yaml by js-yaml; regenerated with every contract change; read by the stubs and the tests |
+
+### 2026-11-07 — ADU-PLAN v1.2: Q-06, FB-01, FB-02 (O-01) — release M1
+| Document | From | To | What changed |
+|---|---|---|---|
+| ADU-PLAN.md | 1.1 | 1.2 | ADU-00 gains the FB-01 acceptance arm on tests/test_layering.py (the defect session, under Q-06 option 1, ruled by the operator; committed in c56ea77 with no version until this row): a requirement added, hence the minor bump. M1's usable-path cell is corrected to ADU-02's own arm (ADU-PLAN.md:129): 401 unauthenticated without a token, 501 not_built with one, and sign-in 501, as the operator's use-it run showed. ADU-11's entry carries the O-01 pointer (FB-02). |

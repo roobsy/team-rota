@@ -1,5 +1,5 @@
 # ADU-PLAN — Team Rota
-v1.1 · cut by the architect (`/adu-lifecycle:cut-adus`) on 2026-11-07 from stories v1.7 (D-02), contracts/openapi.yaml v1.1, design/INTERFACES.md v1.0.1 and design/ARCHITECTURE.md v1.1; recut after the developer's buildability read (docs/PLAN-REVIEW-1.md, 23 findings, all accepted). Nothing is cut from prose alone. Each entry's `yaml adu` block is normative; the prose lines under it are rendered from the block (`adu derived render`) and never edited by hand. The order is derived (`adu plan order`), never typed; ids are stable and allocated with `adu next-id ADU`; an inserted unit gets a new id, never a letter (ADU-16 and ADU-17 were inserted by the recut and take their derived places).
+v1.2 (the release manager's bump at M1's close; what changed is in VERSIONS.md) · cut by the architect (`/adu-lifecycle:cut-adus`) on 2026-11-07 from stories v1.7 (D-02), contracts/openapi.yaml v1.1, design/INTERFACES.md v1.0.1 and design/ARCHITECTURE.md v1.1; recut after the developer's buildability read (docs/PLAN-REVIEW-1.md, 23 findings, all accepted). Nothing is cut from prose alone. Each entry's `yaml adu` block is normative; the prose lines under it are rendered from the block (`adu derived render`) and never edited by hand. The order is derived (`adu plan order`), never typed; ids are stable and allocated with `adu next-id ADU`; an inserted unit gets a new id, never a letter (ADU-16 and ADU-17 were inserted by the recut and take their derived places).
 
 The entry format and its rules are documented in the plugin's `templates/plan/adu-entry.md`. `adu plan check` enforces them: every session opens with it, and ADU-00's method guard runs it as a test.
 
@@ -9,7 +9,7 @@ The entry format and its rules are documented in the plugin's `templates/plan/ad
 <!-- contiguous slices of `adu plan order`; each ends in a usable vertical path -->
 | Milestone | Title | Units | Usable path at close |
 |---|---|---|---|
-| M1 | Foundations | ADU-00, ADU-01, ADU-16, ADU-02 | the served contract equals the golden; every operation answers 501 not_built; the ports exist with Nulls and doubles; the seeded fixture reproduces byte for byte |
+| M1 | Foundations | ADU-00, ADU-01, ADU-16, ADU-02 | the served contract equals the golden; every operation answers 401 unauthenticated without a token and 501 not_built with one (sign-in, which takes no token, answers 501); the ports exist with Nulls and doubles; the seeded fixture reproduces byte for byte |
 | M2 | The four services | ADU-03, ADU-09, ADU-05, ADU-07 | the brief's §6 path (members → week → request → accept → decide, every party notified, the board correct) runs end to end through the four real services under a fixed clock, asserted by ADU-07's tests; every in-process mock retired |
 | M3 | The API | ADU-04, ADU-06, ADU-10, ADU-08 | the same path for real personas through the API with curl or the test client, signed in as the seeded fixture's members (the fixture of ADU-01 is the operator's first team until the seed command of M4) |
 | M4 | The browser and the operator's command | ADU-12, ADU-17, ADU-13, ADU-14, ADU-11, ADU-15 | the same path in the browser; the operator seeds a real first admin; the E2E test runs on every commit; `app serve` packages it |
@@ -382,6 +382,7 @@ acceptance:
 owed: []
 ```
 Layer 6 (the root): the command composes the application like `app serve` will (ADU-15 adds the serve subcommand here by amendment). Its derived place is in M4; until then the operator's first team is the seeded fixture of ADU-01.
+**Owed at this unit: O-01 (FB-02, release M1).** Before this command seeds the first real admin, the workspace database must be impossible to add to git. `.gitignore` ignores `*.db` and `data/real/`, but the database is `rota.sqlite` (src/app/db.py:12), and the default workspace `.rota` sits wherever the server starts (src/app/main.py:59). How it is done is this session's choice; moving the default workspace is a design question (a Q-nn). `.gitignore` is in no roster, so an edit to it needs an `adu grant`. `adu plan check` refuses this unit's ✅ while O-01 is open (rule 19).
 
 ### ADU-12 — UI foundation: the Vite scaffold, the shell and the anchor lint
 ```yaml adu
