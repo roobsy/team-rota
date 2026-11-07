@@ -100,3 +100,10 @@ A recorded approval (hard rule 1, 4 or 6) is a paragraph in the block of the ses
 **Deviations flagged:** D-06 is applied only on the operator's approval; until then adu.toml keeps the adapter default.
 **Tests at close:** layering scan green on the empty tree.
 **NEXT:** /adu-lifecycle:design-contract (architect).
+
+## 2026-11-07 08:17 · design-contract (architect) · done
+**Done:** contracts/openapi.yaml v1.0 — 18 operations (identity 5, scheduling 6, swaps 5, notifications 2) each with operationId, x-story, x-roles, synthetic examples and explicit refusals; Spectral clean against the plugin ruleset; Prism served one request per operation plus a refusal example with zero validator errors (docs/CONTRACT-SMOKE.md). design/INTERFACES.md v1.0 — five protocols with signatures, Null implementations at the providers' future paths, the build order for the accepted cycles, the traceability table (every story action has an operation, a protocol or a CLI command; no row is empty). IR-01..IR-12 resolved. D-07.
+**Decisions:** D-07 (contract style). The transfer is a protocol, never an operation (R-scheduling-08). The seed is a CLI command.
+**Deviations flagged:** none.
+**Tests at close:** spectral 0 errors; prism 0 validator errors.
+**NEXT:** /adu-lifecycle:cut-adus (architect).

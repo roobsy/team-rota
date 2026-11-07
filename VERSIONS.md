@@ -10,7 +10,7 @@ Scheme: `vMAJOR.MINOR` — a requirement changed (design-change loop, operator d
 | design/PRODUCT-BRIEF.md | 1.0 | purpose (content-pinned, D-01) |
 | design/PRODUCT-DESIGN.md | 1.7 | product design (agreed, D-02) |
 | design/ARCHITECTURE.md | 1.0 | architecture contract |
-| contracts/openapi.yaml | 0.1 | API contract |
+| contracts/openapi.yaml | 1.0 | API contract |
 | ADU-PLAN.md | 0.1 | the plan |
 
 ## History
@@ -86,3 +86,9 @@ Scheme: `vMAJOR.MINOR` — a requirement changed (design-change loop, operator d
 | Document | From | To | What changed |
 |---|---|---|---|
 | design/ARCHITECTURE.md | 0.1 | 1.0 | written against design v1.5; the layering scan and baseline committed |
+
+### 2026-11-07 — contracts/openapi.yaml v1.0, design/INTERFACES.md v1.0: D-07 — 18 operations, five protocols, the request row, examples as the mock
+| Document | From | To | What changed |
+|---|---|---|---|
+| contracts/openapi.yaml | 0.1 | 1.0 | every story action an operation with operationId <domain>.<action>, x-story, x-roles, named synthetic examples, explicit refusals with enumerated reasons; Spectral clean; Prism serves every operation with zero validator errors (docs/CONTRACT-SMOKE.md) |
+| design/INTERFACES.md | 0.1 | 1.0 | Clock, MemberDirectory, SchedulingPort, SwapsPort, Notifier with signatures, Null implementations and the build order; the traceability table |
