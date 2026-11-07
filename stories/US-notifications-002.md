@@ -8,17 +8,18 @@ step: 2
 roles: [admin, planner, member]
 data: [Notification, SwapRequest]
 arms:
-  - { arm: "the counterpart receives one notification naming the shift, the requester and the reason", kind: deterministic }
+  - { arm: "the counterpart receives one notification naming the shift, the requester and the reason code", kind: deterministic }
   - { arm: "nobody else is notified at this step", kind: deterministic }
 ---
 ## Story
 As a counterpart, I want to be told of a request so that I can answer it.
 
 ## Rules
-See design/domains/notifications/spec.md — the rules this story serves are referenced by id there.
+The rules this story serves are in the notifications domain spec, referenced by id there.
 
 ## Data touched
-Notification, SwapRequest (owned by notifications; others read through an interface)
+Notification (owned); SwapRequest (read through swaps's interface)
 
 ## Out of scope
+Reminders.
 Anything the journey step does not name; no free text, no optimisation, no second team.

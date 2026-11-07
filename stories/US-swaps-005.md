@@ -1,6 +1,6 @@
 ---
 id: US-swaps-005
-title: Planner sees pending approvals
+title: Planner or admin sees pending decisions
 domain: swaps
 persona: Pat
 journey: J-05
@@ -8,17 +8,19 @@ step: 2
 roles: [admin, planner]
 data: [SwapRequest]
 arms:
-  - { arm: "every accepted request awaiting approval is listed oldest first", kind: deterministic }
-  - { arm: "requests the planner is party to are listed but marked decide_by_admin", kind: deterministic }
+  - { arm: "every accepted request awaiting a decision is listed oldest first by accepted_at, the same list for any admin or planner", kind: deterministic }
+  - { arm: "requests the viewer is party to are listed and marked party, with no decide controls", kind: deterministic }
+  - { arm: "a member calling the action is refused with reason forbidden", kind: deterministic }
 ---
 ## Story
-As a planner, I want to see every pending approval so that no swap waits unseen.
+As a planner or admin, I want to see every pending decision so that no swap waits unseen.
 
 ## Rules
-See design/domains/swaps/spec.md — the rules this story serves are referenced by id there.
+The rules this story serves are in the swaps domain spec, referenced by id there.
 
 ## Data touched
-SwapRequest (owned by swaps)
+SwapRequest (owned)
 
 ## Out of scope
+Assignment of decisions to a named decider.
 Anything the journey step does not name; no free text, no optimisation, no second team.

@@ -8,17 +8,18 @@ step: 4
 roles: [admin, planner, member]
 data: [Notification, Member, Week]
 arms:
-  - { arm: "every active member receives one notification naming the week when it is published", kind: deterministic }
+  - { arm: "every active member receives one notification naming the week's start_date when it is published", kind: deterministic }
   - { arm: "an inactive member receives none", kind: deterministic }
 ---
 ## Story
 As a member, I want to be told when a week is published so that I see it the same minute.
 
 ## Rules
-See design/domains/notifications/spec.md — the rules this story serves are referenced by id there.
+The rules this story serves are in the notifications domain spec, referenced by id there.
 
 ## Data touched
-Notification, Member, Week (owned by notifications; others read through an interface)
+Notification (owned); Member (read through identity's interface), Week (read through scheduling's interface)
 
 ## Out of scope
+Delivery channels.
 Anything the journey step does not name; no free text, no optimisation, no second team.
