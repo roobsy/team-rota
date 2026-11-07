@@ -9,7 +9,7 @@ roles: [admin, planner]
 data: [SwapRequest, Decision, Assignment]
 arms:
   - { arm: "approving an open accepted request first transfers the assignment through scheduling, inside the same transaction, and then records one Decision (decider, outcome approved, decided_at); the request mirrors approved and the response carries the decision", kind: deterministic }
-  - { arm: "refusing records one Decision with outcome refused and the reason code; the request mirrors refused", kind: deterministic }
+  - { arm: "refusing records one Decision with outcome refused and the reason code; the request mirrors refused; approve and refuse are one decide operation with an outcome; a caller who sends counterpart_overlap or counterpart_inactive as the reason gets invalid_reason", kind: deterministic }
   - { arm: "a decision by the requester or the counterpart, whether planner or admin, is refused with reason party_to_swap", kind: deterministic }
   - { arm: "an admin who is not a party decides a request a planner is party to", kind: deterministic }
   - { arm: "deciding a request that is not in state accepted is refused with reason wrong_state", kind: deterministic }
@@ -18,7 +18,7 @@ arms:
   - { arm: "a refusal without a reason code is refused with reason reason_required; one outside the enumerated codes with reason invalid_reason", kind: deterministic }
   - { arm: "a member calling the action is refused with reason forbidden", kind: deterministic }
   - { arm: "the inbox shows swap-approve and swap-refuse only to an admin or planner who is not a party and only while the request is open in state accepted; after the decision swap-decision shows the outcome and the reason", kind: deterministic }
-  - { arm: "the brief's §6 path (request → accept → approve) runs end to end in the browser against the real product on every commit: every party's notifications are exactly those of R-notifications-01 and the board shows the new holder", kind: deterministic }
+  - { arm: "the brief's §6 path (request → accept → approve) runs end to end in the browser against the real product on every commit: every party's notifications are exactly those of R-notifications-01 and the board shows the new holder — the plan places this arm in the packaging/E2E unit, the last one; the other arms of this story close with the swaps units", kind: deterministic }
 ---
 ## Story
 As a planner or admin, I want to approve or refuse an accepted swap with a reason so that the roster changes only by a recorded decision.

@@ -54,3 +54,10 @@ A recorded approval (hard rule 1, 4 or 6) is a paragraph in the block of the ses
 **Deviations flagged:** round 2 was heavier than round 1 in blocking findings (14 + 14 vs. the first round's, which did not grade severity) — the second reading found what the first round's fixes created (A5: implicit weeks + immutable shifts made no_shifts unconstructible). Recorded for the retro: dispositions applied independently can conflict; a round-3 read is the check.
 **Tests at close:** design check and stories check green; no code yet.
 **NEXT:** round 3 — fresh architect and developer reviewers on v1.2; the gate is both AGREED in the same round, then D-02.
+
+## 2026-11-07 07:05 · review-design round 3 (pm-lead) · in progress
+**Done:** DESIGN-REVIEW-3 with fresh reviewers: architect 11 findings (1 blocking: scheduling cannot name week_published's recipients — IR-12), developer 11 (1 blocking: publishing an already published week — refused week_published); both `VERDICT: CHANGES REQUIRED`; all 22 dispositioned in design/DESIGN-REVIEW-3.md and applied as PRODUCT-DESIGN v1.3 (Reason codes table with bucket and HTTP status), specs v1.3, 22 stories (108 arms), IR-01..IR-12; checks green.
+**Decisions:** the status mapping by bucket (401/403/404/409/422); within-bucket order = the arms' order; credentials verified before the active check; one decide operation; the seed emits nothing; the same-role change is a no-op.
+**Deviations flagged:** none. The rounds are converging: 56 → 52 → 22 findings, 28 → 2 blocking.
+**Tests at close:** design check and stories check green; no code yet.
+**NEXT:** round 4 — fresh reviewers on v1.3; both AGREED closes the gate and records D-02.

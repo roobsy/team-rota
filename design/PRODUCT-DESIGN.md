@@ -1,5 +1,5 @@
 # PRODUCT-DESIGN — Team Rota
-v1.2 · owned by the pm-lead (`/adu-lifecycle:design-product`); checked by `adu design check`; reviewed by the architect and the developer (`/adu-lifecycle:review-design`) before stories are written. Everything here serves the North Star in `design/PRODUCT-BRIEF.md`: the roster tells each person the truth about their week, plainly, even when unwelcome. v1.1 applied `design/DESIGN-REVIEW-1.md` (56 findings); v1.2 applies `design/DESIGN-REVIEW-2.md` (52 findings): the caller resolved once, refusal shape and precedence, not_found, the typed Notifier events, "open" defined once, the answer fields, list members and list weeks, the badge per holder, tiebreaks, ids on every entity.
+v1.3 · owned by the pm-lead (`/adu-lifecycle:design-product`); checked by `adu design check`; reviewed by the architect and the developer (`/adu-lifecycle:review-design`) before stories are written. Everything here serves the North Star in `design/PRODUCT-BRIEF.md`: the roster tells each person the truth about their week, plainly, even when unwelcome. v1.1 applied `design/DESIGN-REVIEW-1.md` (56 findings); v1.2 `design/DESIGN-REVIEW-2.md` (52); v1.3 `design/DESIGN-REVIEW-3.md` (22, two blocking): the caller resolved once, refusal shape and precedence, not_found, the typed Notifier events, "open" defined once, the answer fields, list members and list weeks, the badge per holder, tiebreaks, ids on every entity.
 
 ## Personas
 | Persona | Role | Goal | Pain today |
@@ -11,10 +11,21 @@ v1.2 · owned by the pm-lead (`/adu-lifecycle:design-product`); checked by `adu 
 ## Cross-cutting rules (apply to every journey)
 - **The caller.** Every operation except sign-in and the operator's seed command carries a bearer token issued by identity at sign-in. The API layer resolves the token once per request into the caller {member_id, name, role, active} (IR-11) and passes that value into every domain operation; the domain enforces forbidden, own and party on it. A missing or unknown token, or a token of an inactive member, is refused with reason `unauthenticated`. A new sign-in replaces the member's token.
 - **The forbidden rule.** An action by a role the Permissions table denies is refused with reason `forbidden`; an action on something that is not the caller's own, where the table says `own`, is refused with the reason the story names.
-- **Refusals.** A refusal is {reason, detail, and the extra fields a story names}; it changes nothing. An identifier that names nothing is refused with reason `not_found`. When several checks fail, the first in this order names the reason: unauthenticated → forbidden → not_found → own/party → state → deadline → validation. An operation that changed state never answers with a refusal: approval whose transfer was refused succeeds and returns the recorded decision.
+- **Refusals.** A refusal is {reason, detail, and the extra fields a story names}; it changes nothing. An identifier that names nothing is refused with reason `not_found` (except sign-in, where an unknown email is `invalid_credentials`, and credentials are verified before the active check so that `member_inactive` is only ever answered to a correct passcode). When several checks fail, the first in this order names the reason: unauthenticated → forbidden → not_found → own/party → state → deadline → validation; within a bucket, checks run in the order the story's arms list them. The HTTP status follows the bucket: unauthenticated 401 · forbidden and own/party 403 · not_found 404 · state and deadline 409 · validation 422 (the Reason codes table below lists every code with its bucket). An operation that changed state never answers with a refusal: approval whose transfer was refused succeeds and returns the recorded decision.
 - **The clock.** Every action reads `now` from an injected clock; tests set it. Times are naive local times of the team (one team, one timezone, a fixed deployment setting). A shift's start instant is its date plus its start time. A deadline is half-open: an action is allowed while now < deadline and refused at or after it.
 - **Lists and ties.** Every list names its sort key and breaks ties by id: ascending for oldest-first lists, descending for newest-first; the board sorts by date, start, then shift id.
+- **Ids.** Every entity's id is an integer assigned by the store in creation order; Week is keyed by its start_date.
 - **Nothing pending looks done.** States are shown as they are; a derived display state (`expired`) is computed on read and never stored. A request is **open** when its stored state is requested or accepted and now < its deadline; only open requests carry a badge, show answer or decide controls, or count as pending.
+
+## Reason codes (every refusal a story names, its bucket and its status)
+| Bucket | Status | Codes |
+|---|---|---|
+| unauthenticated | 401 | unauthenticated; invalid_credentials (sign-in) |
+| forbidden / own / party | 403 | forbidden; member_inactive (sign-in); not_holder; not_counterpart; party_to_swap; not_recipient; week_draft (board of a draft week, members) |
+| not_found | 404 | not_found |
+| state | 409 | team_not_empty; duplicate_email; last_admin; future_assignments; week_published; already_assigned; overlapping_shift; shift_full; member_inactive (assign); unfilled_slots; request_open; week_draft (request on a draft week); counterpart_inactive; counterpart_on_shift; counterpart_self; wrong_state |
+| deadline | 409 | past_deadline |
+| validation | 422 | invalid_role; not_week_start; outside_week; invalid_interval; invalid_slots; reason_required; invalid_reason |
 
 ## Journeys
 ### J-01 — Admin sets up the team
@@ -35,7 +46,7 @@ Persona: Pat. Outcome: the week is visible to every member, who were all told.
 
 ### J-03 — Member views the week
 Persona: Mo. Outcome: Mo knows who holds every shift and what is pending.
-1. [scheduling] Mo opens the week board — the current week by default, any listed week from the picker — and sees every shift with its holders and the open request on each
+1. [scheduling] Mo opens the week board — the current week by default, any listed week from the picker — and sees every shift with its holders and the open request on each, and a request control on their own rows
 2. [scheduling] Mo filters the board to their own shifts
 
 ### J-04 — Member hands over a shift
@@ -59,10 +70,10 @@ Persona: Mo, Pat. Outcome: nothing pending is hidden, nothing pending looks done
 |---|---|---|
 | Sign in | J-01#5 | sign-in-form, sign-in-email, sign-in-passcode, sign-in-submit |
 | Team | J-01#2, J-01#3, J-01#4 | team-list, member-add, member-role, member-deactivate |
-| Week board | J-02#1, J-02#2, J-02#3, J-03#1, J-03#2, J-04#6 | week-board, week-picker, board-draft, board-none, shift-create, shift-assign, shift-unassign, week-publish, board-filter-mine, board-empty-mine, holder-row, holder-pending-badge |
+| Week board | J-02#1, J-02#2, J-02#3, J-03#1, J-03#2, J-04#6 | week-board, week-picker, board-draft, board-none, shift-create, shift-assign, shift-unassign, week-publish, board-filter-mine, board-empty-mine, holder-row, holder-pending-badge, holder-request-swap |
 | Swap request | J-04#1 | swap-request-form, swap-counterpart, swap-reason, swap-submit |
 | Swap inbox | J-04#3, J-04#5, J-05#1, J-05#2 | swap-inbox, swap-accept, swap-decline, swap-approve, swap-refuse, swap-state, swap-awaiting, swap-party, swap-decision |
-| Notifications | J-01#6, J-02#4, J-04#2, J-04#4, J-04#7, J-05#3 | notification-list, notification-item, notification-empty |
+| Notifications | J-01#6, J-02#4, J-04#2, J-04#4, J-04#7, J-05#3 | notification-list, notification-item, notification-mark-read, notification-empty |
 
 ## Domains
 | Domain | Owner PM | Purpose |
@@ -81,7 +92,7 @@ Persona: Mo, Pat. Outcome: nothing pending is hidden, nothing pending looks done
 | Shift | scheduling | a set of slots on one day of a week; immutable once created in this version | id, week_start, date, start, end (times of day on that date; end after start; never crossing midnight), slots (≥ 1) |
 | Assignment | scheduling | a member holding one slot of a shift | id, shift_id, member_id |
 | SwapRequest | swaps | a request to hand an assignment to a counterpart, with the counterpart's answer | id, assignment_id, requester_id, counterpart_id, reason (the requester's), state (requested, accepted, declined, approved, refused), created_at, answered_at, answer_reason (the counterpart's, on decline); `expired` is derived on read (requested or accepted, deadline passed), never stored |
-| Decision | swaps | the decision on an accepted request, approved or refused, with the reason | id, request_id, decider_id, outcome (approved, refused), reason, decided_at |
+| Decision | swaps | the decision on an accepted request, approved or refused, with the reason | id, request_id, decider_id, outcome (approved, refused), reason (absent on approved; on refused one of the four caller codes, or counterpart_overlap / counterpart_inactive set only by the system), decided_at |
 | Notification | notifications | a message to one member about one event | id, recipient_id, event (one of the nine event codes of R-notifications-01), text, created_at, read |
 
 ## Roles

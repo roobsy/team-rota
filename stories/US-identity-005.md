@@ -8,7 +8,7 @@ step: 1
 roles: []
 data: [Member, Role]
 arms:
-  - { arm: "on an empty team the seed command creates one active admin with the given name, email and passcode and prints the member id", kind: deterministic }
+  - { arm: "on an empty team the seed command creates one active admin with the given name, email and passcode and prints the member id; the seed emits no notification", kind: deterministic }
   - { arm: "on a team that already has any member the seed command is refused with reason team_not_empty", kind: deterministic }
   - { arm: "the seeded admin's stored passcode hash verifies the given passcode and nothing else", kind: deterministic }
 ---

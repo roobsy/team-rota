@@ -8,7 +8,7 @@ Scheme: `vMAJOR.MINOR` — a requirement changed (design-change loop, operator d
 |---|---|---|
 | CLAUDE.md | 1.0 | constitution |
 | design/PRODUCT-BRIEF.md | 1.0 | purpose (content-pinned, D-01) |
-| design/PRODUCT-DESIGN.md | 1.2 | product design |
+| design/PRODUCT-DESIGN.md | 1.3 | product design |
 | design/ARCHITECTURE.md | 0.1 | architecture contract |
 | contracts/openapi.yaml | 0.1 | API contract |
 | ADU-PLAN.md | 0.1 | the plan |
@@ -41,3 +41,11 @@ Scheme: `vMAJOR.MINOR` — a requirement changed (design-change loop, operator d
 | stories/ | 22 (86 arms) | 22 (107 arms) | UI arms on every screen story; token lifecycle; the §6 end-to-end arm on US-swaps-003; the quantitative arm with its predicate and fixture; identity no longer asserts other domains' lists |
 | design/domains/*/spec.md | 1.1 | 1.2 | the nine typed Notifier events with payloads (R-notifications-01); R-scheduling-09 fixture; R-identity-09 list; transactions and the internal transfer stated |
 | design/INTERFACE-REQUESTS.md | IR-01..10 | IR-01..11 | rows widened to what the rules need; the service cycles accepted explicitly |
+
+### 2026-11-07 — PRODUCT-DESIGN v1.3: DESIGN-REVIEW-3 — 22 findings (architect 11, developer 11; one blocking each) dispositioned, all accepted
+| Document | From | To | What changed |
+|---|---|---|---|
+| design/PRODUCT-DESIGN.md | 1.2 | 1.3 | the Reason codes table (bucket and HTTP status for every code); order within a bucket; ids in creation order; holder-request-swap and notification-mark-read anchors; Decision.reason values |
+| stories/ | 22 (107 arms) | 22 (108 arms) | publishing twice refused; the seed emits nothing; same-role change a no-op; lists carry shift and names; the timing arm's call; the transfer arm's predicate |
+| design/domains/*/spec.md | 1.2 | 1.3 | R-scheduling-04/08/09, R-identity-01/06/07/09, R-swaps-04/07/09, R-notifications-01 reworded as the dispositions say |
+| design/INTERFACE-REQUESTS.md | IR-01..11 | IR-01..12 | IR-12 (active member ids for week_published); IR-07 no longer re-entrant |

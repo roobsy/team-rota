@@ -15,7 +15,7 @@ arms:
   - { arm: "a request on an assignment of a draft week is refused with reason week_draft", kind: deterministic }
   - { arm: "a counterpart who is inactive, already holds a slot on that shift, or is the requester is refused with reason counterpart_inactive, counterpart_on_shift or counterpart_self respectively", kind: deterministic }
   - { arm: "a request without a reason code is refused with reason reason_required; one outside the enumerated codes with reason invalid_reason", kind: deterministic }
-  - { arm: "the swap-request-form offers as swap-counterpart the eligible members by name (active, not the requester, not holding a slot on that shift — composed in the browser from the members list and the board; the server refuses the rest), submits, and the inbox shows the new request with swap-state requested", kind: deterministic }
+  - { arm: "the swap-request-form offers as swap-counterpart the eligible members by name (active, not the requester, not holding a slot on that shift — composed in the browser from the members list and the board; the server refuses the rest), submits, and the inbox shows the new request with swap-state requested; holder-request-swap on the member's own holder-row opens the form for that assignment", kind: deterministic }
 ---
 ## Story
 As a member, I want to request a swap with a counterpart and a reason so that I can hand over a shift I cannot work.
