@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "ask": ["Edit(./adu.toml)","Edit(./PINS.lock)","Edit(./.claude/settings.json)","Edit(./CLAUDE.md)","Edit(./src/app/ledger.py)"]
+  },
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "0"
+  }
+}

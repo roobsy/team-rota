@@ -1,0 +1,16 @@
+# Session state the hooks keep (grants, session marks, last test log, the plugin root) — per machine, never shared.
+.adu/sessions/
+.adu/grants/
+.adu/last-session-tests.log*
+.adu/plugin-root
+# Environments and build output
+.venv/
+node_modules/
+dist/
+__pycache__/
+*.pyc
+.pytest_cache/
+# Real data never enters the repository (hard rule 3).
+*.db
+*.db-*
+data/real/

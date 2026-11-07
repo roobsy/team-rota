@@ -1,0 +1,28 @@
+# adu.toml — the project's method configuration. Protected: it changes only on the operator's explicit approval.
+# Every hook and skill reads commands from here; nothing is typed twice.
+
+[project]
+name = "Team Rota"
+authority = ["design/PRODUCT-BRIEF.md"]
+code_roots = ["src","tests","frontend/src","frontend/tests"]
+
+[commands]
+gate = "uv run pytest tests/ -q -m \"not timing\" && npm --prefix frontend run test -- --run"
+fast = "uv run pytest tests/ -q -m \"not calibration\" && npm --prefix frontend run test -- --run"
+timing = "uv run pytest tests/ -q -m timing"
+lint = "uv run ruff check && npm --prefix frontend run lint"
+contract_export = "uv run python tests/api/test_openapi_golden.py"
+mock = "npx --yes @stoplight/prism-cli mock contracts/openapi.yaml"
+
+[protected]
+paths = ["adu.toml","PINS.lock",".claude/settings.json","CLAUDE.md","src/app/ledger.py"]
+
+[mode]
+session_end = "automatic"
+gate_budget_seconds = 300
+
+[adapter]
+name = "python-fastapi-uv,react-vite-vitest"
+
+[pm]
+story_cap = 12

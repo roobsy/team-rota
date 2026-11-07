@@ -1,0 +1,17 @@
+# Ledgers are append-only records: a merge that picks a side deletes content (Crucible FB-13, three times).
+# union keeps both sides; the one thing it cannot do is dedupe a stateful single line (## Now:, a ledger row),
+# which is why `adu ledger lint` checks for duplicates after every merge and fails toward noise, never silence.
+STATUS.md merge=union
+SESSION-JOURNAL.md merge=union
+OPEN-QUESTIONS.md merge=union
+FEEDBACK.md merge=union
+RETRO.md merge=union
+VERSIONS.md merge=union
+DECISIONS.md merge=union
+# Fixtures and lock files keep LF on every platform (Crucible FB-20: CRLF fixtures failed on Windows clones).
+*.csv text eol=lf
+*.json text eol=lf
+*.lock text eol=lf
+*.yaml text eol=lf
+*.sh text eol=lf
+*.ps1 text eol=crlf

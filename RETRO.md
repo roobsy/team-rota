@@ -1,0 +1,13 @@
+# RETRO — Team Rota
+One section per milestone close, written by the release-manager session before the alignment check. Four questions; answers 3 and 4 name what they became (an FB-nn, a Q-nn, a document version, or "nothing" with the reason). Question 4 is the North Star check and is answered only after using the milestone's output, not after testing it.
+
+Section format:
+```
+## M<n> <name> · closed YYYY-MM-DD · tag m<n>-<name>
+1. What did the units of this milestone get wrong, and what found it? → became …
+2. What nearly slipped through? → became …
+3. One change to the method, if any. → became …
+4. Used it how; does the truth it tells still serve the North Star? → …
+Suite at close: N passed in D (gate) · timing pass: reported figures · tooling notes.
+Light check (when no full review is due): "anything drift from PRODUCT-BRIEF.md?" and the backward series — a light check cannot report ALIGNED; it escalates to a full review if either answer looks wrong.
+```
