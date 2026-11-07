@@ -114,3 +114,7 @@ A recorded approval (hard rule 1, 4 or 6) is a paragraph in the block of the ses
 **Deviations flagged:** rule 17 (first usable path by M2) — recorded in the plan and as package feedback FB-01.
 **Tests at close:** plan check green; derived blocks current; ledgers OK.
 **NEXT:** the operator approves the plan; then `adu handover ADU-00` and a fresh developer session for ADU-00.
+
+## 2026-11-07 08:19 · hand-over ADU-00 (oversight) · grant
+**Grant (hard rule 4, protected file):** `adu.toml [commands]` gate, fast and lint reduced to the python commands until ADU-12, per Q-04 option 1. Authority: the operator's standing instruction for this example run (execute ADU-00..02 here); the operator re-confirms this grant when they take over at ADU-03. Package feedback recorded (FB-14 in the plugin's ledger).
+**NEXT:** the developer's buildability read of the plan (docs/PLAN-REVIEW-1.md), then `adu handover ADU-00` and the ADU-00 session.

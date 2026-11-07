@@ -29,3 +29,9 @@ Entry format:
 **Conflict:** when every active admin and planner is a party to the swap, swap_accepted finds an empty decider set and the request shows "awaiting decider" with nobody able to decide until it expires.
 **Options:** (a) leave it (truthful, and rare on a team with one admin and two planners); (b) the system refuses it at acceptance with a new reason no_decider; (c) seeding a second admin is an operator practice recorded in the runbook.
 **Resolution:** none yet — the raiser recommends (a) now and (c) in the runbook; revisit with the first real team.
+
+### Q-04 · 2026-11-07 · ADU-00 (hand-over) · resolved → adu.toml (operator's grant recorded in the journal)
+**Conflict:** `adu.toml [commands].gate` is `uv run pytest tests/ -q -m "not timing" && npm --prefix frontend run test -- --run` (the two adapters joined at scaffold), but no `frontend/` exists until ADU-12 (UI foundation) — the gate for ADU-00..11 fails on the npm half before any test runs, so no unit before ADU-12 can close under the gate as written. Seen in the ADU-00 hand-over (section C2).
+**Blocking:** yes — for the closure of every unit before ADU-12.
+**Options:** (1) the operator edits the protected `adu.toml` so gate, fast and lint are the python commands until ADU-12, and ADU-12's entry amends `adu.toml` back to the combined commands under a recorded grant; (2) ADU-00 scaffolds a minimal frontend with one passing test — outside its roster and its stories; (3) the gate wraps the npm half in a directory test — hides a missing frontend forever.
+**Resolution:** option 1, 2026-11-07. The operator's grant for this protected edit is the standing instruction for the example run (the operator asked for ADU-00..02 to be executed in this run); recorded in this session's journal as a grant paragraph. Package feedback: a combined-adapter scaffold must not produce a gate that cannot pass before the second adapter's first unit.
