@@ -6,7 +6,7 @@ persona: Avi
 journey: J-01
 step: 1
 roles: []
-data: [Member, Role]
+data: [Member]
 arms:
   - { arm: "on an empty team the seed command creates one active admin with the given name, email and passcode and prints the member id; the seed emits no notification", kind: deterministic }
   - { arm: "on a team that already has any member the seed command is refused with reason team_not_empty", kind: deterministic }
@@ -19,7 +19,7 @@ As the operator, I want to seed the first admin with a command outside the API s
 The rules this story serves are in the identity domain spec, referenced by id there.
 
 ## Data touched
-Member, Role (owned)
+Member (owned)
 
 ## Out of scope
 No second seed, no reset, no import.

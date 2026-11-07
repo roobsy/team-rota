@@ -12,7 +12,7 @@ arms:
   - { arm: "a deactivated member cannot sign in (reason member_inactive), and a token issued before deactivation is refused on the next operation with reason unauthenticated", kind: deterministic }
   - { arm: "deactivating a member who holds an assignment on any shift, draft or published week, whose start instant is after now is refused with reason future_assignments", kind: deterministic }
   - { arm: "deactivating the last active admin is refused with reason last_admin", kind: deterministic }
-  - { arm: "deactivating a member who is already inactive is refused with reason member_inactive and nothing is emitted (no second member_deactivated)", kind: deterministic }
+  - { arm: "deactivating a member who is already inactive is refused with reason member_inactive and nothing is emitted (no second member_deactivated); a member id that names nobody is refused not_found", kind: deterministic }
   - { arm: "a planner or member calling the action is refused with reason forbidden", kind: deterministic }
   - { arm: "the Team screen's member-deactivate control deactivates and team-list shows the member inactive; the refusals are shown with their reason", kind: deterministic }
 ---

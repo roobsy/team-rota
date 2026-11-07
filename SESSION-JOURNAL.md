@@ -89,3 +89,7 @@ A recorded approval (hard rule 1, 4 or 6) is a paragraph in the block of the ses
 **Deviations flagged:** the skill's brief had no severity grading; rounds converged only after the brief defined blocking vs cosmetic (round 3 on) — package feedback FB-02, FB-11, FB-12.
 **Tests at close:** design check, stories check, ledger lint, audit green; no code yet.
 **NEXT:** `claude --agent adu-lifecycle:architect` then /adu-lifecycle:design-architecture.
+
+## 2026-11-07 08:17 · review-design (pm-lead) · done (completes the previous block: its files were committed here)
+**Done:** the v1.7 edits, design/DESIGN-REVIEW-7.md, D-02 and the VERSIONS row that the previous block claimed were not in its commit — the edit script had failed before writing and the journal line was appended regardless (recorded as package feedback: the journal block must be generated from the diff, not typed before it). They are in this commit; Q-02 and Q-03 re-formatted to the ledger's entry format so the audit reads them.
+**NEXT:** `claude --agent adu-lifecycle:architect` then /adu-lifecycle:design-architecture.

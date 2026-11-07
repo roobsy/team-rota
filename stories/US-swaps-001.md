@@ -9,7 +9,7 @@ roles: [admin, planner, member]
 data: [SwapRequest, Assignment, Shift, Week, Member]
 arms:
   - { arm: "a request for an assignment the member holds on a published week, naming an eligible counterpart and a reason code, is recorded in state requested with created_at from the clock, and the response is the request row of R-swaps-09", kind: deterministic }
-  - { arm: "a request for an assignment the member does not hold is refused with reason not_holder", kind: deterministic }
+  - { arm: "a request for an assignment the member does not hold is refused with reason not_holder; an assignment id that names nothing is not_found", kind: deterministic }
   - { arm: "a request at or after the shift's deadline (24 hours before the shift's start instant, by the clock) is refused with reason past_deadline", kind: deterministic }
   - { arm: "a second request for the same assignment while one is open is refused with reason request_open", kind: deterministic }
   - { arm: "a request on an assignment of a draft week is refused with reason week_draft", kind: deterministic }

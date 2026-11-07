@@ -4,3 +4,4 @@ The register that resolves every settled choice. A session never re-opens a row;
 | ID | Decision | Rationale / status |
 |---|---|---|
 | D-01 | **PRODUCT-BRIEF v1.0 approved as the fixed point of purpose.** A change to it is a change of purpose: the operator's explicit decision, recorded as a new version, never an editorial patch. | 2026-11-07, operator; pinned in PINS.lock |
+| D-02 | **PRODUCT-DESIGN v1.7, the 22 stories (109 arms), the four domain specs v1.7 and IR-01..12 are agreed by both sides: DESIGN-REVIEW-7 returned AGREED from the architect and the developer in the same round, after six rounds of CHANGES REQUIRED (155 findings dispositioned, none declined).** The architecture, the contract and the plan are cut from this version; a change to it is a design-change loop. | 2026-11-07, pm-lead; design/DESIGN-REVIEW-7.md |

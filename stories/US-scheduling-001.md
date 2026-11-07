@@ -14,7 +14,7 @@ arms:
   - { arm: "a shift whose end is not after its start (times of day on the shift's date, end at most 23:59; a shift never crosses midnight) is refused with reason invalid_interval", kind: deterministic }
   - { arm: "a shift with fewer than one slot is refused with reason invalid_slots", kind: deterministic }
   - { arm: "a member calling the action is refused with reason forbidden", kind: deterministic }
-  - { arm: "the Week board's shift-create form submits and the shift appears on week-board in date and start order", kind: deterministic }
+  - { arm: "the Week board's shift-create form takes start_date, date, start, end and slots — so a new week is begun from it when none is selected — submits, and the shift appears on week-board in date and start order", kind: deterministic }
 ---
 ## Story
 As a planner, I want to create the shifts of a week so that the week can be staffed.

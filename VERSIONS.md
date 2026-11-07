@@ -8,7 +8,7 @@ Scheme: `vMAJOR.MINOR` — a requirement changed (design-change loop, operator d
 |---|---|---|
 | CLAUDE.md | 1.0 | constitution |
 | design/PRODUCT-BRIEF.md | 1.0 | purpose (content-pinned, D-01) |
-| design/PRODUCT-DESIGN.md | 1.6 | product design |
+| design/PRODUCT-DESIGN.md | 1.7 | product design (agreed, D-02) |
 | design/ARCHITECTURE.md | 0.1 | architecture contract |
 | contracts/openapi.yaml | 0.1 | API contract |
 | ADU-PLAN.md | 0.1 | the plan |
@@ -73,3 +73,11 @@ Scheme: `vMAJOR.MINOR` — a requirement changed (design-change loop, operator d
 | stories/ | 22 (108 arms) | 22 (109 arms) | repeated deactivation; counterpart_overlap at request; anchors named in the sign-in and swap-form arms; stored state vs expiry; the board's shape |
 | design/domains/*/spec.md | 1.5 | 1.6 | R-identity-04, R-scheduling-01/05, R-swaps-03/08/09, R-notifications-01/02 |
 | design/INTERFACE-REQUESTS.md | IR-01/06/09 | restated | the shift's representation, the intersecting-shift check, absent ids → not_found |
+
+### 2026-11-07 — PRODUCT-DESIGN v1.7: DESIGN-REVIEW-7 — both AGREED (D-02); the 16 cosmetic findings applied
+| Document | From | To | What changed |
+|---|---|---|---|
+| design/PRODUCT-DESIGN.md | 1.6 | 1.7 | lenient read of path and query; sign-in's unreadable body; writes answer rows; Role an enumeration in the table; the header points at VERSIONS.md |
+| stories/ | 22 (109 arms) | 22 (109 arms) | not_found named per operation; unfilled rows; the weeks list's shape; mark-read twice; the shift-create form carries the week |
+| design/domains/*/spec.md | 1.6 | 1.7 | R-scheduling-03/06/09, R-notifications-04 |
+| design/INTERFACE-REQUESTS.md | — | — | IR-06 story column; IR-09 'eligible' wording; the Build order pointer |

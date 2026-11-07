@@ -1,5 +1,5 @@
 # identity — domain spec
-v1.6 · owned by pm-lead. The business rules of this domain, each testable, each naming the story it serves. v1.3 applied DESIGN-REVIEW-3; v1.4 DESIGN-REVIEW-4; v1.5 DESIGN-REVIEW-5; v1.6 applies DESIGN-REVIEW-6.
+v1.7 · owned by pm-lead. The business rules of this domain, each testable, each naming the story it serves. v1.3 applied DESIGN-REVIEW-3; v1.4 DESIGN-REVIEW-4; v1.5 DESIGN-REVIEW-5; v1.6 DESIGN-REVIEW-6; v1.7 applies the cosmetic findings of DESIGN-REVIEW-7, the agreed round.
 
 ## Rules
 | Rule | Statement | Serves | Testable as |

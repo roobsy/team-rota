@@ -10,7 +10,7 @@ data: [SwapRequest, Decision, Assignment, Shift, Member]
 arms:
   - { arm: "approving an open accepted request first transfers the assignment through scheduling, inside the same transaction, and then records one Decision (decider, outcome approved, decided_at); the request mirrors approved and the response is the request row of R-swaps-09, with the decision embedded", kind: deterministic }
   - { arm: "refusing records one Decision with outcome refused and the reason code; the request mirrors refused; approve and refuse are one decide operation with an outcome; a caller who sends counterpart_overlap or counterpart_inactive as the reason, or any reason with outcome approve, gets invalid_reason", kind: deterministic }
-  - { arm: "a decision by the requester or the counterpart, whether planner or admin, is refused with reason party_to_swap", kind: deterministic }
+  - { arm: "a decision by the requester or the counterpart, whether planner or admin, is refused with reason party_to_swap; a request id that names nothing is not_found", kind: deterministic }
   - { arm: "an admin who is not a party decides a request a planner is party to", kind: deterministic }
   - { arm: "deciding a request whose stored state is not accepted is refused with reason wrong_state (an expired accepted request answers past_deadline)", kind: deterministic }
   - { arm: "deciding at or after the shift's deadline is refused with reason past_deadline", kind: deterministic }

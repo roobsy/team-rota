@@ -9,7 +9,7 @@ roles: [admin, planner, member]
 data: [Notification]
 arms:
   - { arm: "a member's own notifications are listed newest first by created_at then id descending; nobody else's are ever returned", kind: deterministic }
-  - { arm: "invoking mark-read from the notification-mark-read control of a notification-item marks that notification read", kind: deterministic }
+  - { arm: "invoking mark-read from the notification-mark-read control of a notification-item marks that notification read; marking it again changes nothing and succeeds; a notification id that names nothing is not_found", kind: deterministic }
   - { arm: "marking another member's notification is refused with reason not_recipient", kind: deterministic }
   - { arm: "a member with none sees the notification-empty state with the text \"Nothing yet\"", kind: deterministic }
   - { arm: "the Notifications screen lists them as notification-item rows under notification-list", kind: deterministic }
