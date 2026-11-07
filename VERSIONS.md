@@ -8,7 +8,7 @@ Scheme: `vMAJOR.MINOR` — a requirement changed (design-change loop, operator d
 |---|---|---|
 | CLAUDE.md | 1.0 | constitution |
 | design/PRODUCT-BRIEF.md | 1.0 | purpose (content-pinned, D-01) |
-| design/PRODUCT-DESIGN.md | 1.3 | product design |
+| design/PRODUCT-DESIGN.md | 1.4 | product design |
 | design/ARCHITECTURE.md | 0.1 | architecture contract |
 | contracts/openapi.yaml | 0.1 | API contract |
 | ADU-PLAN.md | 0.1 | the plan |
@@ -49,3 +49,11 @@ Scheme: `vMAJOR.MINOR` — a requirement changed (design-change loop, operator d
 | stories/ | 22 (107 arms) | 22 (108 arms) | publishing twice refused; the seed emits nothing; same-role change a no-op; lists carry shift and names; the timing arm's call; the transfer arm's predicate |
 | design/domains/*/spec.md | 1.2 | 1.3 | R-scheduling-04/08/09, R-identity-01/06/07/09, R-swaps-04/07/09, R-notifications-01 reworded as the dispositions say |
 | design/INTERFACE-REQUESTS.md | IR-01..11 | IR-01..12 | IR-12 (active member ids for week_published); IR-07 no longer re-entrant |
+
+### 2026-11-07 — PRODUCT-DESIGN v1.4: DESIGN-REVIEW-4 — 28 findings (architect 13, developer 15; four distinct blocking) dispositioned, all accepted
+| Document | From | To | What changed |
+|---|---|---|---|
+| design/PRODUCT-DESIGN.md | 1.3 | 1.4 | cross-story order in the state bucket; invalid_request; the internal codes row; a Permissions row for my requests; inbox reason anchors |
+| stories/ | 22 (108 arms) | 22 (108 arms) | holder-row fields incl. requestable; counterpart check order; swap_refused recipients; one answer operation; the week-picker; mine rows; the E2E's clock; Data touched corrected |
+| design/domains/*/spec.md | 1.3 | 1.4 | R-scheduling-05/09, R-swaps-03/06/07/08, R-notifications-01 |
+| design/INTERFACE-REQUESTS.md | IR-07 | IR-07 widened | pending and requestable per assignment; the third cycle named |

@@ -1,7 +1,7 @@
 # INTERFACE-REQUESTS — Team Rota
 Cross-domain needs, raised by a domain's PM as a row and resolved by the pm-lead with the architect into `design/INTERFACES.md` or the contract. Sub-PMs never negotiate with each other in chat; this table is the conversation.
 
-The service graph has cycles (identity ↔ scheduling: IR-05/IR-06; scheduling ↔ swaps: IR-01, IR-02 / IR-07). They are accepted explicitly: every cross-domain call goes through a protocol whose Null implementation the contract unit creates, and the plan names the build and retire order (INTERFACES.md, "Build order").
+The service graph has cycles (identity ↔ scheduling: IR-05/IR-06; scheduling ↔ swaps: IR-01, IR-02 / IR-07; identity ↔ notifications: IR-10 / IR-04). They are accepted explicitly: every cross-domain call goes through a protocol whose Null implementation the contract unit creates, and the plan names the build and retire order (INTERFACES.md, "Build order").
 
 | ID | From | To | Need | Story | Status |
 |---|---|---|---|---|---|
@@ -11,7 +11,7 @@ The service graph has cycles (identity ↔ scheduling: IR-05/IR-06; scheduling �
 | IR-04 | notifications | identity | whether a recipient is active | US-notifications-001, US-notifications-006 | open |
 | IR-05 | identity | scheduling | whether a member holds an assignment on a shift whose start instant is after now, in any week | US-identity-003 | open |
 | IR-06 | scheduling | identity | whether a member is active, their role, and their name (for holder-rows) | US-scheduling-002, US-scheduling-004 | open |
-| IR-07 | scheduling | swaps | the open requests among the assignments scheduling passes with their start instants (open as R-swaps-06 defines it: swaps applies the deadline to the instants given, no re-entrant read), each with its state | US-scheduling-004 | open |
+| IR-07 | scheduling | swaps | for each assignment scheduling passes with its holder and start instant: the open request's state (requested, accepted or none — open as R-swaps-06 defines it, the deadline applied to the instant given, no re-entrant read) and whether a new request by the holder is allowed now (published week, no open request, now < deadline) | US-scheduling-004 | open |
 | IR-08 | scheduling | notifications | emit week_published with the recipients, written in the same transaction | US-notifications-001 | open |
 | IR-09 | swaps | identity | whether the counterpart is active; the eligible deciders (active admins and planners); member names for payloads and for the request lists | US-swaps-001, US-swaps-004, US-swaps-005, US-notifications-002, US-notifications-003 | open |
 | IR-10 | identity | notifications | emit member_added / role_changed / member_deactivated, written in the same transaction | US-notifications-006 | open |

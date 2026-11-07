@@ -6,10 +6,10 @@ persona: Pat
 journey: J-05
 step: 2
 roles: [admin, planner]
-data: [SwapRequest]
+data: [SwapRequest, Shift, Member]
 arms:
   - { arm: "every open accepted request is listed oldest first by answered_at then id ascending, each with its shift's date and start and both parties' names, the same list for any admin or planner; an accepted request whose deadline has passed is not listed (it shows expired in the parties' own lists)", kind: deterministic }
-  - { arm: "requests the viewer is party to are listed and marked swap-party, with no decide controls", kind: deterministic }
+  - { arm: "each row carries requester_id and counterpart_id with the names and a per-viewer party flag computed by the server; rows the viewer is party to are marked swap-party, with no decide controls", kind: deterministic }
   - { arm: "a request whose party is inactive is still listed to deciders", kind: deterministic }
   - { arm: "a member calling the action is refused with reason forbidden", kind: deterministic }
 ---
@@ -20,7 +20,7 @@ As a planner or admin, I want to see every pending decision so that no swap wait
 The rules this story serves are in the swaps domain spec, referenced by id there.
 
 ## Data touched
-SwapRequest (owned)
+SwapRequest (owned); Shift (read through scheduling's interface, IR-01); Member (read through identity's interface, IR-09)
 
 ## Out of scope
 Assignment of decisions to a named decider.

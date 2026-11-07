@@ -8,12 +8,12 @@ step: 3
 roles: [admin, planner, member]
 data: [SwapRequest]
 arms:
-  - { arm: "the counterpart's accept moves the request to accepted with answered_at from the clock; a decline moves it to declined with answer_reason set to the reason code and answered_at from the clock", kind: deterministic }
+  - { arm: "accept and decline are one answer operation with an outcome: accept moves the request to accepted with answered_at from the clock and no answer_reason; decline moves it to declined with answer_reason set to the reason code (required) and answered_at from the clock", kind: deterministic }
   - { arm: "anyone but the counterpart answering is refused with reason not_counterpart", kind: deterministic }
   - { arm: "answering a request that is not in state requested is refused with reason wrong_state", kind: deterministic }
   - { arm: "answering at or after the shift's deadline is refused with reason past_deadline", kind: deterministic }
   - { arm: "a decline without a reason code is refused with reason reason_required; one outside the enumerated codes with reason invalid_reason", kind: deterministic }
-  - { arm: "the inbox shows swap-accept and swap-decline only to the counterpart and only while the request is open in state requested", kind: deterministic }
+  - { arm: "the inbox shows swap-accept, swap-decline and swap-decline-reason only to the counterpart and only while the request is open in state requested", kind: deterministic }
 ---
 ## Story
 As a counterpart, I want to accept or decline so that the request moves or ends.

@@ -8,7 +8,7 @@ step: 2
 roles: [admin, planner, member]
 data: [Assignment]
 arms:
-  - { arm: "the mine parameter of the board operation returns only shifts the member holds, in the same order; board-filter-mine sets it", kind: deterministic }
+  - { arm: "the mine parameter of the board operation returns only the shifts the member holds, each with all its holder-rows, in the same order; board-filter-mine sets it", kind: deterministic }
   - { arm: "a member with no shifts sees the board-empty-mine state with the text \"No shifts this week\", not a blank board", kind: deterministic }
 ---
 ## Story

@@ -5,7 +5,7 @@ domain: identity
 persona: Avi
 journey: J-01
 step: 2
-roles: [admin]
+roles: [admin, planner, member]
 data: [Member, Role]
 arms:
   - { arm: "a member added with name, email, role and passcode appears in the team list as active", kind: deterministic }
@@ -25,5 +25,5 @@ The rules this story serves are in the identity domain spec, referenced by id th
 Member, Role (owned)
 
 ## Out of scope
-Invitations, passcode resets, bulk import.
+Invitations, passcode resets, bulk import. (Roles: arms 1–4 and 6 are the admin's; arm 5, the list, is every role's.)
 Anything the journey step does not name; no free text, no optimisation, no second team.
