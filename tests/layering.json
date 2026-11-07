@@ -1,0 +1,24 @@
+{
+  "package_root": "src",
+  "package": "app",
+  "layers": {
+    "model": ["app.models", "app.db", "app.synthetic"],
+    "ports": ["app.ports"],
+    "identity": ["app.identity.*"],
+    "scheduling": ["app.scheduling.*"],
+    "swaps": ["app.swaps.*"],
+    "notifications": ["app.notifications.*"],
+    "api": ["app.api.*"],
+    "root": ["app.main", "app.serve"]
+  },
+  "forbidden": [
+    ["model", "ports"], ["model", "identity"], ["model", "scheduling"], ["model", "swaps"], ["model", "notifications"], ["model", "api"], ["model", "root"],
+    ["ports", "identity"], ["ports", "scheduling"], ["ports", "swaps"], ["ports", "notifications"], ["ports", "api"], ["ports", "root"],
+    ["identity", "scheduling"], ["identity", "swaps"], ["identity", "notifications"], ["identity", "api"], ["identity", "root"],
+    ["scheduling", "identity"], ["scheduling", "swaps"], ["scheduling", "notifications"], ["scheduling", "api"], ["scheduling", "root"],
+    ["swaps", "identity"], ["swaps", "scheduling"], ["swaps", "notifications"], ["swaps", "api"], ["swaps", "root"],
+    ["notifications", "identity"], ["notifications", "scheduling"], ["notifications", "swaps"], ["notifications", "api"], ["notifications", "root"],
+    ["api", "root"]
+  ],
+  "frozen": [["identity", "model"], ["scheduling", "model"], ["swaps", "model"], ["notifications", "model"], ["api", "model"]]
+}

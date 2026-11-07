@@ -93,3 +93,10 @@ A recorded approval (hard rule 1, 4 or 6) is a paragraph in the block of the ses
 ## 2026-11-07 08:17 · review-design (pm-lead) · done (completes the previous block: its files were committed here)
 **Done:** the v1.7 edits, design/DESIGN-REVIEW-7.md, D-02 and the VERSIONS row that the previous block claimed were not in its commit — the edit script had failed before writing and the journal line was appended regardless (recorded as package feedback: the journal block must be generated from the diff, not typed before it). They are in this commit; Q-02 and Q-03 re-formatted to the ledger's entry format so the audit reads them.
 **NEXT:** `claude --agent adu-lifecycle:architect` then /adu-lifecycle:design-architecture.
+
+## 2026-11-07 08:17 · design-architecture (architect) · done
+**Done:** design/ARCHITECTURE.md v1.0 (layers 0–6 with path prefixes, the allowed-edges law with the five ports as the only cross-domain crossings, the roster, one session and transaction per request shared by every service and the Notifier, the injected clock); tests/layering.json + tests/layering_scan.py from the adapter; the baseline generated on the empty tree (0 edges, 1 module) and the scan green; a planted swaps→scheduling import was shown to fail the scan in a scratch copy. DECISIONS D-03..D-06.
+**Decisions:** D-03 stack and roster; D-04 auth; D-05 the layering law; D-06 protected paths (proposed, needs the operator since adu.toml is protected).
+**Deviations flagged:** D-06 is applied only on the operator's approval; until then adu.toml keeps the adapter default.
+**Tests at close:** layering scan green on the empty tree.
+**NEXT:** /adu-lifecycle:design-contract (architect).

@@ -9,7 +9,7 @@ Scheme: `vMAJOR.MINOR` — a requirement changed (design-change loop, operator d
 | CLAUDE.md | 1.0 | constitution |
 | design/PRODUCT-BRIEF.md | 1.0 | purpose (content-pinned, D-01) |
 | design/PRODUCT-DESIGN.md | 1.7 | product design (agreed, D-02) |
-| design/ARCHITECTURE.md | 0.1 | architecture contract |
+| design/ARCHITECTURE.md | 1.0 | architecture contract |
 | contracts/openapi.yaml | 0.1 | API contract |
 | ADU-PLAN.md | 0.1 | the plan |
 
@@ -81,3 +81,8 @@ Scheme: `vMAJOR.MINOR` — a requirement changed (design-change loop, operator d
 | stories/ | 22 (109 arms) | 22 (109 arms) | not_found named per operation; unfilled rows; the weeks list's shape; mark-read twice; the shift-create form carries the week |
 | design/domains/*/spec.md | 1.6 | 1.7 | R-scheduling-03/06/09, R-notifications-04 |
 | design/INTERFACE-REQUESTS.md | — | — | IR-06 story column; IR-09 'eligible' wording; the Build order pointer |
+
+### 2026-11-07 — ARCHITECTURE v1.0: D-03..D-06 — layers, allowed edges, roster, persistence and transactions, the five ports, the layering baseline on the empty tree
+| Document | From | To | What changed |
+|---|---|---|---|
+| design/ARCHITECTURE.md | 0.1 | 1.0 | written against design v1.5; the layering scan and baseline committed |

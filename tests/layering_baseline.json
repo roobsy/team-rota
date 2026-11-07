@@ -1,0 +1,5 @@
+{
+ "note": "frozen edges; regenerate deliberately with: python tests/layering_scan.py --write-baseline",
+ "modules": 1,
+ "edges": []
+}
