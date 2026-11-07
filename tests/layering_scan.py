@@ -9,13 +9,14 @@ Reads tests/layering.json:
     "frozen": [["core", "model"]] }
 Walks the package, parses every import with `ast`, resolves importer and target to layers by fnmatch, and
 produces edges keyed (kind, importer, target, placement, symbol): kind "forbidden" (a crossing the config
-forbids — asserted zero, never written to the baseline), "frozen" (a tolerated crossing or a private reach —
+forbids - asserted zero, never written to the baseline), "frozen" (a tolerated crossing or a private reach -
 frozen in the baseline, may only shrink). The baseline is compared both ways: a new edge fails, a vanished
 edge fails (regenerate on purpose).
 
 usage: layering_scan.py [--config tests/layering.json] [--baseline tests/layering_baseline.json]
                         [--write-baseline] [--json]
 exit 0 = clean; 1 = findings (printed, one per line).
+Output is ASCII-only on purpose: it must print on a cp1252 Windows console (plugin FB-18).
 """
 
 from __future__ import annotations
@@ -118,7 +119,7 @@ def scan(cfg: dict, root: Path) -> tuple[list[dict], set[str]]:
                             "symbol": symbol if private else "",
                             "file": str(file.relative_to(root)),
                             "line": node.lineno,
-                            "clause": f"{li}→{lt}",
+                            "clause": f"{li}->{lt}",
                         }
                     )
     return edges, modules
@@ -153,7 +154,7 @@ def main(argv: list[str]) -> int:
         print(json.dumps({"edges": edges, "modules": sorted(modules)}, indent=1))
         return 0
     problems = [
-        f"{e['file']}:{e['line']} — {e['importer']} imports {e['imported']} "
+        f"{e['file']}:{e['line']} - {e['importer']} imports {e['imported']} "
         f"({e['clause']}: forbidden by the layering law)"
         for e in forbidden
     ]
@@ -186,14 +187,14 @@ def main(argv: list[str]) -> int:
         for e in added:
             sym = (" ." + e["symbol"]) if e["symbol"] else ""
             problems.append(
-                f"new frozen edge not in the baseline: {e['importer']} → {e['target']}{sym} "
-                f"({e['file']}:{e['line']}) — regenerate deliberately: {REGENERATE}"
+                f"new frozen edge not in the baseline: {e['importer']} -> {e['target']}{sym} "
+                f"({e['file']}:{e['line']}) - regenerate deliberately: {REGENERATE}"
             )
         for e in removed:
             sym = (" ." + e["symbol"]) if e["symbol"] else ""
             problems.append(
-                f"baseline edge no longer in the code: {e['importer']} → {e['target']}{sym} "
-                f"— the baseline is stale: {REGENERATE}"
+                f"baseline edge no longer in the code: {e['importer']} -> {e['target']}{sym} "
+                f"- the baseline is stale: {REGENERATE}"
             )
         if len(modules) < int(base.get("modules", 0)):
             problems.append(

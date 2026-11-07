@@ -35,3 +35,4 @@ Legend: ☐ planned · 🔨 in progress (at most one) · ✅ done = green under 
 2026-11-07 08:44 · ADU-01 · done · 16 tests · gate in 5s · backward: 0
 2026-11-07 08:46 · ADU-16 · done · 28 tests · gate in 6s · backward: 0
 2026-11-07 08:55 · ADU-02 · done · 42 tests · gate in 10s · backward: 0
+2026-11-07 16:43 · Defect session FB-01 · done · 46 tests (4 new) · gate 46 passed in 15s · backward: 2 (tests/layering_scan.py (ADU-00), tests/test_layering.py (ADU-00))

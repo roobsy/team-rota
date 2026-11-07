@@ -49,6 +49,7 @@ acceptance:
   - { arm: "the real tree has no forbidden layer crossing and matches the committed baseline (tests/layering.json: frozen is empty — services and the API may import the model, as the architecture allows; only private reaches are frozen; app.cli and app.serve are the root layer)", file: tests/test_layering.py, kind: deterministic }
   - { arm: "a planted forbidden import in a scratch package is caught by the scan (exit 1, the edge named)", file: tests/test_layering.py, kind: deterministic }
   - { arm: "the baseline fails both ways: a new frozen edge and a baseline edge no longer in the code", file: tests/test_layering.py, kind: deterministic }
+  - { arm: "FB-01 (defect session 2026-11-07, Q-06): under a child forced to strict cp1252 (PYTHONIOENCODING=cp1252, PYTHONUTF8=0; a control proves the forcing) the scan reports a planted forbidden crossing (--write-baseline exit 0, plain run exit 1) and both baseline directions (exit 1) with its full messages and no UnicodeEncodeError; the scan's source is ASCII-only", file: tests/test_layering.py, kind: deterministic }
   - { arm: "every test is in the gate or the timing tier and not both; timing implies calibration; no tier pattern is stale (TIMING_NODES is empty until ADU-05 registers its arm by amendment)", file: tests/test_tiers.py, kind: deterministic }
 owed: []
 ```
