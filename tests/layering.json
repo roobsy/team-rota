@@ -20,5 +20,5 @@
     ["notifications", "identity"], ["notifications", "scheduling"], ["notifications", "swaps"], ["notifications", "api"], ["notifications", "root"],
     ["api", "root"]
   ],
-  "frozen": [["identity", "model"], ["scheduling", "model"], ["swaps", "model"], ["notifications", "model"], ["api", "model"]]
+  "frozen": []
 }

@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: Team Rota API
-  version: 1.0.0
+  version: 1.1.0
   contact: { name: Team Rota operator }
   description: >-
     The public interface of Team Rota, defined before any implementation (design/PRODUCT-DESIGN.md v1.7,
@@ -74,7 +74,7 @@ paths:
       operationId: identity.list_members
       tags: [identity]
       summary: List the team
-      description: Every member, active and inactive, with id, name, role and active only, ordered by name (case-insensitively) then id ascending. Any signed-in member may read it (the counterpart picker needs it); passcode and token never leave identity.
+      description: Every member, active and inactive, as MemberSummary (id, name, role, active — never email, passcode or token; R-identity-09), ordered by name (case-insensitively) then id ascending. Any signed-in member may read it (the counterpart picker needs it).
       x-story: [US-identity-001, US-identity-003]
       x-roles: [admin, planner, member]
       responses:
@@ -82,9 +82,9 @@ paths:
           description: The team.
           content:
             application/json:
-              schema: { type: array, items: { $ref: '#/components/schemas/Member' } }
+              schema: { type: array, items: { $ref: '#/components/schemas/MemberSummary' } }
               examples:
-                team: { x-synthetic: true, value: [ { id: 1, name: Avi, email: avi@example.test, role: admin, active: true }, { id: 2, name: Mo, email: mo@example.test, role: member, active: true }, { id: 3, name: Pat, email: pat@example.test, role: planner, active: true } ] }
+                team: { x-synthetic: true, value: [ { id: 1, name: Avi, role: admin, active: true }, { id: 2, name: Mo, role: member, active: true }, { id: 3, name: Pat, role: planner, active: true } ] }
         '401': { $ref: '#/components/responses/Unauthenticated' }
     post:
       operationId: identity.add_member
@@ -691,6 +691,16 @@ components:
         name: { type: string, title: Name, description: The member's display name., example: Mo }
         email: { type: string, format: email, title: Email, description: Unique on the team., example: mo@example.test }
         role: { type: string, title: Role, description: "admin, planner or member — checked by identity (invalid_role), declared as a string on purpose so that the domain, not the framework, answers", example: member, x-values: [admin, planner, member], x-when-to-use: "admin manages members; planner runs weeks; member works shifts" }
+        active: { type: boolean, title: Active, description: False once deactivated; history stays., example: true }
+    MemberSummary:
+      title: Member summary
+      description: A member as the team list shows them to every role — never the email, the passcode or the token.
+      type: object
+      required: [id, name, role, active]
+      properties:
+        id: { type: integer, title: Id, description: The member's id., example: 2, x-when-to-use: identifies the member everywhere }
+        name: { type: string, title: Name, description: The member's display name., example: Mo }
+        role: { type: string, title: Role, description: "admin, planner or member", example: member, x-values: [admin, planner, member], x-when-to-use: "admin manages members; planner runs weeks; member works shifts" }
         active: { type: boolean, title: Active, description: False once deactivated; history stays., example: true }
     MemberCreate:
       title: New member

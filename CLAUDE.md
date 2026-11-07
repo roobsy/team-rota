@@ -42,10 +42,10 @@ If documents conflict, or a spec is wrong, ambiguous or incomplete: **stop, reco
 ## Commands
 <!-- derived: status --commands -->
 Commands (from adu.toml):
-  gate:   uv run pytest tests/ -q -m "not timing" && npm --prefix frontend run test -- --run
-  fast:   uv run pytest tests/ -q -m "not calibration" && npm --prefix frontend run test -- --run
+  gate:   uv run pytest tests/ -q -m "not timing"
+  fast:   uv run pytest tests/ -q -m "not calibration"
   timing: uv run pytest tests/ -q -m timing
-  lint:   uv run ruff check && npm --prefix frontend run lint
+  lint:   uv run ruff check
 <!-- /derived -->
 Identifiers are allocated with `adu next-id <stream>`; the state block with `adu status`; the hand-over with `adu handover ADU-nn`.
 

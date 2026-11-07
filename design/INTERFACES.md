@@ -1,9 +1,9 @@
 # INTERFACES — Team Rota
-v1.0 (design v1.7, D-02) · owned by the architect (`/adu-lifecycle:design-contract`). Every in-process interface one domain offers another, defined before either side exists; HTTP operations live in `contracts/openapi.yaml` and are listed here only in the traceability table. All protocols live in one module of layer 2 (`src/app/ports.py`), each with a `Null<Interface>` in the contract unit at the provider's future path; the composition root (`src/app/main.py`) binds the real class when its unit lands — class replaced, shape kept.
+v1.0.1 (design v1.7, D-02) · owned by the architect (`/adu-lifecycle:design-contract`). Every in-process interface one domain offers another, defined before either side exists; HTTP operations live in `contracts/openapi.yaml` and are listed here only in the traceability table. All protocols live in one module of layer 2 (`src/app/ports.py`), each with a `Null<Interface>` in the contract unit at the provider's future path; the composition root (`src/app/main.py`) binds the real class when its unit lands — class replaced, shape kept.
 
 ## Protocols
 ### Clock
-Provider: ADU-02 (the contract unit; `SystemClock` is trivial and ships with the port). Consumers: every service; tests pass a `FixedClock`. Null implementation: none (a fixed clock is the test double, a system clock the product's).
+Provider: ADU-02 (the contract unit; `SystemClock` is trivial and ships with the port). Consumers: every service; tests pass a `FixedClock`. Null implementation: none (FixedClock in tests/support/doubles.py is the test double, SystemClock the product's).
 ```
 class Clock(Protocol):
     def now(self) -> datetime            # naive local time of the team
@@ -11,7 +11,7 @@ class Clock(Protocol):
 Invariants: no service calls datetime.now(); the deadline, expiry, created_at, accepted_at, decided_at and "future week" all read this clock.
 
 ### MemberDirectory (identity → scheduling, swaps, notifications)
-Provider: ADU-03 (identity service). Consumers: scheduling (IR-06, IR-12: active_member_ids for WeekPublished), swaps (IR-09), notifications (IR-04), the API layer (IR-11). Null implementation: `src/app/identity/null_directory.py` (created by the contract unit, deleted by ADU-03).
+Provider: ADU-03 (identity service). Consumers: scheduling (IR-06, IR-12: active_member_ids for WeekPublished), swaps (IR-09), notifications (IR-04), the API layer (IR-11). Null implementation: `src/app/identity/null_directory.py` (created by ADU-16, deleted by ADU-03).
 ```
 @dataclass(frozen=True)
 class Caller:
@@ -76,7 +76,10 @@ class Notifier(Protocol):
 ```
 Invariants: one notification per recipient per event, written in the caller's transaction; the Notifier composes the text from the payload alone and never reads another domain; recipients are deduplicated; inactive recipients are skipped except for MemberDeactivated (IR-04). The Null records every event in a list (`sent`) a spy can assert and writes nothing.
 
-## Composition root bindings (ADU-02 writes the Null bindings; each provider unit replaces its own line)
+## Test doubles (ADU-16, permanent — never deleted)
+`tests/support/doubles.py`: `SpyNotifier` (records every event), `FakeSchedulingPort` (settable AssignmentInfo, has_assignment_after, holds_intersecting_shift and transfer outcome), `FakeSwapsPort` (settable view), `FakeMemberDirectory` (settable members, callers, deciders). Consumer units test against these, never against a Null; a double that round-trips its input is labelled vacuous and is no oracle (rule 13).
+
+## Composition root bindings (ADU-16 creates the Nulls, ADU-02 binds them; each provider unit replaces its own line by amendment)
 | Port | Null (contract unit) | Real (provider unit) |
 |---|---|---|
 | Clock | SystemClock / FixedClock in tests | — |
@@ -107,7 +110,7 @@ identity ↔ scheduling (IR-05 / IR-06) and scheduling ↔ swaps (IR-01, IR-02 /
 | US-scheduling-002 | assign; unassign | scheduling.assign; scheduling.unassign |
 | US-scheduling-003 | publish | scheduling.publish |
 | US-notifications-001 | week published | Notifier.notify from scheduling (WeekPublished) |
-| US-scheduling-004 | the board; the badge per holder-row; the request control on own rows; the weeks and the current week | scheduling.board (reads SwapsPort.open_requests with the start instants); scheduling.list_weeks |
+| US-scheduling-004 | the board; the badge per holder-row; the request control on own rows; the weeks and the current week | scheduling.board (reads SwapsPort.view with the caller, the week state and each assignment's holder and start instant); scheduling.list_weeks |
 | US-scheduling-005 | filter mine | scheduling.board?mine=true |
 | US-swaps-001 | request a swap; the eligible counterparts | swaps.request (reads SchedulingPort.assignment — holder_ids answer counterpart_on_shift; MemberDirectory.is_active); the form composes candidates from identity.list_members and the board |
 | US-notifications-002 | counterpart told | Notifier.notify from swaps (SwapRequested) |

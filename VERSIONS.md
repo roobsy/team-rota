@@ -9,9 +9,9 @@ Scheme: `vMAJOR.MINOR` — a requirement changed (design-change loop, operator d
 | CLAUDE.md | 1.0 | constitution |
 | design/PRODUCT-BRIEF.md | 1.0 | purpose (content-pinned, D-01) |
 | design/PRODUCT-DESIGN.md | 1.7 | product design (agreed, D-02) |
-| design/ARCHITECTURE.md | 1.0 | architecture contract |
-| contracts/openapi.yaml | 1.0 | API contract |
-| ADU-PLAN.md | 1.0 | the plan |
+| design/ARCHITECTURE.md | 1.1 | architecture contract |
+| contracts/openapi.yaml | 1.1 | API contract |
+| ADU-PLAN.md | 1.1 | the plan |
 
 ## History
 <!-- ### YYYY-MM-DD — DOC vX / DOC vY: <ID> — <summary>, then a table | Document | From | To | What changed | -->
@@ -97,3 +97,11 @@ Scheme: `vMAJOR.MINOR` — a requirement changed (design-change loop, operator d
 | Document | From | To | What changed |
 |---|---|---|---|
 | ADU-PLAN.md | 0.1 | 1.0 | cut by the twenty rules from stories v1.5, the contract and the interfaces; `adu plan check` green with no warnings |
+
+### 2026-11-07 — ADU-PLAN v1.1, ARCHITECTURE v1.1, contract v1.1, INTERFACES v1.0.1: D-09, D-10 — the developer's buildability read (docs/PLAN-REVIEW-1.md, 23 findings, all accepted)
+| Document | From | To | What changed |
+|---|---|---|---|
+| ADU-PLAN.md | 1.0 | 1.1 | 18 units: ADU-16 (ports, Nulls, doubles) and ADU-17 (client and sign-in) inserted; every retirement a declared amendment; the CLI at layer 6; Prism out of the gate; the §6 path asserted in ADU-07; milestones from the new order |
+| design/ARCHITECTURE.md | 1.0 | 1.1 | D-09 frontend toolchain in the roster; contract_stubs and serve.py named; frozen edges removed from the layering law's configuration |
+| contracts/openapi.yaml | 1.0 | 1.1 | MemberSummary for identity.list_members (additive; the golden is pinned by ADU-02) |
+| design/INTERFACES.md | 1.0 | 1.0.1 | the doubles section; ADU-16 as the Nulls' creator; SwapsPort.view in the traceability |

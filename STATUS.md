@@ -7,8 +7,8 @@ Legend: ☐ planned · 🔨 in progress (at most one) · ✅ done = green under 
 | ADU | Title | St | Started | Completed | Tests |
 |---|---|---|---|---|---|
 | ADU-00 | Scaffold and method guard | ☐ | | | |
-| ADU-01 | Data model and synthetic generator | ☐ | | | |
-| ADU-02 | Contract unit — served contract, golden pin, ports and nulls | ☐ | | | |
+| ADU-01 | Data model and the seeded fixture | ☐ | | | |
+| ADU-02 | Contract unit — served contract, golden pin, composition root | ☐ | | | |
 | ADU-03 | Identity service | ☐ | | | |
 | ADU-04 | Identity API | ☐ | | | |
 | ADU-05 | Scheduling service | ☐ | | | |
@@ -18,10 +18,12 @@ Legend: ☐ planned · 🔨 in progress (at most one) · ✅ done = green under 
 | ADU-09 | Notifications service | ☐ | | | |
 | ADU-10 | Notifications API | ☐ | | | |
 | ADU-11 | Operator command — seed the first admin | ☐ | | | |
-| ADU-12 | UI foundation — shell, generated client, sign-in | ☐ | | | |
+| ADU-12 | UI foundation — the Vite scaffold, the shell and the anchor lint | ☐ | | | |
 | ADU-13 | UI — Team and Week board | ☐ | | | |
 | ADU-14 | UI — Swap request, Swap inbox, Notifications | ☐ | | | |
 | ADU-15 | End-to-end vertical path and packaging | ☐ | | | |
+| ADU-16 | Ports, Null implementations and test doubles | ☐ | | | |
+| ADU-17 | Generated client and sign-in | ☐ | | | |
 
 ## Owed
 | O | Due | Where | Approval | Status |
