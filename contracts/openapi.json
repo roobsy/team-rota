@@ -1,0 +1,3370 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Team Rota API",
+    "version": "1.1.0",
+    "contact": {
+      "name": "Team Rota operator"
+    },
+    "description": "The public interface of Team Rota, defined before any implementation (design/PRODUCT-DESIGN.md v1.7, stories v1.7, agreed by both reviewers — D-02). Fields with a named validation code (role, reason codes, the shift's times and slots) are declared optional and read leniently so that the refusal order of the cross-cutting rules holds; a body that cannot be read into the operation's fields is invalid_request. Path ids are declared as integers; the API layer reads them leniently and answers invalid_request at the not_found step, after the caller is resolved. Every write answers the row it created or changed as its list or the board shows it; unassign answers nothing. Every operation carries an operationId <domain>.<action>, x-story traceability, x-roles from the permissions matrix, and named examples (x-synthetic: true) that the mock server serves and consumer tests use. Every refusal a story names is an explicit 4xx Problem with an enumerated reason. All times are naive local times of the team; every action reads now from the injected clock."
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:8000",
+      "description": "local (loopback only at test time)"
+    }
+  ],
+  "tags": [
+    {
+      "name": "identity",
+      "description": "members, roles, sign-in"
+    },
+    {
+      "name": "scheduling",
+      "description": "weeks, shifts, assignments, the board"
+    },
+    {
+      "name": "swaps",
+      "description": "swap requests, answers, decisions"
+    },
+    {
+      "name": "notifications",
+      "description": "what changed, for whom"
+    }
+  ],
+  "security": [
+    {
+      "bearer": []
+    }
+  ],
+  "paths": {
+    "/auth/sign-in": {
+      "post": {
+        "operationId": "identity.sign_in",
+        "tags": [
+          "identity"
+        ],
+        "summary": "Sign in with email and passcode",
+        "description": "Issues the bearer token every later operation carries. One reason for a wrong passcode and an unknown email.",
+        "x-story": [
+          "US-identity-004",
+          "US-identity-005"
+        ],
+        "x-roles": [
+          "admin",
+          "planner",
+          "member"
+        ],
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignIn"
+              },
+              "examples": {
+                "mo": {
+                  "x-synthetic": true,
+                  "value": {
+                    "email": "mo@example.test",
+                    "passcode": "mo-passcode-1"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Signed in.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Token"
+                },
+                "examples": {
+                  "mo": {
+                    "x-synthetic": true,
+                    "value": {
+                      "token": "tok_m02",
+                      "member": {
+                        "id": 2,
+                        "name": "Mo",
+                        "email": "mo@example.test",
+                        "role": "member",
+                        "active": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Wrong passcode or unknown email (a missing passcode counts as wrong).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                },
+                "examples": {
+                  "invalid_credentials": {
+                    "x-synthetic": true,
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Sign-in refused",
+                      "detail": "The email or passcode is wrong.",
+                      "reason": "invalid_credentials"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The member is inactive.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                },
+                "examples": {
+                  "member_inactive": {
+                    "x-synthetic": true,
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Sign-in refused",
+                      "detail": "This member is inactive.",
+                      "reason": "member_inactive"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "The body's email or passcode cannot be read.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                },
+                "examples": {
+                  "invalid_request": {
+                    "x-synthetic": true,
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Request not understood",
+                      "detail": "The body does not match the schema.",
+                      "reason": "invalid_request"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/members": {
+      "get": {
+        "operationId": "identity.list_members",
+        "tags": [
+          "identity"
+        ],
+        "summary": "List the team",
+        "description": "Every member, active and inactive, as MemberSummary (id, name, role, active — never email, passcode or token; R-identity-09), ordered by name (case-insensitively) then id ascending. Any signed-in member may read it (the counterpart picker needs it).",
+        "x-story": [
+          "US-identity-001",
+          "US-identity-003"
+        ],
+        "x-roles": [
+          "admin",
+          "planner",
+          "member"
+        ],
+        "responses": {
+          "200": {
+            "description": "The team.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MemberSummary"
+                  }
+                },
+                "examples": {
+                  "team": {
+                    "x-synthetic": true,
+                    "value": [
+                      {
+                        "id": 1,
+                        "name": "Avi",
+                        "role": "admin",
+                        "active": true
+                      },
+                      {
+                        "id": 2,
+                        "name": "Mo",
+                        "role": "member",
+                        "active": true
+                      },
+                      {
+                        "id": 3,
+                        "name": "Pat",
+                        "role": "planner",
+                        "active": true
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthenticated"
+          }
+        }
+      },
+      "post": {
+        "operationId": "identity.add_member",
+        "tags": [
+          "identity"
+        ],
+        "summary": "Add a member",
+        "description": "Adds an active member with a role and a passcode; the member is notified (member_added).",
+        "x-story": [
+          "US-identity-001"
+        ],
+        "x-roles": [
+          "admin"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MemberCreate"
+              },
+              "examples": {
+                "sam": {
+                  "x-synthetic": true,
+                  "value": {
+                    "name": "Sam",
+                    "email": "sam@example.test",
+                    "role": "member",
+                    "passcode": "sam-passcode-1"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Added, active.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Member"
+                },
+                "examples": {
+                  "sam": {
+                    "x-synthetic": true,
+                    "value": {
+                      "id": 4,
+                      "name": "Sam",
+                      "email": "sam@example.test",
+                      "role": "member",
+                      "active": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthenticated"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "409": {
+            "description": "The email is already on the team.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                },
+                "examples": {
+                  "duplicate_email": {
+                    "x-synthetic": true,
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Member not added",
+                      "detail": "mo@example.test is already on the team.",
+                      "reason": "duplicate_email"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "The role is not admin, planner or member.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                },
+                "examples": {
+                  "invalid_role": {
+                    "x-synthetic": true,
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Member not added",
+                      "detail": "Role must be admin, planner or member.",
+                      "reason": "invalid_role"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/members/{member_id}/role": {
+      "patch": {
+        "operationId": "identity.change_role",
+        "tags": [
+          "identity"
+        ],
+        "summary": "Change a member's role",
+        "description": "Changes the member's role; the member is notified (role_changed); the last active admin cannot lose the role.",
+        "x-story": [
+          "US-identity-002"
+        ],
+        "x-roles": [
+          "admin"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/member_id"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoleChange"
+              },
+              "examples": {
+                "to_planner": {
+                  "x-synthetic": true,
+                  "value": {
+                    "role": "planner"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Changed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Member"
+                },
+                "examples": {
+                  "mo_planner": {
+                    "x-synthetic": true,
+                    "value": {
+                      "id": 2,
+                      "name": "Mo",
+                      "email": "mo@example.test",
+                      "role": "planner",
+                      "active": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthenticated"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "409": {
+            "description": "The member is the last active admin.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                },
+                "examples": {
+                  "last_admin": {
+                    "x-synthetic": true,
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Role not changed",
+                      "detail": "Avi is the last active admin.",
+                      "reason": "last_admin"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "The role is not admin, planner or member.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                },
+                "examples": {
+                  "invalid_role": {
+                    "x-synthetic": true,
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Role not changed",
+                      "detail": "Role must be admin, planner or member.",
+                      "reason": "invalid_role"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/members/{member_id}/deactivate": {
+      "post": {
+        "operationId": "identity.deactivate",
+        "tags": [
+          "identity"
+        ],
+        "summary": "Deactivate a member",
+        "description": "The member stays listed with active false; assignments and requests remain; they can no longer sign in or be assigned.",
+        "x-story": [
+          "US-identity-003"
+        ],
+        "x-roles": [
+          "admin"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/member_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Deactivated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Member"
+                },
+                "examples": {
+                  "sam_inactive": {
+                    "x-synthetic": true,
+                    "value": {
+                      "id": 4,
+                      "name": "Sam",
+                      "email": "sam@example.test",
+                      "role": "member",
+                      "active": false
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthenticated"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "409": {
+            "description": "The member holds an assignment on a shift after now, is the last active admin, or is already inactive.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                },
+                "examples": {
+                  "future_assignments": {
+                    "x-synthetic": true,
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Member not deactivated",
+                      "detail": "Sam holds a shift in the published week of 2026-11-16.",
+                      "reason": "future_assignments"
+                    }
+                  },
+                  "member_inactive": {
+                    "x-synthetic": true,
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Member not deactivated",
+                      "detail": "Sam is already inactive; nothing was emitted.",
+                      "reason": "member_inactive"
+                    }
+                  },
+                  "last_admin": {
+                    "x-synthetic": true,
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Member not deactivated",
+                      "detail": "Avi is the last active admin.",
+                      "reason": "last_admin"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/weeks": {
+      "get": {
+        "operationId": "scheduling.list_weeks",
+        "tags": [
+          "scheduling"
+        ],
+        "summary": "The weeks that exist, and the current one",
+        "description": "Newest first by start_date; members see published weeks only; current is the latest published week whose start_date is on or before today by the clock, or null. The browser never computes it.",
+        "x-story": [
+          "US-scheduling-004",
+          "US-identity-004"
+        ],
+        "x-roles": [
+          "admin",
+          "planner",
+          "member"
+        ],
+        "responses": {
+          "200": {
+            "description": "The weeks.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Weeks"
+                },
+                "examples": {
+                  "two": {
+                    "x-synthetic": true,
+                    "value": {
+                      "current": "2026-11-09",
+                      "weeks": [
+                        {
+                          "start_date": "2026-11-16",
+                          "state": "draft"
+                        },
+                        {
+                          "start_date": "2026-11-09",
+                          "state": "published"
+                        }
+                      ]
+                    }
+                  },
+                  "none": {
+                    "x-synthetic": true,
+                    "value": {
+                      "current": null,
+                      "weeks": []
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthenticated"
+          }
+        }
+      }
+    },
+    "/weeks/{start_date}/shifts": {
+      "post": {
+        "operationId": "scheduling.create_shift",
+        "tags": [
+          "scheduling"
+        ],
+        "summary": "Create a shift in a week",
+        "description": "The week is named by its Monday and comes into being in state draft with its first shift. Times are times of day on the shift's date; a shift never crosses midnight.",
+        "x-story": [
+          "US-scheduling-001",
+          "US-scheduling-003"
+        ],
+        "x-roles": [
+          "admin",
+          "planner"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/start_date"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ShiftCreate"
+              },
+              "examples": {
+                "monday_morning": {
+                  "x-synthetic": true,
+                  "value": {
+                    "date": "2026-11-09",
+                    "start": "08:00",
+                    "end": "14:00",
+                    "slots": 2
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created in the draft week.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Shift"
+                },
+                "examples": {
+                  "monday_morning": {
+                    "x-synthetic": true,
+                    "value": {
+                      "id": 11,
+                      "week_start": "2026-11-09",
+                      "date": "2026-11-09",
+                      "start": "08:00",
+                      "end": "14:00",
+                      "slots": 2
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthenticated"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "409": {
+            "description": "The week is published.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                },
+                "examples": {
+                  "week_published": {
+                    "x-synthetic": true,
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Shift not created",
+                      "detail": "The week of 2026-11-09 is published.",
+                      "reason": "week_published"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "The week does not start on a Monday, the date is outside it, the interval is invalid, or slots is below one.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                },
+                "examples": {
+                  "not_week_start": {
+                    "x-synthetic": true,
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Shift not created",
+                      "detail": "2026-11-10 is not a Monday.",
+                      "reason": "not_week_start"
+                    }
+                  },
+                  "outside_week": {
+                    "x-synthetic": true,
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Shift not created",
+                      "detail": "2026-11-16 is not within the week of 2026-11-09.",
+                      "reason": "outside_week"
+                    }
+                  },
+                  "invalid_interval": {
+                    "x-synthetic": true,
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Shift not created",
+                      "detail": "End 08:00 is not after start 14:00.",
+                      "reason": "invalid_interval"
+                    }
+                  },
+                  "invalid_slots": {
+                    "x-synthetic": true,
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Shift not created",
+                      "detail": "Slots must be at least 1.",
+                      "reason": "invalid_slots"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/shifts/{shift_id}/assignments": {
+      "post": {
+        "operationId": "scheduling.assign",
+        "tags": [
+          "scheduling"
+        ],
+        "summary": "Assign a member to a shift",
+        "description": "Gives an active member one free slot of the shift; refused on double booking, overlap, a full shift, an inactive member or a published week.",
+        "x-story": [
+          "US-scheduling-002",
+          "US-scheduling-003"
+        ],
+        "x-roles": [
+          "admin",
+          "planner"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/shift_id"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssignmentCreate"
+              },
+              "examples": {
+                "mo": {
+                  "x-synthetic": true,
+                  "value": {
+                    "member_id": 2
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The member holds a slot.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Assignment"
+                },
+                "examples": {
+                  "mo": {
+                    "x-synthetic": true,
+                    "value": {
+                      "id": 101,
+                      "shift_id": 11,
+                      "member_id": 2
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthenticated"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "409": {
+            "description": "Refused by a scheduling rule.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                },
+                "examples": {
+                  "already_assigned": {
+                    "x-synthetic": true,
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Not assigned",
+                      "detail": "Mo already holds this shift.",
+                      "reason": "already_assigned"
+                    }
+                  },
+                  "overlapping_shift": {
+                    "x-synthetic": true,
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Not assigned",
+                      "detail": "Mo holds 2026-11-09 12:00–18:00, which overlaps.",
+                      "reason": "overlapping_shift"
+                    }
+                  },
+                  "shift_full": {
+                    "x-synthetic": true,
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Not assigned",
+                      "detail": "All 2 slots are held.",
+                      "reason": "shift_full"
+                    }
+                  },
+                  "member_inactive": {
+                    "x-synthetic": true,
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Not assigned",
+                      "detail": "Sam is inactive.",
+                      "reason": "member_inactive"
+                    }
+                  },
+                  "week_published": {
+                    "x-synthetic": true,
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Not assigned",
+                      "detail": "The week of 2026-11-09 is published.",
+                      "reason": "week_published"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/assignments/{assignment_id}": {
+      "delete": {
+        "operationId": "scheduling.unassign",
+        "tags": [
+          "scheduling"
+        ],
+        "summary": "Remove an assignment from a shift of a draft week",
+        "description": "Frees the slot; only while the week is a draft.",
+        "x-story": [
+          "US-scheduling-002",
+          "US-scheduling-003"
+        ],
+        "x-roles": [
+          "admin",
+          "planner"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/assignment_id"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Removed; the slot is free."
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthenticated"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "409": {
+            "description": "The week is published.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                },
+                "examples": {
+                  "week_published": {
+                    "x-synthetic": true,
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Not removed",
+                      "detail": "The week of 2026-11-09 is published.",
+                      "reason": "week_published"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/weeks/{start_date}/publish": {
+      "post": {
+        "operationId": "scheduling.publish",
+        "tags": [
+          "scheduling"
+        ],
+        "summary": "Publish a week",
+        "description": "Publishes a draft week whose every slot is filled; every active member is notified (week_published).",
+        "x-story": [
+          "US-scheduling-003",
+          "US-notifications-001"
+        ],
+        "x-roles": [
+          "admin",
+          "planner"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/start_date"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Published; every active member is notified.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Week"
+                },
+                "examples": {
+                  "published": {
+                    "x-synthetic": true,
+                    "value": {
+                      "start_date": "2026-11-09",
+                      "state": "published"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthenticated"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "409": {
+            "description": "A slot is unfilled (the unfilled shifts are listed), or the week is already published (nothing is emitted).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublishProblem"
+                },
+                "examples": {
+                  "unfilled_slots": {
+                    "x-synthetic": true,
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Week not published",
+                      "detail": "1 shift has unfilled slots.",
+                      "reason": "unfilled_slots",
+                      "unfilled": [
+                        {
+                          "shift_id": 11,
+                          "date": "2026-11-09",
+                          "start": "08:00",
+                          "unfilled": 1
+                        }
+                      ]
+                    }
+                  },
+                  "week_published": {
+                    "x-synthetic": true,
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Week not published",
+                      "detail": "The week of 2026-11-09 is already published.",
+                      "reason": "week_published",
+                      "unfilled": []
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/weeks/{start_date}/board": {
+      "get": {
+        "operationId": "scheduling.board",
+        "tags": [
+          "scheduling"
+        ],
+        "summary": "The week board",
+        "description": "Every shift by date, start, then shift id, holder-rows by assignment id, each carrying pending (the open request's state or null) and requestable (whether the caller may request a swap on it now), both computed by swaps. A draft week is returned to planners and admins only. With mine, only the caller's shifts, each with all its holder-rows.",
+        "x-story": [
+          "US-scheduling-004",
+          "US-scheduling-005",
+          "US-scheduling-006"
+        ],
+        "x-roles": [
+          "admin",
+          "planner",
+          "member"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/start_date"
+          },
+          {
+            "name": "mine",
+            "in": "query",
+            "required": false,
+            "description": "Only the shifts the caller holds.",
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Mine",
+              "description": "Only the shifts the caller holds.",
+              "example": true,
+              "x-when-to-use": "true for the member's own week; false for the whole team"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The board.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Board"
+                },
+                "examples": {
+                  "week": {
+                    "x-synthetic": true,
+                    "value": {
+                      "week": {
+                        "start_date": "2026-11-09",
+                        "state": "published"
+                      },
+                      "shifts": [
+                        {
+                          "shift": {
+                            "id": 11,
+                            "week_start": "2026-11-09",
+                            "date": "2026-11-09",
+                            "start": "08:00",
+                            "end": "14:00",
+                            "slots": 2
+                          },
+                          "holders": [
+                            {
+                              "assignment_id": 101,
+                              "member_id": 2,
+                              "name": "Mo",
+                              "pending": "requested",
+                              "requestable": false
+                            },
+                            {
+                              "assignment_id": 102,
+                              "member_id": 3,
+                              "name": "Pat",
+                              "pending": null,
+                              "requestable": false
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthenticated"
+          },
+          "403": {
+            "description": "A member asked for a draft week.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                },
+                "examples": {
+                  "week_draft": {
+                    "x-synthetic": true,
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Board not shown",
+                      "detail": "The week of 2026-11-16 is a draft.",
+                      "reason": "week_draft"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/swaps": {
+      "post": {
+        "operationId": "swaps.request",
+        "tags": [
+          "swaps"
+        ],
+        "summary": "Request a swap of one of your assignments",
+        "description": "Records a request in state requested for an assignment the caller holds on a published week, before the deadline; the counterpart is notified (swap_requested).",
+        "x-story": [
+          "US-swaps-001",
+          "US-notifications-002"
+        ],
+        "x-roles": [
+          "admin",
+          "planner",
+          "member"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SwapRequestCreate"
+              },
+              "examples": {
+                "sick": {
+                  "x-synthetic": true,
+                  "value": {
+                    "assignment_id": 101,
+                    "counterpart_id": 4,
+                    "reason": "sick"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Recorded in state requested; the counterpart is notified.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SwapRequest"
+                },
+                "examples": {
+                  "requested": {
+                    "x-synthetic": true,
+                    "value": {
+                      "id": 501,
+                      "assignment_id": 101,
+                      "requester_id": 2,
+                      "counterpart_id": 4,
+                      "shift_date": "2026-11-09",
+                      "shift_start": "08:00",
+                      "requester_name": "Mo",
+                      "counterpart_name": "Sam",
+                      "reason": "sick",
+                      "state": "requested",
+                      "display_state": "requested",
+                      "awaiting": "counterpart",
+                      "created_at": "2026-11-07T10:00:00",
+                      "answered_at": null,
+                      "answer_reason": null,
+                      "decision": null,
+                      "party": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthenticated"
+          },
+          "403": {
+            "description": "The caller does not hold the assignment.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                },
+                "examples": {
+                  "not_holder": {
+                    "x-synthetic": true,
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Swap not requested",
+                      "detail": "You do not hold this assignment.",
+                      "reason": "not_holder"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "409": {
+            "description": "Refused by a swaps rule.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                },
+                "examples": {
+                  "past_deadline": {
+                    "x-synthetic": true,
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Swap not requested",
+                      "detail": "It is at or after the deadline (24 h before 2026-11-09 08:00).",
+                      "reason": "past_deadline"
+                    }
+                  },
+                  "request_open": {
+                    "x-synthetic": true,
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Swap not requested",
+                      "detail": "A request for this assignment is open.",
+                      "reason": "request_open"
+                    }
+                  },
+                  "week_draft": {
+                    "x-synthetic": true,
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Swap not requested",
+                      "detail": "The week of 2026-11-16 is a draft.",
+                      "reason": "week_draft"
+                    }
+                  },
+                  "counterpart_self": {
+                    "x-synthetic": true,
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Swap not requested",
+                      "detail": "You cannot name yourself.",
+                      "reason": "counterpart_self"
+                    }
+                  },
+                  "counterpart_inactive": {
+                    "x-synthetic": true,
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Swap not requested",
+                      "detail": "Sam is inactive.",
+                      "reason": "counterpart_inactive"
+                    }
+                  },
+                  "counterpart_on_shift": {
+                    "x-synthetic": true,
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Swap not requested",
+                      "detail": "Pat already holds a slot on this shift.",
+                      "reason": "counterpart_on_shift"
+                    }
+                  },
+                  "counterpart_overlap": {
+                    "x-synthetic": true,
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Swap not requested",
+                      "detail": "Pat holds 2026-11-09 12:00–18:00, which overlaps.",
+                      "reason": "counterpart_overlap"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "$ref": "#/components/responses/BadReason"
+          }
+        }
+      }
+    },
+    "/swaps/{request_id}/answer": {
+      "post": {
+        "operationId": "swaps.answer",
+        "tags": [
+          "swaps"
+        ],
+        "summary": "Accept or decline a request named to you (one answer operation with an outcome; a reason is required on decline and absent on accept)",
+        "description": "The counterpart accepts (answered_at from the clock) or declines with a reason; the requester, and on accept every eligible decider, is notified (swap_answered).",
+        "x-story": [
+          "US-swaps-002",
+          "US-notifications-003"
+        ],
+        "x-roles": [
+          "admin",
+          "planner",
+          "member"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/request_id"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Answer"
+              },
+              "examples": {
+                "accept": {
+                  "x-synthetic": true,
+                  "value": {
+                    "answer": "accept"
+                  }
+                },
+                "decline": {
+                  "x-synthetic": true,
+                  "value": {
+                    "answer": "decline",
+                    "reason": "unavailable"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Answered; the requester (and on accept every eligible decider) is notified.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SwapRequest"
+                },
+                "examples": {
+                  "accepted": {
+                    "x-synthetic": true,
+                    "value": {
+                      "id": 501,
+                      "assignment_id": 101,
+                      "requester_id": 2,
+                      "counterpart_id": 4,
+                      "shift_date": "2026-11-09",
+                      "shift_start": "08:00",
+                      "requester_name": "Mo",
+                      "counterpart_name": "Sam",
+                      "reason": "sick",
+                      "state": "accepted",
+                      "display_state": "accepted",
+                      "awaiting": "decider",
+                      "created_at": "2026-11-07T10:00:00",
+                      "answered_at": "2026-11-07T10:30:00",
+                      "answer_reason": null,
+                      "decision": null,
+                      "party": true
+                    }
+                  },
+                  "declined": {
+                    "x-synthetic": true,
+                    "value": {
+                      "id": 501,
+                      "assignment_id": 101,
+                      "requester_id": 2,
+                      "counterpart_id": 4,
+                      "shift_date": "2026-11-09",
+                      "shift_start": "08:00",
+                      "requester_name": "Mo",
+                      "counterpart_name": "Sam",
+                      "reason": "sick",
+                      "state": "declined",
+                      "display_state": "declined",
+                      "awaiting": "none",
+                      "created_at": "2026-11-07T10:00:00",
+                      "answered_at": "2026-11-07T10:30:00",
+                      "answer_reason": "unavailable",
+                      "decision": null,
+                      "party": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthenticated"
+          },
+          "403": {
+            "description": "The caller is not the counterpart.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                },
+                "examples": {
+                  "not_counterpart": {
+                    "x-synthetic": true,
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Not answered",
+                      "detail": "This request is not named to you.",
+                      "reason": "not_counterpart"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "409": {
+            "description": "Not in state requested, or past the deadline.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                },
+                "examples": {
+                  "wrong_state": {
+                    "x-synthetic": true,
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Not answered",
+                      "detail": "The request is accepted.",
+                      "reason": "wrong_state"
+                    }
+                  },
+                  "past_deadline": {
+                    "x-synthetic": true,
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Not answered",
+                      "detail": "It is at or after the deadline (24 h before 2026-11-09 08:00).",
+                      "reason": "past_deadline"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "$ref": "#/components/responses/BadReason"
+          }
+        }
+      }
+    },
+    "/swaps/{request_id}/decision": {
+      "post": {
+        "operationId": "swaps.decide",
+        "tags": [
+          "swaps"
+        ],
+        "summary": "Approve or refuse an accepted request",
+        "description": "One decide operation with an outcome. Approval transfers the assignment first and records the decision second, in one transaction; a refused transfer is recorded as a refused decision with the transfer's reason and the operation still succeeds (state changed). A reason with outcome approve, or a system code as the reason, is invalid_reason. Both members are notified, less an inactive one. The response is the request as the inbox lists it. Allowed while now < the deadline.",
+        "x-story": [
+          "US-swaps-003",
+          "US-scheduling-006",
+          "US-notifications-004"
+        ],
+        "x-roles": [
+          "admin",
+          "planner"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/request_id"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DecisionInput"
+              },
+              "examples": {
+                "approve": {
+                  "x-synthetic": true,
+                  "value": {
+                    "outcome": "approve"
+                  }
+                },
+                "refuse": {
+                  "x-synthetic": true,
+                  "value": {
+                    "outcome": "refuse",
+                    "reason": "coverage"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Decided; the request mirrors the outcome.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SwapRequest"
+                },
+                "examples": {
+                  "approved": {
+                    "x-synthetic": true,
+                    "value": {
+                      "id": 501,
+                      "assignment_id": 101,
+                      "requester_id": 2,
+                      "counterpart_id": 4,
+                      "shift_date": "2026-11-09",
+                      "shift_start": "08:00",
+                      "requester_name": "Mo",
+                      "counterpart_name": "Sam",
+                      "reason": "sick",
+                      "state": "approved",
+                      "display_state": "approved",
+                      "awaiting": "none",
+                      "created_at": "2026-11-07T10:00:00",
+                      "answered_at": "2026-11-07T10:30:00",
+                      "answer_reason": null,
+                      "decision": {
+                        "id": 701,
+                        "request_id": 501,
+                        "decider_id": 3,
+                        "outcome": "approved",
+                        "reason": null,
+                        "decided_at": "2026-11-07T11:00:00"
+                      },
+                      "party": true
+                    }
+                  },
+                  "refused": {
+                    "x-synthetic": true,
+                    "value": {
+                      "id": 501,
+                      "assignment_id": 101,
+                      "requester_id": 2,
+                      "counterpart_id": 4,
+                      "shift_date": "2026-11-09",
+                      "shift_start": "08:00",
+                      "requester_name": "Mo",
+                      "counterpart_name": "Sam",
+                      "reason": "sick",
+                      "state": "refused",
+                      "display_state": "refused",
+                      "awaiting": "none",
+                      "created_at": "2026-11-07T10:00:00",
+                      "answered_at": "2026-11-07T10:30:00",
+                      "answer_reason": null,
+                      "decision": {
+                        "id": 701,
+                        "request_id": 501,
+                        "decider_id": 3,
+                        "outcome": "refused",
+                        "reason": "coverage",
+                        "decided_at": "2026-11-07T11:00:00"
+                      },
+                      "party": true
+                    }
+                  },
+                  "transfer_refused": {
+                    "x-synthetic": true,
+                    "value": {
+                      "id": 501,
+                      "assignment_id": 101,
+                      "requester_id": 2,
+                      "counterpart_id": 4,
+                      "shift_date": "2026-11-09",
+                      "shift_start": "08:00",
+                      "requester_name": "Mo",
+                      "counterpart_name": "Sam",
+                      "reason": "sick",
+                      "state": "refused",
+                      "display_state": "refused",
+                      "awaiting": "none",
+                      "created_at": "2026-11-07T10:00:00",
+                      "answered_at": "2026-11-07T10:30:00",
+                      "answer_reason": null,
+                      "decision": {
+                        "id": 701,
+                        "request_id": 501,
+                        "decider_id": 3,
+                        "outcome": "refused",
+                        "reason": "counterpart_overlap",
+                        "decided_at": "2026-11-07T11:00:00"
+                      },
+                      "party": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthenticated"
+          },
+          "403": {
+            "description": "The caller is a member, or is a party to the swap.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                },
+                "examples": {
+                  "forbidden": {
+                    "x-synthetic": true,
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Not decided",
+                      "detail": "Members do not decide swaps.",
+                      "reason": "forbidden"
+                    }
+                  },
+                  "party_to_swap": {
+                    "x-synthetic": true,
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Not decided",
+                      "detail": "You are a party to this swap.",
+                      "reason": "party_to_swap"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "409": {
+            "description": "Not in state accepted, or past the deadline.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                },
+                "examples": {
+                  "wrong_state": {
+                    "x-synthetic": true,
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Not decided",
+                      "detail": "The request is requested.",
+                      "reason": "wrong_state"
+                    }
+                  },
+                  "past_deadline": {
+                    "x-synthetic": true,
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Not decided",
+                      "detail": "It is at or after the deadline (24 h before 2026-11-09 08:00).",
+                      "reason": "past_deadline"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "$ref": "#/components/responses/BadReason"
+          }
+        }
+      }
+    },
+    "/swaps/mine": {
+      "get": {
+        "operationId": "swaps.mine",
+        "tags": [
+          "swaps"
+        ],
+        "summary": "Every request you are party to",
+        "description": "Every request the caller is party to, every state, newest first by created_at then id descending, with the display state (expired is derived from the clock), the answer reason and the decision when one exists, and the party awaited.",
+        "x-story": [
+          "US-swaps-004"
+        ],
+        "x-roles": [
+          "admin",
+          "planner",
+          "member"
+        ],
+        "responses": {
+          "200": {
+            "description": "The caller's requests.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SwapRequest"
+                  }
+                },
+                "examples": {
+                  "mine": {
+                    "x-synthetic": true,
+                    "value": [
+                      {
+                        "id": 502,
+                        "assignment_id": 103,
+                        "requester_id": 2,
+                        "counterpart_id": 3,
+                        "shift_date": "2026-11-09",
+                        "shift_start": "08:00",
+                        "requester_name": "Mo",
+                        "counterpart_name": "Pat",
+                        "reason": "travel",
+                        "state": "requested",
+                        "display_state": "expired",
+                        "awaiting": "none",
+                        "created_at": "2026-11-01T09:00:00",
+                        "answered_at": null,
+                        "answer_reason": null,
+                        "decision": null,
+                        "party": true
+                      },
+                      {
+                        "id": 501,
+                        "assignment_id": 101,
+                        "requester_id": 2,
+                        "counterpart_id": 4,
+                        "shift_date": "2026-11-09",
+                        "shift_start": "08:00",
+                        "requester_name": "Mo",
+                        "counterpart_name": "Sam",
+                        "reason": "sick",
+                        "state": "accepted",
+                        "display_state": "accepted",
+                        "awaiting": "decider",
+                        "created_at": "2026-11-07T10:00:00",
+                        "answered_at": "2026-11-07T10:30:00",
+                        "answer_reason": null,
+                        "decision": null,
+                        "party": true
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthenticated"
+          }
+        }
+      }
+    },
+    "/swaps/pending": {
+      "get": {
+        "operationId": "swaps.pending",
+        "tags": [
+          "swaps"
+        ],
+        "summary": "Every accepted request awaiting a decision",
+        "description": "Open accepted requests only (an accepted request past its deadline is not pending), oldest first by answered_at then id, the same list for any admin or planner; requests the caller is party to are marked party.",
+        "x-story": [
+          "US-swaps-005"
+        ],
+        "x-roles": [
+          "admin",
+          "planner"
+        ],
+        "responses": {
+          "200": {
+            "description": "Pending decisions.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SwapRequest"
+                  }
+                },
+                "examples": {
+                  "pending": {
+                    "x-synthetic": true,
+                    "value": [
+                      {
+                        "id": 501,
+                        "assignment_id": 101,
+                        "requester_id": 2,
+                        "counterpart_id": 4,
+                        "shift_date": "2026-11-09",
+                        "shift_start": "08:00",
+                        "requester_name": "Mo",
+                        "counterpart_name": "Sam",
+                        "reason": "sick",
+                        "state": "accepted",
+                        "display_state": "accepted",
+                        "awaiting": "decider",
+                        "created_at": "2026-11-07T10:00:00",
+                        "answered_at": "2026-11-07T10:30:00",
+                        "answer_reason": null,
+                        "decision": null,
+                        "party": false
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthenticated"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/notifications": {
+      "get": {
+        "operationId": "notifications.list",
+        "tags": [
+          "notifications"
+        ],
+        "summary": "Your notifications, newest first by created_at then id",
+        "description": "The caller's own notifications, newest first by created_at; nobody else's are ever returned.",
+        "x-story": [
+          "US-notifications-005",
+          "US-notifications-001",
+          "US-notifications-002",
+          "US-notifications-003",
+          "US-notifications-004",
+          "US-notifications-006"
+        ],
+        "x-roles": [
+          "admin",
+          "planner",
+          "member"
+        ],
+        "responses": {
+          "200": {
+            "description": "The caller's notifications.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Notification"
+                  }
+                },
+                "examples": {
+                  "two": {
+                    "x-synthetic": true,
+                    "value": [
+                      {
+                        "id": 9002,
+                        "recipient_id": 4,
+                        "event": "swap_requested",
+                        "text": "Mo asks you to take 2026-11-09 08:00–14:00 (sick).",
+                        "created_at": "2026-11-07T10:00:00",
+                        "read": false
+                      },
+                      {
+                        "id": 9001,
+                        "recipient_id": 4,
+                        "event": "week_published",
+                        "text": "The week of 2026-11-09 is published.",
+                        "created_at": "2026-11-06T17:00:00",
+                        "read": true
+                      }
+                    ]
+                  },
+                  "none": {
+                    "x-synthetic": true,
+                    "value": []
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthenticated"
+          }
+        }
+      }
+    },
+    "/notifications/{notification_id}/read": {
+      "post": {
+        "operationId": "notifications.mark_read",
+        "tags": [
+          "notifications"
+        ],
+        "summary": "Mark one of your notifications read (marking again changes nothing and succeeds)",
+        "description": "Sets read on one of the caller's notifications.",
+        "x-story": [
+          "US-notifications-005"
+        ],
+        "x-roles": [
+          "admin",
+          "planner",
+          "member"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/notification_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Marked read.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Notification"
+                },
+                "examples": {
+                  "read": {
+                    "x-synthetic": true,
+                    "value": {
+                      "id": 9002,
+                      "recipient_id": 4,
+                      "event": "swap_requested",
+                      "text": "Mo asks you to take 2026-11-09 08:00–14:00 (sick).",
+                      "created_at": "2026-11-07T10:00:00",
+                      "read": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthenticated"
+          },
+          "403": {
+            "description": "The notification belongs to someone else.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                },
+                "examples": {
+                  "not_recipient": {
+                    "x-synthetic": true,
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Not marked",
+                      "detail": "This notification is not yours.",
+                      "reason": "not_recipient"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "The token identity.sign_in issued; the caller is the member it identifies."
+      }
+    },
+    "parameters": {
+      "member_id": {
+        "name": "member_id",
+        "in": "path",
+        "required": true,
+        "description": "A member's id.",
+        "schema": {
+          "type": "integer",
+          "title": "Member id",
+          "description": "A member's id.",
+          "example": 2,
+          "x-when-to-use": "from identity.list_members"
+        }
+      },
+      "shift_id": {
+        "name": "shift_id",
+        "in": "path",
+        "required": true,
+        "description": "A shift's id.",
+        "schema": {
+          "type": "integer",
+          "title": "Shift id",
+          "description": "A shift's id.",
+          "example": 11,
+          "x-when-to-use": "from the board"
+        }
+      },
+      "assignment_id": {
+        "name": "assignment_id",
+        "in": "path",
+        "required": true,
+        "description": "An assignment's id.",
+        "schema": {
+          "type": "integer",
+          "title": "Assignment id",
+          "description": "An assignment's id.",
+          "example": 101,
+          "x-when-to-use": "from the board's holders"
+        }
+      },
+      "request_id": {
+        "name": "request_id",
+        "in": "path",
+        "required": true,
+        "description": "A swap request's id.",
+        "schema": {
+          "type": "integer",
+          "title": "Request id",
+          "description": "A swap request's id.",
+          "example": 501,
+          "x-when-to-use": "from swaps.mine or swaps.pending"
+        }
+      },
+      "notification_id": {
+        "name": "notification_id",
+        "in": "path",
+        "required": true,
+        "description": "A notification's id.",
+        "schema": {
+          "type": "integer",
+          "title": "Notification id",
+          "description": "A notification's id.",
+          "example": 9002,
+          "x-when-to-use": "from notifications.list"
+        }
+      },
+      "start_date": {
+        "name": "start_date",
+        "in": "path",
+        "required": true,
+        "description": "The week's Monday (ISO date).",
+        "schema": {
+          "type": "string",
+          "format": "date",
+          "title": "Week start",
+          "description": "The Monday the week starts on.",
+          "example": "2026-11-09"
+        }
+      }
+    },
+    "responses": {
+      "Unauthenticated": {
+        "description": "No valid token.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Problem"
+            },
+            "examples": {
+              "unauthenticated": {
+                "x-synthetic": true,
+                "value": {
+                  "type": "about:blank",
+                  "title": "Not signed in",
+                  "detail": "Sign in first.",
+                  "reason": "unauthenticated"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Forbidden": {
+        "description": "The caller's role may not do this.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Problem"
+            },
+            "examples": {
+              "forbidden": {
+                "x-synthetic": true,
+                "value": {
+                  "type": "about:blank",
+                  "title": "Not allowed",
+                  "detail": "Your role may not do this.",
+                  "reason": "forbidden"
+                }
+              }
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "No such thing.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Problem"
+            },
+            "examples": {
+              "not_found": {
+                "x-synthetic": true,
+                "value": {
+                  "type": "about:blank",
+                  "title": "Not found",
+                  "detail": "No such id.",
+                  "reason": "not_found"
+                }
+              }
+            }
+          }
+        }
+      },
+      "BadReason": {
+        "description": "The reason code is missing or not in the enumeration for this step, or the body fails shape validation.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Problem"
+            },
+            "examples": {
+              "invalid_request": {
+                "x-synthetic": true,
+                "value": {
+                  "type": "about:blank",
+                  "title": "Request not understood",
+                  "detail": "The body does not match the schema.",
+                  "reason": "invalid_request"
+                }
+              },
+              "reason_required": {
+                "x-synthetic": true,
+                "value": {
+                  "type": "about:blank",
+                  "title": "Reason needed",
+                  "detail": "A reason code is required.",
+                  "reason": "reason_required"
+                }
+              },
+              "invalid_reason": {
+                "x-synthetic": true,
+                "value": {
+                  "type": "about:blank",
+                  "title": "Reason not recognised",
+                  "detail": "Use one of: sick, family, travel, other.",
+                  "reason": "invalid_reason"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "Problem": {
+        "title": "Problem",
+        "description": "A refusal or failure, with an enumerated reason tests can assert.",
+        "type": "object",
+        "required": [
+          "type",
+          "title",
+          "reason"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "title": "Type",
+            "description": "A URI reference identifying the problem class.",
+            "example": "about:blank"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title",
+            "description": "A short human-readable summary.",
+            "example": "Swap not requested"
+          },
+          "detail": {
+            "type": "string",
+            "title": "Detail",
+            "description": "What happened",
+            "in one sentence.": null,
+            "example": "You do not hold this assignment."
+          },
+          "reason": {
+            "type": "string",
+            "title": "Reason",
+            "description": "The enumerated reason code the story names.",
+            "example": "not_holder",
+            "enum": [
+              "unauthenticated",
+              "forbidden",
+              "not_found",
+              "invalid_credentials",
+              "member_inactive",
+              "duplicate_email",
+              "invalid_role",
+              "last_admin",
+              "future_assignments",
+              "not_week_start",
+              "outside_week",
+              "invalid_interval",
+              "invalid_slots",
+              "week_published",
+              "already_assigned",
+              "overlapping_shift",
+              "shift_full",
+              "unfilled_slots",
+              "week_draft",
+              "not_holder",
+              "past_deadline",
+              "request_open",
+              "counterpart_self",
+              "counterpart_inactive",
+              "counterpart_on_shift",
+              "counterpart_overlap",
+              "reason_required",
+              "invalid_reason",
+              "invalid_request",
+              "not_counterpart",
+              "wrong_state",
+              "party_to_swap",
+              "not_recipient"
+            ],
+            "x-when-to-use": "assert the code",
+            "never the detail text": null
+          }
+        }
+      },
+      "PublishProblem": {
+        "title": "Publish problem",
+        "description": "The publish refusal, carrying the unfilled shifts.",
+        "type": "object",
+        "required": [
+          "type",
+          "title",
+          "reason",
+          "unfilled"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "title": "Type",
+            "description": "A URI reference identifying the problem class.",
+            "example": "about:blank"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title",
+            "description": "A short human-readable summary.",
+            "example": "Week not published"
+          },
+          "detail": {
+            "type": "string",
+            "title": "Detail",
+            "description": "What happened",
+            "in one sentence.": null,
+            "example": "1 shift has unfilled slots."
+          },
+          "reason": {
+            "type": "string",
+            "title": "Reason",
+            "description": "unfilled_slots",
+            "or week_published for a repeat.": null,
+            "example": "unfilled_slots",
+            "enum": [
+              "unfilled_slots",
+              "week_published"
+            ],
+            "x-when-to-use": "assert the code"
+          },
+          "unfilled": {
+            "type": "array",
+            "title": "Unfilled shifts",
+            "description": "One row per shift with at least one empty slot",
+            "in board order; a full shift has no row.": null,
+            "example": [
+              {
+                "shift_id": 11,
+                "date": "2026-11-09",
+                "start": "08:00",
+                "unfilled": 1
+              }
+            ],
+            "items": {
+              "$ref": "#/components/schemas/UnfilledShift"
+            }
+          }
+        }
+      },
+      "UnfilledShift": {
+        "title": "Unfilled shift",
+        "description": "One shift with free slots, as the publish refusal lists it.",
+        "type": "object",
+        "required": [
+          "shift_id",
+          "date",
+          "start",
+          "unfilled"
+        ],
+        "properties": {
+          "shift_id": {
+            "type": "integer",
+            "title": "Shift id",
+            "description": "The shift's id.",
+            "example": 11,
+            "x-when-to-use": "to open the shift on the board"
+          },
+          "date": {
+            "type": "string",
+            "format": "date",
+            "title": "Date",
+            "description": "The shift's date.",
+            "example": "2026-11-09"
+          },
+          "start": {
+            "type": "string",
+            "title": "Start",
+            "description": "The start time of day (HH:MM).",
+            "example": "08:00"
+          },
+          "unfilled": {
+            "type": "integer",
+            "title": "Unfilled",
+            "description": "How many slots are free.",
+            "example": 1,
+            "x-when-to-use": "the number of assignments still needed"
+          }
+        }
+      },
+      "SignIn": {
+        "title": "Sign in",
+        "description": "Email and passcode.",
+        "type": "object",
+        "required": [
+          "email",
+          "passcode"
+        ],
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "title": "Email",
+            "description": "The member's email.",
+            "example": "mo@example.test"
+          },
+          "passcode": {
+            "type": "string",
+            "format": "password",
+            "title": "Passcode",
+            "description": "The passcode the admin set.",
+            "example": "mo-passcode-1"
+          }
+        }
+      },
+      "Token": {
+        "title": "Token",
+        "description": "The bearer token and the member it identifies.",
+        "type": "object",
+        "required": [
+          "token",
+          "member"
+        ],
+        "properties": {
+          "token": {
+            "type": "string",
+            "title": "Token",
+            "description": "Send as Authorization Bearer on every later operation.",
+            "example": "tok_m02"
+          },
+          "member": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Member"
+              }
+            ],
+            "title": "Member",
+            "description": "The signed-in member.",
+            "example": {
+              "id": 2,
+              "name": "Mo",
+              "email": "mo@example.test",
+              "role": "member",
+              "active": true
+            }
+          }
+        }
+      },
+      "Member": {
+        "title": "Member",
+        "description": "A person on the team.",
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "email",
+          "role",
+          "active"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id",
+            "description": "The member's id.",
+            "example": 2,
+            "x-when-to-use": "identifies the member everywhere"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name",
+            "description": "The member's display name.",
+            "example": "Mo"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "title": "Email",
+            "description": "Unique on the team.",
+            "example": "mo@example.test"
+          },
+          "role": {
+            "type": "string",
+            "title": "Role",
+            "description": "admin, planner or member — checked by identity (invalid_role), declared as a string on purpose so that the domain, not the framework, answers",
+            "example": "member",
+            "x-values": [
+              "admin",
+              "planner",
+              "member"
+            ],
+            "x-when-to-use": "admin manages members; planner runs weeks; member works shifts"
+          },
+          "active": {
+            "type": "boolean",
+            "title": "Active",
+            "description": "False once deactivated; history stays.",
+            "example": true
+          }
+        }
+      },
+      "MemberSummary": {
+        "title": "Member summary",
+        "description": "A member as the team list shows them to every role — never the email, the passcode or the token.",
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "role",
+          "active"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id",
+            "description": "The member's id.",
+            "example": 2,
+            "x-when-to-use": "identifies the member everywhere"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name",
+            "description": "The member's display name.",
+            "example": "Mo"
+          },
+          "role": {
+            "type": "string",
+            "title": "Role",
+            "description": "admin, planner or member",
+            "example": "member",
+            "x-values": [
+              "admin",
+              "planner",
+              "member"
+            ],
+            "x-when-to-use": "admin manages members; planner runs weeks; member works shifts"
+          },
+          "active": {
+            "type": "boolean",
+            "title": "Active",
+            "description": "False once deactivated; history stays.",
+            "example": true
+          }
+        }
+      },
+      "MemberCreate": {
+        "title": "New member",
+        "description": "What the admin supplies to add a member.",
+        "type": "object",
+        "required": [
+          "name",
+          "email",
+          "passcode"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name",
+            "description": "The member's display name.",
+            "example": "Sam"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "title": "Email",
+            "description": "Unique on the team.",
+            "example": "sam@example.test"
+          },
+          "role": {
+            "type": "string",
+            "title": "Role",
+            "description": "admin, planner or member — checked by identity (invalid_role), declared as a string on purpose so that the domain, not the framework, answers",
+            "example": "member",
+            "x-values": [
+              "admin",
+              "planner",
+              "member"
+            ],
+            "x-when-to-use": "admin manages members; planner runs weeks; member works shifts"
+          },
+          "passcode": {
+            "type": "string",
+            "format": "password",
+            "title": "Passcode",
+            "description": "The passcode the member signs in with; stored hashed.",
+            "example": "sam-passcode-1"
+          }
+        }
+      },
+      "RoleChange": {
+        "title": "Role change",
+        "description": "The new role.",
+        "type": "object",
+        "required": [],
+        "properties": {
+          "role": {
+            "type": "string",
+            "title": "Role",
+            "description": "admin, planner or member — checked by identity (invalid_role), a string on purpose",
+            "example": "planner",
+            "x-values": [
+              "admin",
+              "planner",
+              "member"
+            ],
+            "x-when-to-use": "admin manages members; planner runs weeks; member works shifts"
+          }
+        }
+      },
+      "Week": {
+        "title": "Week",
+        "description": "The seven days from a Monday, with a publication state.",
+        "type": "object",
+        "required": [
+          "start_date",
+          "state"
+        ],
+        "properties": {
+          "start_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Week start",
+            "description": "The Monday the week starts on.",
+            "example": "2026-11-09"
+          },
+          "state": {
+            "type": "string",
+            "title": "State",
+            "description": "draft until published; published changes only through an approved swap.",
+            "example": "published",
+            "enum": [
+              "draft",
+              "published"
+            ],
+            "x-when-to-use": "members see published weeks only"
+          }
+        }
+      },
+      "Shift": {
+        "title": "Shift",
+        "description": "A set of slots on one day of a week; immutable once created.",
+        "type": "object",
+        "required": [
+          "id",
+          "week_start",
+          "date",
+          "start",
+          "end",
+          "slots"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id",
+            "description": "The shift's id.",
+            "example": 11,
+            "x-when-to-use": "identifies the shift everywhere"
+          },
+          "week_start": {
+            "type": "string",
+            "format": "date",
+            "title": "Week start",
+            "description": "The Monday of the shift's week.",
+            "example": "2026-11-09"
+          },
+          "date": {
+            "type": "string",
+            "format": "date",
+            "title": "Date",
+            "description": "The shift's date",
+            "within its week.": null,
+            "example": "2026-11-09"
+          },
+          "start": {
+            "type": "string",
+            "title": "Start",
+            "description": "Start time of day (HH:MM) on the date.",
+            "example": "08:00"
+          },
+          "end": {
+            "type": "string",
+            "title": "End",
+            "description": "End time of day (HH:MM) on the date",
+            "after start and at most 23:59; never crosses midnight.": null,
+            "example": "14:00"
+          },
+          "slots": {
+            "type": "integer",
+            "title": "Slots",
+            "description": "How many members the shift needs; at least 1.",
+            "example": 2,
+            "x-when-to-use": "the number of holders when full"
+          }
+        }
+      },
+      "ShiftCreate": {
+        "title": "New shift",
+        "description": "What the planner supplies to create a shift.",
+        "type": "object",
+        "required": [
+          "date"
+        ],
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date",
+            "title": "Date",
+            "description": "The shift's date",
+            "within the week.": null,
+            "example": "2026-11-09"
+          },
+          "start": {
+            "type": "string",
+            "title": "Start",
+            "description": "Start time of day (HH:MM).",
+            "example": "08:00"
+          },
+          "end": {
+            "type": "string",
+            "title": "End",
+            "description": "End time of day (HH:MM)",
+            "after start and at most 23:59.": null,
+            "example": "14:00"
+          },
+          "slots": {
+            "type": "integer",
+            "title": "Slots",
+            "description": "How many members the shift needs; at least 1.",
+            "example": 2,
+            "x-when-to-use": "the number of holders when full"
+          }
+        }
+      },
+      "Assignment": {
+        "title": "Assignment",
+        "description": "A member holding one slot of a shift.",
+        "type": "object",
+        "required": [
+          "id",
+          "shift_id",
+          "member_id"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id",
+            "description": "The assignment's id.",
+            "example": 101,
+            "x-when-to-use": "what a swap request names"
+          },
+          "shift_id": {
+            "type": "integer",
+            "title": "Shift id",
+            "description": "The shift held.",
+            "example": 11,
+            "x-when-to-use": "to find the shift on the board"
+          },
+          "member_id": {
+            "type": "integer",
+            "title": "Member id",
+            "description": "The holder.",
+            "example": 2,
+            "x-when-to-use": "the current holder"
+          }
+        }
+      },
+      "AssignmentCreate": {
+        "title": "New assignment",
+        "description": "The member to assign.",
+        "type": "object",
+        "required": [
+          "member_id"
+        ],
+        "properties": {
+          "member_id": {
+            "type": "integer",
+            "title": "Member id",
+            "description": "An active member.",
+            "example": 2,
+            "x-when-to-use": "from identity.list_members"
+          }
+        }
+      },
+      "Holder": {
+        "title": "Holder",
+        "description": "One holder-row of a shift, as the board shows it, ordered by assignment id, with the open request on that assignment and whether the caller may request a swap on it now.",
+        "type": "object",
+        "required": [
+          "assignment_id",
+          "member_id",
+          "name",
+          "pending",
+          "requestable"
+        ],
+        "properties": {
+          "assignment_id": {
+            "type": "integer",
+            "title": "Assignment id",
+            "description": "The assignment the holder holds.",
+            "example": 101,
+            "x-when-to-use": "what a swap request names"
+          },
+          "member_id": {
+            "type": "integer",
+            "title": "Member id",
+            "description": "The holder (an inactive member still shows).",
+            "example": 2,
+            "x-when-to-use": "the current holder"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name",
+            "description": "The holder's display name.",
+            "example": "Mo"
+          },
+          "pending": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "title": "Pending",
+            "description": "requested or accepted when an open request exists on this assignment; null otherwise (declined",
+            "refused": null,
+            "approved": null,
+            "expired or none). Never anything that looks done.": null,
+            "example": "requested",
+            "enum": [
+              "requested",
+              "accepted",
+              null
+            ],
+            "x-when-to-use": "show the text as it is; null shows nothing"
+          },
+          "requestable": {
+            "type": "boolean",
+            "title": "Requestable",
+            "description": "True only on the caller's own row of a published week while now < the deadline by the server's clock and no request is open on it; computed by swaps",
+            "never in the browser.": null,
+            "example": false
+          }
+        }
+      },
+      "Weeks": {
+        "title": "Weeks",
+        "description": "The weeks that exist and the current one.",
+        "type": "object",
+        "required": [
+          "current",
+          "weeks"
+        ],
+        "properties": {
+          "current": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date",
+            "title": "Current week",
+            "description": "The latest published week whose start_date is on or before today by the clock; null when none.",
+            "example": "2026-11-09"
+          },
+          "weeks": {
+            "type": "array",
+            "title": "Weeks",
+            "description": "Newest first by start_date; members see published weeks only.",
+            "example": [],
+            "items": {
+              "$ref": "#/components/schemas/Week"
+            }
+          }
+        }
+      },
+      "BoardShift": {
+        "title": "Board shift",
+        "description": "A shift with its holder-rows.",
+        "type": "object",
+        "required": [
+          "shift",
+          "holders"
+        ],
+        "properties": {
+          "shift": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Shift"
+              }
+            ],
+            "title": "Shift",
+            "description": "The shift.",
+            "example": {
+              "id": 11,
+              "week_start": "2026-11-09",
+              "date": "2026-11-09",
+              "start": "08:00",
+              "end": "14:00",
+              "slots": 2
+            }
+          },
+          "holders": {
+            "type": "array",
+            "title": "Holders",
+            "description": "Who holds it",
+            "by assignment id.": null,
+            "example": [
+              {
+                "assignment_id": 101,
+                "member_id": 2,
+                "name": "Mo",
+                "pending": null,
+                "requestable": false
+              }
+            ],
+            "items": {
+              "$ref": "#/components/schemas/Holder"
+            }
+          }
+        }
+      },
+      "Board": {
+        "title": "Board",
+        "description": "The week and its shifts in date and start order.",
+        "type": "object",
+        "required": [
+          "week",
+          "shifts"
+        ],
+        "properties": {
+          "week": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Week"
+              }
+            ],
+            "title": "Week",
+            "description": "The week shown.",
+            "example": {
+              "start_date": "2026-11-09",
+              "state": "published"
+            }
+          },
+          "shifts": {
+            "type": "array",
+            "title": "Shifts",
+            "description": "Every shift of the week by date",
+            "start": null,
+            "then shift id (or only the caller's with mine).": null,
+            "example": [],
+            "items": {
+              "$ref": "#/components/schemas/BoardShift"
+            }
+          }
+        }
+      },
+      "SwapRequestCreate": {
+        "title": "New swap request",
+        "description": "The assignment to hand over, the counterpart and the reason.",
+        "type": "object",
+        "required": [
+          "assignment_id",
+          "counterpart_id"
+        ],
+        "properties": {
+          "assignment_id": {
+            "type": "integer",
+            "title": "Assignment id",
+            "description": "An assignment the caller holds on a published week.",
+            "example": 101,
+            "x-when-to-use": "from the board's holders"
+          },
+          "counterpart_id": {
+            "type": "integer",
+            "title": "Counterpart id",
+            "description": "An active member other than the caller who holds no slot on that shift.",
+            "example": 4,
+            "x-when-to-use": "from identity.list_members"
+          },
+          "reason": {
+            "type": "string",
+            "title": "Reason",
+            "description": "Why the shift is handed over: sick, family, travel or other — checked by swaps (reason_required, invalid_reason), a string on purpose",
+            "example": "sick",
+            "x-values": [
+              "sick",
+              "family",
+              "travel",
+              "other"
+            ],
+            "x-when-to-use": "other when none fits"
+          }
+        }
+      },
+      "Answer": {
+        "title": "Answer",
+        "description": "The counterpart's accept or decline, with a reason when declining.",
+        "type": "object",
+        "required": [
+          "answer"
+        ],
+        "properties": {
+          "answer": {
+            "type": "string",
+            "title": "Answer",
+            "description": "accept or decline.",
+            "example": "accept",
+            "enum": [
+              "accept",
+              "decline"
+            ],
+            "x-when-to-use": "decline needs a reason"
+          },
+          "reason": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "title": "Reason",
+            "description": "Required on decline (unavailable or other), refused with invalid_reason on accept — checked by swaps, a string on purpose",
+            "example": "unavailable",
+            "x-values": [
+              "unavailable",
+              "other"
+            ],
+            "x-when-to-use": "other when none fits"
+          }
+        }
+      },
+      "DecisionInput": {
+        "title": "Decision input",
+        "description": "Approve or refuse, with a reason when refusing.",
+        "type": "object",
+        "required": [
+          "outcome"
+        ],
+        "properties": {
+          "outcome": {
+            "type": "string",
+            "title": "Outcome",
+            "description": "approve or refuse.",
+            "example": "approve",
+            "enum": [
+              "approve",
+              "refuse"
+            ],
+            "x-when-to-use": "refuse needs a reason"
+          },
+          "reason": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "title": "Reason",
+            "description": "Required on refuse (fairness, coverage, policy or other), refused with invalid_reason on approve — checked by swaps, a string on purpose",
+            "example": "coverage",
+            "x-values": [
+              "fairness",
+              "coverage",
+              "policy",
+              "other"
+            ],
+            "x-when-to-use": "other when none fits"
+          }
+        }
+      },
+      "Decision": {
+        "title": "Decision",
+        "description": "The recorded decision on an accepted request.",
+        "type": "object",
+        "required": [
+          "id",
+          "request_id",
+          "decider_id",
+          "outcome",
+          "reason",
+          "decided_at"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id",
+            "description": "The decision's id.",
+            "example": 701,
+            "x-when-to-use": "identifies the decision"
+          },
+          "request_id": {
+            "type": "integer",
+            "title": "Request id",
+            "description": "The request decided.",
+            "example": 501,
+            "x-when-to-use": "the request it belongs to"
+          },
+          "decider_id": {
+            "type": "integer",
+            "title": "Decider id",
+            "description": "Who decided (or attempted the approval the transfer refused).",
+            "example": 3,
+            "x-when-to-use": "never a party"
+          },
+          "outcome": {
+            "type": "string",
+            "title": "Outcome",
+            "description": "approved or refused.",
+            "example": "approved",
+            "enum": [
+              "approved",
+              "refused"
+            ],
+            "x-when-to-use": "the request mirrors it"
+          },
+          "reason": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "title": "Reason",
+            "description": "The refusal reason; null when approved; one of the four caller codes",
+            "or counterpart_overlap / counterpart_inactive set only by the system when the transfer refuses (a caller sending those gets invalid_reason).": null,
+            "example": null,
+            "enum": [
+              "fairness",
+              "coverage",
+              "policy",
+              "other",
+              "counterpart_overlap",
+              "counterpart_inactive",
+              null
+            ],
+            "x-when-to-use": "counterpart_overlap and counterpart_inactive are recorded by the system when the transfer refuses"
+          },
+          "decided_at": {
+            "type": "string",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}$",
+            "title": "Decided at",
+            "description": "From the clock; naive local date-time.",
+            "example": "2026-11-07T11:00:00"
+          }
+        }
+      },
+      "SwapRequest": {
+        "title": "Swap request",
+        "description": "A request to hand an assignment to a counterpart, with its stored state and its derived display state.",
+        "type": "object",
+        "required": [
+          "id",
+          "assignment_id",
+          "requester_id",
+          "counterpart_id",
+          "shift_date",
+          "shift_start",
+          "requester_name",
+          "counterpart_name",
+          "reason",
+          "state",
+          "display_state",
+          "awaiting",
+          "created_at",
+          "answered_at",
+          "answer_reason",
+          "decision",
+          "party"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id",
+            "description": "The request's id.",
+            "example": 501,
+            "x-when-to-use": "identifies the request everywhere"
+          },
+          "shift_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Shift date",
+            "description": "The date of the shift handed over (from scheduling",
+            "IR-01).": null,
+            "example": "2026-11-09"
+          },
+          "shift_start": {
+            "type": "string",
+            "title": "Shift start",
+            "description": "The start time of day of that shift (HH:MM).",
+            "example": "08:00"
+          },
+          "requester_name": {
+            "type": "string",
+            "title": "Requester",
+            "description": "The requester's display name (from identity",
+            "IR-09).": null,
+            "example": "Mo"
+          },
+          "counterpart_name": {
+            "type": "string",
+            "title": "Counterpart",
+            "description": "The counterpart's display name.",
+            "example": "Sam"
+          },
+          "assignment_id": {
+            "type": "integer",
+            "title": "Assignment id",
+            "description": "The assignment handed over.",
+            "example": 101,
+            "x-when-to-use": "to find the shift"
+          },
+          "requester_id": {
+            "type": "integer",
+            "title": "Requester id",
+            "description": "The holder who asked.",
+            "example": 2,
+            "x-when-to-use": "a party"
+          },
+          "counterpart_id": {
+            "type": "integer",
+            "title": "Counterpart id",
+            "description": "Who was asked to take it.",
+            "example": 4,
+            "x-when-to-use": "a party"
+          },
+          "reason": {
+            "type": "string",
+            "title": "Reason",
+            "description": "Why the shift is handed over.",
+            "example": "sick",
+            "enum": [
+              "sick",
+              "family",
+              "travel",
+              "other"
+            ],
+            "x-when-to-use": "shown to the counterpart and the decider"
+          },
+          "state": {
+            "type": "string",
+            "title": "State",
+            "description": "The stored state.",
+            "example": "requested",
+            "enum": [
+              "requested",
+              "accepted",
+              "declined",
+              "approved",
+              "refused"
+            ],
+            "x-when-to-use": "the truth; see display_state for expiry"
+          },
+          "display_state": {
+            "type": "string",
+            "title": "Display state",
+            "description": "The state as shown; expired when requested or accepted and the deadline has passed by the clock.",
+            "example": "requested",
+            "enum": [
+              "requested",
+              "accepted",
+              "declined",
+              "approved",
+              "refused",
+              "expired"
+            ],
+            "x-when-to-use": "what the inbox shows"
+          },
+          "awaiting": {
+            "type": "string",
+            "title": "Awaiting",
+            "description": "Whose action is awaited; counterpart while requested",
+            "decider while accepted": null,
+            "none otherwise (and when expired).": null,
+            "example": "counterpart",
+            "enum": [
+              "counterpart",
+              "decider",
+              "none"
+            ],
+            "x-when-to-use": "who is holding it up"
+          },
+          "created_at": {
+            "type": "string",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}$",
+            "title": "Created at",
+            "description": "From the clock; naive local date-time (ISO 8601 without offset).",
+            "example": "2026-11-07T10:00:00"
+          },
+          "answered_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "title": "Answered at",
+            "description": "From the clock when the counterpart answered (naive local date-time); null before.",
+            "example": null
+          },
+          "answer_reason": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "title": "Answer reason",
+            "description": "The counterpart's reason when declined; null otherwise.",
+            "example": null,
+            "enum": [
+              "unavailable",
+              "other",
+              null
+            ],
+            "x-when-to-use": "only when state is declined"
+          },
+          "decision": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Decision"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Decision",
+            "description": "The decision once decided; null before.",
+            "example": null
+          },
+          "party": {
+            "type": "boolean",
+            "title": "Party",
+            "description": "True when the caller is the requester or the counterpart (per viewer; always true in the caller's own list).",
+            "example": true
+          }
+        }
+      },
+      "Notification": {
+        "title": "Notification",
+        "description": "A message to one member about one event.",
+        "type": "object",
+        "required": [
+          "id",
+          "recipient_id",
+          "event",
+          "text",
+          "created_at",
+          "read"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id",
+            "description": "The notification's id.",
+            "example": 9002,
+            "x-when-to-use": "to mark it read"
+          },
+          "recipient_id": {
+            "type": "integer",
+            "title": "Recipient id",
+            "description": "Whose it is.",
+            "example": 4,
+            "x-when-to-use": "only the recipient sees it"
+          },
+          "event": {
+            "type": "string",
+            "title": "Event",
+            "description": "What happened.",
+            "example": "swap_requested",
+            "enum": [
+              "week_published",
+              "swap_requested",
+              "swap_accepted",
+              "swap_declined",
+              "swap_approved",
+              "swap_refused",
+              "member_added",
+              "role_changed",
+              "member_deactivated"
+            ],
+            "x-when-to-use": "the nine events of R-notifications-01"
+          },
+          "text": {
+            "type": "string",
+            "title": "Text",
+            "description": "The message",
+            "naming the state as it is and the reason when refused.": null,
+            "example": "Mo asks you to take 2026-11-09 08:00–14:00 (sick)."
+          },
+          "created_at": {
+            "type": "string",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}$",
+            "title": "Created at",
+            "description": "From the clock; naive local date-time (ISO 8601 without offset).",
+            "example": "2026-11-07T10:00:00"
+          },
+          "read": {
+            "type": "boolean",
+            "title": "Read",
+            "description": "True once the recipient marked it.",
+            "example": false
+          }
+        }
+      }
+    }
+  }
+}

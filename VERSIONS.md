@@ -105,3 +105,8 @@ Scheme: `vMAJOR.MINOR` — a requirement changed (design-change loop, operator d
 | design/ARCHITECTURE.md | 1.0 | 1.1 | D-09 frontend toolchain in the roster; contract_stubs and serve.py named; frozen edges removed from the layering law's configuration |
 | contracts/openapi.yaml | 1.0 | 1.1 | MemberSummary for identity.list_members (additive; the golden is pinned by ADU-02) |
 | design/INTERFACES.md | 1.0 | 1.0.1 | the doubles section; ADU-16 as the Nulls' creator; SwapsPort.view in the traceability |
+
+### 2026-11-07 — contract v1.1 addendum: D-11 — the JSON twin of the contract
+| Document | From | To | What changed |
+|---|---|---|---|
+| contracts/openapi.json | — | 1.1 | generated from openapi.yaml by js-yaml; regenerated with every contract change; read by the stubs and the tests |

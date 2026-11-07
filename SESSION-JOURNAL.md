@@ -162,3 +162,7 @@ A recorded approval (hard rule 1, 4 or 6) is a paragraph in the block of the ses
 
 ## 2026-11-07 08:47 · ADU-16 lint follow-up · done
 **Done:** six over-long docstring lines in ADU-16's files reflowed; `uv run ruff check` clean; gate unchanged (28 passed). The ADU-16 commit went in with those six findings because the session's script printed the lint summary and carried on — the closure's "ruff clean" was asserted, not checked. Recorded as package feedback (the closure prompt should demand the lint's last line pasted beside the gate's, and the Stop hook should refuse a closure block without both).
+
+## 2026-11-07 08:49 · contract addendum (architect) · done
+**Done:** contracts/openapi.json generated from the YAML by `npx --yes js-yaml` (D-11): ADU-02's stubs and its conformance test read the contract in process, and the roster gains no YAML parser. Regenerated with every contract change, in the same commit as the golden.
+**NEXT:** the ADU-02 session.
