@@ -9,3 +9,9 @@ Entry format:
 **Options:** two or three, each with its consequence; the raiser recommends one.
 **Resolution:** the ruling, who made it, the date, and the document it now lives in.
 ```
+
+### Q-01 · 2026-11-07 · design-product (pm-lead) · resolved → PRODUCT-DESIGN v1.0
+**Conflict:** the permissions matrix lets a planner approve swaps and lets a planner request swaps of their own assignments; nothing said who approves a swap the planner is party to.
+**Blocking:** no — relevant at the swaps stories.
+**Options:** (1) the admin approves such swaps (segregation of duties); (2) a second planner, if any; (3) the planner may approve their own.
+**Resolution:** option 1, the operator, 2026-11-07; the rule lives in design/domains/swaps/spec.md (R-swaps-05) and the permissions matrix ("allowed (not own)").
