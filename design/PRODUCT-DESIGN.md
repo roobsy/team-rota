@@ -1,5 +1,5 @@
 # PRODUCT-DESIGN — Team Rota
-v1.1 · owned by the pm-lead (`/adu-lifecycle:design-product`); checked by `adu design check`; reviewed by the architect and the developer (`/adu-lifecycle:review-design`) before stories are written. Everything here serves the North Star in `design/PRODUCT-BRIEF.md`: the roster tells each person the truth about their week, plainly, even when unwelcome. v1.1 applies the dispositions of `design/DESIGN-REVIEW-1.md` (56 findings): sign-in and the first admin, implicit Monday weeks, the clock, atomic approval, derived expiry, the decider rule, the forbidden rule, the notifications read path and account-change events.
+v1.2 · owned by the pm-lead (`/adu-lifecycle:design-product`); checked by `adu design check`; reviewed by the architect and the developer (`/adu-lifecycle:review-design`) before stories are written. Everything here serves the North Star in `design/PRODUCT-BRIEF.md`: the roster tells each person the truth about their week, plainly, even when unwelcome. v1.1 applied `design/DESIGN-REVIEW-1.md` (56 findings); v1.2 applies `design/DESIGN-REVIEW-2.md` (52 findings): the caller resolved once, refusal shape and precedence, not_found, the typed Notifier events, "open" defined once, the answer fields, list members and list weeks, the badge per holder, tiebreaks, ids on every entity.
 
 ## Personas
 | Persona | Role | Goal | Pain today |
@@ -9,19 +9,21 @@ v1.1 · owned by the pm-lead (`/adu-lifecycle:design-product`); checked by `adu 
 | Avi | admin | keep members and roles right; nobody decides their own swap | no record of who agreed to what |
 
 ## Cross-cutting rules (apply to every journey)
-- **The caller.** Every operation except sign-in and the operator's seed command carries a bearer token issued by identity at sign-in; the acting member is the one the token identifies. A missing or invalid token is refused with reason `unauthenticated`.
+- **The caller.** Every operation except sign-in and the operator's seed command carries a bearer token issued by identity at sign-in. The API layer resolves the token once per request into the caller {member_id, name, role, active} (IR-11) and passes that value into every domain operation; the domain enforces forbidden, own and party on it. A missing or unknown token, or a token of an inactive member, is refused with reason `unauthenticated`. A new sign-in replaces the member's token.
 - **The forbidden rule.** An action by a role the Permissions table denies is refused with reason `forbidden`; an action on something that is not the caller's own, where the table says `own`, is refused with the reason the story names.
-- **The clock.** Every action reads `now` from an injected clock; tests set it. Times are naive local times of the team (one team, one timezone, a fixed deployment setting). A shift's start instant is its date plus its start time; a week is "future" when its start_date is after the clock's today.
-- **Nothing pending looks done.** States are shown as they are; a derived display state (`expired`) is computed on read and never stored.
+- **Refusals.** A refusal is {reason, detail, and the extra fields a story names}; it changes nothing. An identifier that names nothing is refused with reason `not_found`. When several checks fail, the first in this order names the reason: unauthenticated → forbidden → not_found → own/party → state → deadline → validation. An operation that changed state never answers with a refusal: approval whose transfer was refused succeeds and returns the recorded decision.
+- **The clock.** Every action reads `now` from an injected clock; tests set it. Times are naive local times of the team (one team, one timezone, a fixed deployment setting). A shift's start instant is its date plus its start time. A deadline is half-open: an action is allowed while now < deadline and refused at or after it.
+- **Lists and ties.** Every list names its sort key and breaks ties by id: ascending for oldest-first lists, descending for newest-first; the board sorts by date, start, then shift id.
+- **Nothing pending looks done.** States are shown as they are; a derived display state (`expired`) is computed on read and never stored. A request is **open** when its stored state is requested or accepted and now < its deadline; only open requests carry a badge, show answer or decide controls, or count as pending.
 
 ## Journeys
 ### J-01 — Admin sets up the team
 Persona: Avi. Outcome: the team exists with one admin, every member has one role, a passcode and can sign in, and is told of changes to their account.
 1. [identity] the operator seeds the first admin with a command outside the API, once, on an empty team
-2. [identity] Avi adds a member with a name, an email, a role and a passcode
+2. [identity] Avi adds a member with a name, an email, a role and a passcode, and sees the team list
 3. [identity] Avi changes a member's role
-4. [identity] Avi deactivates a member, who keeps their history but can no longer be assigned or sign in
-5. [identity] a member signs in with email and passcode and receives the token every later operation carries
+4. [identity] Avi deactivates a member, who keeps their row and history but can no longer be assigned, sign in or act on a token
+5. [identity] a member signs in with email and passcode and receives the token every later operation carries, with who they are
 6. [notifications] the member is told when they are added, when their role changes and when they are deactivated
 
 ### J-02 — Planner publishes a week
@@ -29,27 +31,27 @@ Persona: Pat. Outcome: the week is visible to every member, who were all told.
 1. [scheduling] Pat creates the shifts of a week (date, start, end, slots); the week is named by its Monday and comes into being with its first shift
 2. [scheduling] Pat assigns active members to shifts, no member twice in one shift and no overlapping shifts for one member, and removes a mistaken assignment while the week is a draft
 3. [scheduling] Pat publishes the week; a published week changes only through an approved swap
-4. [notifications] every active member is notified that the week is published
+4. [notifications] every active member of any role is notified that the week is published
 
 ### J-03 — Member views the week
 Persona: Mo. Outcome: Mo knows who holds every shift and what is pending.
-1. [scheduling] Mo opens the week board and sees every shift with its holders and the state of any open swap on it
+1. [scheduling] Mo opens the week board — the current week by default, any listed week from the picker — and sees every shift with its holders and the open request on each
 2. [scheduling] Mo filters the board to their own shifts
 
 ### J-04 — Member hands over a shift
 Persona: Mo. Outcome: a counterpart holds Mo's shift, a planner or admin who is not a party approved it, everyone concerned was told.
-1. [swaps] Mo requests a swap of one of their assignments on a published week, naming a counterpart and a reason code, before the shift's deadline
+1. [swaps] Mo requests a swap of one of their assignments on a published week, naming an eligible counterpart and a reason code, before the shift's deadline
 2. [notifications] the counterpart is notified of the request
-3. [swaps] the counterpart accepts or declines the request
-4. [notifications] the requester and every member eligible to decide the request are notified of the counterpart's answer
-5. [swaps] a planner or admin who is not a party approves or refuses the accepted request with a reason code; approval transfers the assignment first and records the decision second, atomically
+3. [swaps] the counterpart accepts or declines the request, with a reason when declining
+4. [notifications] on accept the requester and every eligible decider are notified; on decline the requester, with the reason
+5. [swaps] a planner or admin who is not a party approves or refuses the accepted request with a reason code; approval transfers the assignment first and records the decision second, in one transaction
 6. [scheduling] on transfer the assignment moves to the counterpart and the board shows it
 7. [notifications] both members are notified of the outcome, with the reason when refused
 
 ### J-05 — Anyone reads what is pending
 Persona: Mo, Pat. Outcome: nothing pending is hidden, nothing pending looks done.
 1. [swaps] Mo sees every request they are party to, with its state and whose action is awaited
-2. [swaps] Pat sees every accepted request awaiting a decision, oldest first, those Pat is party to marked
+2. [swaps] Pat sees every open accepted request awaiting a decision, oldest first, those Pat is party to marked
 3. [notifications] Mo reads their notifications, newest first, and marks one read
 
 ## Screens
@@ -57,15 +59,15 @@ Persona: Mo, Pat. Outcome: nothing pending is hidden, nothing pending looks done
 |---|---|---|
 | Sign in | J-01#5 | sign-in-form, sign-in-email, sign-in-passcode, sign-in-submit |
 | Team | J-01#2, J-01#3, J-01#4 | team-list, member-add, member-role, member-deactivate |
-| Week board | J-02#1, J-02#2, J-02#3, J-03#1, J-03#2, J-04#6 | week-board, week-picker, shift-create, shift-assign, shift-unassign, week-publish, board-filter-mine, board-empty-mine, shift-pending-badge |
+| Week board | J-02#1, J-02#2, J-02#3, J-03#1, J-03#2, J-04#6 | week-board, week-picker, board-draft, board-none, shift-create, shift-assign, shift-unassign, week-publish, board-filter-mine, board-empty-mine, holder-row, holder-pending-badge |
 | Swap request | J-04#1 | swap-request-form, swap-counterpart, swap-reason, swap-submit |
-| Swap inbox | J-04#3, J-04#5, J-05#1, J-05#2 | swap-inbox, swap-accept, swap-decline, swap-approve, swap-refuse, swap-state, swap-awaiting, swap-party |
+| Swap inbox | J-04#3, J-04#5, J-05#1, J-05#2 | swap-inbox, swap-accept, swap-decline, swap-approve, swap-refuse, swap-state, swap-awaiting, swap-party, swap-decision |
 | Notifications | J-01#6, J-02#4, J-04#2, J-04#4, J-04#7, J-05#3 | notification-list, notification-item, notification-empty |
 
 ## Domains
 | Domain | Owner PM | Purpose |
 |---|---|---|
-| identity | pm-lead | members, roles, passcodes and tokens, who may do what |
+| identity | pm-lead | members, roles, passcodes and tokens, who the caller is |
 | scheduling | pm-lead | weeks, shifts, assignments, the board, the transfer |
 | swaps | pm-swaps | swap requests, answers, decisions and their reasons |
 | notifications | pm-lead | telling the people affected what changed, never overstating |
@@ -73,14 +75,14 @@ Persona: Mo, Pat. Outcome: nothing pending is hidden, nothing pending looks done
 ## Entities
 | Entity | Domain | Description | Key fields |
 |---|---|---|---|
-| Member | identity | a person on the team | id, name, email, role, active, passcode_hash, token |
+| Member | identity | a person on the team | id, name, email (unique, compared case-insensitively), role, active, passcode_hash, token (one; replaced by each sign-in) |
 | Role | identity | admin, planner or member | name |
-| Week | scheduling | the seven days from a Monday, with a publication state; comes into being with its first shift | start_date (a Monday), state (draft, published) |
-| Shift | scheduling | a set of slots on one day of a week; immutable once created in this version | week, date, start, end (times of day on that date; end after start; never crossing midnight), slots (≥ 1) |
-| Assignment | scheduling | a member holding one slot of a shift | shift, member |
-| SwapRequest | swaps | a request to hand an assignment to a counterpart | assignment, requester, counterpart, reason, state (requested, accepted, declined, approved, refused), created_at, accepted_at; `expired` is derived on read (deadline passed, no decision), never stored |
-| Decision | swaps | the decision on an accepted request, approved or refused, with the reason | request, decider, outcome (approved, refused), reason, decided_at |
-| Notification | notifications | a message to one member about one event | recipient, event, text, created_at, read |
+| Week | scheduling | the seven days from a Monday, keyed by that date; comes into being with its first shift | start_date (a Monday, the key), state (draft, published) |
+| Shift | scheduling | a set of slots on one day of a week; immutable once created in this version | id, week_start, date, start, end (times of day on that date; end after start; never crossing midnight), slots (≥ 1) |
+| Assignment | scheduling | a member holding one slot of a shift | id, shift_id, member_id |
+| SwapRequest | swaps | a request to hand an assignment to a counterpart, with the counterpart's answer | id, assignment_id, requester_id, counterpart_id, reason (the requester's), state (requested, accepted, declined, approved, refused), created_at, answered_at, answer_reason (the counterpart's, on decline); `expired` is derived on read (requested or accepted, deadline passed), never stored |
+| Decision | swaps | the decision on an accepted request, approved or refused, with the reason | id, request_id, decider_id, outcome (approved, refused), reason, decided_at |
+| Notification | notifications | a message to one member about one event | id, recipient_id, event (one of the nine event codes of R-notifications-01), text, created_at, read |
 
 ## Roles
 | Role | Description |
@@ -90,12 +92,14 @@ Persona: Mo, Pat. Outcome: nothing pending is hidden, nothing pending looks done
 | member | views the board, requests and answers swaps for their own assignments, reads their own notifications |
 
 ## Permissions
-Every cell presumes the caller identified by the bearer token (cross-cutting rules). `own` = only for assignments, requests or notifications where the caller is the holder, a party or the recipient.
+Every cell presumes the caller resolved from the bearer token (cross-cutting rules). `own` = only for assignments, requests or notifications where the caller is the holder, a party or the recipient.
 | Action | admin | planner | member |
 |---|---|---|---|
 | seed the first admin (operator command, outside the API) | — | — | — |
 | sign in | allowed | allowed | allowed |
+| list members (id, name, role, active; never passcode or token) | allowed | allowed | allowed |
 | manage members and roles | allowed | denied | denied |
+| list weeks (members: published only) | allowed | allowed | allowed |
 | create shifts, assign, unassign, publish a week | allowed | allowed | denied |
 | view the week board (draft weeks: planners and admins only) | allowed | allowed | allowed |
 | request a swap | own | own | own |

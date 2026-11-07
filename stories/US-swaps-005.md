@@ -8,8 +8,9 @@ step: 2
 roles: [admin, planner]
 data: [SwapRequest]
 arms:
-  - { arm: "every accepted request awaiting a decision is listed oldest first by accepted_at, the same list for any admin or planner", kind: deterministic }
-  - { arm: "requests the viewer is party to are listed and marked party, with no decide controls", kind: deterministic }
+  - { arm: "every open accepted request is listed oldest first by answered_at then id ascending, the same list for any admin or planner; an accepted request whose deadline has passed is not listed (it shows expired in the parties' own lists)", kind: deterministic }
+  - { arm: "requests the viewer is party to are listed and marked swap-party, with no decide controls", kind: deterministic }
+  - { arm: "a request whose party is inactive is still listed to deciders", kind: deterministic }
   - { arm: "a member calling the action is refused with reason forbidden", kind: deterministic }
 ---
 ## Story

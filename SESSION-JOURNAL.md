@@ -47,3 +47,10 @@ A recorded approval (hard rule 1, 4 or 6) is a paragraph in the block of the ses
 **Deviations flagged:** the swaps rows were applied by the lead on pm-swaps' behalf (the lead convenes the review; the fence binds the pm-swaps agent, not the lead) — recorded here so segregation stays visible.
 **Tests at close:** design check and stories check green; no code yet.
 **NEXT:** round 2 — fresh architect and developer reviewers on v1.1; the gate is both AGREED in the same round, then D-02.
+
+## 2026-11-07 06:53 · review-design round 2 (pm-lead) · in progress
+**Done:** DESIGN-REVIEW-2 convened with fresh reviewers (a two-agent workflow, structured findings): architect 25, developer 27, 14 blocking each, both `VERDICT: CHANGES REQUIRED`; all 52 dispositioned in design/DESIGN-REVIEW-2.md and applied as PRODUCT-DESIGN v1.2, specs v1.2, 22 stories (107 arms), IR-01..IR-11; `adu design check` and `adu stories check` green.
+**Decisions (in the review table):** typed Notifier events with self-contained payloads, the emitter names recipients (A1/D5/D6); the caller resolved once by the API layer (A4, IR-11); refusal shape, not_found and precedence (A6/D8); approval after a refused transfer succeeds and returns the decision (A9/D11); "open" defined once, expired never pending (A12/D2); answer_reason and answered_at (A11/D4); list members and list weeks with the current week served by the API (A7/D14); the service cycles accepted explicitly through ports (A18/D17).
+**Deviations flagged:** round 2 was heavier than round 1 in blocking findings (14 + 14 vs. the first round's, which did not grade severity) — the second reading found what the first round's fixes created (A5: implicit weeks + immutable shifts made no_shifts unconstructible). Recorded for the retro: dispositions applied independently can conflict; a round-3 read is the check.
+**Tests at close:** design check and stories check green; no code yet.
+**NEXT:** round 3 — fresh architect and developer reviewers on v1.2; the gate is both AGREED in the same round, then D-02.

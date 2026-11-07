@@ -1,20 +1,20 @@
 # swaps — domain spec
-v1.1 · owned by pm-swaps. The business rules of this domain, each testable, each naming the story it serves. v1.1 applies the dispositions of DESIGN-REVIEW-1.
+v1.2 · owned by pm-swaps. The business rules of this domain, each testable, each naming the story it serves. v1.2 applies the dispositions of DESIGN-REVIEW-2.
 
 ## Rules
 | Rule | Statement | Serves | Testable as |
 |---|---|---|---|
-| R-swaps-01 | Only the holder requests a swap of an assignment, on a published week, before the deadline: 24 hours before the shift's start instant by the injected clock | US-swaps-001 | not_holder, week_draft, past_deadline |
-| R-swaps-02 | One open request (state requested or accepted) per assignment | US-swaps-001 | request_open |
-| R-swaps-03 | Only the named counterpart answers, only in state requested, only before the deadline | US-swaps-002 | not_counterpart, wrong_state, past_deadline |
-| R-swaps-04 | Only an accepted request is decided, only before the deadline; approval is one atomic action: transfer through scheduling first, then one Decision row (approved) and the request mirrors it; a refused transfer records a Decision refused with the transfer's reason and the decider who attempted it; a refusal records a Decision refused with the reason code | US-swaps-003 | wrong_state, past_deadline; the Decision row and the mirrored state |
+| R-swaps-01 | Only the holder requests a swap of an assignment, on a published week, while now < the deadline (24 hours before the shift's start instant, by the injected clock) | US-swaps-001 | not_holder, week_draft, past_deadline (reads scheduling, IR-01) |
+| R-swaps-02 | One open request per assignment | US-swaps-001 | request_open |
+| R-swaps-03 | Only the named counterpart answers, only while the request is open in state requested; an answer sets answered_at and, on decline, answer_reason | US-swaps-002 | not_counterpart, wrong_state, past_deadline |
+| R-swaps-04 | Only an open accepted request is decided; approval is one action in one transaction: transfer through scheduling first (IR-02, commits nothing itself), then one Decision row (approved) and the request mirrors it; a refused transfer records a Decision refused with the transfer's reason and the decider who attempted it, and the operation succeeds — an error reason is reserved for calls that changed nothing; a refusal records a Decision refused with the reason code; atomicity rests on the one-transaction-per-request rule of the architecture | US-swaps-003 | wrong_state, past_deadline; the Decision row and the mirrored state |
 | R-swaps-05 | Nobody decides a swap they are party to; any admin or planner who is not a party decides; the pending list marks requests the viewer is party to | US-swaps-003, US-swaps-005 | party_to_swap; the party mark |
-| R-swaps-06 | A request in state requested or accepted whose deadline has passed is shown expired: derived on read from the clock, never stored, never notified | US-swaps-004 | the expired display state |
+| R-swaps-06 | A request is open when its stored state is requested or accepted and now < its deadline; a request in those states at or after the deadline is shown expired — derived on read, never stored, never notified — and is not pending, carries no badge and shows no controls | US-swaps-004, US-swaps-005, US-scheduling-004 | the expired display state; absence from pending; no badge |
 | R-swaps-07 | Reason codes are enumerated and required: request sick, family, travel, other; decline unavailable, other; refusal fairness, coverage, policy, other; the transfer's counterpart_overlap and counterpart_inactive are recorded as refusal reasons by the system | US-swaps-001, US-swaps-002, US-swaps-003 | reason_required, invalid_reason; the enum |
-| R-swaps-08 | The counterpart is an active member other than the requester who holds no slot on that shift | US-swaps-001 | counterpart_inactive, counterpart_on_shift, counterpart_self |
-| R-swaps-09 | Lists are ordered by a stored timestamp: a member's requests newest first by created_at; pending decisions oldest first by accepted_at | US-swaps-004, US-swaps-005 | the order |
+| R-swaps-08 | The counterpart is an active member other than the requester who holds no slot on that shift | US-swaps-001 | counterpart_inactive, counterpart_on_shift, counterpart_self (reads scheduling IR-01, identity IR-09) |
+| R-swaps-09 | Lists are ordered by a stored timestamp with id as the tiebreak: a member's requests newest first by created_at then id descending; pending decisions oldest first by answered_at then id ascending; a listed request carries its answer_reason and its Decision | US-swaps-004, US-swaps-005 | the order and the embedded fields |
 
 ## Interfaces this domain needs from others
-- scheduling: read an assignment's holder and its shift's start instant (IR-01); transfer an assignment to the counterpart, refused on overlap or inactivity (IR-02)
-- notifications: a Notifier to emit the request / answer / outcome events (IR-03)
-- identity: whether the counterpart is active, and member names for notification text (IR-09)
+- scheduling: read an assignment — its holder, its shift (id, date, start instant, end, current holder ids) and its week's state (IR-01); transfer an assignment to the counterpart inside the caller's transaction, refused on overlap or inactivity (IR-02)
+- notifications: emit swap_requested / swap_accepted / swap_declined / swap_approved / swap_refused with self-contained payloads (IR-03)
+- identity: whether the counterpart is active; the eligible deciders; member names for the payloads (IR-09)

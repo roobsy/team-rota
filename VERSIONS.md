@@ -8,7 +8,7 @@ Scheme: `vMAJOR.MINOR` — a requirement changed (design-change loop, operator d
 |---|---|---|
 | CLAUDE.md | 1.0 | constitution |
 | design/PRODUCT-BRIEF.md | 1.0 | purpose (content-pinned, D-01) |
-| design/PRODUCT-DESIGN.md | 1.1 | product design |
+| design/PRODUCT-DESIGN.md | 1.2 | product design |
 | design/ARCHITECTURE.md | 0.1 | architecture contract |
 | contracts/openapi.yaml | 0.1 | API contract |
 | ADU-PLAN.md | 0.1 | the plan |
@@ -33,3 +33,11 @@ Scheme: `vMAJOR.MINOR` — a requirement changed (design-change loop, operator d
 | design/PRODUCT-DESIGN.md | 1.0 | 1.1 | cross-cutting rules (caller, forbidden, clock, derived states); J-01 gains seed, sign-in and account-change steps; J-05 gains the notifications read; Sign-in screen; Week implicit from a Monday; Shift times of day; SwapRequest timestamps, expired derived; Approval renamed Decision; deciders = any non-party admin or planner |
 | stories/ | 18 | 22 | US-identity-004/005, US-notifications-005/006 added; every story's arms made falsifiable (reason codes, fixtures, anchors); 5 UI arms; forbidden arms |
 | design/domains/*/spec.md | 1.0 | 1.1 | identity 5→8 rules, scheduling 6→8, swaps 7→9, notifications 3→4; every "needs from others" section filled against IR-01..IR-10 |
+
+### 2026-11-07 — PRODUCT-DESIGN v1.2: DESIGN-REVIEW-2 — 52 findings (architect 25, developer 27; 14 blocking each) dispositioned, all accepted
+| Document | From | To | What changed |
+|---|---|---|---|
+| design/PRODUCT-DESIGN.md | 1.1 | 1.2 | the caller resolved once (IR-11), refusal shape and precedence, not_found, half-open deadlines, tiebreaks, "open" defined once; list members and list weeks with the current week; badge per holder-row; SwapRequest answered_at/answer_reason; ids on every entity; board-draft/board-none anchors |
+| stories/ | 22 (86 arms) | 22 (107 arms) | UI arms on every screen story; token lifecycle; the §6 end-to-end arm on US-swaps-003; the quantitative arm with its predicate and fixture; identity no longer asserts other domains' lists |
+| design/domains/*/spec.md | 1.1 | 1.2 | the nine typed Notifier events with payloads (R-notifications-01); R-scheduling-09 fixture; R-identity-09 list; transactions and the internal transfer stated |
+| design/INTERFACE-REQUESTS.md | IR-01..10 | IR-01..11 | rows widened to what the rules need; the service cycles accepted explicitly |

@@ -6,10 +6,10 @@ persona: Mo
 journey: J-04
 step: 7
 roles: [admin, planner, member]
-data: [Notification, SwapRequest, Decision]
+data: [Notification]
 arms:
-  - { arm: "on approval both members receive one notification naming the shift and the new holder", kind: deterministic }
-  - { arm: "on refusal both members receive one notification carrying the reason code, including counterpart_overlap and counterpart_inactive", kind: deterministic }
+  - { arm: "on approval (swap_approved) both members receive one notification naming the shift's date and start and the new holder's name", kind: deterministic }
+  - { arm: "on refusal (swap_refused) both members receive one notification carrying the reason code, including counterpart_overlap and counterpart_inactive", kind: deterministic }
 ---
 ## Story
 As a member, I want to be told the outcome, with the reason when refused, so that nothing pending looks done.
@@ -18,7 +18,7 @@ As a member, I want to be told the outcome, with the reason when refused, so tha
 The rules this story serves are in the notifications domain spec, referenced by id there.
 
 ## Data touched
-Notification (owned); SwapRequest (read through swaps's interface), Decision (read through swaps's interface)
+Notification (owned)
 
 ## Out of scope
 Appeals.

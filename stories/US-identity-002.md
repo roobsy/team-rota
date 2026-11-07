@@ -12,6 +12,7 @@ arms:
   - { arm: "changing the last active admin to another role is refused with reason last_admin", kind: deterministic }
   - { arm: "changing to a role outside admin, planner, member is refused with reason invalid_role", kind: deterministic }
   - { arm: "a planner or member calling the action is refused with reason forbidden", kind: deterministic }
+  - { arm: "the Team screen's member-role control changes the role shown in team-list", kind: deterministic }
 ---
 ## Story
 As an admin, I want to change a member's role so that duties follow people, not accounts.

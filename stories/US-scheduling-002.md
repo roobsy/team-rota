@@ -15,6 +15,7 @@ arms:
   - { arm: "assigning an inactive member is refused with reason member_inactive", kind: deterministic }
   - { arm: "removing an assignment from a shift of a draft week frees the slot; in a published week it is refused with reason week_published", kind: deterministic }
   - { arm: "a member calling the action is refused with reason forbidden", kind: deterministic }
+  - { arm: "the Week board's shift-assign control assigns a member chosen from the members list and the holder-row appears; shift-unassign removes it while the week is a draft", kind: deterministic }
 ---
 ## Story
 As a planner, I want to assign members to shifts, and undo a mistake while the week is a draft, so that every slot has a holder.

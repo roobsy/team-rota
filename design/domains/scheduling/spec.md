@@ -1,19 +1,20 @@
 # scheduling — domain spec
-v1.1 · owned by pm-lead. The business rules of this domain, each testable, each naming the story it serves. v1.1 applies the dispositions of DESIGN-REVIEW-1.
+v1.2 · owned by pm-lead. The business rules of this domain, each testable, each naming the story it serves. v1.2 applies the dispositions of DESIGN-REVIEW-2.
 
 ## Rules
 | Rule | Statement | Serves | Testable as |
 |---|---|---|---|
-| R-scheduling-01 | A week is the seven days from a Monday, named by that start_date, and comes into being in state draft with its first shift; a shift lies on one of those days with start and end as times of day on that date, end after start, never crossing midnight; slots is at least one | US-scheduling-001 | not_week_start, outside_week, invalid_interval, invalid_slots |
-| R-scheduling-02 | An active member holds at most one slot per shift and no two shifts whose half-open intervals [start, end) intersect on the same date; an inactive member is never assigned or transferred to | US-scheduling-002, US-scheduling-006 | already_assigned, overlapping_shift, member_inactive, counterpart_overlap, counterpart_inactive |
-| R-scheduling-03 | A week publishes only when it has at least one shift and every slot is filled; the refusal lists the unfilled shifts (shift id, date, start, unfilled) | US-scheduling-003 | unfilled_slots, no_shifts |
+| R-scheduling-01 | A week is the seven days from a Monday, keyed by that start_date, and comes into being in state draft with its first shift (so a week always has a shift); a shift lies on one of those days with start and end as times of day on that date, end after start, never crossing midnight; slots is at least one | US-scheduling-001 | not_week_start, outside_week, invalid_interval, invalid_slots |
+| R-scheduling-02 | An active member holds at most one slot per shift and no two shifts whose half-open intervals [start, end) intersect on the same date — a slot on the same shift counts as an overlap; an inactive member is never assigned or transferred to | US-scheduling-002, US-scheduling-006 | already_assigned, overlapping_shift, member_inactive; counterpart_overlap, counterpart_inactive on transfer |
+| R-scheduling-03 | A week publishes only when every slot is filled; the refusal lists the unfilled shifts (shift id, date, start, unfilled); an unknown start_date is not_found | US-scheduling-003 | unfilled_slots, not_found |
 | R-scheduling-04 | A published week changes only through a transfer requested by swaps; creating, assigning and unassigning are refused on it; an assignment of a draft week may be removed | US-scheduling-002, US-scheduling-003, US-scheduling-006 | week_published; the transfer on approval |
-| R-scheduling-05 | The board shows a badge on a shift with a request in state requested or accepted, whose text is that state, and no badge otherwise; a pending request never looks done | US-scheduling-004 | the badge text equals the state |
-| R-scheduling-06 | A draft week's board is returned to planners and admins only | US-scheduling-004 | week_draft |
+| R-scheduling-05 | The board lists shifts by date, start, then shift id; each holder-row carries the open request on that assignment (requested or accepted, open as R-swaps-06 defines it, answered by swaps through IR-07) and nothing otherwise; a pending request never looks done | US-scheduling-004 | the badge text equals the open request's state, per holder-row |
+| R-scheduling-06 | A draft week's board is returned to planners and admins only; the weeks list shows members published weeks only; the current week (latest published with start_date on or before today) is served by the API, never computed in the browser | US-scheduling-004 | week_draft; the list and the current week |
 | R-scheduling-07 | A shift holds at most slots assignments | US-scheduling-002 | shift_full |
-| R-scheduling-08 | The transfer is an internal interface for swaps, never an operation of the API | US-scheduling-006 | no operation exists; the interface is tested through swaps' approval |
+| R-scheduling-08 | The transfer is an internal interface for swaps, running inside the caller's transaction and committing nothing itself; no HTTP route performs it | US-scheduling-006 | the interface called directly in scheduling's tests; the route table has no such route; the end-to-end path is US-swaps-003 |
+| R-scheduling-09 | The seeded fixture seeded_week(seed): clock fixed at 2026-11-05 09:00 (Thursday); start_date 2026-11-09; 7 days × shifts 08:00–12:00, 12:00–16:00, 16:00–20:00 × 2 slots (42 slots); 12 active members (1 admin, 2 planners, 9 members, synthetic names, emails under example.test) assigned round-robin by the seeded generator with no overlap; the week published; open requests on the first 5 assignments alternating requested and accepted, counterparts drawn by the generator among the eligible | US-scheduling-004 and the timing arm | the fixture reproduces byte for byte for one seed and differs for another |
 
 ## Interfaces this domain needs from others
-- identity: whether a member is active, and their role for the draft-week rule (IR-06)
-- swaps: the open requests per shift for the badge (IR-07)
-- notifications: emit the week-published event (IR-08)
+- identity: whether a member is active, their role, and their name for holder-rows (IR-06)
+- swaps: the open requests per assignment of a week, open as R-swaps-06 defines it (IR-07)
+- notifications: emit week_published (IR-08)

@@ -26,4 +26,4 @@ components:
         type: { type: string, title: Type, description: A URI reference identifying the problem class., example: "about:blank" }
         title: { type: string, title: Title, description: A short human-readable summary., example: "Swap refused" }
         detail: { type: string, title: Detail, description: What happened, in one sentence., example: "The counterpart is not assigned to this shift." }
-        reason: { type: string, title: Reason, description: The enumerated reason code., example: "counterpart_not_assigned" }
+        reason: { type: string, title: Reason, description: The enumerated reason code., example: "counterpart_on_shift" }

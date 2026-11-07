@@ -6,9 +6,9 @@ persona: Mo
 journey: J-02
 step: 4
 roles: [admin, planner, member]
-data: [Notification, Member, Week]
+data: [Notification]
 arms:
-  - { arm: "every active member receives one notification naming the week's start_date when it is published", kind: deterministic }
+  - { arm: "every active Member of any role receives one notification (week_published) whose text names the week's start_date, taken from the event payload", kind: deterministic }
   - { arm: "an inactive member receives none", kind: deterministic }
 ---
 ## Story
@@ -18,7 +18,7 @@ As a member, I want to be told when a week is published so that I see it the sam
 The rules this story serves are in the notifications domain spec, referenced by id there.
 
 ## Data touched
-Notification (owned); Member (read through identity's interface), Week (read through scheduling's interface)
+Notification (owned)
 
 ## Out of scope
 Delivery channels.

@@ -6,9 +6,9 @@ persona: Mo
 journey: J-04
 step: 2
 roles: [admin, planner, member]
-data: [Notification, SwapRequest]
+data: [Notification]
 arms:
-  - { arm: "the counterpart receives one notification naming the shift, the requester and the reason code", kind: deterministic }
+  - { arm: "the counterpart receives one notification (swap_requested) whose text names the shift's date and start, the requester's name and the reason code, all from the event payload", kind: deterministic }
   - { arm: "nobody else is notified at this step", kind: deterministic }
 ---
 ## Story
@@ -18,7 +18,7 @@ As a counterpart, I want to be told of a request so that I can answer it.
 The rules this story serves are in the notifications domain spec, referenced by id there.
 
 ## Data touched
-Notification (owned); SwapRequest (read through swaps's interface)
+Notification (owned)
 
 ## Out of scope
 Reminders.

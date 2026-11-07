@@ -6,11 +6,11 @@ persona: Mo
 journey: J-01
 step: 6
 roles: [admin, planner, member]
-data: [Notification, Member]
+data: [Notification]
 arms:
-  - { arm: "an added member receives one notification naming their role", kind: deterministic }
-  - { arm: "a member whose role changed receives one notification naming the new role", kind: deterministic }
-  - { arm: "a deactivated member receives one notification saying so", kind: deterministic }
+  - { arm: "an added member receives one notification (member_added) naming their role", kind: deterministic }
+  - { arm: "a member whose role changed receives one notification (role_changed) naming the new role", kind: deterministic }
+  - { arm: "a deactivated member receives one notification (member_deactivated), the one event that reaches an inactive recipient; it is verified through the notifications read model since the member can no longer sign in", kind: deterministic }
   - { arm: "nobody else is notified of these three events", kind: deterministic }
 ---
 ## Story
@@ -20,7 +20,7 @@ As a member, I want to be told when I am added, my role changes or I am deactiva
 The rules this story serves are in the notifications domain spec, referenced by id there.
 
 ## Data touched
-Notification (owned); Member (read through identity's interface)
+Notification (owned)
 
 ## Out of scope
 Email or push delivery; the product records notifications, the screen shows them.
