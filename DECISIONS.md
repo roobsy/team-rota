@@ -3,3 +3,4 @@ The register that resolves every settled choice. A session never re-opens a row;
 
 | ID | Decision | Rationale / status |
 |---|---|---|
+| D-01 | **PRODUCT-BRIEF v1.0 approved as the fixed point of purpose.** A change to it is a change of purpose: the operator's explicit decision, recorded as a new version, never an editorial patch. | 2026-11-07, operator; pinned in PINS.lock |

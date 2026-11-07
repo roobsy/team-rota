@@ -18,3 +18,10 @@ A recorded approval (hard rule 1, 4 or 6) is a paragraph in the block of the ses
 **Deviations flagged:** none.
 **Tests at close:** none yet (ADU-00 brings the first).
 **NEXT:** pm-lead session: /adu-lifecycle:discover → design/PRODUCT-BRIEF.md approved and pinned.
+
+## 2026-11-07 06:18 · discover (pm-lead) · done
+**Done:** design/PRODUCT-BRIEF.md v1.0 — purpose, three personas, the North Star, four never-becomes, non-goals, success; approved by the operator; pinned (`adu pins add`); D-01 appended; CLAUDE.md identity lines filled from the brief; VERSIONS row.
+**Decisions:** D-01 (the brief is the fixed point of purpose).
+**Deviations flagged:** none. The discovery questions were answered from the operator's own description of the product (a shift roster with planner/member/admin roles, swaps with approval, a weekly board) — recorded here so the example states its source.
+**Tests at close:** none yet.
+**NEXT:** pm-lead session: /adu-lifecycle:design-product → design/PRODUCT-DESIGN.md v1.0 with `adu design check` green.

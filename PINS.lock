@@ -1,1 +1,2 @@
 # PINS.lock — content pins of the authority documents. Only `adu pins update` writes this file, and only with a DECISIONS row that says why.
+c24817ecbc7ec9be5dfcc6a3e77a872c54ba3c62d35a2d5a44c0eeecd76f9e9e  design/PRODUCT-BRIEF.md

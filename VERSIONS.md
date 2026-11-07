@@ -7,7 +7,7 @@ Scheme: `vMAJOR.MINOR` — a requirement changed (design-change loop, operator d
 | Document | Version | Role |
 |---|---|---|
 | CLAUDE.md | 1.0 | constitution |
-| design/PRODUCT-BRIEF.md | 0.1 | purpose (content-pinned once approved) |
+| design/PRODUCT-BRIEF.md | 1.0 | purpose (content-pinned, D-01) |
 | design/PRODUCT-DESIGN.md | 0.1 | product design |
 | design/ARCHITECTURE.md | 0.1 | architecture contract |
 | contracts/openapi.yaml | 0.1 | API contract |
@@ -15,3 +15,9 @@ Scheme: `vMAJOR.MINOR` — a requirement changed (design-change loop, operator d
 
 ## History
 <!-- ### YYYY-MM-DD — DOC vX / DOC vY: <ID> — <summary>, then a table | Document | From | To | What changed | -->
+
+### 2026-11-07 — PRODUCT-BRIEF v1.0: D-01 — the brief approved and pinned
+| Document | From | To | What changed |
+|---|---|---|---|
+| design/PRODUCT-BRIEF.md | 0.1 | 1.0 | purpose, personas, North Star, never-becomes, non-goals, success written in the operator's terms and approved |
+
