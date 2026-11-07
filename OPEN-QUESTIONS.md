@@ -35,3 +35,9 @@ Entry format:
 **Blocking:** yes — for the closure of every unit before ADU-12.
 **Options:** (1) the operator edits the protected `adu.toml` so gate, fast and lint are the python commands until ADU-12, and ADU-12's entry amends `adu.toml` back to the combined commands under a recorded grant; (2) ADU-00 scaffolds a minimal frontend with one passing test — outside its roster and its stories; (3) the gate wraps the npm half in a directory test — hides a missing frontend forever.
 **Resolution:** option 1, 2026-11-07. The operator's grant for this protected edit is the standing instruction for the example run (the operator asked for ADU-00..02 to be executed in this run); recorded in this session's journal as a grant paragraph. Package feedback: a combined-adapter scaffold must not produce a gate that cannot pass before the second adapter's first unit.
+
+### Q-05 · 2026-11-07 · ADU-00 · open
+**Question:** `uv.lock` is produced by the gate command itself (`uv run` syncs) and belongs in the repository, but ADU-00's roster lists `pyproject.toml` and not the lockfile; hard rule 6 forbids the session committing it.
+**Blocking:** no — the unit's tests do not depend on the lockfile being committed; the session leaves it untracked.
+**Options:** (1) the architect amends ADU-00's `files` with `uv.lock` (a plan amendment; the adapter's `adu00_files` should list it — package feedback); (2) ignore it in `.gitignore` (loses reproducible installs); (3) commit it under an owed row.
+**Resolution:** none yet — the raiser recommends (1) at the next plan touch; until then the lockfile stays untracked.

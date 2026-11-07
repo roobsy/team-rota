@@ -126,3 +126,10 @@ A recorded approval (hard rule 1, 4 or 6) is a paragraph in the block of the ses
 **Approval:** the operator's approval of the plan is, for this example run, the standing instruction to execute ADU-00..02 here; the operator re-approves when taking over at ADU-03 (the plan is theirs to amend first).
 **Tests at close:** plan check, derived check, ledger lint, audit, release check, spectral — all green; no code yet.
 **NEXT:** `adu handover ADU-00`, then the ADU-00 session (developer).
+
+## 2026-11-07 08:39 · ADU-00 · in progress
+**Done:** tests first — tests/test_layering.py and tests/test_tiers.py from the adapter templates (arms 5–8), tests/test_method.py refreshed from the template (arms 1–4, the planted faults in temporary copies); then the roster: pyproject.toml from the template plus `[project.scripts] app = "app.cli:main"`, src/app/__init__.py (already present from the architecture phase), tests/conftest.py (the tiers by node id, TIMING_NODES empty), tests/layering.json with app.cli in the root layer and `frozen` empty, the baseline regenerated on the empty tree (0 edges, 1 module).
+**Decisions:** none beyond the plan; the test files are the adapter's templates verbatim (the method's own guards), not hand-written.
+**Deviations flagged:** `uv.lock` appears outside the roster (Q-05, not blocking; left untracked). The qa-engineer subagent step was performed by hand: the templates are the criteria-first drafts for every arm.
+**Tests at close:** 10 passed under `uv run pytest tests/ -q -m "not timing"`; ruff clean.
+**NEXT:** the operator's gate; then `adu handover ADU-00 --closure` in a fresh session writes ✅ from the pasted gate line.

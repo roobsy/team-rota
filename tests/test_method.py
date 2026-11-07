@@ -5,6 +5,7 @@ a method that cannot check itself was absent for Crucible's first sessions, when
 constitution from auto-loading. These tests call the plugin's `adu` command; they never read the ledgers
 themselves (the command is the one reader).
 """
+
 from __future__ import annotations
 
 import os
@@ -27,7 +28,8 @@ def plugin_root() -> Path:
         return Path(marker.read_text(encoding="utf-8").strip())
     raise AssertionError(
         "the adu plugin root is unknown on this machine: set ADU_PLUGIN_ROOT, or open the project once in a "
-        "Claude Code session with the adu-lifecycle plugin installed (its SessionStart hook writes .adu/plugin-root)"
+        "Claude Code session with the adu-lifecycle plugin installed "
+        "(its SessionStart hook writes .adu/plugin-root)"
     )
 
 
@@ -50,7 +52,11 @@ def test_the_bootstrap_manifest_and_its_invariants_hold() -> None:
 
 
 def test_a_planted_wrong_pin_in_a_copy_fails_pins_check(copy: Path) -> None:
-    pins = [l for l in (copy / "PINS.lock").read_text(encoding="utf-8").splitlines() if l and not l.startswith("#")]
+    pins = [
+        line
+        for line in (copy / "PINS.lock").read_text(encoding="utf-8").splitlines()
+        if line and not line.startswith("#")
+    ]
     assert pins, "nothing is pinned yet: pin the brief first (adu pins add design/PRODUCT-BRIEF.md)"
     pinned = copy / pins[0].split()[1]
     pinned.write_text(pinned.read_text(encoding="utf-8") + "\nedited after the pin\n", encoding="utf-8")
@@ -72,12 +78,13 @@ def test_plan_check_passes_here_and_fails_on_a_planted_cycle(copy: Path) -> None
     text = plan.read_text(encoding="utf-8")
     # ADU-00 consumes an interface that a new unit provides while that unit consumes ADU-00's — a cycle
     text = text.replace("consumes: []", "consumes: [cycle.probe]", 1)
+    arms = "\n".join(f"  - {{ arm: {a}, file: tests/test_x.py, kind: deterministic }}" for a in "abcd")
     text += (
-        "\n### ADU-99 — Planted cycle\n```yaml adu\nid: ADU-99\ntitle: Planted cycle\nlayer: 3\ndomain: platform\n"
-        "stories: []\nprovides: [cycle.probe]\nconsumes: [method.guard]\ndepends: [ADU-00]\nfiles: [src/app/x.py]\n"
-        "tests: [tests/test_x.py]\namends: []\nmocks: []\nsize: S\nacceptance:\n"
-        "  - { arm: a, file: tests/test_x.py, kind: deterministic }\n  - { arm: b, file: tests/test_x.py, kind: deterministic }\n"
-        "  - { arm: c, file: tests/test_x.py, kind: deterministic }\n  - { arm: d, file: tests/test_x.py, kind: deterministic }\nowed: []\n```\n"
+        "\n### ADU-99 — Planted cycle\n```yaml adu\nid: ADU-99\ntitle: Planted cycle\n"
+        "layer: 3\ndomain: platform\n"
+        "stories: []\nprovides: [cycle.probe]\nconsumes: [method.guard]\ndepends: [ADU-00]\n"
+        "files: [src/app/x.py]\ntests: [tests/test_x.py]\namends: []\nmocks: []\nsize: S\nacceptance:\n"
+        f"{arms}\nowed: []\n```\n"
     )
     plan.write_text(text, encoding="utf-8")
     r = adu("plan", "check", cwd=copy)

@@ -9,7 +9,7 @@
     "swaps": ["app.swaps.*"],
     "notifications": ["app.notifications.*"],
     "api": ["app.api.*"],
-    "root": ["app.main", "app.serve"]
+    "root": ["app.main", "app.serve", "app.cli"]
   },
   "forbidden": [
     ["model", "ports"], ["model", "identity"], ["model", "scheduling"], ["model", "swaps"], ["model", "notifications"], ["model", "api"], ["model", "root"],
