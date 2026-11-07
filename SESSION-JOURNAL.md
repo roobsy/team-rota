@@ -148,3 +148,10 @@ A recorded approval (hard rule 1, 4 or 6) is a paragraph in the block of the ses
 ## 2026-11-07 08:44 · ADU-01 closure · done
 **Done:** the gate re-run under the operator's hands (same machine in this example run — the caveat of the record): `16 passed in 5.23s`; ADU-01 ✅ with 16 tests; `## Now:` advanced to ADU-16 (next in the derived order: ports, Null implementations and test doubles).
 **NEXT:** `adu handover ADU-16`, then the ADU-16 session (developer).
+
+## 2026-11-07 08:46 · ADU-16 · in progress
+**Done:** tests first from the six arms (tests/test_ports.py: the five protocols with their signatures, the values and the nine events; the doubles satisfy and are settable; ports.py imports nothing of the product; no vacuous oracle. tests/test_nulls.py: one test per Null, each marked for deletion by its retiring unit). Then the roster: src/app/ports.py (Clock + SystemClock, MemberDirectory, SchedulingPort, SwapsPort, Notifier; Caller, AssignmentInfo, AssignmentView; the nine event dataclasses with their codes; MemberNotFound, AssignmentNotFound, TransferRefused), the four Nulls at their providers' future paths with the docstring naming the provider, tests/support/doubles.py (FixedClock, SpyNotifier, FakeSchedulingPort, FakeSwapsPort, FakeMemberDirectory; VACUOUS empty).
+**Decisions:** the fixed clock is a double, not a port (INTERFACES: SystemClock is the product's); NullDirectory resolves `tok_<n>` and `tok_admin` so the contract unit can test auth before identity exists.
+**Deviations flagged:** none.
+**Tests at close:** 28 passed under `uv run pytest tests/ -q -m "not timing"` (12 of them this unit's); ruff clean; layering scan clean (the Nulls import only ports).
+**NEXT:** the operator's gate; then the closure prompt for ADU-16.
