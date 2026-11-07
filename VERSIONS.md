@@ -11,7 +11,7 @@ Scheme: `vMAJOR.MINOR` — a requirement changed (design-change loop, operator d
 | design/PRODUCT-DESIGN.md | 1.7 | product design (agreed, D-02) |
 | design/ARCHITECTURE.md | 1.0 | architecture contract |
 | contracts/openapi.yaml | 1.0 | API contract |
-| ADU-PLAN.md | 0.1 | the plan |
+| ADU-PLAN.md | 1.0 | the plan |
 
 ## History
 <!-- ### YYYY-MM-DD — DOC vX / DOC vY: <ID> — <summary>, then a table | Document | From | To | What changed | -->
@@ -92,3 +92,8 @@ Scheme: `vMAJOR.MINOR` — a requirement changed (design-change loop, operator d
 |---|---|---|---|
 | contracts/openapi.yaml | 0.1 | 1.0 | every story action an operation with operationId <domain>.<action>, x-story, x-roles, named synthetic examples, explicit refusals with enumerated reasons; Spectral clean; Prism serves every operation with zero validator errors (docs/CONTRACT-SMOKE.md) |
 | design/INTERFACES.md | 0.1 | 1.0 | Clock, MemberDirectory, SchedulingPort, SwapsPort, Notifier with signatures, Null implementations and the build order; the traceability table |
+
+### 2026-11-07 — ADU-PLAN v1.0: D-08 — 16 units in four milestones, three in-process mocks, the derived order
+| Document | From | To | What changed |
+|---|---|---|---|
+| ADU-PLAN.md | 0.1 | 1.0 | cut by the twenty rules from stories v1.5, the contract and the interfaces; `adu plan check` green with no warnings |

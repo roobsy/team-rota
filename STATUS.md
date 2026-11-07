@@ -7,6 +7,21 @@ Legend: ☐ planned · 🔨 in progress (at most one) · ✅ done = green under 
 | ADU | Title | St | Started | Completed | Tests |
 |---|---|---|---|---|---|
 | ADU-00 | Scaffold and method guard | ☐ | | | |
+| ADU-01 | Data model and synthetic generator | ☐ | | | |
+| ADU-02 | Contract unit — served contract, golden pin, ports and nulls | ☐ | | | |
+| ADU-03 | Identity service | ☐ | | | |
+| ADU-04 | Identity API | ☐ | | | |
+| ADU-05 | Scheduling service | ☐ | | | |
+| ADU-06 | Scheduling API | ☐ | | | |
+| ADU-07 | Swaps service | ☐ | | | |
+| ADU-08 | Swaps API | ☐ | | | |
+| ADU-09 | Notifications service | ☐ | | | |
+| ADU-10 | Notifications API | ☐ | | | |
+| ADU-11 | Operator command — seed the first admin | ☐ | | | |
+| ADU-12 | UI foundation — shell, generated client, sign-in | ☐ | | | |
+| ADU-13 | UI — Team and Week board | ☐ | | | |
+| ADU-14 | UI — Swap request, Swap inbox, Notifications | ☐ | | | |
+| ADU-15 | End-to-end vertical path and packaging | ☐ | | | |
 
 ## Owed
 | O | Due | Where | Approval | Status |

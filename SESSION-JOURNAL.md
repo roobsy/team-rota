@@ -107,3 +107,10 @@ A recorded approval (hard rule 1, 4 or 6) is a paragraph in the block of the ses
 **Deviations flagged:** none.
 **Tests at close:** spectral 0 errors; prism 0 validator errors.
 **NEXT:** /adu-lifecycle:cut-adus (architect).
+
+## 2026-11-07 08:17 · cut-adus (architect) · done
+**Done:** ADU-PLAN v1.0 — 16 units with yaml blocks, prose rendered by `adu derived render`; `adu plan check` green with no warnings; order derived; mocks MK-01..03 registered; milestones as contiguous slices; STATUS ledger rows for ADU-01..15. D-08. The developer buildability read is recorded in docs/PLAN-REVIEW-1.md.
+**Decisions:** D-08. The seed command sits in the api package (layer 4) so that the operator's path closes with M3. Two mocks that the derived order made unnecessary (Notifier for scheduling and swaps) were removed rather than kept.
+**Deviations flagged:** rule 17 (first usable path by M2) — recorded in the plan and as package feedback FB-01.
+**Tests at close:** plan check green; derived blocks current; ledgers OK.
+**NEXT:** the operator approves the plan; then `adu handover ADU-00` and a fresh developer session for ADU-00.
