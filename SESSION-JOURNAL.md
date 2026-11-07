@@ -144,3 +144,7 @@ A recorded approval (hard rule 1, 4 or 6) is a paragraph in the block of the ses
 **Deviations flagged:** none. The qa-engineer step was performed by hand (the tests were written from the arms before any body existed).
 **Tests at close:** 16 passed under `uv run pytest tests/ -q -m "not timing"` (6 of them this unit's); ruff clean. Two tests were red on the first run: the case-insensitive email index lowercased the literal string "email" instead of the column — red is information; fixed by declaring the index on the column.
 **NEXT:** the operator's gate; then the closure prompt for ADU-01.
+
+## 2026-11-07 08:44 · ADU-01 closure · done
+**Done:** the gate re-run under the operator's hands (same machine in this example run — the caveat of the record): `16 passed in 5.23s`; ADU-01 ✅ with 16 tests; `## Now:` advanced to ADU-16 (next in the derived order: ports, Null implementations and test doubles).
+**NEXT:** `adu handover ADU-16`, then the ADU-16 session (developer).
