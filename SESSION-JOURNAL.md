@@ -303,3 +303,36 @@ The one pass is the control `test_the_forced_child_really_writes_strict_cp1252` 
 1. The operator commits the pack: `git add docs/PACK-q07-retire-amends.md SESSION-JOURNAL.md` then `git commit -m "docs: pack q07-retire-amends v1.0, snapshot 7d1e7d4"`.
 2. In a fresh `claude --plugin-dir C:\dev\adu-lifecycle --agent adu-lifecycle:verifier` started inside `C:\dev\team-rota`, paste Part D-1 of the pack.
 3. Rule Part E (E-1 … E-5) after the verdict.
+
+## 2026-11-08 18:34 · design-change loop Q-07, stage 1 again (architect): pack v1.1 · done
+**Done:**
+- Start checks: `adu status` (Now: ADU-03; Q-07 open, blocking); `adu snapshot check 7d1e7d4` → OK (no commit since); `ADU_PLUGIN_ROOT` = `C:\dev\adu-lifecycle`. The interpreter line as given, `python -c …`, printed `C:\Python314 cp1252 0`, not the venv: bare `python` resolves to the system interpreter in this session's shells (Git Bash and `powershell -NoProfile`). `uv run python -c …` prints the expected `C:\dev\team-rota-data\.venv cp1252 0`.
+- The connection dropped once mid-session, before anything was written. On resuming, the pack and the journal were still byte-identical to 3082fd4, and no draft of E-5–E-9 existed; nothing was left mixed.
+- docs/PACK-q07-retire-amends.md v1.1 (snapshot 7d1e7d4; verification pending, round R1). It was assembled in the scratchpad from the 3082fd4 blob. All 58 v1.0 blocks and the E-1–E-4 text are byte-identical (checked by script). Allocated ids appear only in D-2's expected mapping.
+  - E-6–E-9: Q-p1–Q-p4 become operator decisions. Each has the text of its recommended option and of one alternative, as E-blocks against the files as B leaves them. Together they complete design/INTERFACES.md §Domain services and §IdentityService, write D-p3–D-p6, amend design/ARCHITECTURE.md:42 (E-6) and :45 (E-8), add ADU-03's amends of src/app/db.py and src/app/api/deps.py (E-6 (b)), and write the four resolutions. E-6 (c), E-7 (c), E-8 (c) and E-9 (b) have no text.
+  - E-6 (b) states the seed command, how a test makes a session current, and that a method with no current session raises `db.NoCurrentSession`. The new current-session probe (async generator dependency, the repository's engine) and its output are pasted.
+  - E-9.P (PRODUCT-DESIGN.md:18) is the pm-lead's editorial text and is not in this apply.
+  - E-5 rewritten: (a) with E-6–E-9 ruled, Q-p1–Q-p4 are entered resolved and Q-p5 open; (b) with none ruled, v1.0's open-and-blocking entries. A partial ruling stops the apply.
+  - B-4.3's script extended and re-run in full: 109 blocks matched; the 16 combinations, alone and with E-2 (b) + E-3 (b), all match with the DECISIONS rows in id order. `plan OK: 18 units`, order unchanged, with B-3, with B-3 + E-6 (b), with B-3 + E-2 (b), and with B-3 + E-2 (b) + E-6 (b). The guard allows db.py and deps.py with E-6 (b) and still refuses both completed tests. Stages: gate 46 → 44 → 42 → 40 → 38, lint clean at each. The E-6 (b) scaffold raises `NoCurrentSession` outside a unit of work and answers `None` inside; the twins are unchanged.
+  - D-1 and D-2 updated as asked; header v1.1, with a line saying what changed.
+**Decisions:**
+- The probe settled the commit's place. FastAPI 0.162 runs a default-scope yield-dependency's exit after the response is sent (a raise there still answers 200), so under E-6 (b) the API layer commits before it answers and never in the dependency's exit (D-p3).
+- The constructor line is split into three adjacent fragments, one per decision, so any options compose. The four DECISIONS rows share one anchor and are applied E-9 first; the reading notes and D-2 say so.
+- E-7 (b) is written as a zero-argument callable answering the container: the container cannot be passed while it is being built (src/app/main.py:52–58).
+- E-8 (a) narrows v1.0's "never `random`" to "a credential never comes from `random`": src/app/synthetic.py is product code and takes a `random.Random(seed)`.
+- E-9 (b) has no text (a breaking contract change), so the written alternative is (c), plain dicts.
+- No apply rehearsal with substituted ids was run: it would put allocated ids into the pack's pasted output.
+**Deviations flagged:**
+- D-1 and D-2 use `uv run python -c …` for the interpreter line, not the bare `python -c …` as given (see Done).
+- D-1 steps 3 and 5 changed beyond the list: step 3 names both 2026-11-08 drafting blocks, and step 5 re-runs E-6 (b)'s plan check and the E-6 probe, since the verifier re-runs every stated measurement.
+- D-2 allocates Q ids for Q-p1–Q-p4 as well, where the instruction said Q-p5 "and any question still entered open". Entered resolved, they are still entries, and `adu ledger lint` refuses a provisional id in a governing document (plugin scripts/adu.mjs:225).
+- Observed, not changed:
+  - Under E-2 (b), B-2.7's Q-07 resolution and B-2.9's VERSIONS row still say "ADU-03 amends src/app/ports.py" (a v1.0 gap, for the verifier).
+  - design/INTERFACES.md:92 lists two service cycles and omits identity ↔ notifications (IR-10 / IR-04); E-7 cites it and does not amend it.
+  - Part C has no row for E-6–E-9's terms. Outside records, `git grep` finds "No randomness" only at design/ARCHITECTURE.md:45 and "a member as the team list shows it" only at design/PRODUCT-DESIGN.md:18.
+- Not committed, at the operator's instruction. No governing document, code, test or protected path changed; the only files written in the repository are the pack and this block.
+**Tests at close:** none — documents only. The scratch runs above are measurements on exports, not this tree's gate.
+**NEXT:**
+1. The operator commits: `git add docs/PACK-q07-retire-amends.md SESSION-JOURNAL.md` then `git commit -m "docs: pack q07-retire-amends v1.1, snapshot 7d1e7d4"`.
+2. In a fresh `claude --plugin-dir C:\dev\adu-lifecycle --agent adu-lifecycle:verifier` started inside `C:\dev\team-rota`, paste Part D-1 of the pack.
+3. Rule E-1 … E-9 after the verdict.

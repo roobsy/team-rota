@@ -1,8 +1,9 @@
 # PACK — q07-retire-amends
-v1.0 · 2026-11-08 · snapshot: 7d1e7d4 · status: unapplied — verification pending (round R1)
-Input to the loop, not a replacement for it: every proposal below is in the documents' own vocabulary, for a verifier to check first and the release-manager to apply second. Every identifier here is provisional (D-p1, D-p2, Q-p1 … Q-p5) until the apply step allocates it with `adu next-id`; `<apply-date>` is the apply step's date. Drafted by the architect (`/adu-lifecycle:change-design Q-07`, stage 1); the operator's ruling is written here, not re-opened.
+v1.1 · 2026-11-08 · snapshot: 7d1e7d4 · status: unapplied — verification pending (round R1)
+Changed from v1.0 (committed at 3082fd4): Q-p1–Q-p4 become the operator's decisions E-6–E-9, each with the complete text of its recommended option and at least one alternative. E-5 is rewritten: with E-6–E-9 ruled, Q-p1–Q-p4 are entered resolved and Q-p5 alone open. The reading notes name the order for blocks on one line or one anchor. B-4.3's script is extended to the new blocks and re-run, and D-1 and D-2 are updated. No B-, T- or E-1–E-4 block changes.
+Input to the loop, not a replacement for it: every proposal below is in the documents' own vocabulary, for a verifier to check first and the release-manager to apply second. Every identifier here is provisional (D-p1 … D-p6, Q-p1 … Q-p5) until the apply step allocates it with `adu next-id`; `<apply-date>` is the apply step's date. Drafted by the architect (`/adu-lifecycle:change-design Q-07`, stage 1); the operator's ruling is written here, not re-opened.
 
-**How to read the replacement blocks.** Each block is headed `#### <id> · <file>:<line>` and gives `replace exactly:` and `with:` as fenced `text` blocks; the fence content is the text, character for character, with line endings normalised (the Windows working tree is CRLF, the blobs LF). "(within the line)" means the text is a fragment of that line, with no line ending of its own. An empty `with:` block removes the lines, line endings included. A block's line is where its text starts. B-blocks are numbered against 7d1e7d4, and E-blocks against the file as B leaves it. T-blocks are numbered against the file as the previous retirement leaves it: 7d1e7d4 for ADU-03. Within a file, blocks are applied from the bottom up, so every stated line stays valid. Every block was matched and applied by the script in B-4.3; its outputs are pasted there.
+**How to read the replacement blocks.** Each block is headed `#### <id> · <file>:<line>` and gives `replace exactly:` and `with:` as fenced `text` blocks; the fence content is the text, character for character, with line endings normalised (the Windows working tree is CRLF, the blobs LF). "(within the line)" means the text is a fragment of that line, with no line ending of its own. An empty `with:` block removes the lines, line endings included. A block's line is where its text starts. B-blocks are numbered against 7d1e7d4, and E-blocks against the file as B leaves it. T-blocks are numbered against the file as the previous retirement leaves it: 7d1e7d4 for ADU-03. Within a file, blocks are applied from the bottom up, so every stated line stays valid. Within a line they go right to left. Blocks that share one anchor (the DECISIONS rows of E-6–E-9, all at the end of DECISIONS.md:18) go in reverse pack order, E-9's first, so the rows stand in id order. E-9.P is the pm-lead's text: it is checked here and not applied by the apply step. Every block was matched and applied by the script in B-4.3; its outputs are pasted there.
 
 ## Part A — the finding
 
@@ -714,11 +715,23 @@ None proposed. Every arm this pack rewrites is deterministic. No pin changes: th
 - Twins, rehearsed (B-4.3): at stage ADU-03 the unedited conformance test fails at collection once the Null is deleted, and with only the import and class-check edits (no injected directory) the 401/501 test fails with 401. Each part of T-03 is therefore needed.
 
 #### B-4.3 The rehearsal (reproducible; scratch only)
-The script below, `pack_rehearse.py`, was run with the project's venv interpreter (`C:\dev\team-rota-data\.venv\Scripts\python.exe -I`) as `pack_rehearse.py C:\dev\team-rota docs\PACK-q07-retire-amends.md <scratchpad>\rehearsal`. It parses this pack. It checks every B-block against the 7d1e7d4 blob: the text unique in its file, starting at the stated line. It applies B-3 to an export, runs the plan and guard checks, and then runs the four stages in the derived order. Each stage deletes the Null and binds a stand-in "real" service that satisfies the protocol: identity's resolves no token, the worst case for line 70. It applies the stage's T-blocks (each also unique, at its stated line), then runs the gate and the lint. ADU-03's stage also adds the illustrative `Refused` (the D-p2 shape) to ports.py and runs the twins first. The E-blocks are checked against the text as B leaves it. E-2 (b) gets its own plan check. The stand-ins, the main.py rebinding and the illustrative `Refused` are scaffolding for the rehearsal, not proposed text: each session writes its own implementation.
+The script below, `pack_rehearse.py`, was run with the project's venv interpreter (`C:\dev\team-rota-data\.venv\Scripts\python.exe -I`) as `pack_rehearse.py C:\dev\team-rota docs\PACK-q07-retire-amends.md <scratchpad>\rehearsal`, with `ADU_PLUGIN_ROOT` set to `C:\dev\adu-lifecycle`. It parses this pack and checks every B-block against the 7d1e7d4 blob: the text unique in its file, starting at the stated line. Blocks are applied bottom-up, right to left within a line, and blocks that share an anchor in reverse pack order. The E-blocks are checked against the text as B leaves it, in this order:
+- E-2 (b) and E-3 (b), alone and together (as in v1.0);
+- every written option of E-5–E-9 alone, and E-9.P, the pm-lead's text, against PRODUCT-DESIGN.md;
+- each of the 16 combinations of E-6–E-9's written options with E-5 (a), alone and with E-2 (b) and E-3 (b) on top, checking also that the DECISIONS rows stand in id order.
+
+For the recommended options it prints the OPEN-QUESTIONS headings and §Domain services as composed. It applies B-3 to one export and B-3 with E-6 (b), the recommended options' only plan text, to another, and runs the plan checks there and with E-2 (b). It asks the guard about the two completed tests, ports.py, db.py and deps.py at 7d1e7d4, with B-3, and with B-3 and E-6 (b).
+
+It then runs the four stages in the derived order, on the export with B-3 and E-6 (b). Each stage deletes the Null and binds a stand-in "real" service that satisfies the protocol: identity's resolves no token, the worst case for line 70. It applies the stage's T-blocks (each also unique, at its stated line), then runs the gate and the lint. ADU-03's stage does three more things first:
+- It adds the illustrative `Refused` (the D-p2 shape) to ports.py.
+- It adds E-6 (b)'s illustrative current session to db.py and deps.py, and binds the identity stand-in as E-7 (b) and E-8 (a) construct it; the stand-in's `caller_for_token` reads `db.current_session()`. It then asks the composition root's directory for a token outside and inside a unit of work.
+- It runs the twins.
+
+The stand-ins, the main.py rebinding, the illustrative `Refused` and the illustrative current session are scaffolding for the rehearsal, not proposed text: each session writes its own implementation.
 
 The full output of the run:
 ~~~text
-pack: C:\dev\team-rota\docs\PACK-q07-retire-amends.md · 58 replace blocks · 1 file deletions · snapshot 7d1e7d4
+pack: C:\dev\team-rota\docs\PACK-q07-retire-amends.md · 109 replace blocks · 1 file deletions · snapshot 7d1e7d4
 B-2.1    DECISIONS.md:16   occurrences=1 starts-at=16 OK (against the 7d1e7d4 blob)
 B-2.5    design/INTERFACES.md:103  occurrences=1 starts-at=103 OK (against the 7d1e7d4 blob)
 B-2.4    design/INTERFACES.md:91   occurrences=1 starts-at=91 OK (against the 7d1e7d4 blob)
@@ -747,10 +760,10 @@ E-2b.2   ADU-PLAN.md:148  occurrences=1 starts-at=148 OK (E-2b on post-B)
 E-2b.1   ADU-PLAN.md:147  occurrences=1 starts-at=147 OK (E-2b on post-B)
 E-2b.4   design/ARCHITECTURE.md:12   occurrences=1 starts-at=12 OK (E-2b on post-B)
 E-2b.5   design/INTERFACES.md:80   occurrences=1 starts-at=80 OK (E-2b on post-B)
-E-2b.6   DECISIONS.md:18   occurrences=1 starts-at=18 OK (E-2b on post-B)
 E-2b.7   DECISIONS.md:18   occurrences=1 starts-at=18 OK (E-2b on post-B)
-E-3b.1   DECISIONS.md:18   occurrences=1 starts-at=18 OK (E-3b on post-B)
+E-2b.6   DECISIONS.md:18   occurrences=1 starts-at=18 OK (E-2b on post-B)
 E-3b.2   DECISIONS.md:18   occurrences=1 starts-at=18 OK (E-3b on post-B)
+E-3b.1   DECISIONS.md:18   occurrences=1 starts-at=18 OK (E-3b on post-B)
 E-3b.4   design/INTERFACES.md:85   occurrences=1 starts-at=85 OK (E-3b on post-B)
 E-3b.3   design/INTERFACES.md:83   occurrences=1 starts-at=83 OK (E-3b on post-B)
 E-2b.3   ADU-PLAN.md:155  occurrences=1 starts-at=155 OK (E-2b + E-3b on post-B)
@@ -760,10 +773,157 @@ E-2b.4   design/ARCHITECTURE.md:12   occurrences=1 starts-at=12 OK (E-2b + E-3b 
 E-3b.4   design/INTERFACES.md:85   occurrences=1 starts-at=85 OK (E-2b + E-3b on post-B)
 E-3b.3   design/INTERFACES.md:83   occurrences=1 starts-at=83 OK (E-2b + E-3b on post-B)
 E-2b.5   design/INTERFACES.md:80   occurrences=1 starts-at=80 OK (E-2b + E-3b on post-B)
-E-2b.6   DECISIONS.md:18   occurrences=1 starts-at=18 OK (E-2b + E-3b on post-B)
 E-2b.7   DECISIONS.md:18   occurrences=1 starts-at=18 OK (E-2b + E-3b on post-B)
-E-3b.1   DECISIONS.md:18   occurrences=1 starts-at=18 OK (E-2b + E-3b on post-B)
 E-3b.2   DECISIONS.md:18   occurrences=1 starts-at=18 OK (E-2b + E-3b on post-B)
+E-2b.6   DECISIONS.md:18   occurrences=1 starts-at=18 OK (E-2b + E-3b on post-B)
+E-3b.1   DECISIONS.md:18   occurrences=1 starts-at=18 OK (E-2b + E-3b on post-B)
+E-5a.5   OPEN-QUESTIONS.md:82   occurrences=1 starts-at=82 OK (E-5a on post-B)
+E-5a.4   OPEN-QUESTIONS.md:75   occurrences=1 starts-at=75 OK (E-5a on post-B)
+E-5a.3   OPEN-QUESTIONS.md:68   occurrences=1 starts-at=68 OK (E-5a on post-B)
+E-5a.2   OPEN-QUESTIONS.md:61   occurrences=1 starts-at=61 OK (E-5a on post-B)
+E-5a.1   OPEN-QUESTIONS.md:59   occurrences=1 starts-at=59 OK (E-5a on post-B)
+E-5a.6   design/INTERFACES.md:2    occurrences=1 starts-at=2 OK (E-5a on post-B)
+E-5a.9   design/ARCHITECTURE.md:52   occurrences=1 starts-at=52 OK (E-5a on post-B)
+E-5a.8   design/ARCHITECTURE.md:2    occurrences=1 starts-at=2 OK (E-5a on post-B)
+E-5a.7   design/ARCHITECTURE.md:2    occurrences=1 starts-at=2 OK (E-5a on post-B)
+E-5a.13  VERSIONS.md:124  occurrences=1 starts-at=124 OK (E-5a on post-B)
+E-5a.12  VERSIONS.md:124  occurrences=1 starts-at=124 OK (E-5a on post-B)
+E-5a.11  VERSIONS.md:120  occurrences=1 starts-at=120 OK (E-5a on post-B)
+E-5a.10  VERSIONS.md:12   occurrences=1 starts-at=12 OK (E-5a on post-B)
+E-6a.5   design/INTERFACES.md:112  occurrences=1 starts-at=112 OK (E-6a on post-B)
+E-6a.4   design/INTERFACES.md:95   occurrences=1 starts-at=95 OK (E-6a on post-B)
+E-6a.3   design/INTERFACES.md:94   occurrences=1 starts-at=94 OK (E-6a on post-B)
+E-6a.2   design/INTERFACES.md:93   occurrences=1 starts-at=93 OK (E-6a on post-B)
+E-6a.1   design/INTERFACES.md:88   occurrences=1 starts-at=88 OK (E-6a on post-B)
+E-6a.6   design/ARCHITECTURE.md:42   occurrences=1 starts-at=42 OK (E-6a on post-B)
+E-6a.7   DECISIONS.md:18   occurrences=1 starts-at=18 OK (E-6a on post-B)
+E-6a.8   OPEN-QUESTIONS.md:65   occurrences=1 starts-at=65 OK (E-6a on post-B)
+E-6b.4   design/INTERFACES.md:112  occurrences=1 starts-at=112 OK (E-6b on post-B)
+E-6b.3   design/INTERFACES.md:94   occurrences=1 starts-at=94 OK (E-6b on post-B)
+E-6b.2   design/INTERFACES.md:93   occurrences=1 starts-at=93 OK (E-6b on post-B)
+E-6b.1   design/INTERFACES.md:88   occurrences=1 starts-at=88 OK (E-6b on post-B)
+E-6b.5   design/ARCHITECTURE.md:42   occurrences=1 starts-at=42 OK (E-6b on post-B)
+E-6b.6   ADU-PLAN.md:153  occurrences=1 starts-at=153 OK (E-6b on post-B)
+E-6b.7   VERSIONS.md:123  occurrences=1 starts-at=123 OK (E-6b on post-B)
+E-6b.8   DECISIONS.md:18   occurrences=1 starts-at=18 OK (E-6b on post-B)
+E-6b.9   OPEN-QUESTIONS.md:65   occurrences=1 starts-at=65 OK (E-6b on post-B)
+E-7a.1   design/INTERFACES.md:94   occurrences=1 starts-at=94 OK (E-7a on post-B)
+E-7a.2   DECISIONS.md:18   occurrences=1 starts-at=18 OK (E-7a on post-B)
+E-7a.3   OPEN-QUESTIONS.md:72   occurrences=1 starts-at=72 OK (E-7a on post-B)
+E-7b.1   design/INTERFACES.md:94   occurrences=1 starts-at=94 OK (E-7b on post-B)
+E-7b.2   DECISIONS.md:18   occurrences=1 starts-at=18 OK (E-7b on post-B)
+E-7b.3   OPEN-QUESTIONS.md:72   occurrences=1 starts-at=72 OK (E-7b on post-B)
+E-8a.1   design/INTERFACES.md:94   occurrences=1 starts-at=94 OK (E-8a on post-B)
+E-8a.2   design/ARCHITECTURE.md:45   occurrences=1 starts-at=45 OK (E-8a on post-B)
+E-8a.3   DECISIONS.md:18   occurrences=1 starts-at=18 OK (E-8a on post-B)
+E-8a.4   OPEN-QUESTIONS.md:78   occurrences=1 starts-at=78 OK (E-8a on post-B)
+E-8b.1   design/INTERFACES.md:94   occurrences=1 starts-at=94 OK (E-8b on post-B)
+E-8b.2   design/ARCHITECTURE.md:45   occurrences=1 starts-at=45 OK (E-8b on post-B)
+E-8b.3   DECISIONS.md:18   occurrences=1 starts-at=18 OK (E-8b on post-B)
+E-8b.4   OPEN-QUESTIONS.md:78   occurrences=1 starts-at=78 OK (E-8b on post-B)
+E-9a.1   design/INTERFACES.md:102  occurrences=1 starts-at=102 OK (E-9a on post-B)
+E-9a.2   DECISIONS.md:18   occurrences=1 starts-at=18 OK (E-9a on post-B)
+E-9a.3   OPEN-QUESTIONS.md:85   occurrences=1 starts-at=85 OK (E-9a on post-B)
+E-9c.1   design/INTERFACES.md:102  occurrences=1 starts-at=102 OK (E-9c on post-B)
+E-9c.2   DECISIONS.md:18   occurrences=1 starts-at=18 OK (E-9c on post-B)
+E-9c.3   OPEN-QUESTIONS.md:85   occurrences=1 starts-at=85 OK (E-9c on post-B)
+E-9.P    design/PRODUCT-DESIGN.md:18   occurrences=1 starts-at=18 OK (E-9.P on post-B: the pm-lead's, not applied)
+
+the 16 combinations of E-6..E-9's written options with E-5 (a), on post-B:
+E-5a + E-6a + E-7a + E-8a + E-9a             31 blocks: all matched at their lines; DECISIONS rows D-p1..D-p6 in id order: True
+E-5a + E-6a + E-7a + E-8a + E-9a + E-2b + E-3b 42 blocks: all matched at their lines; DECISIONS rows D-p1..D-p6 in id order: True
+E-5a + E-6a + E-7a + E-8a + E-9c             31 blocks: all matched at their lines; DECISIONS rows D-p1..D-p6 in id order: True
+E-5a + E-6a + E-7a + E-8a + E-9c + E-2b + E-3b 42 blocks: all matched at their lines; DECISIONS rows D-p1..D-p6 in id order: True
+E-5a + E-6a + E-7a + E-8b + E-9a             31 blocks: all matched at their lines; DECISIONS rows D-p1..D-p6 in id order: True
+E-5a + E-6a + E-7a + E-8b + E-9a + E-2b + E-3b 42 blocks: all matched at their lines; DECISIONS rows D-p1..D-p6 in id order: True
+E-5a + E-6a + E-7a + E-8b + E-9c             31 blocks: all matched at their lines; DECISIONS rows D-p1..D-p6 in id order: True
+E-5a + E-6a + E-7a + E-8b + E-9c + E-2b + E-3b 42 blocks: all matched at their lines; DECISIONS rows D-p1..D-p6 in id order: True
+E-5a + E-6a + E-7b + E-8a + E-9a             31 blocks: all matched at their lines; DECISIONS rows D-p1..D-p6 in id order: True
+E-5a + E-6a + E-7b + E-8a + E-9a + E-2b + E-3b 42 blocks: all matched at their lines; DECISIONS rows D-p1..D-p6 in id order: True
+E-5a + E-6a + E-7b + E-8a + E-9c             31 blocks: all matched at their lines; DECISIONS rows D-p1..D-p6 in id order: True
+E-5a + E-6a + E-7b + E-8a + E-9c + E-2b + E-3b 42 blocks: all matched at their lines; DECISIONS rows D-p1..D-p6 in id order: True
+E-5a + E-6a + E-7b + E-8b + E-9a             31 blocks: all matched at their lines; DECISIONS rows D-p1..D-p6 in id order: True
+E-5a + E-6a + E-7b + E-8b + E-9a + E-2b + E-3b 42 blocks: all matched at their lines; DECISIONS rows D-p1..D-p6 in id order: True
+E-5a + E-6a + E-7b + E-8b + E-9c             31 blocks: all matched at their lines; DECISIONS rows D-p1..D-p6 in id order: True
+E-5a + E-6a + E-7b + E-8b + E-9c + E-2b + E-3b 42 blocks: all matched at their lines; DECISIONS rows D-p1..D-p6 in id order: True
+E-5a + E-6b + E-7a + E-8a + E-9a             32 blocks: all matched at their lines; DECISIONS rows D-p1..D-p6 in id order: True
+E-5a + E-6b + E-7a + E-8a + E-9a + E-2b + E-3b 43 blocks: all matched at their lines; DECISIONS rows D-p1..D-p6 in id order: True
+E-5a + E-6b + E-7a + E-8a + E-9c             32 blocks: all matched at their lines; DECISIONS rows D-p1..D-p6 in id order: True
+E-5a + E-6b + E-7a + E-8a + E-9c + E-2b + E-3b 43 blocks: all matched at their lines; DECISIONS rows D-p1..D-p6 in id order: True
+E-5a + E-6b + E-7a + E-8b + E-9a             32 blocks: all matched at their lines; DECISIONS rows D-p1..D-p6 in id order: True
+E-5a + E-6b + E-7a + E-8b + E-9a + E-2b + E-3b 43 blocks: all matched at their lines; DECISIONS rows D-p1..D-p6 in id order: True
+E-5a + E-6b + E-7a + E-8b + E-9c             32 blocks: all matched at their lines; DECISIONS rows D-p1..D-p6 in id order: True
+E-5a + E-6b + E-7a + E-8b + E-9c + E-2b + E-3b 43 blocks: all matched at their lines; DECISIONS rows D-p1..D-p6 in id order: True
+E-5a + E-6b + E-7b + E-8a + E-9a             32 blocks: all matched at their lines; DECISIONS rows D-p1..D-p6 in id order: True
+E-5a + E-6b + E-7b + E-8a + E-9a + E-2b + E-3b 43 blocks: all matched at their lines; DECISIONS rows D-p1..D-p6 in id order: True
+E-5a + E-6b + E-7b + E-8a + E-9c             32 blocks: all matched at their lines; DECISIONS rows D-p1..D-p6 in id order: True
+E-5a + E-6b + E-7b + E-8a + E-9c + E-2b + E-3b 43 blocks: all matched at their lines; DECISIONS rows D-p1..D-p6 in id order: True
+E-5a + E-6b + E-7b + E-8b + E-9a             32 blocks: all matched at their lines; DECISIONS rows D-p1..D-p6 in id order: True
+E-5a + E-6b + E-7b + E-8b + E-9a + E-2b + E-3b 43 blocks: all matched at their lines; DECISIONS rows D-p1..D-p6 in id order: True
+E-5a + E-6b + E-7b + E-8b + E-9c             32 blocks: all matched at their lines; DECISIONS rows D-p1..D-p6 in id order: True
+E-5a + E-6b + E-7b + E-8b + E-9c + E-2b + E-3b 43 blocks: all matched at their lines; DECISIONS rows D-p1..D-p6 in id order: True
+
+OPEN-QUESTIONS.md headings with the recommended options (E-5 (a), E-6 (b), E-7 (b), E-8 (a), E-9 (a)):
+### Q-07 · 2026-11-07 · ADU-03 (hand-over, the D-0 check) · resolved → D-p1
+### Q-p1 · 2026-11-08 · design-change loop Q-07 (IdentityService) · resolved → D-p3
+### Q-p2 · 2026-11-08 · design-change loop Q-07 (IdentityService) · resolved → D-p4
+### Q-p3 · 2026-11-08 · design-change loop Q-07 (IdentityService) · resolved → D-p5
+### Q-p4 · 2026-11-08 · design-change loop Q-07 (IdentityService) · resolved → D-p6
+### Q-p5 · 2026-11-08 · design-change loop Q-07 (the API units) · open
+
+design/INTERFACES.md with the recommended options, lines 87–139:
+## Domain services (called by the API layer and the operator's command; not ports)
+A service is called only from the layers above it — the API, the composition root, the CLI; another domain reaches it only through the ports above (D-05). Every operation a signed-in member performs takes the `Caller` that `deps.py` resolved (R-identity-06, IR-11); every refusal is `Refused(<reason>)`. A point the arms, the domain spec and the contract do not settle is marked open with its question, never filled in.
+
+**The request's session (D-p3).** Every service, and every port implementation `src/app/main.py` binds, reads and writes in the current session, `db.current_session()`, and never opens, commits or closes one. With no session current, `db.current_session()` raises `db.NoCurrentSession`; a service method lets it propagate and never opens a session quietly. Exactly three owners make a session current:
+- **A request.** `deps.get_session` is an async generator dependency. It opens the request's one session on `engine_of(request)`, makes it current with `db.use_session(session)` for the whole request, and yields it. On the way out it restores the previous current session and closes this one, which rolls back whatever was not committed. It is async because a ContextVar set in a sync dependency is not visible to the endpoint. `require_caller` depends on it, so `caller_for_token` reads the request's session. The API layer commits a write after the service returns and before it answers, never in the dependency's exit: FastAPI runs that exit after the response is sent, so a failure there would leave a 200 standing. Both behaviours are measured in docs/PACK-q07-retire-amends.md, Part E-6.
+- **The operator's command.** `app seed-admin` (ADU-11) builds the app with `create_app(workspace)` and calls `seed_admin` inside `with db.unit_of_work(db.engine_for(app.state.workspace)):`. The block commits when `seed_admin` returns, and the command then prints the id (exit 0). `Refused("team_not_empty")` rolls the block back, and the command prints the reason and exits 2.
+- **A test.** A service unit's tests (ADU-03's first) wrap each call in `with db.unit_of_work(db.engine_for(tmp_path)):` and read back in a second unit of work. A refusal is asserted with `pytest.raises(Refused)` around the block, which leaves it rolled back. No test sets the ContextVar itself; a test calls a service outside a unit of work only to assert `db.NoCurrentSession`.
+```
+# src/app/db.py gains (ADU-03, by amendment of ADU-01's module; layer 1, so every service, the API and the CLI reach it):
+class NoCurrentSession(RuntimeError)
+def current_session() -> Session                               # the current session; raises NoCurrentSession when none is
+def use_session(session: Session) -> ContextManager[Session]    # current for the block, the previous one restored on exit; commits nothing
+def unit_of_work(engine: Engine) -> ContextManager[Session]     # session_for(engine) made current; commits on return, rolls back on raise, closes
+```
+Invariants: one ContextVar, private to `src/app/db.py`. `use_session` restores the previous session with the token it set, so nested blocks and concurrent requests stay apart. `engine_for` and `session_for` do not change. The transfer (ADU-05) and the Notifier (ADU-09) write in the same current session, so a decision, its transfer and its notifications commit together (R-swaps-04).
+
+### IdentityService (identity → the identity API, the seed command)
+Provider: ADU-03 (`src/app/identity/service.py`, persistence in `src/app/identity/repo.py`). Consumers: ADU-04 (the five identity operations), ADU-11 (`app seed-admin`), and ADU-07's §6 arm through the composition root. The same object implements MemberDirectory and is bound as it in `src/app/main.py` (ADU-03 arm 1).
+```
+class IdentityService:                          # implements MemberDirectory (above), and the operations below — every method in db.current_session() (D-p3):
+    def __init__(
+        self,
+        bound: Callable[[], Bindings],          # the composition root's bindings, read at call time (D-p4): .clock (Clock),
+                                                #   .scheduling (SchedulingPort, IR-05), .notifier (Notifier, IR-10); Bindings is a Protocol of those
+                                                #   three in src/app/identity/service.py, which main.Ports satisfies, so identity never imports main;
+                                                #   main.py binds IdentityService(lambda: app.state.ports, …); a test passes
+                                                #   lambda: SimpleNamespace(clock=FixedClock(…), scheduling=FakeSchedulingPort(), notifier=SpyNotifier())
+        source: TokenSource,                    # the token and the salt (D-p5): TokenSource is a Protocol in src/app/identity/service.py,
+                                                #   token() -> str and salt() -> str; the product's SecretsSource (same module) answers
+                                                #   secrets.token_urlsafe(32) and secrets.token_hex(8); main.py passes SecretsSource(), a test a
+                                                #   deterministic source; seed_admin and add_member store models.hash_passcode(passcode, source.salt());
+                                                #   sign_in stores source.token() as the member's one token and checks a passcode by recomputing
+                                                #   models.hash_passcode with the stored salt (the text before '$'), compared with hmac.compare_digest
+    ) -> None
+    def seed_admin(self, name: str, email: str, passcode: str) -> int
+    def add_member(self, caller: Caller, name: str, email: str, role: str | None, passcode: str) -> MemberValue
+    def change_role(self, caller: Caller, member_id: int, role: str | None) -> MemberValue
+    def deactivate(self, caller: Caller, member_id: int) -> MemberValue
+    def sign_in(self, email: str, passcode: str | None) -> SignInValue
+    def list_members(self, caller: Caller) -> list[MemberSummary]
+# MemberValue: the contract's Member fields (id, name, email, role, active); SignInValue: the token and a MemberValue (the contract's Token);
+# MemberSummary: id, name, role, active (ADU-03 arm 7). All three are frozen dataclasses (`@dataclass(frozen=True)`) defined in src/app/identity/service.py beside the service; no other domain consumes them in process (D-05), and the API layer maps them onto the contract's Member, Token and MemberSummary (D-p6).
+```
+| Operation | Rule (source) | Emits | Refused with, by bucket (R-identity-08: forbidden → not_found → state → validation) |
+|---|---|---|---|
+| seed_admin | an empty team gets one active admin; the passcode stored as a salted SHA-256; answers the new id; no caller — an operator command outside the API (R-identity-07; ADU-03 arm 2) | nothing | state: team_not_empty |
+| add_member | an active member with the role; the email unique, compared case-insensitively; a role that is missing or not admin, planner or member is invalid_role (R-identity-01, -02; the contract's MemberCreate.role is optional and "checked by identity") | MemberAdded(member_id, role) | forbidden (the caller is not an admin) · state: duplicate_email · validation: invalid_role |
+| change_role | the same role is a no-op that answers the unchanged member and emits nothing; an inactive member's role may change and nobody is notified; the team keeps an active admin (R-identity-01, -03) | RoleChanged(member_id, role), except for the no-op and an inactive member | forbidden · not_found · state: last_admin · validation: invalid_role |
+| deactivate | active false, the row kept; refused while `scheduling.has_assignment_after(member_id, clock.now())` (R-identity-03, -04, -05) | MemberDeactivated(member_id) | forbidden · not_found · state: future_assignments, last_admin, member_inactive (a repeat; nothing emitted) — their order within the bucket is US-identity-003's (PRODUCT-DESIGN, cross-cutting rules) |
+| sign_in | the email matched case-insensitively and the passcode verified before the active check; a missing passcode counts as wrong; the new token replaces the member's earlier one; no caller (R-identity-06; the contract's 401 for identity.sign_in) | nothing | unauthenticated bucket: invalid_credentials (wrong or missing passcode, unknown email) · forbidden bucket: member_inactive (only after a correct passcode) |
+| list_members | every member, active and inactive, as MemberSummary — never email, passcode or token — by name compared case-insensitively, then id (R-identity-09) | nothing | none: any signed-in caller |
+| MemberDirectory | the six methods above over identity's own rows, read in the current session (with none current, each raises db.NoCurrentSession; D-p3): caller_for_token is None for an unknown token and for an inactive member's (IR-11); is_active is None for an unknown id; role_of and name_of raise MemberNotFound; active_member_ids (IR-12); decider_ids the active admins and planners | — | none: no caller |
 
 $ adu plan check   # scratch copy with B-3 applied, exit 0
 plan OK: 18 units, order ADU-00 → ADU-01 → ADU-16 → ADU-02 → ADU-03 → ADU-09 → ADU-05 → ADU-07 → ADU-04 → ADU-06 → ADU-10 → ADU-08 → ADU-12 → ADU-17 → ADU-13 → ADU-14 → ADU-11 → ADU-15
@@ -788,13 +948,45 @@ $ adu plan order   # scratch copy with B-3 applied, exit 0
 17. ADU-11 — Operator command: seed the first admin (layer 6, size S)
 18. ADU-15 — End-to-end vertical path and packaging (layer 6, size M)
 
-(B-3 blocks applied: 14)
+$ adu plan check   # scratch copy with B-3 and E-6 (b), the recommended options' plan text, exit 0
+plan OK: 18 units, order ADU-00 → ADU-01 → ADU-16 → ADU-02 → ADU-03 → ADU-09 → ADU-05 → ADU-07 → ADU-04 → ADU-06 → ADU-10 → ADU-08 → ADU-12 → ADU-17 → ADU-13 → ADU-14 → ADU-11 → ADU-15
+
+$ adu plan order   # scratch copy with B-3 and E-6 (b), the recommended options' plan text, exit 0
+ 1. ADU-00 — Scaffold and method guard (layer 0, size M)
+ 2. ADU-01 — Data model and the seeded fixture (layer 1, size M)
+ 3. ADU-16 — Ports, Null implementations and test doubles (layer 2, size M)
+ 4. ADU-02 — Contract unit: served contract, golden pin, composition root (layer 2, size M)
+ 5. ADU-03 — Identity service (layer 3, size M)
+ 6. ADU-09 — Notifications service (layer 3, size S)
+ 7. ADU-05 — Scheduling service (layer 3, size M)
+ 8. ADU-07 — Swaps service (layer 3, size M)
+ 9. ADU-04 — Identity API (layer 4, size M)
+10. ADU-06 — Scheduling API (layer 4, size M)
+11. ADU-10 — Notifications API (layer 4, size S)
+12. ADU-08 — Swaps API (layer 4, size M)
+13. ADU-12 — UI foundation: the Vite scaffold, the shell and the anchor lint (layer 5, size L)
+14. ADU-17 — Generated client and sign-in (layer 5, size M)
+15. ADU-13 — UI: Team and Week board (layer 5, size M)
+16. ADU-14 — UI: Swap request, Swap inbox, Notifications (layer 5, size M)
+17. ADU-11 — Operator command: seed the first admin (layer 6, size S)
+18. ADU-15 — End-to-end vertical path and packaging (layer 6, size M)
+
+(B-3 blocks applied: 14; E-6 (b) plan blocks on top: 1)
 guard edit tests/test_nulls.py --role developer (at 7d1e7d4) -> exit 2: adu guard: refused to edit tests/test_nulls.py: tests/test_nulls.py is a test file of completed unit ADU-16: tests of completed ADUs are immutable (ha
 guard edit tests/api/test_contract_conformance.py --role developer (at 7d1e7d4) -> exit 2: adu guard: refused to edit tests/api/test_contract_conformance.py: tests/api/test_contract_conformance.py is a test file of completed unit ADU-02: tes
 guard edit src/app/ports.py --role developer (at 7d1e7d4) -> exit 2: adu guard: refused to edit src/app/ports.py: src/app/ports.py is outside ADU-03's roster (files, tests, amends). Stay inside this unit's specified fil
+guard edit src/app/db.py --role developer (at 7d1e7d4) -> exit 2: adu guard: refused to edit src/app/db.py: src/app/db.py is outside ADU-03's roster (files, tests, amends). Stay inside this unit's specified files (ha
+guard edit src/app/api/deps.py --role developer (at 7d1e7d4) -> exit 2: adu guard: refused to edit src/app/api/deps.py: src/app/api/deps.py is outside ADU-03's roster (files, tests, amends). Stay inside this unit's specifi
 guard edit tests/test_nulls.py --role developer (with B-3 applied) -> exit 2: adu guard: refused to edit tests/test_nulls.py: tests/test_nulls.py is a test file of completed unit ADU-16: tests of completed ADUs are immutable (ha
 guard edit tests/api/test_contract_conformance.py --role developer (with B-3 applied) -> exit 2: adu guard: refused to edit tests/api/test_contract_conformance.py: tests/api/test_contract_conformance.py is a test file of completed unit ADU-02: tes
 guard edit src/app/ports.py --role developer (with B-3 applied) -> exit 0: allow src/app/ports.py
+guard edit src/app/db.py --role developer (with B-3 applied) -> exit 2: adu guard: refused to edit src/app/db.py: src/app/db.py is outside ADU-03's roster (files, tests, amends). Stay inside this unit's specified files (ha
+guard edit src/app/api/deps.py --role developer (with B-3 applied) -> exit 2: adu guard: refused to edit src/app/api/deps.py: src/app/api/deps.py is outside ADU-03's roster (files, tests, amends). Stay inside this unit's specifi
+guard edit tests/test_nulls.py --role developer (with B-3 and E-6 (b)) -> exit 2: adu guard: refused to edit tests/test_nulls.py: tests/test_nulls.py is a test file of completed unit ADU-16: tests of completed ADUs are immutable (ha
+guard edit tests/api/test_contract_conformance.py --role developer (with B-3 and E-6 (b)) -> exit 2: adu guard: refused to edit tests/api/test_contract_conformance.py: tests/api/test_contract_conformance.py is a test file of completed unit ADU-02: tes
+guard edit src/app/ports.py --role developer (with B-3 and E-6 (b)) -> exit 0: allow src/app/ports.py
+guard edit src/app/db.py --role developer (with B-3 and E-6 (b)) -> exit 0: allow src/app/db.py
+guard edit src/app/api/deps.py --role developer (with B-3 and E-6 (b)) -> exit 0: allow src/app/api/deps.py
 
 $ adu plan check   # scratch copy with B-3 and E-2 (b), exit 0
 plan OK: 18 units, order ADU-00 → ADU-01 → ADU-16 → ADU-02 → ADU-03 → ADU-09 → ADU-05 → ADU-07 → ADU-04 → ADU-06 → ADU-10 → ADU-08 → ADU-12 → ADU-17 → ADU-13 → ADU-14 → ADU-11 → ADU-15
@@ -819,9 +1011,13 @@ $ adu plan order   # scratch copy with B-3 and E-2 (b), exit 0
 17. ADU-11 — Operator command: seed the first admin (layer 6, size S)
 18. ADU-15 — End-to-end vertical path and packaging (layer 6, size M)
 
-baseline (export A, B-3 applied, no stage yet): gate exit 0: 46 passed, 1 warning in 16.43s · lint exit 0: All checks passed!
-twin 1 (Null deleted, conformance test unedited): exit 2: E   ModuleNotFoundError: No module named 'app.identity.null_directory' | 1 warning, 1 error in 0.91s
-twin 2 (import and class check edited, no injected directory): exit 1: test_contract_conformance.py:70: AssertionError: ('identity.list_members', '{"type":"about:blank","title":"Not signed in","detail":"Sign in first.","reason":"unauthentica | 1 failed, 5 passed, 1 warning in 0.99s
+$ adu plan check   # scratch copy with B-3, E-2 (b) and E-6 (b), exit 0
+plan OK: 18 units, order ADU-00 → ADU-01 → ADU-16 → ADU-02 → ADU-03 → ADU-09 → ADU-05 → ADU-07 → ADU-04 → ADU-06 → ADU-10 → ADU-08 → ADU-12 → ADU-17 → ADU-13 → ADU-14 → ADU-11 → ADU-15
+
+baseline (export A, B-3 and E-6 (b) applied, no stage yet): gate exit 0: 46 passed, 1 warning in 16.23s · lint exit 0: All checks passed!
+E-6 (b) scaffold, the composition root's directory: exit 0: outside a unit of work -> NoCurrentSession; inside db.unit_of_work -> None
+twin 1 (Null deleted, conformance test unedited): exit 2: E   ModuleNotFoundError: No module named 'app.identity.null_directory' | 1 warning, 1 error in 0.76s
+twin 2 (import and class check edited, no injected directory): exit 1: test_contract_conformance.py:70: AssertionError: ('identity.list_members', '{"type":"about:blank","title":"Not signed in","detail":"Sign in first.","reason":"unauthentica | 1 failed, 5 passed, 1 warning in 1.03s
 T-03.6   tests/api/test_contract_conformance.py:105  occurrences=1 starts-at=105 OK (stage T-03)
 T-03.5   tests/api/test_contract_conformance.py:102  occurrences=1 starts-at=102 OK (stage T-03)
 T-03.4   tests/api/test_contract_conformance.py:61   occurrences=1 starts-at=61 OK (stage T-03)
@@ -832,25 +1028,25 @@ T-03.10  tests/test_nulls.py:36   occurrences=1 starts-at=36 OK (stage T-03)
 T-03.9   tests/test_nulls.py:28   occurrences=1 starts-at=28 OK (stage T-03)
 T-03.8   tests/test_nulls.py:17   occurrences=1 starts-at=17 OK (stage T-03)
 T-03.7   tests/test_nulls.py:11   occurrences=1 starts-at=11 OK (stage T-03)
-after stage T-03: gate exit 0: 44 passed, 1 warning in 16.55s · lint exit 0: All checks passed!
+after stage T-03: gate exit 0: 44 passed, 1 warning in 18.04s · lint exit 0: All checks passed!
 T-09.2   tests/api/test_contract_conformance.py:110  occurrences=1 starts-at=110 OK (stage T-09)
 T-09.1   tests/api/test_contract_conformance.py:24   occurrences=1 starts-at=24 OK (stage T-09)
 T-09.6   tests/test_nulls.py:48   occurrences=1 starts-at=48 OK (stage T-09)
 T-09.5   tests/test_nulls.py:28   occurrences=1 starts-at=28 OK (stage T-09)
 T-09.4   tests/test_nulls.py:18   occurrences=1 starts-at=18 OK (stage T-09)
 T-09.3   tests/test_nulls.py:11   occurrences=1 starts-at=11 OK (stage T-09)
-after stage T-09: gate exit 0: 42 passed, 1 warning in 19.35s · lint exit 0: All checks passed!
+after stage T-09: gate exit 0: 42 passed, 1 warning in 17.41s · lint exit 0: All checks passed!
 T-05.2   tests/api/test_contract_conformance.py:108  occurrences=1 starts-at=108 OK (stage T-05)
 T-05.1   tests/api/test_contract_conformance.py:24   occurrences=1 starts-at=24 OK (stage T-05)
 T-05.6   tests/test_nulls.py:30   occurrences=1 starts-at=30 OK (stage T-05)
 T-05.5   tests/test_nulls.py:24   occurrences=1 starts-at=24 OK (stage T-05)
 T-05.4   tests/test_nulls.py:15   occurrences=1 starts-at=15 OK (stage T-05)
 T-05.3   tests/test_nulls.py:11   occurrences=1 starts-at=11 OK (stage T-05)
-after stage T-05: gate exit 0: 40 passed, 1 warning in 19.72s · lint exit 0: All checks passed!
+after stage T-05: gate exit 0: 40 passed, 1 warning in 18.91s · lint exit 0: All checks passed!
 T-07.2   tests/api/test_contract_conformance.py:108  occurrences=1 starts-at=108 OK (stage T-07)
 T-07.1   tests/api/test_contract_conformance.py:24   occurrences=1 starts-at=24 OK (stage T-07)
 T-07.3   tests/test_nulls.py deleted
-after stage T-07: gate exit 0: 38 passed, 1 warning in 20.40s · lint exit 0: All checks passed!
+after stage T-07: gate exit 0: 38 passed, 1 warning in 17.46s · lint exit 0: All checks passed!
 after all four: Null modules left: none; tests/test_nulls.py exists: False; imports of a Null module under src/ and tests/: none
 
 all blocks matched: True
@@ -858,7 +1054,7 @@ all blocks matched: True
 
 The script (`pack_rehearse.py`):
 ~~~python
-"""Re-runs the mechanical claims of docs/PACK-q07-retire-amends.md on scratch exports of its snapshot.
+"""Re-runs the mechanical claims of docs/PACK-q07-retire-amends.md (v1.1) on scratch exports of its snapshot.
 
 Never writes to the repository: blobs are read with `git show`, trees exported with `git archive`, and every
 write lands under <scratch>. Run with the project's venv interpreter, isolated:
@@ -868,6 +1064,7 @@ write lands under <scratch>. Run with the project's venv interpreter, isolated:
 from __future__ import annotations
 
 import io
+import itertools
 import os
 import re
 import shutil
@@ -895,12 +1092,12 @@ DELETE = re.compile(r"^#### (?P<id>T-[\w.]+) · (?P<file>\S+) — delete the fil
 
 def blocks(text: str) -> list[dict]:
     out = []
-    for m in BLOCK.finditer(text):
+    for i, m in enumerate(BLOCK.finditer(text)):
         old, new = m["old"], m["new"]
         if m["inline"]:
             old, new = old[:-1], (new[:-1] if new.endswith("\n") else new)
         out.append({"id": m["id"], "file": m["file"], "line": int(m["line"]), "old": old, "new": new,
-                    "inline": bool(m["inline"])})
+                    "inline": bool(m["inline"]), "idx": i})
     return out
 
 
@@ -921,7 +1118,9 @@ def apply_group(texts: dict[str, str], group: list[dict], label: str, report: li
         by_file.setdefault(b["file"], []).append(b)
     for f, bs in by_file.items():
         text = texts[f]
-        for b in sorted(bs, key=lambda x: x["line"], reverse=True):  # bottom-up: every stated line stays valid
+        # bottom-up, right to left within a line, so every stated line stays valid; blocks that share one anchor
+        # in reverse pack order (E-9's DECISIONS row first, so the rows stand in id order)
+        for b in sorted(bs, key=lambda x: (text.find(x["old"]), x["idx"]), reverse=True):
             n, line = locate(text, b)
             good = n == 1 and line == b["line"]
             ok &= good
@@ -984,16 +1183,38 @@ def gate(tree: Path) -> str:
 
 # ---- scaffolding for the rehearsal only: stand-ins for the real services, never proposed text
 STAND_INS = {
-    "src/app/identity/service.py": '''"""Rehearsal stand-in (scratch only, not the product): a MemberDirectory on an empty workspace."""
+    "src/app/identity/service.py": '''"""Rehearsal stand-in (scratch only, not the product): a MemberDirectory over the current session (E-6 (b)),
+built as E-7 (b) and E-8 (a) construct it."""
 
 from __future__ import annotations
 
+import secrets
+from collections.abc import Callable
+from typing import Any
+
+from sqlalchemy import select
+
+from app import db, models
 from app.ports import Caller, MemberNotFound, Role
 
 
+class SecretsSource:
+    def token(self) -> str:
+        return secrets.token_urlsafe(32)
+
+    def salt(self) -> str:
+        return secrets.token_hex(8)
+
+
 class IdentityService:
+    def __init__(self, bound: Callable[[], Any], source: SecretsSource) -> None:
+        self._bound, self._source = bound, source
+
     def caller_for_token(self, token: str) -> Caller | None:
-        return None
+        member = db.current_session().scalar(select(models.Member).where(models.Member.token == token))
+        if member is None or not member.active:
+            return None
+        return Caller(member_id=member.id, name=member.name, role=member.role, active=member.active)
 
     def is_active(self, member_id: int) -> bool | None:
         return None
@@ -1062,9 +1283,10 @@ class SwapsService:
 }
 STAGES = [  # (stage, Null module, stand-in, main.py rebinding)
     ("T-03", "src/app/identity/null_directory.py", "src/app/identity/service.py", [
-        ("from app.identity.null_directory import NullDirectory\n", "from app.identity.service import IdentityService\n"),
+        ("from app.identity.null_directory import NullDirectory\n",
+         "from app.identity.service import IdentityService, SecretsSource\n"),
         ("member_directory=member_directory or NullDirectory(),  # replaced by ADU-03",
-         "member_directory=member_directory or IdentityService(),")]),
+         "member_directory=member_directory or IdentityService(lambda: app.state.ports, SecretsSource()),")]),
     ("T-09", "src/app/notifications/null_notifier.py", "src/app/notifications/service.py", [
         ("from app.notifications.null_notifier import NullNotifier\n",
          "from app.notifications.service import NotificationsService\n"),
@@ -1083,9 +1305,133 @@ REFUSED = ("        self.reason = reason\n",
            '    def __init__(self, reason: str, detail: str = "", **extra: object) -> None:\n'
            '        super().__init__(reason)\n'
            '        self.reason, self.detail, self.extra = reason, detail, extra\n')
+# the illustrative current session of E-6 (b): db.py gains it, deps.py makes it current in an async dependency
+DB_IMPORTS = ("from pathlib import Path\n",
+              "from collections.abc import Iterator\nfrom contextlib import contextmanager\n"
+              "from contextvars import ContextVar\nfrom pathlib import Path\n")
+DB_CURRENT = '''
+
+_CURRENT: ContextVar[Session | None] = ContextVar("app.db.current_session", default=None)
 
 
-def scaffold(tree: Path, null: str, stand_in: str, rebinding: list[tuple[str, str]], refused: bool) -> None:
+class NoCurrentSession(RuntimeError):
+    """Illustrative E-6 (b) shape (rehearsal only): a service called with no session current."""
+
+
+def current_session() -> Session:
+    session = _CURRENT.get()
+    if session is None:
+        raise NoCurrentSession("no session is current")
+    return session
+
+
+@contextmanager
+def use_session(session: Session) -> Iterator[Session]:
+    token = _CURRENT.set(session)
+    try:
+        yield session
+    finally:
+        _CURRENT.reset(token)
+
+
+@contextmanager
+def unit_of_work(engine: Engine) -> Iterator[Session]:
+    session = session_for(engine)
+    try:
+        with use_session(session):
+            yield session
+        session.commit()
+    except BaseException:
+        session.rollback()
+        raise
+    finally:
+        session.close()
+'''
+DEPS = '''"""Request plumbing (ADU-02; rehearsal scaffold of E-6 (b), scratch only): the caller resolved once per
+request through MemberDirectory, one session per request made current for the whole request, and the Problem
+refusal shape of the cross-cutting rules."""
+
+from __future__ import annotations
+
+from collections.abc import AsyncIterator
+
+from fastapi import Depends, Request
+from fastapi.responses import JSONResponse
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
+from sqlalchemy.orm import Session
+
+from app import db
+from app.ports import Caller
+
+bearer = HTTPBearer(auto_error=False, scheme_name="bearer")
+
+
+class ProblemError(Exception):
+    """A refusal: {reason, detail, ...}; the status follows the bucket of the Reason codes table."""
+
+    def __init__(self, status: int, reason: str, title: str, detail: str, **extra: object) -> None:
+        super().__init__(reason)
+        self.status, self.reason, self.title, self.detail, self.extra = status, reason, title, detail, extra
+
+
+def problem_response(status: int, reason: str, title: str, detail: str, **extra: object) -> JSONResponse:
+    return JSONResponse(
+        {"type": "about:blank", "title": title, "detail": detail, "reason": reason, **extra}, status
+    )
+
+
+def engine_of(request: Request):
+    app = request.app
+    if app.state.engine is None:
+        app.state.engine = db.engine_for(app.state.workspace)
+    return app.state.engine
+
+
+async def get_session(request: Request) -> AsyncIterator[Session]:
+    """One session per request, current for the whole request: async, because a ContextVar set in a sync
+    dependency is not visible to the endpoint; closing it rolls back what the router did not commit."""
+    session = db.session_for(engine_of(request))
+    try:
+        with db.use_session(session):
+            yield session
+    finally:
+        session.close()
+
+
+def require_caller(
+    request: Request,
+    creds: HTTPAuthorizationCredentials | None = Depends(bearer),
+    _session: Session = Depends(get_session),
+) -> Caller:
+    """unauthenticated before anything else: no token, an unknown token or an inactive member's token
+    (R-identity-06); the request's session is current, so caller_for_token reads it."""
+    token = creds.credentials if creds else None
+    caller = request.app.state.ports.member_directory.caller_for_token(token) if token else None
+    if caller is None:
+        raise ProblemError(401, "unauthenticated", "Not signed in", "Sign in first.")
+    return caller
+'''
+CHECK_E6B = '''import sys
+from pathlib import Path
+
+sys.path.insert(0, "src")
+from app import db  # noqa: E402
+from app.main import create_app  # noqa: E402
+
+ws = Path(sys.argv[1])
+directory = create_app(workspace=ws).state.ports.member_directory
+try:
+    directory.caller_for_token("tok_1")
+    outside = "a session was current (unexpected)"
+except db.NoCurrentSession:
+    outside = "NoCurrentSession"
+with db.unit_of_work(db.engine_for(ws)):
+    inside = directory.caller_for_token("tok_1")
+print(f"outside a unit of work -> {outside}; inside db.unit_of_work -> {inside}")
+'''
+
+
+def scaffold(tree: Path, null: str, stand_in: str, rebinding: list[tuple[str, str]], first_stage: bool) -> None:
     (tree / null).unlink()
     write(tree, stand_in, STAND_INS[stand_in])
     main = read(tree, "src/app/main.py")
@@ -1093,10 +1439,20 @@ def scaffold(tree: Path, null: str, stand_in: str, rebinding: list[tuple[str, st
         assert main.count(old) == 1, old
         main = main.replace(old, new)
     write(tree, "src/app/main.py", main)
-    if refused:
+    if first_stage:  # ADU-03: the illustrative Refused (D-p2) and the illustrative current session (E-6 (b))
         ports = read(tree, "src/app/ports.py")
         assert ports.count(REFUSED[0]) == 1
         write(tree, "src/app/ports.py", ports.replace(*REFUSED))
+        dbm = read(tree, "src/app/db.py")
+        assert dbm.count(DB_IMPORTS[0]) == 1
+        write(tree, "src/app/db.py", dbm.replace(*DB_IMPORTS) + DB_CURRENT)
+        write(tree, "src/app/api/deps.py", DEPS)
+
+
+OPTIONS = ("E-5a", "E-6a", "E-6b", "E-7a", "E-7b", "E-8a", "E-8b", "E-9a", "E-9c")
+RECOMMENDED = ("E-5a", "E-6b", "E-7b", "E-8a", "E-9a")
+GUARDED = ("tests/test_nulls.py", "tests/api/test_contract_conformance.py", "src/app/ports.py", "src/app/db.py",
+           "src/app/api/deps.py")
 
 
 def main() -> int:
@@ -1113,47 +1469,102 @@ def main() -> int:
     post = {f: git_show(f) for f in {b["file"] for b in bgroup}}
     ok &= apply_group(post, bgroup, "against the 7d1e7d4 blob", report)
 
-    # 2. E-blocks against the text as B leaves it, each option alone and both (b)s together (disjointness)
-    for label, prefixes in (("E-2b on post-B", ("E-2b",)), ("E-3b on post-B", ("E-3b",)),
-                            ("E-2b + E-3b on post-B", ("E-2b", "E-3b"))):
-        eg = [b for b in allb if b["id"].startswith(prefixes)]
+    def egroup(prefixes: tuple[str, ...]) -> list[dict]:
+        return [b for b in allb if b["id"].startswith(prefixes)]
+
+    def e_texts(eg: list[dict]) -> dict[str, str]:
         texts = dict(post)
         for f in {b["file"] for b in eg} - set(texts):
             texts[f] = git_show(f)
-        ok &= apply_group(texts, eg, label, report)
+        return texts
+
+    # 2. E-blocks against the text as B leaves it: v1.0's E-2 (b) and E-3 (b), alone and together; every written
+    #    option of E-5..E-9 alone (E-9.P, the pm-lead's, is checked and never applied with the others)
+    for label, prefixes in (("E-2b on post-B", ("E-2b",)), ("E-3b on post-B", ("E-3b",)),
+                            ("E-2b + E-3b on post-B", ("E-2b", "E-3b"))):
+        eg = egroup(prefixes)
+        ok &= apply_group(e_texts(eg), eg, label, report)
+    for opt in OPTIONS:
+        eg = egroup((opt + ".",))
+        ok &= apply_group(e_texts(eg), eg, f"{opt} on post-B", report)
+    eg = [b for b in allb if b["id"] == "E-9.P"]
+    ok &= apply_group(e_texts(eg), eg, "E-9.P on post-B: the pm-lead's, not applied", report)
     print("\n".join(report))
 
-    # 3. export A: B-3 applied; plan check and order; guard at the snapshot (export H) and after B-3 (export A)
-    a, h = export("A-plan-and-stages"), export("H-pristine")
-    b3 = [b for b in bgroup if b["file"] == "ADU-PLAN.md"]
-    write(a, "ADU-PLAN.md", post["ADU-PLAN.md"])
-    for label, tree in (("scratch copy with B-3 applied", a),):
+    # 3. every combination of E-6..E-9's written options with E-5 (a), alone and under E-2 (b) + E-3 (b)
+    print("\nthe 16 combinations of E-6..E-9's written options with E-5 (a), on post-B:")
+    composed: dict[str, str] = {}
+    for o6, o7, o8, o9 in itertools.product("ab", "ab", "ab", "ac"):
+        opts = ("E-5a", f"E-6{o6}", f"E-7{o7}", f"E-8{o8}", f"E-9{o9}")
+        for extra in ((), ("E-2b", "E-3b")):
+            eg = egroup(tuple(o + "." for o in opts) + extra)
+            texts = e_texts(eg)
+            good = apply_group(texts, eg, "combination", [])
+            rows = re.findall(r"^\| (D-\w+) \|", texts["DECISIONS.md"], re.M)
+            in_order = rows[-6:] == [f"D-p{i}" for i in range(1, 7)]
+            ok &= good and in_order
+            print(f"{' + '.join(opts + extra):44} {len(eg):2} blocks: {'all matched at their lines' if good else 'MISMATCH'};"
+                  f" DECISIONS rows D-p1..D-p6 in id order: {in_order}")
+            if opts == RECOMMENDED and not extra:
+                composed = texts
+    heads = [ln for ln in composed["OPEN-QUESTIONS.md"].splitlines() if ln.startswith("### Q-")]
+    print("\nOPEN-QUESTIONS.md headings with the recommended options (E-5 (a), E-6 (b), E-7 (b), E-8 (a), E-9 (a)):")
+    print("\n".join(heads[-6:]))
+    sec = composed["design/INTERFACES.md"]
+    start, end = sec.index("## Domain services"), sec.index("## Test doubles")
+    print(f"\ndesign/INTERFACES.md with the recommended options, lines {sec.count(chr(10), 0, start) + 1}–"
+          f"{sec.count(chr(10), 0, end)}:")
+    print(sec[start:end].rstrip("\n"))
+
+    # 4. the plan: B-3 alone (export B), B-3 + E-6 (b), the recommended options' only plan text (export A);
+    #    the guard at 7d1e7d4 (export H), with B-3, and with B-3 + E-6 (b)
+    a, b3, h = export("A-plan-and-stages"), export("B-plan-B3"), export("H-pristine")
+    b3_blocks = [b for b in bgroup if b["file"] == "ADU-PLAN.md"]
+    e6b_plan = [b for b in allb if b["id"].startswith("E-6b.") and b["file"] == "ADU-PLAN.md"]
+    rec = {"ADU-PLAN.md": post["ADU-PLAN.md"]}
+    ok &= apply_group(rec, e6b_plan, "E-6b plan", [])
+    write(b3, "ADU-PLAN.md", post["ADU-PLAN.md"])
+    write(a, "ADU-PLAN.md", rec["ADU-PLAN.md"])
+    for label, tree in (("scratch copy with B-3 applied", b3),
+                        ("scratch copy with B-3 and E-6 (b), the recommended options' plan text", a)):
         for args in (("plan", "check"), ("plan", "order")):
             r = adu(tree, *args)
             print(f"\n$ adu {' '.join(args)}   # {label}, exit {r.returncode}\n{(r.stdout + r.stderr).rstrip()}")
-    print(f"\n(B-3 blocks applied: {len(b3)})")
-    for label, tree in (("at 7d1e7d4", h), ("with B-3 applied", a)):
-        for p in ("tests/test_nulls.py", "tests/api/test_contract_conformance.py", "src/app/ports.py"):
+    print(f"\n(B-3 blocks applied: {len(b3_blocks)}; E-6 (b) plan blocks on top: {len(e6b_plan)})")
+    for label, tree in (("at 7d1e7d4", h), ("with B-3 applied", b3), ("with B-3 and E-6 (b)", a)):
+        for p in GUARDED:
             r = adu(tree, "guard", "edit", p, "--role", "developer")
             msg = (r.stdout + r.stderr).strip().replace("\n", " ")
             print(f"guard edit {p} --role developer ({label}) -> exit {r.returncode}: {msg[:150]}")
 
-    # 4. export C: B-3 plus E-2b on the plan
-    c = export("C-plan-E2b")
+    # 5. export C: B-3 plus E-2b on the plan; export D: B-3, E-2b and E-6b together (the two touch other lines)
+    c, d = export("C-plan-E2b"), export("D-plan-E2b-E6b")
+    e2b_plan = [b for b in allb if b["id"].startswith("E-2b") and b["file"] == "ADU-PLAN.md"]
     e2b = {"ADU-PLAN.md": post["ADU-PLAN.md"]}
-    apply_group(e2b, [b for b in allb if b["id"].startswith("E-2b") and b["file"] == "ADU-PLAN.md"], "E-2b", [])
+    apply_group(e2b, e2b_plan, "E-2b", [])
     write(c, "ADU-PLAN.md", e2b["ADU-PLAN.md"])
     for args in (("plan", "check"), ("plan", "order")):
         r = adu(c, *args)
         print(f"\n$ adu {' '.join(args)}   # scratch copy with B-3 and E-2 (b), exit {r.returncode}\n"
               f"{(r.stdout + r.stderr).rstrip()}")
+    both = {"ADU-PLAN.md": post["ADU-PLAN.md"]}
+    ok &= apply_group(both, e2b_plan + e6b_plan, "E-2b + E-6b", [])
+    write(d, "ADU-PLAN.md", both["ADU-PLAN.md"])
+    r = adu(d, "plan", "check")
+    print(f"\n$ adu plan check   # scratch copy with B-3, E-2 (b) and E-6 (b), exit {r.returncode}\n"
+          f"{(r.stdout + r.stderr).rstrip()}")
 
-    # 5. the stages, in the derived order, on export A
-    print(f"\nbaseline (export A, B-3 applied, no stage yet): {gate(a)}")
+    # 6. the stages, in the derived order, on export A (B-3 and E-6 (b) applied)
+    print(f"\nbaseline (export A, B-3 and E-6 (b) applied, no stage yet): {gate(a)}")
     for stage, null, stand_in, rebinding in STAGES:
-        refused = stage == "T-03"
-        scaffold(a, null, stand_in, rebinding, refused)
-        if refused:  # the twins: each part of T-03 is needed
+        first_stage = stage == "T-03"
+        scaffold(a, null, stand_in, rebinding, first_stage)
+        if first_stage:  # the current session through the composition root, then the twins: each part of T-03 is needed
+            ws = SCRATCH / "E6b-check-workspace"
+            shutil.rmtree(ws, ignore_errors=True)
+            r = run([str(PY), "-c", CHECK_E6B, str(ws)], a)
+            print(f"E-6 (b) scaffold, the composition root's directory: exit {r.returncode}: "
+                  f"{last(r.stdout + r.stderr, r'.')}")
             r = run([str(PY), "-m", "pytest", "tests/api/test_contract_conformance.py", "-q", "-p", "no:cacheprovider"], a)
             print(f"twin 1 (Null deleted, conformance test unedited): exit {r.returncode}: "
                   f"{first(r.stdout, r'ModuleNotFoundError')} | {last(r.stdout, r'error|passed|failed')}")
@@ -1172,10 +1583,10 @@ def main() -> int:
         ok &= apply_group(texts, group, f"stage {stage}", srep)
         for f, t in texts.items():
             write(a, f, t)
-        for d in deletes:
-            if d["id"].startswith(stage + "."):
-                (a / d["file"]).unlink()
-                srep.append(f"{d['id']:8} {d['file']} deleted")
+        for dl in deletes:
+            if dl["id"].startswith(stage + "."):
+                (a / dl["file"]).unlink()
+                srep.append(f"{dl['id']:8} {dl['file']} deleted")
         print("\n".join(srep))
         print(f"after stage {stage}: {gate(a)}")
     left = [str(p.relative_to(a)) for p in (a / "src").rglob("null_*.py")]
@@ -1279,9 +1690,9 @@ Verification round for Team Rota: /adu-lifecycle:verify docs/PACK-q07-retire-ame
 
 You are a fresh verifier; you did not write this pack, and you change nothing in the repository except your report and your journal block.
 
-1. `adu status`: expect Now: ADU-03 and Q-07 open and blocking (the pack answers Q-07; it does not open ADU-03). Before any `uv` or python command confirm `$env:UV_PROJECT_ENVIRONMENT` is `C:\dev\team-rota-data\.venv` (the User-level variable names another project's venv) and that `$env:PYTHONUTF8` is empty. `git status --short` is expected to show `?? uv.lock` (Q-05) and, if the operator has not committed the pack yet, `?? docs/PACK-q07-retire-amends.md`.
+1. `adu status`: expect Now: ADU-03 and Q-07 open and blocking (the pack answers Q-07; it does not open ADU-03). Then confirm three variables before any `uv` or python command: `$env:UV_PROJECT_ENVIRONMENT` is `C:\dev\team-rota-data\.venv` (the User-level variable names another project's venv); `$env:PYTHONUTF8` is empty; and `$env:ADU_PLUGIN_ROOT` is `C:\dev\adu-lifecycle` (in Git Bash, `echo $ADU_PLUGIN_ROOT`). Without the last, every scratch gate shows 4 failures in tests/test_method.py (plugin FB-19), which are not the pack's. Then the interpreter line, `uv run python -c "import sys, locale; print(sys.prefix, locale.getpreferredencoding(False), sys.flags.utf8_mode)"`: expect `C:\dev\team-rota-data\.venv cp1252 0`. A bare `python -c …` may print `C:\Python314 cp1252 0`: that is the system interpreter, not the gate's, and not a finding. `git status --short` is expected to show `?? uv.lock` only (Q-05): the pack is committed.
 2. Snapshot gate: `adu snapshot check 7d1e7d4`. Exit 2 → the report is the command's output and `VERDICT: STOP — STALE`; nothing else is verified.
-3. Read the pack in full; then OPEN-QUESTIONS.md:53–59 (Q-07), the SESSION-JOURNAL.md blocks of 2026-11-07 20:20 (the hand-over that raised Q-07) and of the pack's drafting session (2026-11-08), and any docs/VERIFICATION-*.md.
+3. Read the pack in full; then OPEN-QUESTIONS.md:53–59 (Q-07), the SESSION-JOURNAL.md blocks of 2026-11-07 20:20 (the hand-over that raised Q-07) and of the pack's drafting sessions (2026-11-08: v1.0 and v1.1), and any docs/VERIFICATION-*.md (none exists before this round).
 4. Claims, each CONFIRMED / WRONG / UNVERIFIABLE with file and line:
    a. every B-block (B-2.1–B-2.9, B-3.1–B-3.14) against the 7d1e7d4 blob (`git show 7d1e7d4:<file>`): text character for character with line endings normalised, unique in its file, starting at the stated line;
    b. every T-block (B-2.T) against the file as the previous T-stage leaves it, starting from 7d1e7d4 for T-03; each E-block against the text as B leaves it;
@@ -1289,10 +1700,14 @@ You are a fresh verifier; you did not write this pack, and you change nothing in
    d. the guard: at 7d1e7d4, `adu guard edit tests/test_nulls.py --role developer` and `adu guard edit tests/api/test_contract_conformance.py --role developer` refused as completed units' tests, `adu guard edit src/app/ports.py --role developer` refused as outside ADU-03's roster; on a scratch export with B-3 applied, the two tests still refused (FB-28) and ports.py allowed;
    e. every amendment names the file and the assertion it falsifies, in both directions (each B-3 `amends` line names its T-blocks; each T-block is named by a B-3 line);
    f. that no arm is weakened: compare each replaced arm with the arm it replaces and with ADU-02's arms (ADU-PLAN.md:126–133) and ADU-16's (:99–104); say how each rewritten arm can fail;
-   g. that the IdentityService section (B-2.3) contains nothing the arms (ADU-PLAN.md:159–165), R-identity-01..09 (design/domains/identity/spec.md:7–15) and contracts/openapi.yaml do not settle, other than what it marks open (Q-p1–Q-p4).
-5. Measurements, in your own scratchpad, never in the repository: (i) `git archive 7d1e7d4` into a scratch folder, apply B-3, run `adu plan check` and `adu plan order` with the working directory inside the copy; compare with B-3.15; repeat with E-2 (b)'s blocks on top; (ii) re-run the rehearsal of B-4.3 (the pack's script, or your own equivalent) and compare per stage the gate count, the lint, and the twins; (iii) re-run the ContextVar probe of B-5 and compare. Table: the pack's value · yours · verdict per cell.
+   g. that the IdentityService section (B-2.3) contains nothing the arms (ADU-PLAN.md:159–165), R-identity-01..09 (design/domains/identity/spec.md:7–15) and contracts/openapi.yaml do not settle, other than what it marks open (Q-p1–Q-p4). Then the same for the completed texts of E-6–E-9, each option that has text: that each settles exactly its question's point and nothing beyond it, and that nothing it writes contradicts the arms, the spec, the contract or design/ARCHITECTURE.md except where the option says it amends them. The points are the request's session, the constructor and collaborators, the token and salt source, and the returned values and their home. Also check that the options compose (B-4.3 composes all 16), and that E-6 (b) states what happens outside a request: the seed command, a test, and no session current.
+5. Measurements, in your own scratchpad, never in the repository:
+   (i) `git archive 7d1e7d4` into a scratch folder, apply B-3, and run `adu plan check` and `adu plan order` with the working directory inside the copy; compare with B-3.15. Repeat with E-2 (b)'s blocks on top, and with E-6 (b)'s plan block (the recommended options' only plan text).
+   (ii) Re-run the rehearsal of B-4.3 (the pack's script, or your own equivalent). Compare, per stage, the gate count, the lint and the twins, and compare the 16 combinations.
+   (iii) Re-run the ContextVar probe of B-5 and the current-session probe of E-6, and compare.
+   Table: the pack's value · yours · verdict per cell.
 6. Optional, once: `uv run pytest tests/ -q -m "not timing" -p no:cacheprovider` at HEAD, expect `46 passed`; `git status --short` unchanged afterwards.
-7. The report: docs/VERIFICATION-<id>.md (`adu next-id V`) in the skill's report shape, the verdict as its last line and the token VERDICT nowhere else; `adu verdict check docs/VERIFICATION-<id>.md` passes; then your journal block. Write nothing else.
+7. The report: docs/VERIFICATION-R1.md, named by hand, because `adu next-id V` crashes with EISDIR (plugin FB-31) and no earlier report exists. Use the skill's report shape, with the verdict as its last line and the token VERDICT nowhere else; `adu verdict check docs/VERIFICATION-R1.md` passes; then your journal block. Write nothing else.
 ~~~
 
 ### D-2 The apply prompt
@@ -1301,22 +1716,41 @@ For a fresh `claude --plugin-dir C:\dev\adu-lifecycle --agent adu-lifecycle:rele
 ~~~text
 Design-change loop, stage 4 (apply) for Team Rota: /adu-lifecycle:change-design apply docs/PACK-q07-retire-amends.md
 
-Preconditions — stop and tell me if any fails: docs/VERIFICATION-<id>.md for this pack ends `VERDICT: READY` or `VERDICT: READY WITH MECHANICAL ADAPTATIONS`; my rulings on Part E (E-1 … E-5) are pasted at the end of this prompt, verbatim; `adu snapshot check 7d1e7d4` exits 0; `$env:UV_PROJECT_ENVIRONMENT` is `C:\dev\team-rota-data\.venv` and `$env:PYTHONUTF8` is empty.
+First, the interpreter line: `uv run python -c "import sys, locale; print(sys.prefix, locale.getpreferredencoding(False), sys.flags.utf8_mode)"` prints `C:\dev\team-rota-data\.venv cp1252 0` (a bare `python -c …` may print `C:\Python314 …`, the system interpreter, which is not the gate's).
 
-1. First: re-derive every provisional identifier against HEAD and record the mapping in docs/APPLICATION-REPORT-q07-retire-amends.md (from the plugin's templates/reports/APPLICATION-REPORT.md): D-p1 and D-p2 with `adu next-id D` (D-12 and D-13 if main took none), Q-p1 … Q-p5 with `adu next-id Q` (Q-08 … Q-12 if main took none). Replace every provisional id, every `<apply-date>` and `docs/VERIFICATION-<id>.md` in the text you apply. Never renumber to dodge a number main took.
-2. Apply B-2.1–B-2.9 and B-3.1–B-3.14 block by block, bottom-up within each file, each `replace exactly` matching character for character with line endings normalised; a miss is a stop, not a guess. For each Part E bracket apply the text of the option I ruled (its E-blocks on top of B); a ruled option whose text is not in the pack stops the apply. Do not apply B-2.T: those edits belong to the retiring units' sessions, each under its own grant.
+Preconditions — stop and tell me if any fails:
+- docs/VERIFICATION-R1.md for this pack (v1.1) ends `VERDICT: READY` or `VERDICT: READY WITH MECHANICAL ADAPTATIONS`.
+- My rulings on Part E (E-1 … E-9) are pasted at the end of this prompt, verbatim.
+- `adu snapshot check 7d1e7d4` exits 0.
+- `$env:UV_PROJECT_ENVIRONMENT` is `C:\dev\team-rota-data\.venv`, `$env:PYTHONUTF8` is empty, and `$env:ADU_PLUGIN_ROOT` is `C:\dev\adu-lifecycle`.
+
+1. First: re-derive every provisional identifier against HEAD and record the mapping in docs/APPLICATION-REPORT-q07-retire-amends.md (from the plugin's templates/reports/APPLICATION-REPORT.md).
+   - Every D-p row the rulings apply takes an id from `adu next-id D`: D-p1 … D-p6 are D-12 … D-17 if main took none; without E-6–E-9 only D-p1 and D-p2 are applied, as D-12 and D-13.
+   - Every question this apply enters takes an id from `adu next-id Q`: Q-p1 … Q-p5 are Q-08 … Q-12 if main took none. Q-p1 … Q-p4 are entered resolved under E-5 (a) or open under E-5 (b), and Q-p5 is entered open either way. A question entered resolved is still an entry, and it takes its id.
+   - Replace every provisional id, every `<apply-date>` and every `docs/VERIFICATION-<id>.md` (→ docs/VERIFICATION-R1.md) in the text you apply. Never renumber to dodge a number main took.
+2. Apply B-2.1–B-2.9 and B-3.1–B-3.14 block by block: bottom-up within each file, right to left within a line, each `replace exactly` matching character for character with line endings normalised. A miss is a stop, not a guess.
+   - For each Part E bracket, apply the text of the option I ruled (its E-blocks on top of B). The DECISIONS blocks of E-6–E-9 share one anchor; apply them in the order E-9, E-8, E-7, E-6, so the rows stand in id order.
+   - A ruled option whose text is not in the pack stops the apply, and so does a ruling of some but not all of E-6–E-9.
+   - Do not apply B-2.T: those edits belong to the retiring units' sessions, each under its own grant.
+   - Do not apply E-9.P either: it is the pm-lead's editorial patch of PRODUCT-DESIGN.md:18. Record it in the application report as the pm-lead's to make.
 3. Chase every row of Part C with `adu chase "<old>" "<new>"`; change each hit or record in the application report why it stays.
-4. Make the verification report's mechanical adaptations in the governing documents (never in the pack). Then `adu derived render`; `adu plan check` (expect `plan OK: 18 units` and the order of B-3.15); `adu derived check`; `adu ledger lint`; `adu pins check` (no pinned file changes).
-5. Versions as B-2 writes them: ADU-PLAN 1.2 → 1.3, design/INTERFACES.md 1.0.1 → 1.1 (it gains the Current row it lacked). Q-07 resolved as B-2.6–B-2.7 write it; Q-p1 … Q-p5 entered with their allocated ids.
-6. Run the gate once: `uv run pytest tests/ -q -m "not timing"`; expect `46 passed` (STATUS.md:40; this loop changes no test). Any other count is a stop. Then your journal block and a STATUS Log line ending `backward: n/a (documents only)`. I commit: `docs: apply pack q07-retire-amends (ADU-PLAN v1.3, INTERFACES v1.1)`.
-7. NEXT in your journal block: if E-5 (a) was ruled, ADU-03 still does not open — I rule the allocated Q-p1 … Q-p4 first. When ADU-03 is handed over, its prompt says "design updated: ADU-PLAN v1.3 (ADU-03's amends and arm 1; the same pattern in ADU-09, ADU-05, ADU-07), INTERFACES v1.1 (§Refused, §Domain services — IdentityService, the retirement paragraph)", and its first section names the two grants the session asks me for (`tests/api/test_contract_conformance.py`, `tests/test_nulls.py`), since the guard does not honour amends on a completed unit's test (plugin FB-28).
+4. Make the verification report's mechanical adaptations in the governing documents (never in the pack). Then run `adu derived render`; `adu plan check` (expect `plan OK: 18 units` and the order of B-3.15); `adu derived check`; `adu ledger lint`; and `adu pins check` (no pinned file changes).
+5. Versions as B-2 writes them: ADU-PLAN 1.2 → 1.3; design/INTERFACES.md 1.0.1 → 1.1 (it gains the Current row it lacked); and, under E-5 (a), design/ARCHITECTURE.md 1.1 → 1.2. Q-07 is resolved as B-2.6–B-2.7 write it, and Q-p1 … Q-p5 are entered with their allocated ids, as E-5 rules.
+6. Run the gate once, `uv run pytest tests/ -q -m "not timing"`, then the lint, `uv run ruff check`, and report the last line of each. Expect `46 passed …` (STATUS.md:40; this loop changes no test) and `All checks passed!`; any other count or any lint finding is a stop. Then write your journal block and a STATUS Log line ending `backward: n/a (documents only)`. I commit with the message `docs: apply pack q07-retire-amends (ADU-PLAN v1.3, INTERFACES v1.1, ARCHITECTURE v1.2)`, or without ARCHITECTURE v1.2 under E-5 (b).
+7. NEXT in your journal block:
+   - If E-6–E-9 were ruled (E-5 (a)), ADU-03 is handed over next. The oversight session regenerates `adu handover ADU-03` and checks it against the entry.
+   - Its prompt says "design updated: ADU-PLAN v1.3 (ADU-03's amends and arm 1; the same pattern in ADU-09, ADU-05, ADU-07), INTERFACES v1.1 (§Refused, §Domain services — the request's session and IdentityService, the retirement paragraph), ARCHITECTURE v1.2 (§Persistence and concurrency rules)".
+   - Its first section names the two grants the session asks me for (`tests/api/test_contract_conformance.py`, `tests/test_nulls.py`), since the guard does not honour amends on a completed unit's test (plugin FB-28).
+   - Under E-6 (b), its roster lists src/app/db.py and src/app/api/deps.py among the amends (no grant: they are not tests).
+   - The pm-lead's E-9.P patch follows in a pm-lead session and does not block ADU-03.
+   - If E-5 (b) was ruled, ADU-03 still does not open: I rule the allocated Q-p1 … Q-p4 first.
 
 My rulings on Part E:
 <paste here>
 ~~~
 
 ## Part E — the operator's decisions
-Each bracket's options have their text in this pack. An option without text stops the apply, and E-1 (c) is such an option.
+Each bracket's options have their text in this pack. An option without text stops the apply: E-1 (c), E-6 (c), E-7 (c), E-8 (c) and E-9 (b) are such options. E-6–E-9 are ruled all four or none; E-5 says how each case is entered.
 
 **1. Which double answers `Bearer tok_1` in the 401/501 test.** No existing double resolves `tok_1` as constructed (Part A-2).
 [(a) recommended: `FakeMemberDirectory`, configured in the test with `add(1, "Member 1", "member", token="tok_1")`, the same Caller the Null gave; nothing but the test changes (T-03.2, T-03.4, B-3.3, B-2.4)
@@ -1448,5 +1882,892 @@ If (b) is ruled, B-3.4's ports.py line reads "gains Refused(reason, **extra)" in
 | (b) both unchanged: drop T-03.1 and T-03.5; in B-3.3's conformance line delete the clause "; the composition-root test is renamed test_the_composition_root_binds_an_implementation_per_port_and_an_injectable_clock and the module docstring reads 'binds an implementation of each port (the Null until its provider lands)'"; the later conformance lines move up by 2 (T-09.2 :108, T-05.2 :106, T-07.2 :106; with E-1 (b) as well, by 4) — consequence: a test whose name states what is no longer true]
 
 **5. The status of the questions this loop raises (B-5).**
-[(a) recommended: Q-p1–Q-p4 enter OPEN-QUESTIONS as open and blocking ADU-03, and Q-p5 as open and blocking ADU-04. Q-07 is resolved by this apply, but ADU-03 opens only after you rule Q-p1–Q-p4 (in the oversight session, as Q-07 was), and their text is written by the next design-change loop
-| (b) Q-p1–Q-p4 non-blocking: in B-2.7 each `**Blocking:** yes — for ADU-03 …` line reads `**Blocking:** no — ADU-03's session proceeds on the recommended option, stated in its journal block as the assumption (Q-02's pattern).` Consequence: ADU-03 opens at once, but ADU-04, ADU-09 and ADU-05 inherit four choices made by a unit session rather than by you]
+[(a) recommended, with E-6–E-9 ruled: Q-p1–Q-p4 are entered resolved by this apply and Q-p5 alone open, blocking ADU-04, as B-2.7 writes it. Each of Q-p1–Q-p4 is headed `resolved → D-p3` … `D-p6` (E-5a.2–E-5a.5), and its Resolution line is the one the option you rule in E-6–E-9 writes: the ruling, and where it now lives. Q-07's resolution says so (E-5a.1). The version lines follow (E-5a.6–E-5a.13): design/INTERFACES.md's header names D-p1–D-p6, and design/ARCHITECTURE.md goes from v1.1 to v1.2, because E-6 amends its line 42 and E-8 its line 45 whichever option is ruled. ADU-03 is handed over after the apply
+| (b) with none of E-6–E-9 ruled: Q-p1–Q-p4 enter open and blocking ADU-03, and Q-p5 open and blocking ADU-04, exactly as B-2.7 writes them, and no E-5–E-9 block is applied. Q-07 is resolved by this apply, but ADU-03 opens only after you rule Q-p1–Q-p4 (in the oversight session, as Q-07 was), and their text is written by the next design-change loop. This is v1.0's recommendation]
+A ruling of some but not all of E-6–E-9 stops the apply: there is no text for a section half settled and half open. v1.0's other option is withdrawn: Q-p1–Q-p4 non-blocking, with ADU-03 proceeding on the recommended options as its own assumption. With E-6–E-9 written out, ruling them costs no further loop, and the withdrawn option would leave ADU-03's session making four choices that ADU-04, ADU-09 and ADU-05 inherit.
+
+#### E-5a.1 · OPEN-QUESTIONS.md:59
+replace exactly (within the line):
+~~~text
+The IdentityService section's open points are Q-p1–Q-p4; the same wall at the API units is Q-p5.
+~~~
+with:
+~~~text
+The IdentityService section's four open points, raised and ruled in the same loop, are resolved by this apply: Q-p1 → D-p3, Q-p2 → D-p4, Q-p3 → D-p5, Q-p4 → D-p6 (design/INTERFACES.md §Domain services and §IdentityService). The same wall at the API units is Q-p5, entered open.
+~~~
+
+#### E-5a.2 · OPEN-QUESTIONS.md:61
+replace exactly:
+~~~text
+### Q-p1 · 2026-11-08 · design-change loop Q-07 (IdentityService) · open
+~~~
+with:
+~~~text
+### Q-p1 · 2026-11-08 · design-change loop Q-07 (IdentityService) · resolved → D-p3
+~~~
+
+#### E-5a.3 · OPEN-QUESTIONS.md:68
+replace exactly:
+~~~text
+### Q-p2 · 2026-11-08 · design-change loop Q-07 (IdentityService) · open
+~~~
+with:
+~~~text
+### Q-p2 · 2026-11-08 · design-change loop Q-07 (IdentityService) · resolved → D-p4
+~~~
+
+#### E-5a.4 · OPEN-QUESTIONS.md:75
+replace exactly:
+~~~text
+### Q-p3 · 2026-11-08 · design-change loop Q-07 (IdentityService) · open
+~~~
+with:
+~~~text
+### Q-p3 · 2026-11-08 · design-change loop Q-07 (IdentityService) · resolved → D-p5
+~~~
+
+#### E-5a.5 · OPEN-QUESTIONS.md:82
+replace exactly:
+~~~text
+### Q-p4 · 2026-11-08 · design-change loop Q-07 (IdentityService) · open
+~~~
+with:
+~~~text
+### Q-p4 · 2026-11-08 · design-change loop Q-07 (IdentityService) · resolved → D-p6
+~~~
+
+#### E-5a.6 · design/INTERFACES.md:2
+replace exactly (within the line):
+~~~text
+v1.1 (design v1.7, D-02; Q-07: D-p1, D-p2)
+~~~
+with:
+~~~text
+v1.1 (design v1.7, D-02; Q-07: D-p1–D-p6)
+~~~
+
+#### E-5a.7 · design/ARCHITECTURE.md:2
+replace exactly (within the line):
+~~~text
+v1.1 · owned by the architect
+~~~
+with:
+~~~text
+v1.2 · owned by the architect
+~~~
+
+#### E-5a.8 · design/ARCHITECTURE.md:2
+replace exactly (within the line):
+~~~text
+Rests on D-03..D-06 and D-09 (the frontend toolchain).
+~~~
+with:
+~~~text
+Rests on D-03..D-06, D-09 (the frontend toolchain), D-p3 (the request's session) and D-p5 (the token and salt source).
+~~~
+
+#### E-5a.9 · design/ARCHITECTURE.md:52
+replace exactly (within the line):
+~~~text
+· D-09 (the frontend toolchain).
+~~~
+with:
+~~~text
+· D-09 (the frontend toolchain) · D-p3 (the request's session) · D-p5 (the token and salt source).
+~~~
+
+#### E-5a.10 · VERSIONS.md:12
+replace exactly:
+~~~text
+| design/ARCHITECTURE.md | 1.1 | architecture contract |
+~~~
+with:
+~~~text
+| design/ARCHITECTURE.md | 1.2 | architecture contract |
+~~~
+
+#### E-5a.11 · VERSIONS.md:120
+replace exactly (within the line):
+~~~text
+— ADU-PLAN v1.3, INTERFACES v1.1: Q-07, D-p1, D-p2 — the retirement edits under grants, Refused, IdentityService
+~~~
+with:
+~~~text
+— ADU-PLAN v1.3, INTERFACES v1.1, ARCHITECTURE v1.2: Q-07, D-p1–D-p6 — the retirement edits under grants, Refused, IdentityService and its session, collaborators, token source and values
+~~~
+
+#### E-5a.12 · VERSIONS.md:124
+replace exactly (within the line):
+~~~text
+open points Q-p1–Q-p4);
+~~~
+with:
+~~~text
+the session, the constructor and collaborators, the token and salt source and the returned values as ruled, D-p3–D-p6);
+~~~
+
+#### E-5a.13 · VERSIONS.md:124
+The block's replacement ends the INTERFACES row and adds the ARCHITECTURE row on a line of its own.
+replace exactly (within the line):
+~~~text
+first row in Current |
+~~~
+with:
+~~~text
+first row in Current |
+| design/ARCHITECTURE.md | 1.1 | 1.2 | §Persistence and concurrency rules: the request's session (D-p3), and the token and salt source as the one exception to "no randomness in the product" (D-p5); the header and §Decisions name both: a requirement changed, hence the minor bump |
+~~~
+
+**6. How the IdentityService, bound once, reaches the request's session (Q-p1).** B-2.7 states the question in full. Each option's blocks complete design/INTERFACES.md §Domain services and §IdentityService (as B-2.3 leaves them), write D-p3, amend design/ARCHITECTURE.md:42 and write Q-p1's resolution.
+[(a) explicit: every IdentityService operation takes the session it runs in as its first parameter, and the MemberDirectory methods read through short sessions of their own — blocks E-6a.1–E-6a.8. There is no change to the ports, deps.py or db.py. The consequences: each request opens a second session for the directory's reads, and those reads see committed state only; the Notifier's and the transfer's writes in the caller's transaction get no mechanism, so ADU-09 and ADU-05 each need a design-change loop before they open (this apply enters no question for that: E-5 (a) enters Q-p5 alone)
+| (b) recommended: a request-scoped current session — blocks E-6b.1–E-6b.9. `db.current_session()` answers it; the async dependency `deps.get_session` makes it current for a request, and `db.unit_of_work(engine)` for the operator's command and for tests. With none current, a method raises `db.NoCurrentSession`. The API layer commits a write before it answers. ADU-03 gains two `amends` lines, for src/app/db.py (ADU-01's) and src/app/api/deps.py (ADU-02's); neither is a test, so neither needs a grant, and the order is unchanged (B-4.3)
+| (c) per-request construction — no text: it changes the shape of ADU-02's composition root (`app.state.ports` would hold factories) and with it the `isinstance` checks of ADU-02's completed test (tests/api/test_contract_conformance.py:105–118). This loop does not open that wall; choosing (c) stops the apply]
+
+Under (b), outside a request (E-6b.1 states it in full; in short):
+- **The seed command (ADU-11, `app seed-admin`)** builds the app with `create_app(workspace)` and calls `seed_admin` inside `with db.unit_of_work(db.engine_for(app.state.workspace)):`. The block commits when `seed_admin` returns, and the command then prints the id (exit 0). `Refused("team_not_empty")` rolls the block back, and the command prints the reason and exits 2.
+- **A test of ADU-03** wraps each call in `with db.unit_of_work(db.engine_for(tmp_path)):` and reads back in a second unit of work. A refusal is asserted with `pytest.raises(Refused)` around the block, which leaves it rolled back. No test sets the ContextVar itself.
+- **When no session is current**, every MemberDirectory and IdentityService method raises `db.NoCurrentSession` from `db.current_session()`. None opens a session quietly.
+
+Measured. v1.0's probe (B-5) showed that a ContextVar set in a sync generator dependency is not visible to the endpoint. The probe below re-runs the case (b) recommends: an async generator dependency, the repository's own `app.db` engine, and real writes. It shows:
+1. The current session is seen by a sync dependency (the shape of `require_caller`) and by the sync endpoint, and it is the very session `Depends(get_session)` gives.
+2. A write committed in the endpoint persists. The session is opened on the event loop's thread, used and committed on a worker thread, and closed back on the loop's thread, with no SQLite thread error.
+3. A refusal after a flush reaches the dependency, which rolls back: no row survives.
+4. Outside any request, `NoCurrentSession` is raised.
+5. With the default (request) scope, the dependency's exit runs after the response is returned. A raise there still answers 200, so the commit must come before the answer, never in the exit. With `scope="function"` the same raise answers 500.
+6. Four concurrent requests (httpx `ASGITransport`) see four distinct sessions, each its own throughout.
+7. The reset in the dependency's exit never fails.
+
+The probe (scratch; the project's venv, `python -I probe_current_session.py C:\dev\team-rota <scratch>`):
+~~~python
+"""Scratch probe for the pack's E-6 (b): a request-scoped current session set by an async generator dependency.
+
+Run with the project's venv, isolated, from any directory:  python -I probe_current_session.py <repo> <scratch-dir>
+It imports the repository's own app.db and app.models (read-only) and writes only under <scratch-dir>.
+"""
+
+from __future__ import annotations
+
+import asyncio
+import contextvars
+import sys
+import threading
+import time
+from contextlib import contextmanager
+from pathlib import Path
+
+REPO, SCRATCH = Path(sys.argv[1]), Path(sys.argv[2])
+sys.path.insert(0, str(REPO / "src"))
+
+import fastapi  # noqa: E402
+import httpx  # noqa: E402
+import sqlalchemy  # noqa: E402
+import starlette  # noqa: E402
+from fastapi import Depends, FastAPI, Request  # noqa: E402
+from fastapi.responses import JSONResponse  # noqa: E402
+from fastapi.testclient import TestClient  # noqa: E402
+from sqlalchemy import func, select  # noqa: E402
+
+from app import db, models  # noqa: E402
+
+# ---- the illustrative shape of E-6 (b) (scratch only; ADU-03 writes its own)
+_CURRENT: contextvars.ContextVar = contextvars.ContextVar("app.db.current_session", default=None)
+
+
+class NoCurrentSession(RuntimeError):
+    pass
+
+
+def current_session():
+    s = _CURRENT.get()
+    if s is None:
+        raise NoCurrentSession("no session is current")
+    return s
+
+
+@contextmanager
+def use_session(session):
+    token = _CURRENT.set(session)
+    try:
+        yield session
+    finally:
+        _CURRENT.reset(token)  # raises ValueError if the exit runs in another Context
+
+
+EVENTS: list[str] = []
+ERRORS: list[str] = []
+WORKSPACE = SCRATCH / "probe-workspace"
+ENGINE = db.engine_for(WORKSPACE)
+
+
+async def get_session(request: Request):
+    session = db.session_for(ENGINE)
+    EVENTS.append(f"dep-enter:{threading.current_thread().name}")
+    try:
+        with use_session(session):
+            try:
+                yield session
+            except Exception as exc:
+                EVENTS.append(f"dep-saw:{type(exc).__name__}")
+                session.rollback()
+                raise
+            finally:
+                EVENTS.append(f"dep-exit:{threading.current_thread().name}")
+    except ValueError as exc:  # the reset in another Context
+        ERRORS.append(f"reset: {exc}")
+        raise
+    finally:
+        session.close()
+
+
+def require_caller_like(session=Depends(get_session)) -> int:  # a sync dependency, as require_caller is
+    return id(current_session())
+
+
+class Refusal(Exception):
+    pass
+
+
+app = FastAPI()
+
+
+@app.exception_handler(Refusal)
+async def _refusal(_r: Request, _e: Refusal):
+    return JSONResponse({"reason": "refused"}, 409)
+
+
+@app.middleware("http")
+async def mark_response(request: Request, call_next):
+    response = await call_next(request)
+    EVENTS.append("response-returned-to-middleware")
+    return response
+
+
+@app.get("/read")
+def read(session=Depends(get_session), seen_by_dep: int = Depends(require_caller_like)) -> dict:
+    cur = current_session()
+    return {"endpoint_sees_current": cur is session, "sync_dependency_saw_same": seen_by_dep == id(session)}
+
+
+@app.post("/write")
+def write(session=Depends(get_session)) -> dict:
+    n = current_session().scalar(select(func.count()).select_from(models.Member))
+    current_session().add(models.Member(name=f"P{n}", email=f"p{n}@example.test", role="member",
+                                        active=True, passcode_hash="x$y"))
+    current_session().commit()  # the router commits before it answers (E-6 (b))
+    EVENTS.append(f"endpoint-committed:{threading.current_thread().name}")
+    return {"members": n + 1}
+
+
+@app.post("/refuse")
+def refuse(session=Depends(get_session)) -> dict:
+    current_session().add(models.Member(name="R", email="r@example.test", role="member", active=True,
+                                        passcode_hash="x$y"))
+    current_session().flush()
+    raise Refusal()
+
+
+async def teardown_raises_request_scope(request: Request):
+    yield "x"
+    EVENTS.append("teardown(request scope) raising")
+    raise RuntimeError("commit failed in teardown")
+
+
+async def teardown_raises_function_scope(request: Request):
+    yield "x"
+    EVENTS.append("teardown(function scope) raising")
+    raise RuntimeError("commit failed in teardown")
+
+
+@app.get("/teardown-request")
+def t_request(_=Depends(teardown_raises_request_scope)) -> dict:
+    return {"ok": True}
+
+
+@app.get("/teardown-function")
+def t_function(_=Depends(teardown_raises_function_scope, scope="function")) -> dict:
+    return {"ok": True}
+
+
+@app.get("/slow")
+def slow(session=Depends(get_session)) -> dict:
+    mine = id(current_session())
+    time.sleep(0.2)
+    return {"same_after_sleep": id(current_session()) == mine == id(session), "id": mine}
+
+
+def count_members() -> int:
+    s = db.session_for(ENGINE)
+    try:
+        return s.scalar(select(func.count()).select_from(models.Member))
+    finally:
+        s.close()
+
+
+def main() -> int:
+    sys.stdout.reconfigure(encoding="utf-8")
+    c = TestClient(app, raise_server_exceptions=False)
+    print("fastapi", fastapi.__version__, "starlette", starlette.__version__, "sqlalchemy", sqlalchemy.__version__,
+          "httpx", httpx.__version__, "python", sys.version.split()[0])
+
+    EVENTS.clear()
+    print("1 sync endpoint and sync dependency see the current session:", c.get("/read").json())
+    print("  order:", EVENTS)
+
+    EVENTS.clear()
+    r1, r2 = c.post("/write"), c.post("/write")
+    print("2 a write committed by the endpoint, real engine:", r1.status_code, r1.json(), r2.status_code, r2.json(),
+          "| members in a fresh session:", count_members())
+    print("  order:", EVENTS)
+
+    EVENTS.clear()
+    before = count_members()
+    r = c.post("/refuse")
+    print("3 a refusal after a flush:", r.status_code, r.json(), "| members before/after:", before, count_members())
+    print("  order:", EVENTS)
+
+    try:
+        current_session()
+        print("4 outside any request: a session is current (unexpected)")
+    except NoCurrentSession as exc:
+        print("4 outside any request: NoCurrentSession raised:", exc)
+
+    EVENTS.clear()
+    r = c.get("/teardown-request")
+    print("5 teardown raises, default (request) scope -> client sees", r.status_code, r.text[:60])
+    print("  order:", EVENTS)
+    EVENTS.clear()
+    r = c.get("/teardown-function")
+    print("6 teardown raises, scope='function' -> client sees", r.status_code, r.text[:60])
+    print("  order:", EVENTS)
+
+    async def concurrent() -> list[dict]:
+        transport = httpx.ASGITransport(app=app)
+        async with httpx.AsyncClient(transport=transport, base_url="http://probe") as ac:
+            rs = await asyncio.gather(*(ac.get("/slow") for _ in range(4)))
+        return [x.json() for x in rs]
+
+    rs = asyncio.run(concurrent())
+    print("7 four concurrent requests:", [x["same_after_sleep"] for x in rs], "| distinct sessions:",
+          len({x["id"] for x in rs}))
+    print("errors from the reset in the dependency's exit:", ERRORS or "none")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
+~~~
+Output (stdout and stderr):
+~~~text
+C:\dev\team-rota-data\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+  from starlette.testclient import TestClient as TestClient  # noqa
+fastapi 0.162.0 starlette 1.10.0 sqlalchemy 2.1.8 httpx 0.28.1 python 3.12.13
+1 sync endpoint and sync dependency see the current session: {'endpoint_sees_current': True, 'sync_dependency_saw_same': True}
+  order: ['dep-enter:asyncio-portal-2168fa17380', 'response-returned-to-middleware', 'dep-exit:asyncio-portal-2168fa17380']
+2 a write committed by the endpoint, real engine: 200 {'members': 1} 200 {'members': 2} | members in a fresh session: 2
+  order: ['dep-enter:asyncio-portal-2168fac0c80', 'endpoint-committed:AnyIO worker thread', 'response-returned-to-middleware', 'dep-exit:asyncio-portal-2168fac0c80', 'dep-enter:asyncio-portal-2168fac02f0', 'endpoint-committed:AnyIO worker thread', 'response-returned-to-middleware', 'dep-exit:asyncio-portal-2168fac02f0']
+3 a refusal after a flush: 409 {'reason': 'refused'} | members before/after: 2 2
+  order: ['dep-enter:asyncio-portal-2168fb38770', 'dep-saw:Refusal', 'dep-exit:asyncio-portal-2168fb38770', 'response-returned-to-middleware']
+4 outside any request: NoCurrentSession raised: no session is current
+5 teardown raises, default (request) scope -> client sees 200 {"ok":true}
+  order: ['response-returned-to-middleware', 'teardown(request scope) raising']
+6 teardown raises, scope='function' -> client sees 500 Internal Server Error
+  order: ['teardown(function scope) raising']
+7 four concurrent requests: [True, True, True, True] | distinct sessions: 4
+errors from the reset in the dependency's exit: none
+~~~
+
+#### E-6b.1 · design/INTERFACES.md:88
+Why: the mechanism, its three owners and what happens with none (the operator's three points).
+replace exactly (within the line):
+~~~text
+A point the arms, the domain spec and the contract do not settle is marked open with its question, never filled in.
+~~~
+with:
+~~~text
+A point the arms, the domain spec and the contract do not settle is marked open with its question, never filled in.
+
+**The request's session (D-p3).** Every service, and every port implementation `src/app/main.py` binds, reads and writes in the current session, `db.current_session()`, and never opens, commits or closes one. With no session current, `db.current_session()` raises `db.NoCurrentSession`; a service method lets it propagate and never opens a session quietly. Exactly three owners make a session current:
+- **A request.** `deps.get_session` is an async generator dependency. It opens the request's one session on `engine_of(request)`, makes it current with `db.use_session(session)` for the whole request, and yields it. On the way out it restores the previous current session and closes this one, which rolls back whatever was not committed. It is async because a ContextVar set in a sync dependency is not visible to the endpoint. `require_caller` depends on it, so `caller_for_token` reads the request's session. The API layer commits a write after the service returns and before it answers, never in the dependency's exit: FastAPI runs that exit after the response is sent, so a failure there would leave a 200 standing. Both behaviours are measured in docs/PACK-q07-retire-amends.md, Part E-6.
+- **The operator's command.** `app seed-admin` (ADU-11) builds the app with `create_app(workspace)` and calls `seed_admin` inside `with db.unit_of_work(db.engine_for(app.state.workspace)):`. The block commits when `seed_admin` returns, and the command then prints the id (exit 0). `Refused("team_not_empty")` rolls the block back, and the command prints the reason and exits 2.
+- **A test.** A service unit's tests (ADU-03's first) wrap each call in `with db.unit_of_work(db.engine_for(tmp_path)):` and read back in a second unit of work. A refusal is asserted with `pytest.raises(Refused)` around the block, which leaves it rolled back. No test sets the ContextVar itself; a test calls a service outside a unit of work only to assert `db.NoCurrentSession`.
+```
+# src/app/db.py gains (ADU-03, by amendment of ADU-01's module; layer 1, so every service, the API and the CLI reach it):
+class NoCurrentSession(RuntimeError)
+def current_session() -> Session                               # the current session; raises NoCurrentSession when none is
+def use_session(session: Session) -> ContextManager[Session]    # current for the block, the previous one restored on exit; commits nothing
+def unit_of_work(engine: Engine) -> ContextManager[Session]     # session_for(engine) made current; commits on return, rolls back on raise, closes
+```
+Invariants: one ContextVar, private to `src/app/db.py`. `use_session` restores the previous session with the token it set, so nested blocks and concurrent requests stay apart. `engine_for` and `session_for` do not change. The transfer (ADU-05) and the Notifier (ADU-09) write in the same current session, so a decision, its transfer and its notifications commit together (R-swaps-04).
+~~~
+
+#### E-6b.2 · design/INTERFACES.md:93
+replace exactly (within the line):
+~~~text
+# implements MemberDirectory (above), and:
+~~~
+with:
+~~~text
+# implements MemberDirectory (above), and the operations below — every method in db.current_session() (D-p3):
+~~~
+
+#### E-6b.3 · design/INTERFACES.md:94
+Under (b) the constructor takes no session, so the fragment goes; the class line above says where the session comes from.
+replace exactly (within the line):
+~~~text
+ the request's session: Q-p1;
+~~~
+with:
+~~~text
+~~~
+
+#### E-6b.4 · design/INTERFACES.md:112
+replace exactly (within the line):
+~~~text
+| MemberDirectory | the six methods above over identity's own rows:
+~~~
+with:
+~~~text
+| MemberDirectory | the six methods above over identity's own rows, read in the current session (with none current, each raises db.NoCurrentSession; D-p3):
+~~~
+
+#### E-6b.5 · design/ARCHITECTURE.md:42
+replace exactly (within the line):
+~~~text
+compute first (rules, overlap checks), then write; never hold the write across a computation.
+~~~
+with:
+~~~text
+compute first (rules, overlap checks), then write; never hold the write across a computation. That session is current for the whole request (D-p3). The async dependency `deps.get_session` makes it current; every service and port implementation reads and writes in `db.current_session()` and never opens, commits or closes one; and the API layer commits a write before it answers, never in the dependency's exit, which runs after the response is sent. The operator's command and the tests run in `db.unit_of_work(engine)`; with no session current a service raises `db.NoCurrentSession`.
+~~~
+
+#### E-6b.6 · ADU-PLAN.md:153
+Why: ADU-03's roster must hold the two modules it edits (hard rule 6). Both are `files` of completed units, not tests, so the guard honours the `amends` without a grant (Part A-2, `scripts/adu.mjs:692–693`; rehearsed in B-4.3). ADU-01 and ADU-02 are already in ADU-03's `depends`, so the derived order does not change. The lines cite Q-07, since the plan may carry no provisional id.
+replace exactly:
+~~~text
+  - { unit: ADU-16, file: src/app/identity/null_directory.py, assertion: "deleted (retires MK-04)", q: none }
+~~~
+with:
+~~~text
+  - { unit: ADU-01, file: src/app/db.py, assertion: "gains the current session of design/INTERFACES.md (Domain services): NoCurrentSession, current_session() (raises it when no session is current), use_session(session) and unit_of_work(engine) (commits on return, rolls back on raise, restores the previous session, closes); engine_for and session_for unchanged, and tests/test_models.py and tests/test_synthetic.py stay green unchanged", q: Q-07 }
+  - { unit: ADU-02, file: src/app/api/deps.py, assertion: "get_session becomes an async generator dependency that opens the request's session, makes it current with db.use_session for the whole request, and on exit restores the previous one and closes it, rolling back what was not committed; require_caller depends on it, so caller_for_token reads the request's session; ProblemError, problem_response and engine_of unchanged; the session-sharing test of tests/api/test_contract_conformance.py stays green unchanged", q: Q-07 }
+  - { unit: ADU-16, file: src/app/identity/null_directory.py, assertion: "deleted (retires MK-04)", q: none }
+~~~
+
+#### E-6b.7 · VERSIONS.md:123
+replace exactly (within the line):
+~~~text
+the four retirement arms rewritten so they can be met;
+~~~
+with:
+~~~text
+ADU-03 amends src/app/db.py and src/app/api/deps.py (the request's current session, D-p3); the four retirement arms rewritten so they can be met;
+~~~
+
+#### E-6b.8 · DECISIONS.md:18
+The DECISIONS blocks of E-6–E-9 share this anchor, the end of D-p2's row, and are applied E-9's first, so the rows stand D-p3, D-p4, D-p5, D-p6.
+replace exactly (within the line):
+~~~text
+design/INTERFACES.md §Refused |
+~~~
+with:
+~~~text
+design/INTERFACES.md §Refused |
+| D-p3 | **The request's session is the current session: every service and every port implementation reads and writes in `db.current_session()` and never opens, commits or closes one; with none current it raises `db.NoCurrentSession` and never opens one quietly.** A request makes its one session current in the async dependency `deps.get_session` (`db.use_session`), on which `require_caller` depends. The API layer commits a write after the service returns and before it answers. The operator's command and the tests run in `db.unit_of_work(engine)` (commit on return, rollback on raise). ADU-03 adds `NoCurrentSession`, `current_session`, `use_session` and `unit_of_work` to `src/app/db.py` (ADU-01's module) and rewrites `get_session` in `src/app/api/deps.py` (ADU-02's), both by declared amendment. The transfer (ADU-05) and the Notifier (ADU-09) write in the same session. | <apply-date>, operator: Q-p1 option (b), Part E-6 of docs/PACK-q07-retire-amends.md v1.1. It is the one mechanism that also serves the Notifier's and the transfer's writes in the caller's transaction (R-swaps-04; design/INTERFACES.md §SchedulingPort, §Notifier). Measured on fastapi 0.162.0 with the repository's engine: a ContextVar set in a sync dependency is not visible to the endpoint. Set in an async generator dependency, it is seen by sync dependencies and the endpoint, kept apart across concurrent requests and reset cleanly on exit. That exit runs after the response is sent (a raise there still answers 200), hence the commit before the answer. design/INTERFACES.md §Domain services; design/ARCHITECTURE.md §Persistence and concurrency rules |
+~~~
+
+#### E-6b.9 · OPEN-QUESTIONS.md:65
+replace exactly:
+~~~text
+**Recommendation:** (b), ruled once for all four services: it is the only option that also serves the Notifier's and the transfer's atomic writes.
+**Resolution:** none yet.
+~~~
+with:
+~~~text
+**Recommendation:** (b), ruled once for all four services: it is the only option that also serves the Notifier's and the transfer's atomic writes.
+**Resolution:** option (b), the operator, <apply-date>, on Part E-6 of docs/PACK-q07-retire-amends.md v1.1 (verified in docs/VERIFICATION-<id>.md): the request's session is the current session. The async `deps.get_session` makes it current for a request, and `db.unit_of_work` for the operator's command and the tests. Every service reads it through `db.current_session()`, which raises `db.NoCurrentSession` when none is current. The API layer commits a write before it answers. It lives in D-p3, design/INTERFACES.md §Domain services (the request's session) and §IdentityService, design/ARCHITECTURE.md §Persistence and concurrency rules, and ADU-03's amends of src/app/db.py and src/app/api/deps.py (ADU-PLAN v1.3).
+~~~
+
+#### E-6a.1 · design/INTERFACES.md:88
+replace exactly (within the line):
+~~~text
+A point the arms, the domain spec and the contract do not settle is marked open with its question, never filled in.
+~~~
+with:
+~~~text
+A point the arms, the domain spec and the contract do not settle is marked open with its question, never filled in.
+
+**The request's session (D-p3).** Every IdentityService operation takes the session it runs in as its first parameter after `self` (`session: Session`). It writes only in that session and never commits:
+- The API layer passes the request's one session from `deps.get_session` and commits a write after the service returns and before it answers.
+- The operator's command (ADU-11) opens `db.session_for(db.engine_for(app.state.workspace))` and passes it to `seed_admin`. It commits and prints the id; on `Refused("team_not_empty")` it rolls back, prints the reason and exits 2.
+- A test passes a session it opened on `db.engine_for(tmp_path)`.
+
+The MemberDirectory methods, whose signatures `src/app/ports.py` pins without a session (tests/test_ports.py:21), each open a short session of their own on `engine()`. They see committed state only, never the caller's uncommitted writes. There is no current session, so none can be missing. This does not serve the Notifier's and the transfer's writes in the caller's transaction (§SchedulingPort, §Notifier): ADU-09 and ADU-05 each settle their mechanism in a design-change loop before they open.
+~~~
+
+#### E-6a.2 · design/INTERFACES.md:93
+replace exactly (within the line):
+~~~text
+# implements MemberDirectory (above), and:
+~~~
+with:
+~~~text
+# implements MemberDirectory (above; each method on a short session of its own, D-p3), and:
+~~~
+
+#### E-6a.3 · design/INTERFACES.md:94
+The replacement starts with a line break: the fence's first line is empty.
+replace exactly (within the line):
+~~~text
+ the request's session: Q-p1;
+~~~
+with:
+~~~text
+
+        engine: Callable[[], Engine],           # the workspace's engine, for the MemberDirectory methods' own short sessions
+                                                #   (D-p3); main.py passes one that creates the engine once, as deps.engine_of does
+~~~
+
+#### E-6a.4 · design/INTERFACES.md:95
+replace exactly:
+~~~text
+    def seed_admin(self, name: str, email: str, passcode: str) -> int
+    def add_member(self, caller: Caller, name: str, email: str, role: str | None, passcode: str) -> MemberValue
+    def change_role(self, caller: Caller, member_id: int, role: str | None) -> MemberValue
+    def deactivate(self, caller: Caller, member_id: int) -> MemberValue
+    def sign_in(self, email: str, passcode: str | None) -> SignInValue
+    def list_members(self, caller: Caller) -> list[MemberSummary]
+~~~
+with:
+~~~text
+    def seed_admin(self, session: Session, name: str, email: str, passcode: str) -> int
+    def add_member(self, session: Session, caller: Caller, name: str, email: str, role: str | None, passcode: str) -> MemberValue
+    def change_role(self, session: Session, caller: Caller, member_id: int, role: str | None) -> MemberValue
+    def deactivate(self, session: Session, caller: Caller, member_id: int) -> MemberValue
+    def sign_in(self, session: Session, email: str, passcode: str | None) -> SignInValue
+    def list_members(self, session: Session, caller: Caller) -> list[MemberSummary]
+~~~
+
+#### E-6a.5 · design/INTERFACES.md:112
+replace exactly (within the line):
+~~~text
+| MemberDirectory | the six methods above over identity's own rows:
+~~~
+with:
+~~~text
+| MemberDirectory | the six methods above over identity's own rows, each read in a short session of its own on engine() (committed state only; D-p3):
+~~~
+
+#### E-6a.6 · design/ARCHITECTURE.md:42
+replace exactly (within the line):
+~~~text
+compute first (rules, overlap checks), then write; never hold the write across a computation.
+~~~
+with:
+~~~text
+compute first (rules, overlap checks), then write; never hold the write across a computation. The IdentityService's operations take that session as a parameter, and the API layer commits a write before it answers. The MemberDirectory's reads are the one exception to one session per request: each runs in a short session of its own that sees committed state only (D-p3).
+~~~
+
+#### E-6a.7 · DECISIONS.md:18
+replace exactly (within the line):
+~~~text
+design/INTERFACES.md §Refused |
+~~~
+with:
+~~~text
+design/INTERFACES.md §Refused |
+| D-p3 | **Every IdentityService operation takes the session it runs in as its first parameter and never commits; the MemberDirectory methods, whose signatures the ports pin without a session (tests/test_ports.py:21), each read in a short session of their own on the workspace's engine and see committed state only.** The API layer passes the request's session from `deps.get_session` and commits a write before it answers; the operator's command and the tests pass a session they opened. The Notifier's and the transfer's writes in the caller's transaction are not served: ADU-09 and ADU-05 each settle theirs in a design-change loop before they open. | <apply-date>, operator: Q-p1 option (a), Part E-6 of docs/PACK-q07-retire-amends.md v1.1. No change to the ports, `src/app/api/deps.py` or `src/app/db.py`. The directory's reads are the one exception to one session per request (design/ARCHITECTURE.md §Persistence and concurrency rules); design/INTERFACES.md §Domain services |
+~~~
+
+#### E-6a.8 · OPEN-QUESTIONS.md:65
+replace exactly:
+~~~text
+**Recommendation:** (b), ruled once for all four services: it is the only option that also serves the Notifier's and the transfer's atomic writes.
+**Resolution:** none yet.
+~~~
+with:
+~~~text
+**Recommendation:** (b), ruled once for all four services: it is the only option that also serves the Notifier's and the transfer's atomic writes.
+**Resolution:** option (a), the operator, <apply-date>, on Part E-6 of docs/PACK-q07-retire-amends.md v1.1 (verified in docs/VERIFICATION-<id>.md): every IdentityService operation takes its session as the first parameter, and the MemberDirectory methods read in short sessions of their own (committed state only). The Notifier's and the transfer's writes in the caller's transaction are left to ADU-09's and ADU-05's own loops. It lives in D-p3, design/INTERFACES.md §Domain services and §IdentityService, and design/ARCHITECTURE.md §Persistence and concurrency rules.
+~~~
+
+**7. How the IdentityService receives its collaborators (Q-p2).** B-2.7 states the question in full. The arms name a clock, a SchedulingPort and a Notifier. Identity consumes scheduling (IR-05) and notifications (IR-10), and each of those consumes MemberDirectory (IR-06, IR-04): two cycles at the service level. design/INTERFACES.md:92 lists identity ↔ scheduling but not identity ↔ notifications. Each option's blocks write the constructor's collaborator lines, D-p4 and Q-p2's resolution.
+[(a) constructor values, `IdentityService(clock, scheduling, notifier, …)` — blocks E-7a.1–E-7a.3. ADU-09 and ADU-05 construct their services with the identity service and then set `identity.notifier` and `identity.scheduling` in main.py. The consequence is two attribute sets after construction, a seam that design/INTERFACES.md:82 ("each provider unit replaces its own line") does not describe
+| (b) recommended: the composition root's bindings, read at call time — `IdentityService(bound, …)`, where `bound` is a zero-argument callable answering an object with `.clock`, `.scheduling` and `.notifier` (`main.Ports`, read structurally), and main.py binds `IdentityService(lambda: app.state.ports, …)` — blocks E-7b.1–E-7b.3. Each provider still replaces only its own line, and no setter exists. v1.0 put this as "receives the composition root's `Ports` container". The container cannot be passed itself, because the service is built inside the container's own constructor (src/app/main.py:52–58); a callable answering it is the nearest form that keeps one line per port
+| (c) the collaborators passed with each call — no text: every API call site would carry them, the arms do not suggest it, and ADU-04's and ADU-11's call shapes would change with it; choosing it stops the apply]
+
+#### E-7b.1 · design/INTERFACES.md:94
+The constructor is written across three fragments of this one line, E-7's, E-6's and E-8's; any option of each composes with any option of the others (B-4.3 composes all 16).
+replace exactly (within the line):
+~~~text
+def __init__(self, ...)                     # collaborators the arms name: a Clock, a SchedulingPort (IR-05), a Notifier (IR-10); how they are given: Q-p2;
+~~~
+with:
+~~~text
+def __init__(
+        self,
+        bound: Callable[[], Bindings],          # the composition root's bindings, read at call time (D-p4): .clock (Clock),
+                                                #   .scheduling (SchedulingPort, IR-05), .notifier (Notifier, IR-10); Bindings is a Protocol of those
+                                                #   three in src/app/identity/service.py, which main.Ports satisfies, so identity never imports main;
+                                                #   main.py binds IdentityService(lambda: app.state.ports, …); a test passes
+                                                #   lambda: SimpleNamespace(clock=FixedClock(…), scheduling=FakeSchedulingPort(), notifier=SpyNotifier())
+~~~
+
+#### E-7b.2 · DECISIONS.md:18
+replace exactly (within the line):
+~~~text
+design/INTERFACES.md §Refused |
+~~~
+with:
+~~~text
+design/INTERFACES.md §Refused |
+| D-p4 | **A domain service receives the composition root's bindings, not its collaborators one by one: `IdentityService(bound, …)` takes a zero-argument callable answering an object with `.clock`, `.scheduling` and `.notifier` (`Bindings`, a Protocol in identity's service module that `main.Ports` satisfies, so identity never imports main), and reads them at call time.** The composition root binds `IdentityService(lambda: app.state.ports, …)`; a test passes `lambda: SimpleNamespace(clock=…, scheduling=…, notifier=…)` holding the doubles. Every later service is built the same way, so each provider unit still replaces only its own line in `src/app/main.py` and no cycle needs a setter. | <apply-date>, operator: Q-p2 option (b), Part E-7 of docs/PACK-q07-retire-amends.md v1.1. The service-level cycles identity ↔ scheduling (IR-05 / IR-06) and identity ↔ notifications (IR-10 / IR-04) are closed by reading the bindings at call time, not by construction order. design/INTERFACES.md §Composition root bindings ("each provider unit replaces its own line by amendment") and §IdentityService |
+~~~
+
+#### E-7b.3 · OPEN-QUESTIONS.md:72
+replace exactly:
+~~~text
+**Recommendation:** (b).
+**Resolution:** none yet.
+~~~
+with:
+~~~text
+**Recommendation:** (b).
+**Resolution:** option (b), the operator, <apply-date>, on Part E-7 of docs/PACK-q07-retire-amends.md v1.1 (verified in docs/VERIFICATION-<id>.md): `IdentityService(bound, …)` takes a zero-argument callable answering the composition root's bindings (`.clock`, `.scheduling`, `.notifier`) and reads them at call time; main.py binds `IdentityService(lambda: app.state.ports, …)`. It lives in D-p4 and design/INTERFACES.md §IdentityService.
+~~~
+
+#### E-7a.1 · design/INTERFACES.md:94
+replace exactly (within the line):
+~~~text
+def __init__(self, ...)                     # collaborators the arms name: a Clock, a SchedulingPort (IR-05), a Notifier (IR-10); how they are given: Q-p2;
+~~~
+with:
+~~~text
+def __init__(
+        self,
+        clock: Clock,                           # constructor values (D-p4): main.py passes the bound clock, SchedulingPort
+        scheduling: SchedulingPort,             #   (IR-05) and Notifier (IR-10), a test the doubles; ADU-09 and ADU-05, whose services
+        notifier: Notifier,                     #   consume MemberDirectory, then set identity.notifier / identity.scheduling in main.py
+~~~
+
+#### E-7a.2 · DECISIONS.md:18
+replace exactly (within the line):
+~~~text
+design/INTERFACES.md §Refused |
+~~~
+with:
+~~~text
+design/INTERFACES.md §Refused |
+| D-p4 | **`IdentityService(clock, scheduling, notifier, …)` receives its collaborators as constructor values.** The composition root passes the bound clock, SchedulingPort and Notifier; a test passes the doubles. ADU-09 and ADU-05, whose services consume MemberDirectory while identity consumes theirs, construct their service with the identity service and then set `identity.notifier` / `identity.scheduling` in `src/app/main.py`, each by its own `main.py` amendment. | <apply-date>, operator: Q-p2 option (a), Part E-7 of docs/PACK-q07-retire-amends.md v1.1. The cycles identity ↔ notifications (IR-10 / IR-04) and identity ↔ scheduling (IR-05 / IR-06) are closed by setting an attribute after construction, a seam design/INTERFACES.md §Composition root bindings ("each provider unit replaces its own line") does not describe; design/INTERFACES.md §IdentityService |
+~~~
+
+#### E-7a.3 · OPEN-QUESTIONS.md:72
+replace exactly:
+~~~text
+**Recommendation:** (b).
+**Resolution:** none yet.
+~~~
+with:
+~~~text
+**Recommendation:** (b).
+**Resolution:** option (a), the operator, <apply-date>, on Part E-7 of docs/PACK-q07-retire-amends.md v1.1 (verified in docs/VERIFICATION-<id>.md): the clock, the SchedulingPort and the Notifier are constructor values; ADU-09 and ADU-05 set `identity.notifier` and `identity.scheduling` after construction in main.py. It lives in D-p4 and design/INTERFACES.md §IdentityService.
+~~~
+
+**8. Where a salt and a bearer token come from (Q-p3).** B-2.7 states the question in full. Each option's blocks write the constructor's source line, amend design/ARCHITECTURE.md:45, write D-p5 and Q-p3's resolution.
+[(a) recommended: a `TokenSource` passed to the IdentityService — blocks E-8a.1–E-8a.4. The product's `SecretsSource` draws from the standard library's `secrets` (`token_urlsafe(32)`, `token_hex(8)`), and a test passes a deterministic source. There is no new dependency. ARCHITECTURE.md:45 gains the one exception. v1.0's wording, "never `random`", is narrowed to "a credential never comes from `random`", because `src/app/synthetic.py`, which is product code at layer 1, rightly takes a `random.Random(seed)`
+| (b) a `random.Random` passed in, the synthetic generator's pattern; the composition root passes `random.Random()` (seeded from the OS), a test a seeded one — blocks E-8b.1–E-8b.4. The consequence: Python's Mersenne Twister state can be recovered from enough of its outputs (624 32-bit words), so a member who collects their own tokens can predict other members' tokens. That is unacceptable for a credential. The adapter's opt-in determinism scan (plugin `adapters/python-fastapi-uv/determinism_scan.py`) would also fail on `random` in the package, were it enabled (it is not: `adu.toml` has no `[adapter] determinism`)
+| (c) a salt derived from the email and a token derived by HMAC from a configured secret — no text: it needs an operator-held secret the design does not have (where it is configured, who holds it, how it is rotated), which is the operator's to define, not a mechanism this pack can write; choosing it stops the apply]
+
+#### E-8a.1 · design/INTERFACES.md:94
+The replacement starts with a line break: the fence's first line is empty.
+replace exactly (within the line):
+~~~text
+ the token and salt source: Q-p3 (all open)
+~~~
+with:
+~~~text
+
+        source: TokenSource,                    # the token and the salt (D-p5): TokenSource is a Protocol in src/app/identity/service.py,
+                                                #   token() -> str and salt() -> str; the product's SecretsSource (same module) answers
+                                                #   secrets.token_urlsafe(32) and secrets.token_hex(8); main.py passes SecretsSource(), a test a
+                                                #   deterministic source; seed_admin and add_member store models.hash_passcode(passcode, source.salt());
+                                                #   sign_in stores source.token() as the member's one token and checks a passcode by recomputing
+                                                #   models.hash_passcode with the stored salt (the text before '$'), compared with hmac.compare_digest
+    ) -> None
+~~~
+
+#### E-8a.2 · design/ARCHITECTURE.md:45
+replace exactly (within the line):
+~~~text
+No randomness in the product;
+~~~
+with:
+~~~text
+No randomness in the product except identity's token and salt source: the composition root passes the IdentityService a `TokenSource`, and the product's (`SecretsSource`) draws from the standard library's `secrets` (D-p5); a credential never comes from `random`;
+~~~
+
+#### E-8a.3 · DECISIONS.md:18
+replace exactly (within the line):
+~~~text
+design/INTERFACES.md §Refused |
+~~~
+with:
+~~~text
+design/INTERFACES.md §Refused |
+| D-p5 | **Identity's bearer tokens and passcode salts come from a source passed to the IdentityService; the product's draws from the standard library's `secrets`.** `IdentityService(…, source)` takes a `TokenSource` (`token() -> str`, `salt() -> str`). The composition root passes `SecretsSource()` (`secrets.token_urlsafe(32)`, `secrets.token_hex(8)`, in `src/app/identity/service.py`), and a test passes a deterministic source. It is the one exception to "no randomness in the product" (design/ARCHITECTURE.md §Persistence and concurrency rules); a credential never comes from `random`. | <apply-date>, operator: Q-p3 option (a), Part E-8 of docs/PACK-q07-retire-amends.md v1.1. No new dependency (D-03; D-04: the salted SHA-256 from the standard library). CLAUDE.md hard rule 5 ("randomness only through a passed generator"): the source is passed. A seeded generator's tokens are predictable (Q-p3 (b)). design/INTERFACES.md §IdentityService |
+~~~
+
+#### E-8a.4 · OPEN-QUESTIONS.md:78
+The block starts at the Options line: the Recommendation and Resolution lines of Q-p3 and Q-p4 are identical, so only the Options line makes the text unique.
+replace exactly:
+~~~text
+**Options:** (a) the service takes a token-and-salt source in its constructor; the composition root passes one built on the standard library's `secrets` (no new dependency), tests pass a deterministic one, and a DECISIONS row amends ARCHITECTURE.md:45 to "no randomness in the product except the injected token and salt source (`secrets`); never `random`". (b) a seeded `random.Random` passed in, the synthetic generator's pattern. Consequence: reproducible, but a bearer token becomes guessable from the seed, which is unacceptable for a credential. (c) a deterministic salt (from the email) and a token derived by HMAC from a configured secret. Consequence: no randomness, but the secret is an operator-held configuration the design does not mention.
+**Recommendation:** (a).
+**Resolution:** none yet.
+~~~
+with:
+~~~text
+**Options:** (a) the service takes a token-and-salt source in its constructor; the composition root passes one built on the standard library's `secrets` (no new dependency), tests pass a deterministic one, and a DECISIONS row amends ARCHITECTURE.md:45 to "no randomness in the product except the injected token and salt source (`secrets`); never `random`". (b) a seeded `random.Random` passed in, the synthetic generator's pattern. Consequence: reproducible, but a bearer token becomes guessable from the seed, which is unacceptable for a credential. (c) a deterministic salt (from the email) and a token derived by HMAC from a configured secret. Consequence: no randomness, but the secret is an operator-held configuration the design does not mention.
+**Recommendation:** (a).
+**Resolution:** option (a), the operator, <apply-date>, on Part E-8 of docs/PACK-q07-retire-amends.md v1.1 (verified in docs/VERIFICATION-<id>.md): a `TokenSource` passed to the IdentityService. The product's `SecretsSource` draws from the standard library's `secrets`, and tests pass a deterministic source. It lives in D-p5, design/INTERFACES.md §IdentityService and design/ARCHITECTURE.md §Persistence and concurrency rules (the one exception to "no randomness in the product").
+~~~
+
+#### E-8b.1 · design/INTERFACES.md:94
+The replacement starts with a line break: the fence's first line is empty.
+replace exactly (within the line):
+~~~text
+ the token and salt source: Q-p3 (all open)
+~~~
+with:
+~~~text
+
+        rng: random.Random,                     # the token and the salt (D-p5): salt f"{rng.randrange(16**8):08x}" (the fixture's shape),
+                                                #   token f"tok_{rng.randrange(16**32):032x}"; main.py passes random.Random() (seeded from the OS),
+                                                #   a test random.Random(<seed>); seed_admin and add_member store models.hash_passcode(passcode, salt);
+                                                #   sign_in stores the token as the member's one token and checks a passcode by recomputing
+                                                #   models.hash_passcode with the stored salt (the text before '$'), compared with hmac.compare_digest
+    ) -> None
+~~~
+
+#### E-8b.2 · design/ARCHITECTURE.md:45
+replace exactly (within the line):
+~~~text
+No randomness in the product;
+~~~
+with:
+~~~text
+No randomness in the product except the `random.Random` the composition root passes the IdentityService for its tokens and salts (D-p5);
+~~~
+
+#### E-8b.3 · DECISIONS.md:18
+replace exactly (within the line):
+~~~text
+design/INTERFACES.md §Refused |
+~~~
+with:
+~~~text
+design/INTERFACES.md §Refused |
+| D-p5 | **Identity's bearer tokens and passcode salts come from a `random.Random` passed to the IdentityService.** The composition root passes `random.Random()` (seeded from the OS), and a test passes `random.Random(<seed>)`. A salt is eight hex digits, as the fixture's are, and a token is `tok_` and 32 hex digits. It is the one exception to "no randomness in the product" (design/ARCHITECTURE.md §Persistence and concurrency rules). | <apply-date>, operator: Q-p3 option (b), Part E-8 of docs/PACK-q07-retire-amends.md v1.1. It follows the synthetic generator's pattern and needs no new dependency. Accepted with its consequence: the generator's state can be recovered from enough of its outputs, so tokens are predictable to a member who collects their own. design/INTERFACES.md §IdentityService |
+~~~
+
+#### E-8b.4 · OPEN-QUESTIONS.md:78
+replace exactly:
+~~~text
+**Options:** (a) the service takes a token-and-salt source in its constructor; the composition root passes one built on the standard library's `secrets` (no new dependency), tests pass a deterministic one, and a DECISIONS row amends ARCHITECTURE.md:45 to "no randomness in the product except the injected token and salt source (`secrets`); never `random`". (b) a seeded `random.Random` passed in, the synthetic generator's pattern. Consequence: reproducible, but a bearer token becomes guessable from the seed, which is unacceptable for a credential. (c) a deterministic salt (from the email) and a token derived by HMAC from a configured secret. Consequence: no randomness, but the secret is an operator-held configuration the design does not mention.
+**Recommendation:** (a).
+**Resolution:** none yet.
+~~~
+with:
+~~~text
+**Options:** (a) the service takes a token-and-salt source in its constructor; the composition root passes one built on the standard library's `secrets` (no new dependency), tests pass a deterministic one, and a DECISIONS row amends ARCHITECTURE.md:45 to "no randomness in the product except the injected token and salt source (`secrets`); never `random`". (b) a seeded `random.Random` passed in, the synthetic generator's pattern. Consequence: reproducible, but a bearer token becomes guessable from the seed, which is unacceptable for a credential. (c) a deterministic salt (from the email) and a token derived by HMAC from a configured secret. Consequence: no randomness, but the secret is an operator-held configuration the design does not mention.
+**Recommendation:** (a).
+**Resolution:** option (b), the operator, <apply-date>, on Part E-8 of docs/PACK-q07-retire-amends.md v1.1 (verified in docs/VERIFICATION-<id>.md): a `random.Random` passed to the IdentityService, `random.Random()` in the product and a seeded one in tests, accepted with the predictability its consequence states. It lives in D-p5, design/INTERFACES.md §IdentityService and design/ARCHITECTURE.md §Persistence and concurrency rules.
+~~~
+
+**9. What the IdentityService answers, and where the values live (Q-p4).** B-2.7 states the question in full. One more fact belongs with it: design/PRODUCT-DESIGN.md:18 was added by DESIGN-REVIEW-7 finding 9 (design/DESIGN-REVIEW-7.md:36) so that the contract would read the write answers rather than invent them. The contract, cut afterwards, answers `Member` with the email (contracts/openapi.yaml:104, :144, :178). Only an admin calls the three writes (R-identity-08), and sign-in answers the signed-in member's own row, so the email reaches nobody the team list hides it from (R-identity-09). Each option's blocks complete the values comment of §IdentityService and write D-p6 and Q-p4's resolution.
+[(a) recommended: the contract wins, and the values are frozen dataclasses in src/app/identity/service.py — `MemberValue` (the contract's Member) from add_member, change_role and deactivate; `SignInValue` (token, member) from sign_in; `MemberSummary` from list_members — blocks E-9a.1–E-9a.3. The names are those B-2.3 already uses
+| (b) the design wins: the writes answer MemberSummary and the contract's three Member responses lose `email` — no text: it is a breaking contract change (D-07), which needs a design-change loop of its own and a regenerated golden, and this pack changes no pin; choosing it stops the apply
+| (c) the contract wins, and the values are plain dicts with exactly the contract's keys (`MemberValue` and the rest are aliases of `dict[str, object]`), answered by the API unchanged — blocks E-9c.1–E-9c.3. The consequence: no type checks a key, so a missing or misspelt one shows only in ADU-04's conformance check, and every other in-process value of this product is a frozen dataclass (src/app/ports.py)]
+
+**The editorial note on design/PRODUCT-DESIGN.md:18, under (a) or (c).** It is the pm-lead's edit, not the architect's and not the apply's. The pm-lead owns PRODUCT-DESIGN (D-02), and D-p6 records the reading until the edit is made. It is not in this apply: the release manager does not apply E-9.P. It is proposed as an editorial patch (v1.7.1), because it aligns the sentence with what the contract, pinned by the golden, already answers; it changes no answer. The pm-lead may word it otherwise, as long as it says what D-p6 says. It blocks nothing: ADU-03 and ADU-04 follow D-p6.
+
+#### E-9a.1 · design/INTERFACES.md:102
+replace exactly (within the line):
+~~~text
+Their names, types and home: Q-p4 (open).
+~~~
+with:
+~~~text
+All three are frozen dataclasses (`@dataclass(frozen=True)`) defined in src/app/identity/service.py beside the service; no other domain consumes them in process (D-05), and the API layer maps them onto the contract's Member, Token and MemberSummary (D-p6).
+~~~
+
+#### E-9a.2 · DECISIONS.md:18
+replace exactly (within the line):
+~~~text
+design/INTERFACES.md §Refused |
+~~~
+with:
+~~~text
+design/INTERFACES.md §Refused |
+| D-p6 | **The IdentityService answers the contract's shapes as frozen values defined in `src/app/identity/service.py`: `MemberValue` (id, name, email, role, active — the contract's Member) from add_member, change_role and deactivate; `SignInValue` (token, member: MemberValue — the contract's Token) from sign_in; `MemberSummary` (id, name, role, active) from list_members; seed_admin answers the new id.** The API layer maps them onto the contract's schemas; no other domain consumes them in process (D-05). design/PRODUCT-DESIGN.md:18, "a member as the team list shows it", is read as the member's row as the contract's Member gives it, email included. The pm-lead rewords that line in an editorial patch of PRODUCT-DESIGN, outside this apply. | <apply-date>, operator: Q-p4 option (a), Part E-9 of docs/PACK-q07-retire-amends.md v1.1. The contract wins because ADU-02's golden pins it (contracts/openapi.yaml:104, :144, :178 answer Member, and :44 Token; D-07: a breaking change is a design-change loop). Only an admin calls the three writes, and sign-in answers the caller's own row, so no email reaches anyone the team list hides it from (R-identity-08, R-identity-09). design/INTERFACES.md §IdentityService |
+~~~
+
+#### E-9a.3 · OPEN-QUESTIONS.md:85
+The block starts at the Options line, for the reason E-8a.4 gives.
+replace exactly:
+~~~text
+**Options:** (a) the contract wins, since ADU-02's golden pins it: the service returns a frozen value with the contract Member's fields for the three writes, (token, that value) for sign_in, and MemberSummary for list_members, all defined in src/app/identity/service.py (no other domain consumes them in process, D-05); PRODUCT-DESIGN.md:18 is read as "the member's row", and the pm-lead rewords it editorially. (b) the design wins: the writes answer MemberSummary, and the contract's three Member responses lose `email`. Consequence: a breaking contract change (D-07), so a design-change loop and a regenerated golden.
+**Recommendation:** (a).
+**Resolution:** none yet.
+~~~
+with:
+~~~text
+**Options:** (a) the contract wins, since ADU-02's golden pins it: the service returns a frozen value with the contract Member's fields for the three writes, (token, that value) for sign_in, and MemberSummary for list_members, all defined in src/app/identity/service.py (no other domain consumes them in process, D-05); PRODUCT-DESIGN.md:18 is read as "the member's row", and the pm-lead rewords it editorially. (b) the design wins: the writes answer MemberSummary, and the contract's three Member responses lose `email`. Consequence: a breaking contract change (D-07), so a design-change loop and a regenerated golden.
+**Recommendation:** (a).
+**Resolution:** option (a), the operator, <apply-date>, on Part E-9 of docs/PACK-q07-retire-amends.md v1.1 (verified in docs/VERIFICATION-<id>.md): the contract wins. The values are `MemberValue` (the contract's Member) from the three writes, `SignInValue` (token, member) from sign_in and `MemberSummary` from list_members, all frozen dataclasses in src/app/identity/service.py. It lives in D-p6 and design/INTERFACES.md §IdentityService. PRODUCT-DESIGN.md:18 is read as D-p6 says until the pm-lead's editorial patch (E-9.P of the pack), which is not part of this apply.
+~~~
+
+#### E-9c.1 · design/INTERFACES.md:102
+replace exactly (within the line):
+~~~text
+Their names, types and home: Q-p4 (open).
+~~~
+with:
+~~~text
+All three are plain dicts with exactly those keys, the contract's JSON names (aliases of dict[str, object] in src/app/identity/service.py); the API layer answers them unchanged (D-p6).
+~~~
+
+#### E-9c.2 · DECISIONS.md:18
+replace exactly (within the line):
+~~~text
+design/INTERFACES.md §Refused |
+~~~
+with:
+~~~text
+design/INTERFACES.md §Refused |
+| D-p6 | **The IdentityService answers the contract's shapes as plain dicts with exactly the contract's keys: `MemberValue` ({id, name, email, role, active}) from add_member, change_role and deactivate; `SignInValue` ({token, member}) from sign_in; `MemberSummary` ({id, name, role, active}) from list_members — aliases of `dict[str, object]` in `src/app/identity/service.py`; seed_admin answers the new id.** The API layer answers them unchanged. design/PRODUCT-DESIGN.md:18 is read as the member's row as the contract's Member gives it, email included. The pm-lead rewords that line in an editorial patch of PRODUCT-DESIGN, outside this apply. | <apply-date>, operator: Q-p4 option (c), Part E-9 of docs/PACK-q07-retire-amends.md v1.1. The contract wins, as in option (a). No type checks a key, so a missing or misspelt one shows only in ADU-04's conformance check; every other in-process value of this product is a frozen dataclass (src/app/ports.py). design/INTERFACES.md §IdentityService |
+~~~
+
+#### E-9c.3 · OPEN-QUESTIONS.md:85
+replace exactly:
+~~~text
+**Options:** (a) the contract wins, since ADU-02's golden pins it: the service returns a frozen value with the contract Member's fields for the three writes, (token, that value) for sign_in, and MemberSummary for list_members, all defined in src/app/identity/service.py (no other domain consumes them in process, D-05); PRODUCT-DESIGN.md:18 is read as "the member's row", and the pm-lead rewords it editorially. (b) the design wins: the writes answer MemberSummary, and the contract's three Member responses lose `email`. Consequence: a breaking contract change (D-07), so a design-change loop and a regenerated golden.
+**Recommendation:** (a).
+**Resolution:** none yet.
+~~~
+with:
+~~~text
+**Options:** (a) the contract wins, since ADU-02's golden pins it: the service returns a frozen value with the contract Member's fields for the three writes, (token, that value) for sign_in, and MemberSummary for list_members, all defined in src/app/identity/service.py (no other domain consumes them in process, D-05); PRODUCT-DESIGN.md:18 is read as "the member's row", and the pm-lead rewords it editorially. (b) the design wins: the writes answer MemberSummary, and the contract's three Member responses lose `email`. Consequence: a breaking contract change (D-07), so a design-change loop and a regenerated golden.
+**Recommendation:** (a).
+**Resolution:** option (c), the operator, <apply-date>, on Part E-9 of docs/PACK-q07-retire-amends.md v1.1 (verified in docs/VERIFICATION-<id>.md): the contract wins, and the values are plain dicts with exactly the contract's keys. It lives in D-p6 and design/INTERFACES.md §IdentityService. PRODUCT-DESIGN.md:18 is read as D-p6 says until the pm-lead's editorial patch (E-9.P of the pack), which is not part of this apply.
+~~~
+
+#### E-9.P · design/PRODUCT-DESIGN.md:18 (the pm-lead's text; not applied by this apply)
+Proposed wording for the pm-lead's editorial patch (PRODUCT-DESIGN v1.7.1), under E-9 (a) or (c).
+replace exactly (within the line):
+~~~text
+a member as the team list shows it (the same-role no-op answers the unchanged row, 200)
+~~~
+with:
+~~~text
+a member as the contract's Member gives it — the team list's fields and the email, which only the admin who made the change receives (the same-role no-op answers the unchanged row, 200)
+~~~
