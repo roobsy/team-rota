@@ -268,3 +268,38 @@ The one pass is the control `test_the_forced_child_really_writes_strict_cp1252` 
 **Deviations flagged:** the generated hand-over also carries faults of the plugin's generator, to be corrected when ADU-03 is handed over again (Linux paths when generated off the operator's machine; C1 without `--plugin-dir`; C1's roster without the `amends` files; section A expecting a clean `git status -sb` beside an untracked `uv.lock`; section B's `git add -A` committing `uv.lock` against Q-05; C2 without the interpreter line and without demanding the lint's last line). They are plugin feedback, carried upstream.
 **Tests at close:** none run; no code, test or plan text changed. `adu ledger` → `ledgers OK`.
 **NEXT:** `/adu-lifecycle:change-design Q-07` (stage 1, the pack) in a fresh `claude --plugin-dir C:\dev\adu-lifecycle --agent adu-lifecycle:architect` started inside `C:\dev\team-rota`; ADU-03 opens only after the apply step resolves Q-07.
+
+## 2026-11-08 08:39 · design-change loop Q-07, stage 1 (architect) · done
+**Done:**
+- `adu status` (Now: ADU-03; Q-07 open, blocking) and `git rev-parse --short HEAD` → `7d1e7d4`, the snapshot the operator named. This session answers Q-07 and does not open ADU-03.
+- docs/PACK-q07-retire-amends.md v1.0, snapshot 7d1e7d4, in the shape of the skill's pack-shape.md. It writes the operator's ruling (Q-07 option 1, "Add both tests to ADU-03's amends") without re-opening it:
+  - B-1/B-2.1: D-p1 (the retirement edits, each under the operator's grant, because the guard does not honour `amends` on a completed unit's test, plugin FB-28) and D-p2 (`Refused(reason, detail="", **extra)` in src/app/ports.py).
+  - B-2: design/INTERFACES.md §Refused, §Domain services with IdentityService, the retirement paragraph and the seed trace; Q-07 resolved, and Q-p1–Q-p5 drafted; VERSIONS rows.
+  - B-2.T: the exact test edits each retiring session makes under its grant (ADU-03, ADU-09, ADU-05, ADU-07, in both files; ADU-07 removes tests/test_nulls.py).
+  - B-3: 14 plan replacements (the four retirement arms and their `amends`, the Shape-of-the-cut sentence, the version).
+  - Part C: the chase list.
+  - Part D: the verify and apply prompts.
+  - Part E: five operator decisions with recommendations.
+- Checked on scratch exports of 7d1e7d4 (`git archive`, outside the repository), with the scratch script embedded in B-4.3:
+  - All 58 replace blocks match character for character at their stated lines: 69 checks, 0 mismatches, including the E-options alone and combined.
+  - With B-3 applied: `plan OK: 18 units`, order unchanged. The same holds with E-2 (b).
+  - The guard on the amended plan still refuses both completed tests and allows src/app/ports.py.
+  - The four stages give gate 46 → 44 → 42 → 40 → 38 passed, with lint clean at each, and stand-in services in place of the real ones. Afterwards no Null module and no Null import remain.
+  - Twins at the ADU-03 stage: the unedited test fails at collection (`ModuleNotFoundError: No module named 'app.identity.null_directory'`). With only the import and the class check edited, the 501 assertion fails with 401.
+- A ContextVar probe for Q-p1: set in a sync generator dependency, it is invisible to the endpoint; set in an async one, it is visible (fastapi 0.162.0, starlette 1.10.0).
+**Decisions:**
+- No existing double resolves `tok_1` as constructed (tests/support/doubles.py:95–112). The pack therefore gives the options as E-1 and recommends FakeMemberDirectory configured in the test; it does not choose.
+- The IdentityService signatures come only from ADU-03's arms, R-identity-01..09 and the contract. Four points those sources do not settle are raised, not filled in: the request's session (Q-p1), the construction across the identity ↔ scheduling cycle (Q-p2), the token and salt source against ARCHITECTURE.md:45 "No randomness in the product" (Q-p3), and the returned values (Q-p4).
+- The same wall at the API units (the 501 loop and the helpers in contract_stubs.py, which ADU-08 deletes) is outside Q-07's ruling. It is raised as Q-p5 and blocks ADU-04, not M2.
+- The plan text cites only Q-07, because `adu plan check` rejects a provisional id in the plan.
+- At ADU-03, line 105's protocol check is split into two asserts: as one line it is 113 characters, over ruff's 110.
+**Deviations flagged:**
+- The skill's stage-1 step 4 commits the pack. It is not committed, at the operator's instruction.
+- If E-5 (a) is ruled, ADU-03 stays blocked after the apply, on Q-p1–Q-p4. This is stated in Part E, not hidden.
+- The session ran across midnight, so the pack and this block carry 2026-11-08.
+- No governing document, code, test or protected path was changed. The only files written in the repository are the pack and this block.
+**Tests at close:** none — documents only. The scratch runs above are measurements on exports, not this tree's gate.
+**NEXT:**
+1. The operator commits the pack: `git add docs/PACK-q07-retire-amends.md SESSION-JOURNAL.md` then `git commit -m "docs: pack q07-retire-amends v1.0, snapshot 7d1e7d4"`.
+2. In a fresh `claude --plugin-dir C:\dev\adu-lifecycle --agent adu-lifecycle:verifier` started inside `C:\dev\team-rota`, paste Part D-1 of the pack.
+3. Rule Part E (E-1 … E-5) after the verdict.
