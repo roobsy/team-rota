@@ -1,6 +1,7 @@
 # PACK — q07-retire-amends
-v1.2 · 2026-11-12 · snapshot: 7d1e7d4 · status: verification pending (round R2)
-Changed from v1.1 (bc98783; docs/VERIFICATION-R1.md, STOP — MECHANICAL), finding by finding: **N-1** → E-6b.10 appends R1's clause to ADU-03's arm 1, with its "under D-p3" written as "under the request's current session of design/INTERFACES.md (Domain services)" because the plan may carry no provisional id; E-6a.9 adds the same request path under E-6 (a); B-4.3 rehearses the twin. **N-2** → B-2.7 enters Q-p5 non-blocking; E-5a.14 / E-5b.1 write the Owed row O-p1 due ADU-04 (plugin FB-32); B-3.16 points ADU-04's entry to it; B-5, E-5 and D-2 are aligned; B-4.4 shows the simulated apply's `adu status` ("Open blocking questions: none", Now ADU-03). **M-1** → E-2b.8–E-2b.18. **M-2** → E-3b.5–E-3b.6. **M-3** → E-1b.1–E-1b.4, with E-4 (b) written as E-4b.1. **Notes**, in order: A-2 cites plugin c77cbeb (scripts unchanged since 4b63bb0); A-2's last row names only :160–:161; E-7 (b) says it rules the later constructors; E-7a.5–.6 and E-7b.4–.5 add the third cycle to both documents, and E-7a.4 names (a)'s seam in INTERFACES; Q-p5's text carries the commit no API arm sees and ADU-04's route to the IdentityService; T-03.4's comment names no class; E-9 says "superseded" and leaves E-9.P's version to the pm-lead; E-5 says why the resolved questions keep their Blocking lines; B-4.4 reports the derived render. **R1's other rows**: B-2.3 (§Refused a section of its own; the source of "assert the code"), B-3.3 (the split line), E-8 (hard rule 5 quoted in full; the scan point), E-9 (review line 17), Part C (the five protocols; test_nulls.py:1; the E-6–E-9 terms). **Q-p6** (plugin FB-33) → B-2.7 enters it and E-10 rules it, with (a) recommended and rehearsed. B-4.3's script covers every block in every ruling the brackets allow and is re-run in full. D-1 is round R2's prompt. D-2 takes E-1 … E-10 and writes the Owed row.
+v1.3 · 2026-11-12 · snapshot: 7d1e7d4 · status: verification pending (round R3)
+Changed from v1.2 (1745ed2; docs/VERIFICATION-R2.md, STOP — MECHANICAL), finding by finding: **N-1** → E-6b.10 and E-6a.9 no longer assert through a stubbed operation: ADU-03's own test registers a route on the app `create_app(workspace=tmp_path)` builds, at a path the contract does not declare, taking its caller from `Depends(app.api.deps.require_caller)`; the route answers 200 with the seeded admin's id for a token `sign_in` issued and 401 unauthenticated for `Bearer garbage`, and the clause sends no request to a contract operation and imports nothing from the stubs module (plugin FB-34). It is R2's first fix, refined; E-6 gives the reasons over the second and names the thirteen later units it was checked against. B-4.2 follows, and B-4.3's stand-in test is replaced: it passes with the wiring right, fails under both of R1's broken wirings, and passes in four API twins (the routers of ADU-04, ADU-06, ADU-10 and ADU-08 landed in turn, the stubs module deleted in the last), where v1.2's stand-in, which sends `GET /members`, fails in each; after ADU-08 no form of v1.2's clause can be met. **R2's notes**, in order: E-10's (c) grant cell, E-10c.3, B-4.1 and A-2's roster row give the reason that holds (pyproject.toml lies outside adu.toml's code_roots, so the guard applies no roster to it), and B-4.3 asks the guard about it at 7d1e7d4 as well; E-8 (b) names src/app/synthetic.py:12, and B-4.3 runs the scan; E-1 (b), E-4 (b), E-1b.3 and E-2b.3 are rehearsed now (B-4.3 part 6), and E-7 (a), E-8 (b), E-9 (c) and E-7b.1 say that those constructors are composed as text only; ADU-11's route to `seed_admin`: E-6b.1, E-6a.1 and E-6's prose name the object, and Q-p5's first point covers ADU-11 beside ADU-04 and keeps `Ports.member_directory` the identity service; Part C gives VERSIONS.md:90's wording and the journal's record; D-2 step 6 cites STATUS.md:40 before the apply and the line the Owed rows move it to. **Also**: A-2 cites plugin ae191e2 (FB-34) and gains the rows the fix rests on; A-3 adds FB-34's rule to what a mechanism must never do; the four retirement arms (B-3.5, B-3.8, B-3.11, B-3.14) say that their gate clause is checked at the unit's close and repeated by no test of the arm's file; the pack's references to itself read v1.3; D-1 is round R3's prompt and D-2's precondition R3's verdict.
+**FB-34's class, searched in the whole pack** (an arm, an amends assertion, a T-block, a D-p row or an option that asserts through a Null, a stub, a placeholder answer or a mock that a later unit removes), each against the entries of the thirteen later units. Checked: the arms the pack writes (B-3.5, B-3.8, B-3.11, B-3.14, E-6a.9, E-6b.10, E-10a.2–.28); every amends assertion (B-3.3, B-3.4, B-3.6, B-3.7, B-3.9, B-3.10, B-3.12, B-3.13, E-1b.3, E-2b.3, E-6b.6, E-10c.2); B-2.T's T-blocks; D-p1–D-p7 in every option; the INTERFACES text of B-2.3, B-2.4, E-6a.1 and E-6b.1; Q-p1–Q-p6 and their options; B-3.16, E-10d.2 and the Owed rows. Found: (1) E-6b.10 and E-6a.9, R2's N-1, fixed as above. (2) Q-p5's option (b): its 501 loop "iterates the operations contract_stubs still registers", which reads the module ADU-08 deletes; it now reads them from the app's own route table. (3) Outside the pack's blocks: ADU-06's, ADU-10's and ADU-08's response-validation arms (ADU-PLAN.md:307, :331, :358), like ADU-04's (:281), reach for the one helper there is, in the stubs module, and src/app/main.py imports that module (:16); both are added to Q-p5's Conflict, the API units' wall that O-p1 carries. (4) The four retirement arms' gate clause names other units' tests that later units change or remove: tests/test_nulls.py goes at ADU-07, and the contract unit's test changes under Q-p5. It is the gate's check at the arm's own unit's close, and each arm now says that no test of its file repeats it. Not of the class: T-03.4 keeps ADU-02's own 501 assertion through the stubs, which Q-p5 and O-p1 already carry; every other assertion goes through a protocol of src/app/ports.py, a permanent double of tests/support/doubles.py, or the asserting unit's own module. Nothing else was found, and no note of R2 stays.
 Input to the loop, not a replacement for it: every proposal below is in the documents' own vocabulary, for a verifier to check first and the release-manager to apply second. Every identifier here is provisional (D-p1 … D-p7, Q-p1 … Q-p6, O-p1, O-p2) until the apply step allocates it with `adu next-id`; `<apply-date>` is the apply step's date. Drafted by the architect (`/adu-lifecycle:change-design Q-07`, stage 1); the operator's ruling is written here, not re-opened.
 
 **How to read the replacement blocks.** Each block is headed `#### <id> · <file>:<line>` and gives `replace exactly:` and `with:` as fenced `text` blocks; the fence content is the text, character for character, with line endings normalised (the Windows working tree is CRLF, the blobs LF). "(within the line)" means the text is a fragment of that line, with no line ending of its own; a fragment that runs on into the next line says so. An empty `with:` block removes the lines, line endings included. A block's line is where its text starts. B-blocks are numbered against 7d1e7d4, and E-blocks against the file as B leaves it. T-blocks are numbered against the file as the previous retirement leaves it: 7d1e7d4 for ADU-03.
@@ -33,8 +34,9 @@ Option 1 as the entry states it (:56): both tests in ADU-03's `amends`, each wit
 | src/app/main.py:40–43, :53–56 | `create_app(…, *, member_directory=…, scheduling=…, swaps=…, notifier=…)`; each port is the injected object or else the Null | the injection seam the ruling names already exists; no edit to main.py is needed for the test |
 | src/app/api/contract_stubs.py:82–84, :118–123 | every stub raises `NotBuilt` for any resolved caller; there is no role check | the injected caller's role does not matter for the 501 |
 | tests/support/doubles.py:95–112 | `FakeMemberDirectory()` holds no member; `caller_for_token` resolves only a token given to `add(…, token=…)`, and answers None for an inactive member | **no existing double resolves `tok_1` as constructed.** FakeMemberDirectory resolves it once the test calls `add(1, "Member 1", "member", token="tok_1")`, which reproduces exactly the Caller the Null gave (`Caller(member_id=1, name="Member 1", role="member", active=True)`, src/app/identity/null_directory.py:15–17). The options are E-1 |
-| plugin `scripts/adu.mjs:687` (plugin HEAD c77cbeb; `git diff --stat 4b63bb0 c77cbeb` lists FEEDBACK.md only, so every line cited from `scripts/` reads as it did at 4b63bb0) | a path in a completed unit's `tests:` is denied unless granted; `amends` is not consulted | every edit of a completed unit's test needs the operator's grant, with or without an `amends` line (plugin FB-28, plugin FEEDBACK.md:33, open) |
+| plugin `scripts/adu.mjs:687` (plugin HEAD ae191e2; `git diff --stat 4b63bb0 ae191e2` lists FEEDBACK.md only, so every line cited from `scripts/` reads as it did at 4b63bb0) | a path in a completed unit's `tests:` is denied unless granted; `amends` is not consulted | every edit of a completed unit's test needs the operator's grant, with or without an `amends` line (plugin FB-28, plugin FEEDBACK.md:33, open) |
 | plugin `scripts/adu.mjs:692–693` | the Now unit's roster is `files` + `tests` + `amends` files | `amends` is honoured for non-test files (main.py, a Null, ports.py, doubles.py, layering.json); no grant is needed there |
+| plugin `scripts/adu.mjs:689–691`; adu.toml:7 | the roster is applied only to a path under `code_roots` (`["src","tests","frontend/src","frontend/tests"]`) | a file outside them, such as pyproject.toml, is allowed in every tree, so the guard neither needs nor checks an `amends` line for it: keeping such an edit inside the roster rests on the session (hard rule 6) (E-10 (c); B-4.3 asks at 7d1e7d4 too) |
 | plugin `scripts/adu.mjs:704` | the bash guard refuses `rm` only of the ledgers | removing `tests/test_nulls.py` at ADU-07 is not seen by any guard; the grant and the journal are its only record |
 | src/app/ports.py:28–41 | `MemberNotFound`, `AssignmentNotFound`, `TransferRefused(reason)` with `.reason` | the cross-domain exceptions already live in the layer-2 module; `TransferRefused` is the precedent shape for `Refused` |
 | tests/test_ports.py:21, :38, :66, :117–118 | the pinned signatures (`caller_for_token(self, token)`, `notify(self, event)`), `not hasattr(ports, "FixedClock")`, and "ports imports nothing of the product" | adding `Refused` to ports.py breaks none of them (rehearsed: B-4.3) |
@@ -49,10 +51,16 @@ Option 1 as the entry states it (:56): both tests in ADU-03's `amends`, each wit
 | ADU-PLAN.md:149, :180, :206, :238 | ADU-03, ADU-09, ADU-05 and ADU-07 each place a test file at `tests/<domain>/test_service.py` | four test files with one basename |
 | tests/ (no `__init__.py` anywhere); pyproject.toml `[tool.pytest.ini_options]` (`testpaths`, `pythonpath = ["src", "tests"]`, no import mode) | pytest's default `prepend` mode imports each test file under its basename | the second `test_service.py` fails collection ("import file mismatch": 3 errors with all four, B-4.3; plugin FB-33, plugin FEEDBACK.md:38, open). `pythonpath` keeps `support` and `layering_scan` importable under any import mode |
 | plugin `scripts/lib/plan.mjs:181`, :214, :219 | an entry's declared `depends` must equal the derived one, which counts every unit its `amends` names; an arm's `file` must be in `tests:`, and every `tests:` path needs an arm | an `amends` of ADU-00's file adds ADU-00 to `depends` (E-10 (c)); an `__init__.py` cannot sit in `tests:` without an arm, so E-10 (b) puts it in `files:` |
+| ADU-PLAN.md:128, :273, :299, :325, :349 | the 501 placeholder is "gone once the last router lands (ADU-08)"; ADU-04, ADU-06, ADU-10 and ADU-08 each move their operations out of the stubs, and ADU-08 deletes the module | an arm of ADU-03 that sends a request to a stubbed operation goes red when that operation's router lands, and after ADU-08 there is none left to send (R2 N-1; plugin FB-34, plugin FEEDBACK.md:39, open). E-6b.10 and E-6a.9 assert through a route ADU-03's own test registers |
+| src/app/api/contract_stubs.py:28–29 | `SESSION_DEP = Depends(get_session)` and `CALLER_DEP = Depends(require_caller)`, the same dependencies as `app.api.deps`'s, held in the module ADU-08 deletes | E-6b.10's route takes `require_caller` from `app.api.deps` itself (src/app/api/deps.py:33), a file no later entry amends |
+| contracts/openapi.json `paths` (17 paths, 18 operations; `schemas.CONTRACT`, src/app/api/schemas.py:21–22) | no path has a parameter as its first segment, and none starts `/__probe__` | no contract route, stub or router, can match the path of E-6b.10's route, so it is reached whichever operations are built |
+| src/app/main.py:16, :24, :72–76, :78 | main.py imports `contract_stubs` for `CONTRACT`, the `NotBuilt` handler and `register` | ADU-08's deletion of the module edits main.py too, which no API entry declares (Q-p5). Apart from that, no later entry amends main.py except ADU-09's, ADU-05's and ADU-07's own binding lines |
+| ADU-PLAN.md:281, :307, :331, :358 | each API unit's response-validation arm; only ADU-04's names "the conformance helper from ADU-02" | the one such helper is `contract_stubs.validate_example` (src/app/api/contract_stubs.py:46), in the module ADU-08 deletes (Q-p5) |
+| ADU-PLAN.md:507, :510 (ADU-15) | `app serve` is ADU-15's own src/app/serve.py, reached through its amendment of ADU-11's src/app/cli.py; it serves the built frontend and the API from one port | nothing is mounted on the app `create_app` returns, so no catch-all route of a later unit stands before E-6b.10's route |
 
 ### A-3 What a correct mechanism must do, and must never do
 **Must:** let each provider retire its Null in one session, together with every completed test that names that Null, edited exactly where it names it and nowhere else. Keep every assertion ADU-02's and ADU-16's arms require: the served operations' identity; 401 without a token and with an unknown one; 501 not_built with a resolved caller; every example validates; an implementation of each protocol bound; the injectable clock; one session per request. Keep hard rule 1 in the operator's hands: one grant per file, per session, recorded in that session's journal. Leave the other Nulls' tests untouched until their own provider. Define `Refused` and IdentityService before ADU-03 implements them, with every point the sources do not settle left visibly open. Let every service unit's test file collect beside the others'. Leave the Now unit free of a question that blocks only a later one (plugin FB-32).
-**Must never:** skip, xfail or delete an assertion that is not about the Null. Weaken the 501 check (to "not 401", say). Bring the Null back under another name as the default binding. Let a later unit's edit ride on ADU-03's grant. Invent a signature the arms, the identity spec and the contract do not settle. Add a wiring that no arm of the unit that writes it can catch broken.
+**Must never:** skip, xfail or delete an assertion that is not about the Null. Weaken the 501 check (to "not 401", say). Bring the Null back under another name as the default binding. Let a later unit's edit ride on ADU-03's grant. Invent a signature the arms, the identity spec and the contract do not settle. Add a wiring that no arm of the unit that writes it can catch broken. Write an arm that asserts through a Null, a stub, a placeholder answer or a mock that a later unit removes: an arm asserts only through a surface its own unit owns, or one no later unit is planned to remove (plugin FB-34).
 
 ## Part B — the proposal
 
@@ -211,9 +219,9 @@ with:
 **Resolution:** none yet.
 
 ### Q-p5 · 2026-11-08 · design-change loop Q-07 (the API units) · open
-**Conflict:** tests/api/test_contract_conformance.py:58–73 expects every operation except sign-in to answer `501 not_built` with a resolved caller, and sign-in to answer 501 (:66–67). ADU-04, ADU-06, ADU-10 and ADU-08 move their operations out of the stubs (ADU-PLAN.md:273, :299, :325, :349), after which those operations answer their real codes. ADU-08 deletes `src/app/api/contract_stubs.py`, which the test imports (line 22) for `example_path`, `example_body`, `validate_example`, `resolve` and `SESSION_DEP` (:63–64, :83, :86, :92, :99, :127); ADU-04's arm (ADU-PLAN.md:281) also uses "the conformance helper from ADU-02", which is `contract_stubs.validate_example` (src/app/api/contract_stubs.py:46). None of the four API entries declares the conformance test in its `amends`. This is Q-07's wall again, one milestone later. Two more points sit inside the same wall. First, ADU-04's router must reach the IdentityService, which the composition root binds only as `Ports.member_directory` (design/INTERFACES.md §IdentityService), while the 401/501 test's app binds a FakeMemberDirectory there (T-03.4 of docs/PACK-q07-retire-amends.md). Second, the arms of ADU-04, ADU-06, ADU-10 and ADU-08 do not assert that a write is visible to the next request, so only ADU-15's end-to-end arm (ADU-PLAN.md:518) would catch a write the API layer never commits.
+**Conflict:** tests/api/test_contract_conformance.py:58–73 expects every operation except sign-in to answer `501 not_built` with a resolved caller, and sign-in to answer 501 (:66–67). ADU-04, ADU-06, ADU-10 and ADU-08 move their operations out of the stubs (ADU-PLAN.md:273, :299, :325, :349), after which those operations answer their real codes. ADU-08 deletes `src/app/api/contract_stubs.py`, which the test imports (line 22) for `example_path`, `example_body`, `validate_example`, `resolve` and `SESSION_DEP` (:63–64, :83, :86, :92, :99, :127); ADU-04's arm (ADU-PLAN.md:281) also uses "the conformance helper from ADU-02", which is `contract_stubs.validate_example` (src/app/api/contract_stubs.py:46). ADU-06's, ADU-10's and ADU-08's arms ask the same check (:307, :331, :358) without naming a helper, and a test of theirs that imports it from the stubs module goes red when ADU-08 deletes it (plugin FB-34). src/app/main.py imports the module too (line 16), for `CONTRACT` (:24), the `NotBuilt` handler (:72–76) and `register` (:78). None of the four API entries declares the conformance test, or main.py, in its `amends`. This is Q-07's wall again, one milestone later. Two more points sit inside the same wall. First, ADU-04's router and ADU-11's command (`app seed-admin`, ADU-PLAN.md:378) must reach the IdentityService, which the composition root binds only as `Ports.member_directory` (design/INTERFACES.md §IdentityService), while the 401/501 test's app binds a FakeMemberDirectory there (T-03.4 of docs/PACK-q07-retire-amends.md). Whatever is ruled keeps `Ports.member_directory` bound to the identity service itself, which ADU-03's completed arm 1 asserts. Second, the arms of ADU-04, ADU-06, ADU-10 and ADU-08 do not assert that a write is visible to the next request, so only ADU-15's end-to-end arm (ADU-PLAN.md:518) would catch a write the API layer never commits.
 **Blocking:** no — not for ADU-03, ADU-09, ADU-05 or ADU-07. It must be ruled before ADU-04 (derived position 9) opens, and the Owed row O-p1 (STATUS.md, due ADU-04) and ADU-04's entry carry that duty: `adu status` reads `**Blocking:** yes` as blocking whatever unit is Now (plugin FB-32).
-**Options:** (a) the D-p1 pattern: each API unit's `amends` gains the conformance test under a grant; the 501 loop leaves out the operations its router now serves (sign-in leaves at ADU-04); ADU-08 moves the helpers to a surviving module and repoints the imports. Consequence: four more edits of a completed test. (b) one re-cut before ADU-04: the helpers move to a permanent module (e.g. tests/support/contract.py), and the 501 assertion iterates the operations contract_stubs still registers, so no later unit edits the test again. Consequence: one hard-rule-1 edit, made by ADU-04 or by a contract-maintenance unit.
+**Options:** (a) the D-p1 pattern: each API unit's `amends` gains the conformance test under a grant; the 501 loop leaves out the operations its router now serves (sign-in leaves at ADU-04); ADU-08 moves the helpers to a surviving module and repoints the imports. Consequence: four more edits of a completed test. (b) one re-cut before ADU-04: the helpers move to a permanent module (e.g. tests/support/contract.py), and the 501 assertion iterates only the operations the app still serves from the stubs, read from its own route table and never by importing the stubs module (plugin FB-34), so no later unit edits the test again. Consequence: one hard-rule-1 edit, made by ADU-04 or by a contract-maintenance unit; after ADU-08 the loop has no operation left, as ADU-08's own arm asserts (ADU-PLAN.md:357).
 **Recommendation:** (b), decided in a design-change loop before ADU-04 opens.
 **Resolution:** none yet.
 
@@ -580,14 +588,14 @@ with:
 ~~~
 
 #### B-3.5 · ADU-PLAN.md:159
-Why: ADU-03 arm 1 rewritten so it can be met. The parts its own test file can assert are made concrete; the rest is the gate's, as before.
+Why: ADU-03 arm 1 rewritten so it can be met. The parts its own test file can assert are made concrete; the rest is the gate's, as before, and the arm now says so: tests/test_nulls.py goes at ADU-07 and the contract unit's test changes at the API units, so a test of this file that re-ran them would turn red when they do (plugin FB-34). B-3.8, B-3.11 and B-3.14 say the same.
 replace exactly:
 ~~~text
   - { arm: "retires MK-04: MemberDirectory is bound to the identity service; src/app/identity/null_directory.py and its test_nulls test are deleted; the contract unit's tests stay green unchanged", file: tests/identity/test_service.py, kind: deterministic }
 ~~~
 with:
 ~~~text
-  - { arm: "retires MK-04: create_app(workspace=tmp_path) binds the identity service as MemberDirectory and it satisfies ports.MemberDirectory; src/app/identity/null_directory.py no longer exists and no module under src/ or tests/ imports app.identity.null_directory; the contract unit's tests and tests/test_nulls.py pass in the gate after exactly the edits this entry's amends declare on them, each made under the operator's grant (Q-07)", file: tests/identity/test_service.py, kind: deterministic }
+  - { arm: "retires MK-04: create_app(workspace=tmp_path) binds the identity service as MemberDirectory and it satisfies ports.MemberDirectory; src/app/identity/null_directory.py no longer exists and no module under src/ or tests/ imports app.identity.null_directory; the contract unit's tests and tests/test_nulls.py pass in the gate after exactly the edits this entry's amends declare on them, each made under the operator's grant (Q-07), which the gate checks at this unit's close and no test of this file repeats", file: tests/identity/test_service.py, kind: deterministic }
 ~~~
 
 #### B-3.6 · ADU-PLAN.md:182
@@ -620,7 +628,7 @@ replace exactly:
 ~~~
 with:
 ~~~text
-  - { arm: "retires MK-02: create_app(workspace=tmp_path) binds the notifications service as Notifier and it satisfies ports.Notifier; src/app/notifications/null_notifier.py no longer exists and no module under src/ or tests/ imports app.notifications.null_notifier; the contract unit's tests and tests/test_nulls.py pass in the gate after exactly the edits this entry's amends declare on them, each made under the operator's grant (Q-07); the identity tests (which use the SpyNotifier double) stay green unchanged", file: tests/notifications/test_service.py, kind: deterministic }
+  - { arm: "retires MK-02: create_app(workspace=tmp_path) binds the notifications service as Notifier and it satisfies ports.Notifier; src/app/notifications/null_notifier.py no longer exists and no module under src/ or tests/ imports app.notifications.null_notifier; the contract unit's tests and tests/test_nulls.py pass in the gate after exactly the edits this entry's amends declare on them, each made under the operator's grant (Q-07), which the gate checks at this unit's close and no test of this file repeats; the identity tests (which use the SpyNotifier double) stay green unchanged", file: tests/notifications/test_service.py, kind: deterministic }
 ~~~
 
 #### B-3.9 · ADU-PLAN.md:208
@@ -653,7 +661,7 @@ replace exactly:
 ~~~
 with:
 ~~~text
-  - { arm: "retires MK-01: create_app(workspace=tmp_path) binds the scheduling service as SchedulingPort and it satisfies ports.SchedulingPort; src/app/scheduling/null_port.py no longer exists and no module under src/ or tests/ imports app.scheduling.null_port; the contract unit's tests and tests/test_nulls.py pass in the gate after exactly the edits this entry's amends declare on them, each made under the operator's grant (Q-07); the identity tests (FakeSchedulingPort double) stay green unchanged", file: tests/scheduling/test_service.py, kind: deterministic }
+  - { arm: "retires MK-01: create_app(workspace=tmp_path) binds the scheduling service as SchedulingPort and it satisfies ports.SchedulingPort; src/app/scheduling/null_port.py no longer exists and no module under src/ or tests/ imports app.scheduling.null_port; the contract unit's tests and tests/test_nulls.py pass in the gate after exactly the edits this entry's amends declare on them, each made under the operator's grant (Q-07), which the gate checks at this unit's close and no test of this file repeats; the identity tests (FakeSchedulingPort double) stay green unchanged", file: tests/scheduling/test_service.py, kind: deterministic }
 ~~~
 
 #### B-3.12 · ADU-PLAN.md:240
@@ -686,7 +694,7 @@ replace exactly:
 ~~~
 with:
 ~~~text
-  - { arm: "retires MK-03: create_app(workspace=tmp_path) binds the swaps service as SwapsPort and it satisfies ports.SwapsPort; src/app/swaps/null_port.py and tests/test_nulls.py no longer exist and no module under src/ or tests/ imports a Null (app.identity.null_directory, app.notifications.null_notifier, app.scheduling.null_port, app.swaps.null_port); the contract unit's tests pass in the gate after exactly the edits this entry's amends declare on them, each made under the operator's grant (Q-07); the scheduling tests (FakeSwapsPort double) stay green unchanged", file: tests/swaps/test_service.py, kind: deterministic }
+  - { arm: "retires MK-03: create_app(workspace=tmp_path) binds the swaps service as SwapsPort and it satisfies ports.SwapsPort; src/app/swaps/null_port.py and tests/test_nulls.py no longer exist and no module under src/ or tests/ imports a Null (app.identity.null_directory, app.notifications.null_notifier, app.scheduling.null_port, app.swaps.null_port); the contract unit's tests pass in the gate after exactly the edits this entry's amends declare on them, each made under the operator's grant (Q-07), which the gate checks at this unit's close and no test of this file repeats; the scheduling tests (FakeSwapsPort double) stay green unchanged", file: tests/swaps/test_service.py, kind: deterministic }
 ~~~
 
 #### B-3.16 · ADU-PLAN.md:285
@@ -698,7 +706,7 @@ replace exactly:
 ~~~
 with:
 ~~~text
-**Owed before this unit opens (Q-07's design-change loop).** The API units' wall is open. ADU-02's completed `tests/api/test_contract_conformance.py` expects 501 not_built from every operation this unit moves out of the stubs. It also imports the helpers of `src/app/api/contract_stubs.py`, which ADU-08 deletes and this unit's fifth arm uses. The question is entered non-blocking with an Owed row due at this unit in STATUS.md, which `adu status` lists in every session, because a question entered `**Blocking:** yes` would stop whatever unit is Now (plugin FB-32). It is ruled in a design-change loop before this unit's hand-over. The same loop settles how this unit's router reaches the IdentityService, which the composition root binds only as `Ports.member_directory`, and whether the API units' arms assert that a committed write is visible to the next request. Until then this entry's `amends` and arms stand as written; `adu plan check` refuses its ✅ while the row is open (rule 19).
+**Owed before this unit opens (Q-07's design-change loop).** The API units' wall is open. ADU-02's completed `tests/api/test_contract_conformance.py` expects 501 not_built from every operation this unit moves out of the stubs. It also imports the helpers of `src/app/api/contract_stubs.py`, which ADU-08 deletes, which this unit's fifth arm uses, and which `src/app/main.py` imports as well. The question is entered non-blocking with an Owed row due at this unit in STATUS.md, which `adu status` lists in every session, because a question entered `**Blocking:** yes` would stop whatever unit is Now (plugin FB-32). It is ruled in a design-change loop before this unit's hand-over. The same loop settles how this unit's router, and ADU-11's command, reach the IdentityService, which the composition root binds only as `Ports.member_directory`, and whether the API units' arms assert that a committed write is visible to the next request. Until then this entry's `amends` and arms stand as written; `adu plan check` refuses its ✅ while the row is open (rule 19).
 
 ### ADU-06 — Scheduling API
 ~~~
@@ -731,7 +739,7 @@ $ adu plan order   # scratch copy with B-3 applied, exit 0
 18. ADU-15 — End-to-end vertical path and packaging (layer 6, size M)
 ~~~
 
-The order is the one `adu plan order` gives at 7d1e7d4 (the script compares the two: True), with 18 units, ADU-03 at 5, ADU-09 at 6, ADU-05 at 7 and ADU-07 at 8. The recommended options' plan text (B-3, E-6 (b), E-10 (a)) gives the same check and order. So does each of the 144 distinct ADU-PLAN.md texts among the 1,088 rulings (part 4). The pristine export and this one also check the guard (part 5, which also asks about every option's roster). The grants are still needed after the apply; each message is cut at 150 characters by the script:
+The order is the one `adu plan order` gives at 7d1e7d4 (the script compares the two: True), with 18 units, ADU-03 at 5, ADU-09 at 6, ADU-05 at 7 and ADU-07 at 8. The recommended options' plan text (B-3, E-6 (b), E-10 (a)) gives the same check and order. So does each of the 144 distinct ADU-PLAN.md texts among the 1,088 rulings (part 4). The pristine export and this one also check the guard (part 5, which also asks about every option's roster). The grants are still needed after the apply. pyproject.toml is allowed in both trees, as in every tree, because it lies outside the guard's code roots (Part A-2). Each message is cut at 150 characters by the script:
 
 ~~~text
 guard edit tests/test_nulls.py --role developer (at 7d1e7d4) -> exit 2: adu guard: refused to edit tests/test_nulls.py: tests/test_nulls.py is a test file of completed unit ADU-16: tests of completed ADUs are immutable (ha
@@ -739,27 +747,30 @@ guard edit tests/api/test_contract_conformance.py --role developer (at 7d1e7d4) 
 guard edit src/app/ports.py --role developer (at 7d1e7d4) -> exit 2: adu guard: refused to edit src/app/ports.py: src/app/ports.py is outside ADU-03's roster (files, tests, amends). Stay inside this unit's specified fil
 guard edit src/app/db.py --role developer (at 7d1e7d4) -> exit 2: adu guard: refused to edit src/app/db.py: src/app/db.py is outside ADU-03's roster (files, tests, amends). Stay inside this unit's specified files (ha
 guard edit src/app/api/deps.py --role developer (at 7d1e7d4) -> exit 2: adu guard: refused to edit src/app/api/deps.py: src/app/api/deps.py is outside ADU-03's roster (files, tests, amends). Stay inside this unit's specifi
+guard edit pyproject.toml --role developer (at 7d1e7d4) -> exit 0: allow pyproject.toml
 guard edit tests/test_nulls.py --role developer (with B-3 applied) -> exit 2: adu guard: refused to edit tests/test_nulls.py: tests/test_nulls.py is a test file of completed unit ADU-16: tests of completed ADUs are immutable (ha
 guard edit tests/api/test_contract_conformance.py --role developer (with B-3 applied) -> exit 2: adu guard: refused to edit tests/api/test_contract_conformance.py: tests/api/test_contract_conformance.py is a test file of completed unit ADU-02: tes
 guard edit src/app/ports.py --role developer (with B-3 applied) -> exit 0: allow src/app/ports.py
 guard edit src/app/db.py --role developer (with B-3 applied) -> exit 2: adu guard: refused to edit src/app/db.py: src/app/db.py is outside ADU-03's roster (files, tests, amends). Stay inside this unit's specified files (ha
 guard edit src/app/api/deps.py --role developer (with B-3 applied) -> exit 2: adu guard: refused to edit src/app/api/deps.py: src/app/api/deps.py is outside ADU-03's roster (files, tests, amends). Stay inside this unit's specifi
+guard edit pyproject.toml --role developer (with B-3 applied) -> exit 0: allow pyproject.toml
 ~~~
 
 ### B-4 Criteria
 #### B-4.1 Quantitative criteria and pins
-None proposed. Every arm this pack rewrites is deterministic. No pin changes: the contract, `contracts/openapi.golden.json` and PINS.lock are untouched, so no golden is regenerated and no twin is owed. With no stochastic arm there is no false-failure rate to state. Under E-10 (c), pyproject.toml is neither pinned (PINS.lock pins design/PRODUCT-BRIEF.md alone) nor protected (adu.toml `[protected]`).
+None proposed. Every arm this pack rewrites is deterministic. No pin changes: the contract, `contracts/openapi.golden.json` and PINS.lock are untouched, so no golden is regenerated and no twin is owed. With no stochastic arm there is no false-failure rate to state. Under E-10 (c), pyproject.toml is neither pinned (PINS.lock pins design/PRODUCT-BRIEF.md alone) nor protected (adu.toml `[protected]`), and it lies outside the guard's code roots (adu.toml:7), so the guard applies no roster to it (Part A-2).
 
 #### B-4.2 Can each rewritten arm fail?
 - ADU-03 arm 1 (B-3.5) fails if `create_app()` still binds the Null or anything that does not satisfy `ports.MemberDirectory`; if `src/app/identity/null_directory.py` exists; if any file under src/ or tests/ imports it (as main.py:18, the conformance test :23 and test_nulls.py :11 do at 7d1e7d4); or if either edited test is red in the gate. The rewrite narrows nothing ADU-02's arms require: 401 without a token and with `garbage`, 501 with `tok_1`, an implementation of each protocol bound, the clock, one session per request. Each is still asserted by the unchanged lines.
 - ADU-09, ADU-05 and ADU-07 arm 1 (B-3.8, B-3.11, B-3.14) fail the same way for their own Null. ADU-07's also fails if tests/test_nulls.py or any Null module survives.
 - Twins, rehearsed (B-4.3): at stage ADU-03 the unedited conformance test fails at collection once the Null is deleted, and with only the import and class-check edits (no injected directory) the 401/501 test fails with 401. Each part of T-03 is therefore needed.
-- ADU-03 arm 1 under E-6 (b), with E-6b.10's clause (R1 N-1), also fails in three cases. The composition root's directory may not read the request's session: `require_caller` does not depend on `deps.get_session`, or `get_session` is a sync dependency. Then a request carrying a token `sign_in` issued is not answered 501 not_built. It also fails if an IdentityService method called with no session current does not raise `db.NoCurrentSession`. Rehearsed (B-4.3): a stand-in test of the clause passes with the wiring right and fails under each of the two mutations. With `require_caller` cut off from `get_session`, the full gate is no longer green, where R1 measured 44 passed.
-- ADU-03 arm 1 under E-6 (a), with E-6a.9's clause, fails if the directory's own short session does not see the token `sign_in` committed. Not rehearsed: E-6 (a) has no scaffold in this pack.
+- ADU-03 arm 1 under E-6 (b), with E-6b.10's clause (R1 N-1, R2 N-1), also fails in three cases. The composition root's directory may not read the request's session: `require_caller` does not depend on `deps.get_session`, or `get_session` is a sync dependency. Then the route the test registers answers no 200 with the seeded admin's id for a token `sign_in` issued. It also fails if an IdentityService method called with no session current does not raise `db.NoCurrentSession`. It does not fail when a later unit lands, because it sends no request to an operation of the contract and imports nothing from the stubs module (E-6, the units checked). Rehearsed (B-4.3, part 7): a stand-in test of the clause passes with the wiring right and fails under each of the two mutations; with `require_caller` cut off from `get_session` the full gate is no longer green, where R1 measured 44 passed. The same test passes in the four API twins, where the routers of ADU-04, ADU-06, ADU-10 and ADU-08 land in turn and the last deletes the stubs module. v1.2's stand-in, which sends `GET /members`, fails in each, and after the last no stubbed operation is left for any form of v1.2's clause. In the last twin the new test still fails under both mutations.
+- ADU-03 arm 1 under E-6 (a), with E-6a.9's clause, fails if the directory's own short session does not see the token `sign_in` committed. Not rehearsed: E-6 (a) has no scaffold in this pack. Its request goes through the same route of the test's own as E-6b.10's, so it reaches nothing a later unit removes.
+- The alternative T-text of E-1 (b) and E-4 (b), and the plan lines E-1b.3 and E-2b.3, are rehearsed in B-4.3, part 6. The T-text of each and of both is applied, and the later conformance blocks are found at the lines the brackets state; with both, the gate at stage T-03 is green with a stand-in `TokenDirectory`. tests/test_ports.py stays green with that double added (E-1b.3), and tests/test_layering.py stays green with a stand-in `src/app/refusals.py` joined to the ports layer (E-2b.3). A planted import of identity in that module is caught once it is joined, and escapes without the join (Part A-2).
 - E-10: under (a), each arm's file must exist under its new name, and the four collect together; rehearsed with four stand-in files: the gate is green under the new names, and the same four under the planned name fail collection with 3 errors. (b) and (c) were measured on the 7d1e7d4 tree with four stand-in files (B-4.3); (d) changes no path, and ADU-09's collection still fails until its loop rules.
 
 #### B-4.3 The rehearsal (reproducible; scratch only)
-The script below, `pack_rehearse.py`, was run with the project's venv interpreter (`C:\dev\team-rota-data\.venv\Scripts\python.exe -I`) as `pack_rehearse.py C:\dev\team-rota docs\PACK-q07-retire-amends.md <scratchpad>\rehearsal\run`, with `ADU_PLUGIN_ROOT` set to `C:\dev\adu-lifecycle` (plugin HEAD c77cbeb). Its run is in eight parts; the numbers are the script's own comments.
+The script below, `pack_rehearse.py`, was run with the project's venv interpreter (`C:\dev\team-rota-data\.venv\Scripts\python.exe -I`) as `pack_rehearse.py C:\dev\team-rota docs\PACK-q07-retire-amends.md <scratchpad>\r3\run` from `C:\dev\team-rota`, with `ADU_PLUGIN_ROOT` set to `C:\dev\adu-lifecycle` (plugin HEAD ae191e2). Its run is in eight parts; the numbers are the script's own comments.
 1. It parses this pack and checks every B-block against the 7d1e7d4 blob: the text unique in its file, starting at the stated line. Blocks are applied bottom-up, right to left within a line; blocks that share an anchor go in reverse pack order, and a block "on the text E-xx writes" after the others of its file.
 2. It checks every E-block against the text as B leaves it, in the narrowest ruling that applies it. First each option alone, its unconditional blocks and those "(without E-2 (b))". Then each conditional block in its context, which prints that block only: E-2 (b) with E-5 (a) and with E-5 (b), E-10 (b) with E-2 (b), and E-3 (b) and E-10 (c) with E-2 (b), whose "without" blocks drop out. Then E-9.P, the pm-lead's text, against PRODUCT-DESIGN.md.
 3. It composes every ruling the brackets allow, 1,088 in all. E-1–E-4 and E-10 are ruled always: 2 × 2 × 2 × 2 × 4. E-5 (a) comes with each of the 16 rulings of E-6–E-9, and E-5 (b) with none: 17. For each ruling it checks five things:
@@ -770,21 +781,28 @@ The script below, `pack_rehearse.py`, was run with the project's venv interprete
    - this loop's open questions: Q-p5 (and Q-p6 under E-10 (d)), and no Q-p1 … Q-p4 left in INTERFACES under E-5 (a).
    It prints the recommended ruling's OPEN-QUESTIONS headings, Owed table and §Domain services as composed.
 4. It runs `adu plan check` and `adu plan order` on B-3 alone and on the recommended plan text (B-3, E-6 (b), E-10 (a)), and compares the order with 7d1e7d4's. It then runs `adu plan check` on each distinct ADU-PLAN.md text among the 1,088 rulings.
-5. It asks the guard, at 7d1e7d4, with B-3 and with the recommended plan text, about the two completed tests, ports.py, db.py and deps.py, and about the renamed and the old test path. Then it asks about each option's own roster: E-10 (b) and (c), E-1 (b), E-2 (b).
-6. It measures E-10's options on the 7d1e7d4 tree, with one stand-in test in each of the four service test files: as planned, (a), (b), and (c) without and with the files. (c) is set as E-10c.2's line says, by `addopts` in pyproject.toml.
+5. It asks the guard, at 7d1e7d4, with B-3 and with the recommended plan text, about the two completed tests, ports.py, db.py and deps.py, and about the renamed and the old test path. At 7d1e7d4 and with B-3 it also asks about pyproject.toml, which lies outside `code_roots`, so that E-10 (c)'s query below is read for what it is: an allow in every tree, not a roster answer. Then it asks about each option's own roster: E-10 (b) and (c), E-1 (b), E-2 (b).
+6. It measures on the 7d1e7d4 tree:
+   - E-10's options, with one stand-in test in each of the four service test files: as planned, (a), (b), and (c) without and with the files. (c) is set as E-10c.2's line says, by `addopts` in pyproject.toml.
+   - E-1 (b) and E-4 (b): their T-text, read from their brackets, is applied alone and together. The later conformance blocks are then found at the lines the brackets state, each unique. With both, the stage-T-03 tree is gated: the Null deleted, the identity stand-in bound, a stand-in `TokenDirectory` appended to doubles.py (E-1b.3) and test_nulls.py edited as T-03.7–.10 say.
+   - E-2b.3: with a stand-in `src/app/refusals.py`, tests/test_layering.py runs three times. First with E-2b.3's join of `app.refusals` to the ports layer; then with an import of identity planted in the module, joined; then the same, not joined.
+   - E-8 (b)'s scan point: the adapter's `determinism_scan.py` on the tree's src/app.
 7. It runs the four stages in the derived order, on the export with the recommended plan text. Each stage deletes the Null and binds a stand-in "real" service that satisfies the protocol: identity's resolves only a token it issued itself, the worst case for line 70. Each stage also writes a stand-in service test under E-10 (a)'s name, applies its T-blocks (each also unique, at its stated line), then runs the gate and the lint. ADU-03's stage does more:
    - It adds the illustrative `Refused` (the D-p2 shape) to ports.py.
    - It adds E-6 (b)'s illustrative current session to db.py and deps.py. It binds the identity stand-in as E-7 (b) and E-8 (a) construct it, with `caller_for_token`, `seed_admin` and `sign_in` in `db.current_session()`. It then asks the composition root's directory for a token outside and inside a unit of work.
    - It runs v1.1's twins.
-   - After T-03, it runs the N-1 twin: the stand-in test of E-6b.10's clause with the wiring right, with `require_caller` cut off from `get_session` (R1's mutation; the full gate too), and with `get_session` a sync dependency.
-   After the four stages, it collects the four service test files together, and then runs the E-10 twin: the same four files renamed `test_service.py`.
-8. It makes the simulated apply in two exports: the recommended rulings, and E-5 (b). The ids are substituted as D-2 allocates them if main took none, `<apply-date>` is 2026-11-12, and the report is docs/VERIFICATION-R2.md. It then runs `adu ledger lint`, `adu plan check`, `adu derived render`, `adu derived check`, `adu pins check` and `adu status` (B-4.4).
+   - After T-03, it runs the clause's twins. The stand-in test of E-6b.10's clause registers its own route on the app `create_app(workspace=tmp_path)` builds, taking its caller from `Depends(app.api.deps.require_caller)`. It runs with the wiring right, with `require_caller` cut off from `get_session` (R1's mutation; the full gate too), and with `get_session` a sync dependency.
+   After the four stages, it collects the four service test files together, and then runs the E-10 twin: the same four files renamed `test_service.py`. It then runs the scan again on the staged tree, and the four API twins on a copy of it, the state at ADU-07's close:
+   - First, with every operation still a stub, it runs E-6b.10's stand-in test and v1.2's.
+   - Then, in the derived order, it lands the routers of ADU-04, ADU-06, ADU-10 and ADU-08, each cumulatively: a stand-in router module serves that unit's operations with a 200 once the caller is resolved, and the stubs module stops registering them. At ADU-08 the stubs module is deleted and main.py no longer imports it. Each twin runs both stand-in tests.
+   - In the last twin it runs E-6b.10's under both mutations again.
+8. It makes the simulated apply in two exports: the recommended rulings, and E-5 (b). The ids are substituted as D-2 allocates them if main took none, `<apply-date>` is 2026-11-12, and the report is docs/VERIFICATION-R3.md. It then runs `adu ledger lint`, `adu plan check`, `adu derived render`, `adu derived check`, `adu pins check` and `adu status` (B-4.4).
 
-The stand-ins, their tests, the main.py rebinding, the illustrative `Refused` and the illustrative current session are scaffolding for the rehearsal, not proposed text: each session writes its own implementation and its own tests. With `PACK_REHEARSE_QUICK=1` the script stops after part 3 (the text checks only).
+The following are scaffolding for the rehearsal, not proposed text: the stand-in services and their tests; the main.py rebinding; the illustrative `Refused` and the illustrative current session; the stand-in `TokenDirectory` and `src/app/refusals.py`; and the stand-in routers and their main.py and stubs-module edits. Each session writes its own implementation and its own tests. The identity stand-in answers just enough for the clause, so its values are not E-9's. In the API twins only the two identity stand-in tests are run: the stand-in routers answer 200 without the contract's shapes, so ADU-02's tests mean nothing there (that wall is Q-p5's). With `PACK_REHEARSE_QUICK=1` the script stops after part 3 (the text checks only).
 
 The full output of the run:
 ~~~text
-pack: C:\dev\team-rota\docs\PACK-q07-retire-amends.md · 196 replace blocks (B 24, T 24, E 148) · 1 file deletions · snapshot 7d1e7d4
+pack: docs\PACK-q07-retire-amends.md · 196 replace blocks (B 24, T 24, E 148) · 1 file deletions · snapshot 7d1e7d4
 B-2.1     DECISIONS.md:16   occurrences=1 starts-at=16 OK (against the 7d1e7d4 blob)
 B-2.5     design/INTERFACES.md:103  occurrences=1 starts-at=103 OK (against the 7d1e7d4 blob)
 B-2.4     design/INTERFACES.md:91   occurrences=1 starts-at=91 OK (against the 7d1e7d4 blob)
@@ -991,7 +1009,7 @@ A service is called only from the layers above it — the API, the composition r
 
 **The request's session (D-p3).** Every service, and every port implementation `src/app/main.py` binds, reads and writes in the current session, `db.current_session()`, and never opens, commits or closes one. With no session current, `db.current_session()` raises `db.NoCurrentSession`; a service method lets it propagate and never opens a session quietly. Exactly three owners make a session current:
 - **A request.** `deps.get_session` is an async generator dependency. It opens the request's one session on `engine_of(request)`, makes it current with `db.use_session(session)` for the whole request, and yields it. On the way out it restores the previous current session and closes this one, which rolls back whatever was not committed. It is async because a ContextVar set in a sync dependency is not visible to the endpoint. `require_caller` depends on it, so `caller_for_token` reads the request's session. The API layer commits a write after the service returns and before it answers, never in the dependency's exit: FastAPI runs that exit after the response is sent, so a failure there would leave a 200 standing. Both behaviours are measured in docs/PACK-q07-retire-amends.md, Part E-6.
-- **The operator's command.** `app seed-admin` (ADU-11) builds the app with `create_app(workspace)` and calls `seed_admin` inside `with db.unit_of_work(db.engine_for(app.state.workspace)):`. The block commits when `seed_admin` returns, and the command then prints the id (exit 0). `Refused("team_not_empty")` rolls the block back, and the command prints the reason and exits 2.
+- **The operator's command.** `app seed-admin` (ADU-11) builds the app with `create_app(workspace)` and calls `seed_admin` on the identity service that app binds as `Ports.member_directory` (ADU-03 arm 1), inside `with db.unit_of_work(db.engine_for(app.state.workspace)):`. Whether the command reaches it there or through another binding is Q-p5's first point, ruled before ADU-04 opens and so before ADU-11. The block commits when `seed_admin` returns, and the command then prints the id (exit 0). `Refused("team_not_empty")` rolls the block back, and the command prints the reason and exits 2.
 - **A test.** A service unit's tests (ADU-03's first) wrap each call in `with db.unit_of_work(db.engine_for(tmp_path)):` and read back in a second unit of work. A refusal is asserted with `pytest.raises(Refused)` around the block, which leaves it rolled back. No test sets the ContextVar itself; a test calls a service outside a unit of work only to assert `db.NoCurrentSession`.
 ```
 # src/app/db.py gains (ADU-03, by amendment of ADU-01's module; layer 1, so every service, the API and the CLI reach it):
@@ -1095,11 +1113,13 @@ guard edit tests/api/test_contract_conformance.py --role developer (at 7d1e7d4) 
 guard edit src/app/ports.py --role developer (at 7d1e7d4) -> exit 2: adu guard: refused to edit src/app/ports.py: src/app/ports.py is outside ADU-03's roster (files, tests, amends). Stay inside this unit's specified fil
 guard edit src/app/db.py --role developer (at 7d1e7d4) -> exit 2: adu guard: refused to edit src/app/db.py: src/app/db.py is outside ADU-03's roster (files, tests, amends). Stay inside this unit's specified files (ha
 guard edit src/app/api/deps.py --role developer (at 7d1e7d4) -> exit 2: adu guard: refused to edit src/app/api/deps.py: src/app/api/deps.py is outside ADU-03's roster (files, tests, amends). Stay inside this unit's specifi
+guard edit pyproject.toml --role developer (at 7d1e7d4) -> exit 0: allow pyproject.toml
 guard edit tests/test_nulls.py --role developer (with B-3 applied) -> exit 2: adu guard: refused to edit tests/test_nulls.py: tests/test_nulls.py is a test file of completed unit ADU-16: tests of completed ADUs are immutable (ha
 guard edit tests/api/test_contract_conformance.py --role developer (with B-3 applied) -> exit 2: adu guard: refused to edit tests/api/test_contract_conformance.py: tests/api/test_contract_conformance.py is a test file of completed unit ADU-02: tes
 guard edit src/app/ports.py --role developer (with B-3 applied) -> exit 0: allow src/app/ports.py
 guard edit src/app/db.py --role developer (with B-3 applied) -> exit 2: adu guard: refused to edit src/app/db.py: src/app/db.py is outside ADU-03's roster (files, tests, amends). Stay inside this unit's specified files (ha
 guard edit src/app/api/deps.py --role developer (with B-3 applied) -> exit 2: adu guard: refused to edit src/app/api/deps.py: src/app/api/deps.py is outside ADU-03's roster (files, tests, amends). Stay inside this unit's specifi
+guard edit pyproject.toml --role developer (with B-3 applied) -> exit 0: allow pyproject.toml
 guard edit tests/test_nulls.py --role developer (recommended: B-3, E-6 (b), E-10 (a)) -> exit 2: adu guard: refused to edit tests/test_nulls.py: tests/test_nulls.py is a test file of completed unit ADU-16: tests of completed ADUs are immutable (ha
 guard edit tests/api/test_contract_conformance.py --role developer (recommended: B-3, E-6 (b), E-10 (a)) -> exit 2: adu guard: refused to edit tests/api/test_contract_conformance.py: tests/api/test_contract_conformance.py is a test file of completed unit ADU-02: tes
 guard edit src/app/ports.py --role developer (recommended: B-3, E-6 (b), E-10 (a)) -> exit 0: allow src/app/ports.py
@@ -1115,16 +1135,59 @@ guard edit tests/layering.json --role developer (with E-2 (b), else as recommend
 guard edit src/app/ports.py --role developer (with E-2 (b), else as recommended) -> exit 2: adu guard: refused to edit src/app/ports.py: src/app/ports.py is outside ADU-03's roster (files, tests, amends). Stay inside this unit's specified fil
 
 E-10, measured on the 7d1e7d4 tree with one stand-in test per service test file:
-as planned: four tests/<domain>/test_service.py: exit 2: 1 warning, 3 errors in 1.21s | import file mismatch:
-(a) tests/<domain>/test_<domain>_service.py: exit 0: 50 passed, 1 warning in 22.98s
-(b) tests/<domain>/__init__.py beside test_service.py: exit 0: 50 passed, 1 warning in 22.77s
-(c) addopts in pyproject.toml, no service test file yet: exit 0: 46 passed, 1 warning in 22.99s
-(c) addopts in pyproject.toml, four test_service.py: exit 0: 50 passed, 1 warning in 23.22s
+as planned: four tests/<domain>/test_service.py: exit 2: 1 warning, 3 errors in 2.06s | import file mismatch:
+(a) tests/<domain>/test_<domain>_service.py: exit 0: 50 passed, 1 warning in 20.80s
+(b) tests/<domain>/__init__.py beside test_service.py: exit 0: 50 passed, 1 warning in 20.18s
+(c) addopts in pyproject.toml, no service test file yet: exit 0: 46 passed, 1 warning in 19.61s
+(c) addopts in pyproject.toml, four test_service.py: exit 0: 50 passed, 1 warning in 20.09s
 
-baseline (export A, the recommended plan text, no stage yet): gate exit 0: 46 passed, 1 warning in 22.92s · lint exit 0: All checks passed!
+E-1 (b) and E-4 (b), their T-text as their brackets state it, on the 7d1e7d4 conformance test:
+T-03.6    tests/api/test_contract_conformance.py:105  occurrences=1 starts-at=105 OK (E-1 (b): T-03 as stated)
+T-03.5    tests/api/test_contract_conformance.py:102  occurrences=1 starts-at=102 OK (E-1 (b): T-03 as stated)
+T-03.4    tests/api/test_contract_conformance.py:61   occurrences=1 starts-at=61 OK (E-1 (b): T-03 as stated)
+T-03.3    tests/api/test_contract_conformance.py:23   occurrences=1 starts-at=23 OK (E-1 (b): T-03 as stated)
+T-03.2    tests/api/test_contract_conformance.py:19   occurrences=1 starts-at=19 OK (E-1 (b): T-03 as stated)
+T-03.1    tests/api/test_contract_conformance.py:1    occurrences=1 starts-at=1 OK (E-1 (b): T-03 as stated)
+T-09.2    tests/api/test_contract_conformance.py:108  occurrences=1 starts-at=108 OK (E-1 (b): stage T-09)
+T-09.1    tests/api/test_contract_conformance.py:24   occurrences=1 starts-at=24 OK (E-1 (b): stage T-09)
+T-05.2    tests/api/test_contract_conformance.py:106  occurrences=1 starts-at=106 OK (E-1 (b): stage T-05)
+T-05.1    tests/api/test_contract_conformance.py:24   occurrences=1 starts-at=24 OK (E-1 (b): stage T-05)
+T-07.2    tests/api/test_contract_conformance.py:106  occurrences=1 starts-at=106 OK (E-1 (b): stage T-07)
+T-07.1    tests/api/test_contract_conformance.py:24   occurrences=1 starts-at=24 OK (E-1 (b): stage T-07)
+T-03.6    tests/api/test_contract_conformance.py:105  occurrences=1 starts-at=105 OK (E-4 (b): T-03 as stated)
+T-03.4    tests/api/test_contract_conformance.py:61   occurrences=1 starts-at=61 OK (E-4 (b): T-03 as stated)
+T-03.3    tests/api/test_contract_conformance.py:23   occurrences=1 starts-at=23 OK (E-4 (b): T-03 as stated)
+T-03.2    tests/api/test_contract_conformance.py:19   occurrences=1 starts-at=19 OK (E-4 (b): T-03 as stated)
+T-09.2    tests/api/test_contract_conformance.py:108  occurrences=1 starts-at=108 OK (E-4 (b): stage T-09)
+T-09.1    tests/api/test_contract_conformance.py:24   occurrences=1 starts-at=24 OK (E-4 (b): stage T-09)
+T-05.2    tests/api/test_contract_conformance.py:106  occurrences=1 starts-at=106 OK (E-4 (b): stage T-05)
+T-05.1    tests/api/test_contract_conformance.py:24   occurrences=1 starts-at=24 OK (E-4 (b): stage T-05)
+T-07.2    tests/api/test_contract_conformance.py:106  occurrences=1 starts-at=106 OK (E-4 (b): stage T-07)
+T-07.1    tests/api/test_contract_conformance.py:24   occurrences=1 starts-at=24 OK (E-4 (b): stage T-07)
+T-03.6    tests/api/test_contract_conformance.py:105  occurrences=1 starts-at=105 OK (E-1 (b) with E-4 (b): T-03 as stated)
+T-03.4    tests/api/test_contract_conformance.py:61   occurrences=1 starts-at=61 OK (E-1 (b) with E-4 (b): T-03 as stated)
+T-03.3    tests/api/test_contract_conformance.py:23   occurrences=1 starts-at=23 OK (E-1 (b) with E-4 (b): T-03 as stated)
+T-03.2    tests/api/test_contract_conformance.py:19   occurrences=1 starts-at=19 OK (E-1 (b) with E-4 (b): T-03 as stated)
+T-09.2    tests/api/test_contract_conformance.py:106  occurrences=1 starts-at=106 OK (E-1 (b) with E-4 (b): stage T-09)
+T-09.1    tests/api/test_contract_conformance.py:24   occurrences=1 starts-at=24 OK (E-1 (b) with E-4 (b): stage T-09)
+T-05.2    tests/api/test_contract_conformance.py:104  occurrences=1 starts-at=104 OK (E-1 (b) with E-4 (b): stage T-05)
+T-05.1    tests/api/test_contract_conformance.py:24   occurrences=1 starts-at=24 OK (E-1 (b) with E-4 (b): stage T-05)
+T-07.2    tests/api/test_contract_conformance.py:104  occurrences=1 starts-at=104 OK (E-1 (b) with E-4 (b): stage T-07)
+T-07.1    tests/api/test_contract_conformance.py:24   occurrences=1 starts-at=24 OK (E-1 (b) with E-4 (b): stage T-07)
+E-1b.3: tests/test_ports.py with a stand-in TokenDirectory appended to doubles.py (VACUOUS unchanged): exit 0: 4 passed in 0.11s
+E-1 (b) with E-4 (b), stage T-03 (the Null deleted, the identity stand-in bound, TokenDirectory injected in the 401/501 test): gate exit 0: 46 passed, 1 warning in 19.52s · lint exit 0: All checks passed!
+
+E-2b.3, tests/test_layering.py with a stand-in src/app/refusals.py on the 7d1e7d4 tree:
+joined to the ports layer as E-2b.3 says: exit 0: 7 passed in 1.91s
+joined, with an import of identity planted in the module: exit 1: 1 failed, 6 passed in 1.76s | E   AssertionError: src\app\refusals.py:11 - app.refusals imports app.identity.null_directory (ports->identity: forbidden by the l
+not joined, the same import planted: exit 0: 7 passed in 1.76s
+
+E-8 (b), the adapter's determinism scan on the 7d1e7d4 tree (--package src/app): exit 1: src\app\synthetic.py:12: stdlib random imported
+
+baseline (export A, the recommended plan text, no stage yet): gate exit 0: 46 passed, 1 warning in 19.61s · lint exit 0: All checks passed!
 E-6 (b) scaffold, the composition root's directory: exit 0: outside a unit of work -> NoCurrentSession; inside db.unit_of_work -> None
-twin 1 (Null deleted, conformance test unedited): exit 2: E   ModuleNotFoundError: No module named 'app.identity.null_directory' | 1 warning, 1 error in 1.12s
-twin 2 (import and class check edited, no injected directory): exit 1: test_contract_conformance.py:70: AssertionError: ('identity.list_members', '{"type":"about:blank","title":"Not signed in","detail":"Sign in first.","reason":"unauthentica | 1 failed, 5 passed, 1 warning in 1.54s
+twin 1 (Null deleted, conformance test unedited): exit 2: E   ModuleNotFoundError: No module named 'app.identity.null_directory' | 1 warning, 1 error in 0.90s
+twin 2 (import and class check edited, no injected directory): exit 1: test_contract_conformance.py:70: AssertionError: ('identity.list_members', '{"type":"about:blank","title":"Not signed in","detail":"Sign in first.","reason":"unauthentica | 1 failed, 5 passed, 1 warning in 1.10s
 T-03.6    tests/api/test_contract_conformance.py:105  occurrences=1 starts-at=105 OK (stage T-03)
 T-03.5    tests/api/test_contract_conformance.py:102  occurrences=1 starts-at=102 OK (stage T-03)
 T-03.4    tests/api/test_contract_conformance.py:61   occurrences=1 starts-at=61 OK (stage T-03)
@@ -1135,32 +1198,43 @@ T-03.10   tests/test_nulls.py:36   occurrences=1 starts-at=36 OK (stage T-03)
 T-03.9    tests/test_nulls.py:28   occurrences=1 starts-at=28 OK (stage T-03)
 T-03.8    tests/test_nulls.py:17   occurrences=1 starts-at=17 OK (stage T-03)
 T-03.7    tests/test_nulls.py:11   occurrences=1 starts-at=11 OK (stage T-03)
-N-1 twin, wiring right: tests/identity/test_identity_service.py: exit 0: 2 passed, 1 warning in 1.19s
-N-1 twin, require_caller without Depends(get_session): tests/identity/test_identity_service.py: exit 1: 1 failed, 1 passed, 1 warning in 1.16s | c15c40e1022d\scratchpad\rehearsal\run\A-plan-and-stages\src\app\db.py:47: app.db.NoCurrentSession: no session is current
-  the full gate with that wiring (R1 measured 44 passed and HTTP 500): gate exit 1: 1 failed, 45 passed, 1 warning in 22.91s · lint exit 0: All checks passed!
-N-1 twin, get_session a sync generator dependency: tests/identity/test_identity_service.py: exit 1: 1 failed, 1 passed, 1 warning in 1.11s | e='app.db.current_session' default=None at 0x0000019343503C90> at 0x0000019345CD8940> was created in a different Context
-after stage T-03: gate exit 0: 46 passed, 1 warning in 22.64s · lint exit 0: All checks passed! (of which 2 in the stand-in service tests)
+E-6b.10's clause, wiring right: tests/identity/test_identity_service.py: exit 0: 2 passed, 1 warning in 0.93s
+E-6b.10's clause, require_caller without Depends(get_session): tests/identity/test_identity_service.py: exit 1: 1 failed, 1 passed, 1 warning in 1.08s | 6-a283-e7754217ee54\scratchpad\r3\run\A-plan-and-stages\src\app\db.py:47: app.db.NoCurrentSession: no session is current
+  the full gate with that wiring (R1 measured 44 passed and HTTP 500): gate exit 1: 1 failed, 45 passed, 1 warning in 19.45s · lint exit 0: All checks passed!
+E-6b.10's clause, get_session a sync generator dependency: tests/identity/test_identity_service.py: exit 1: 1 failed, 1 passed, 1 warning in 0.95s | e='app.db.current_session' default=None at 0x000002AD23C0D2B0> at 0x000002AD25CFD700> was created in a different Context
+after stage T-03: gate exit 0: 46 passed, 1 warning in 18.53s · lint exit 0: All checks passed! (of which 2 in the stand-in service tests)
 T-09.2    tests/api/test_contract_conformance.py:110  occurrences=1 starts-at=110 OK (stage T-09)
 T-09.1    tests/api/test_contract_conformance.py:24   occurrences=1 starts-at=24 OK (stage T-09)
 T-09.6    tests/test_nulls.py:48   occurrences=1 starts-at=48 OK (stage T-09)
 T-09.5    tests/test_nulls.py:28   occurrences=1 starts-at=28 OK (stage T-09)
 T-09.4    tests/test_nulls.py:18   occurrences=1 starts-at=18 OK (stage T-09)
 T-09.3    tests/test_nulls.py:11   occurrences=1 starts-at=11 OK (stage T-09)
-after stage T-09: gate exit 0: 45 passed, 1 warning in 24.71s · lint exit 0: All checks passed! (of which 3 in the stand-in service tests)
+after stage T-09: gate exit 0: 45 passed, 1 warning in 18.02s · lint exit 0: All checks passed! (of which 3 in the stand-in service tests)
 T-05.2    tests/api/test_contract_conformance.py:108  occurrences=1 starts-at=108 OK (stage T-05)
 T-05.1    tests/api/test_contract_conformance.py:24   occurrences=1 starts-at=24 OK (stage T-05)
 T-05.6    tests/test_nulls.py:30   occurrences=1 starts-at=30 OK (stage T-05)
 T-05.5    tests/test_nulls.py:24   occurrences=1 starts-at=24 OK (stage T-05)
 T-05.4    tests/test_nulls.py:15   occurrences=1 starts-at=15 OK (stage T-05)
 T-05.3    tests/test_nulls.py:11   occurrences=1 starts-at=11 OK (stage T-05)
-after stage T-05: gate exit 0: 44 passed, 1 warning in 25.65s · lint exit 0: All checks passed! (of which 4 in the stand-in service tests)
+after stage T-05: gate exit 0: 44 passed, 1 warning in 20.89s · lint exit 0: All checks passed! (of which 4 in the stand-in service tests)
 T-07.2    tests/api/test_contract_conformance.py:108  occurrences=1 starts-at=108 OK (stage T-07)
 T-07.1    tests/api/test_contract_conformance.py:24   occurrences=1 starts-at=24 OK (stage T-07)
 T-07.3    tests/test_nulls.py deleted
-after stage T-07: gate exit 0: 43 passed, 1 warning in 24.56s · lint exit 0: All checks passed! (of which 5 in the stand-in service tests)
+after stage T-07: gate exit 0: 43 passed, 1 warning in 26.82s · lint exit 0: All checks passed! (of which 5 in the stand-in service tests)
 after all four: Null modules left: none; tests/test_nulls.py exists: False; imports of a Null module under src/ and tests/: none
-the four service test files under E-10 (a)'s names, collected together: 5 tests collected in 0.94s
-E-10 twin, the same four files renamed tests/<domain>/test_service.py: gate exit 2: 1 warning, 3 errors in 1.26s · lint exit 0: All checks passed!
+the four service test files under E-10 (a)'s names, collected together: 5 tests collected in 0.74s
+E-10 twin, the same four files renamed tests/<domain>/test_service.py: gate exit 2: 1 warning, 3 errors in 0.90s · lint exit 0: All checks passed!
+E-8 (a), the determinism scan on the staged tree (the identity stand-in draws from secrets): exit 1: src\app\synthetic.py:12: stdlib random imported
+
+the API twins: E-6b.10's stand-in test registers /__probe__/caller; lines of it naming contract_stubs: none
+API twin, ADU-07's close (18 of 18 operations stubbed): E-6b.10's clause: exit 0: 2 passed, 1 warning in 1.03s | v1.2's clause: exit 0: 1 passed, 1 warning in 1.04s
+API twin, ADU-04 landed (5 of 18 operations served by a router, 13 stubbed): E-6b.10's clause: exit 0: 2 passed, 1 warning in 1.04s | v1.2's clause: exit 1: 1 failed, 1 warning in 0.87s | E   AssertionError: assert (200, None) == (501, 'not_built')
+API twin, ADU-06 landed (11 of 18 operations served by a router, 7 stubbed): E-6b.10's clause: exit 0: 2 passed, 1 warning in 0.95s | v1.2's clause: exit 1: 1 failed, 1 warning in 0.87s | E   AssertionError: assert (200, None) == (501, 'not_built')
+API twin, ADU-10 landed (13 of 18 operations served by a router, 5 stubbed): E-6b.10's clause: exit 0: 2 passed, 1 warning in 0.89s | v1.2's clause: exit 1: 1 failed, 1 warning in 0.89s | E   AssertionError: assert (200, None) == (501, 'not_built')
+API twin, ADU-08 landed (18 of 18 operations served by a router, 0 stubbed): E-6b.10's clause: exit 0: 2 passed, 1 warning in 0.98s | v1.2's clause: exit 1: 1 failed, 1 warning in 0.88s | E   AssertionError: assert (200, None) == (501, 'not_built')
+  in the last twin: src/app/api/contract_stubs.py exists: False; references to contract_stubs under src/: none
+  the last twin, E-6b.10's clause, require_caller without Depends(get_session): exit 1: 1 failed, 1 passed, 1 warning in 0.96s | a283-e7754217ee54\scratchpad\r3\run\API-twins\src\app\db.py:47: app.db.NoCurrentSession: no session is current
+  the last twin, E-6b.10's clause, get_session a sync generator dependency: exit 1: 1 failed, 1 passed, 1 warning in 0.90s | current_session' default=None at 0x000001E5F173D300> at 0x000001E5F37E0880> was created in a different Context
 
 simulated apply, recommended: 94 blocks into 7 files; ids substituted: D-p1→D-12, D-p2→D-13, D-p3→D-14, D-p4→D-15, D-p5→D-16, D-p6→D-17, D-p7→D-18, O-p1→O-02, Q-p1→Q-08, Q-p2→Q-09, Q-p3→Q-10, Q-p4→Q-11, Q-p5→Q-12, Q-p6→Q-13; provisional ids left: none
 $ adu ledger lint -> exit 0: ledgers OK
@@ -1169,7 +1243,7 @@ $ adu derived render -> exit 0: derived blocks rendered (0 file(s) rewritten)
 $ adu derived check -> exit 0: derived blocks OK
 $ adu pins check -> exit 0: pins OK (1 pinned)
 $ adu status
-ADU status — Team Rota · 2026-11-12 10:38
+ADU status — Team Rota · 2026-11-12 21:41
 Now: ADU-03 — Identity service · size M · layer 3 (domain services) · position 5/18 in the derived order
 Depends: ADU-01 ✅, ADU-02 ✅, ADU-16 ✅
 Consumes through mocks: MK-01 (SchedulingPort ← ADU-05, in-process), MK-02 (Notifier ← ADU-09, in-process)
@@ -1204,7 +1278,7 @@ all blocks matched: True
 
 The script (`pack_rehearse.py`):
 ~~~python
-"""Re-runs the mechanical claims of docs/PACK-q07-retire-amends.md (v1.2) on scratch exports of its snapshot.
+"""Re-runs the mechanical claims of docs/PACK-q07-retire-amends.md (v1.3) on scratch exports of its snapshot.
 
 Never writes to the repository: blobs are read with `git show`, trees exported with `git archive`, and every
 write lands under <scratch>. Run with the project's venv interpreter, isolated:
@@ -1216,6 +1290,7 @@ from __future__ import annotations
 import hashlib
 import io
 import itertools
+import json
 import os
 import re
 import shutil
@@ -1506,32 +1581,41 @@ class SwapsService:
         return {a: AssignmentView(pending=None, requestable=False) for a, _h, _s in assignments}
 ''',
 }
-IDENTITY_TEST = '''"""Rehearsal stand-in (scratch only, not the product): E-6b.10's clause of ADU-03 arm 1, against the
-directory the composition root binds."""
+IDENTITY_TEST = '''"""Rehearsal stand-in (scratch only, not the product): E-6b.10's clause of ADU-03 arm 1. The request goes to
+a route this test registers on the app the composition root builds; no contract operation, no stub."""
 
 from __future__ import annotations
 
 from pathlib import Path
 
 import pytest
+from fastapi import Depends
 from fastapi.testclient import TestClient
 
 from app import db, ports
+from app.api.deps import require_caller
 from app.main import create_app
 
+CALLER = Depends(require_caller)
 
-def test_a_request_reads_the_current_session_through_the_bound_directory(tmp_path: Path) -> None:
+
+def test_a_route_of_the_tests_own_resolves_its_caller_through_the_bound_directory(tmp_path: Path) -> None:
     app = create_app(workspace=tmp_path)
     service = app.state.ports.member_directory
     assert isinstance(service, ports.MemberDirectory)
+
+    @app.get("/__probe__/caller", include_in_schema=False)
+    def probe(caller: ports.Caller = CALLER) -> dict:
+        return {"member_id": caller.member_id}
+
     with db.unit_of_work(db.engine_for(tmp_path)):
-        service.seed_admin("Ada", "ada@example.test", "pass-1")
+        admin_id = service.seed_admin("Ada", "ada@example.test", "pass-1")
     with db.unit_of_work(db.engine_for(tmp_path)):
         token = service.sign_in("ada@example.test", "pass-1").token
     client = TestClient(app)
-    issued = client.get("/members", headers={"Authorization": f"Bearer {token}"})
-    garbage = client.get("/members", headers={"Authorization": "Bearer garbage"})
-    assert (issued.status_code, issued.json()["reason"]) == (501, "not_built")
+    issued = client.get("/__probe__/caller", headers={"Authorization": f"Bearer {token}"})
+    garbage = client.get("/__probe__/caller", headers={"Authorization": "Bearer garbage"})
+    assert (issued.status_code, issued.json()) == (200, {"member_id": admin_id})
     assert (garbage.status_code, garbage.json()["reason"]) == (401, "unauthenticated")
 
 
@@ -1539,6 +1623,106 @@ def test_a_method_called_with_no_session_current_raises(tmp_path: Path) -> None:
     service = create_app(workspace=tmp_path).state.ports.member_directory
     with pytest.raises(db.NoCurrentSession):
         service.sign_in("ada@example.test", "pass-1")
+'''
+# v1.2's stand-in of its clause ("a request to a stubbed operation answers 501 not_built"), kept to show R2's N-1;
+# its first test only, the reason read with .get so that a served answer fails as an assertion, not a KeyError
+V12_CLAUSE_TEST = '''"""Rehearsal stand-in (scratch only): v1.2's form of the clause, through a stubbed operation (R2 N-1)."""
+
+from __future__ import annotations
+
+from pathlib import Path
+
+from fastapi.testclient import TestClient
+
+from app import db
+from app.main import create_app
+
+
+def test_v12_a_request_to_a_stubbed_operation_answers_501(tmp_path: Path) -> None:
+    app = create_app(workspace=tmp_path)
+    service = app.state.ports.member_directory
+    with db.unit_of_work(db.engine_for(tmp_path)):
+        service.seed_admin("Ada", "ada@example.test", "pass-1")
+    with db.unit_of_work(db.engine_for(tmp_path)):
+        token = service.sign_in("ada@example.test", "pass-1").token
+    client = TestClient(app)
+    issued = client.get("/members", headers={"Authorization": f"Bearer {token}"})
+    garbage = client.get("/members", headers={"Authorization": "Bearer garbage"})
+    assert (issued.status_code, issued.json().get("reason")) == (501, "not_built")
+    assert (garbage.status_code, garbage.json()["reason"]) == (401, "unauthenticated")
+'''
+# the API units' routers, landed in turn (scratch only): the operations in SERVED answer 200 once the caller is resolved
+ROUTERS = '''"""Rehearsal stand-in (scratch only, not the product): the routers of the API units landed so far. Each
+operation in SERVED answers 200 once its caller is resolved; the stubs module no longer registers it."""
+
+from __future__ import annotations
+
+from fastapi import Depends, FastAPI
+from fastapi.responses import JSONResponse
+
+from app.api import schemas
+from app.api.deps import require_caller
+
+SERVED: frozenset[str] = frozenset(__SERVED__)
+CALLER = Depends(require_caller)
+
+
+def _endpoint(op_id: str, secured: bool):
+    if secured:
+        def served(caller=CALLER) -> JSONResponse:
+            return JSONResponse({"served": op_id, "member_id": caller.member_id})
+    else:
+        def served() -> JSONResponse:
+            return JSONResponse({"served": op_id})
+    served.__name__ = op_id.replace(".", "_") + "_served"
+    return served
+
+
+def register(app: FastAPI) -> None:
+    for path, ops in schemas.CONTRACT["paths"].items():
+        for method, op in ops.items():
+            if isinstance(op, dict) and op.get("operationId") in SERVED:
+                secured = op.get("security", [{"bearer": []}]) != []
+                app.add_api_route(path, _endpoint(op["operationId"], secured), methods=[method.upper()])
+'''
+API_UNITS = [("ADU-04", "identity."), ("ADU-06", "scheduling."), ("ADU-10", "notifications."), ("ADU-08", "swaps.")]
+# E-1 (b)'s double, as its plan line (E-1b.3) describes it; E-2 (b)'s module, the D-p2 shape (both scratch only)
+TOKEN_DIRECTORY = '''
+
+class TokenDirectory:
+    """Rehearsal stand-in (scratch only) for E-1 (b): resolves tok_<id> as the retired NullDirectory did."""
+
+    def caller_for_token(self, token: str) -> ports.Caller | None:
+        digits = token[4:] if token.startswith("tok_") else ""
+        if not digits.isdigit():
+            return None
+        n = int(digits)
+        return ports.Caller(member_id=n, name=f"Member {n}", role="member", active=True)
+
+    def is_active(self, member_id: int) -> bool | None:
+        return None
+
+    def role_of(self, member_id: int) -> ports.Role:
+        raise ports.MemberNotFound(member_id)
+
+    def name_of(self, member_id: int) -> str:
+        raise ports.MemberNotFound(member_id)
+
+    def active_member_ids(self) -> list[int]:
+        return []
+
+    def decider_ids(self) -> list[int]:
+        return []
+'''
+REFUSALS_MODULE = '''"""Rehearsal stand-in (scratch only) for E-2 (b): Refused, the D-p2 shape, in a layer-2 module of its own."""
+
+from __future__ import annotations
+
+
+class Refused(Exception):
+    def __init__(self, reason: str, detail: str = "", **extra: object) -> None:
+        super().__init__(reason)
+        self.reason, self.detail, self.extra = reason, detail, extra
 '''
 BOUND_TEST = '''"""Rehearsal stand-in (scratch only, not the product): the {domain} stand-in is the bound port."""
 
@@ -1688,7 +1872,7 @@ def require_caller(
         raise ProblemError(401, "unauthenticated", "Not signed in", "Sign in first.")
     return caller
 '''
-# N-1's twins: the wiring R1 broke, and the sync dependency
+# the clause's twins (R1 N-1): the wiring R1 broke, and the sync dependency
 MUTATIONS = [
     ("require_caller without Depends(get_session)", DEPS.replace("    _session: Session = Depends(get_session),\n", "")),
     ("get_session a sync generator dependency", DEPS.replace("async def get_session(", "def get_session(")),
@@ -1714,6 +1898,8 @@ print(f"outside a unit of work -> {outside}; inside db.unit_of_work -> {inside}"
 E10_STAND_IN = '"""Scratch stand-in for {d}\'s service test (E-10 measurement only)."""\n\n\n' \
                'def test_{d}_stand_in() -> None:\n    assert True\n'
 DOMAINS = ("identity", "notifications", "scheduling", "swaps")
+CONF = "tests/api/test_contract_conformance.py"
+SCAN = PLUGIN / "adapters" / "python-fastapi-uv" / "determinism_scan.py"
 RECOMMENDED = {1: "a", 2: "a", 3: "a", 4: "a", 5: "a", 6: "b", 7: "b", 8: "a", 9: "a", 10: "a"}
 MAP_A = {**{f"D-p{i}": f"D-{11 + i}" for i in range(1, 8)}, **{f"Q-p{i}": f"Q-{7 + i:02d}" for i in range(1, 7)},
          "O-p1": "O-02", "O-p2": "O-03"}
@@ -1739,6 +1925,26 @@ def scaffold(tree: Path, stage: tuple, first_stage: bool) -> None:
         assert dbm.count(DB_IMPORTS[0]) == 1
         write(tree, "src/app/db.py", dbm.replace(*DB_IMPORTS) + DB_CURRENT)
         write(tree, "src/app/api/deps.py", DEPS)
+
+
+def scan(tree: Path) -> str:
+    """The adapter's opt-in determinism scan (E-8 (b)), run on the tree's package."""
+    r = run([str(PY), "-I", str(SCAN), "--package", "src/app"], tree)
+    return f"exit {r.returncode}: " + ("; ".join(ln.strip() for ln in r.stdout.splitlines()) or "no finding")
+
+
+def t03_as_stated(allb: list[dict], pack: str, e1b: bool, e4b: bool) -> list[dict]:
+    """T-03's conformance blocks as the brackets of E-1 (b) and E-4 (b) state them, their T-text read from the pack."""
+    t032 = re.search(r"T-03\.2 reads `([^`]+)`", pack)[1]
+    t034 = re.search(r"T-03\.4's three lines become `([^`]+)`", pack)[1]
+    out = []
+    for b in allb:
+        if not b["id"].startswith("T-03.") or b["file"] != CONF or (e4b and b["id"] in ("T-03.1", "T-03.5")):
+            continue
+        if e1b and b["id"] in ("T-03.2", "T-03.4"):
+            b = {**b, "new": (t032 if b["id"] == "T-03.2" else t034) + "\n"}
+        out.append(b)
+    return out
 
 
 def main() -> int:
@@ -1866,9 +2072,9 @@ def main() -> int:
 
     # 5. the guard, at 7d1e7d4, with B-3, with the recommended plan text, and with each option's own roster
     trees = [("at 7d1e7d4", h, ("tests/test_nulls.py", "tests/api/test_contract_conformance.py", "src/app/ports.py",
-                                "src/app/db.py", "src/app/api/deps.py")),
+                                "src/app/db.py", "src/app/api/deps.py", "pyproject.toml")),
              ("with B-3 applied", b3, ("tests/test_nulls.py", "tests/api/test_contract_conformance.py", "src/app/ports.py",
-                                       "src/app/db.py", "src/app/api/deps.py")),
+                                       "src/app/db.py", "src/app/api/deps.py", "pyproject.toml")),
              ("recommended: B-3, E-6 (b), E-10 (a)", a, ("tests/test_nulls.py", "tests/api/test_contract_conformance.py",
                                                          "src/app/ports.py", "src/app/db.py", "src/app/api/deps.py",
                                                          "tests/identity/test_identity_service.py",
@@ -1915,6 +2121,61 @@ def main() -> int:
         print(f"{label}: exit {r.returncode}: {last(r.stdout, r'passed|failed|error')}"
               f"{' | ' + err[:110] if not err.startswith('(no line') else ''}")
 
+    # 6, continued. E-1 (b) and E-4 (b): their T-text as their brackets state it, alone and together; the later
+    #    conformance blocks at the lines the brackets state; with both, the stage-T-03 tree gated (TokenDirectory)
+    print("\nE-1 (b) and E-4 (b), their T-text as their brackets state it, on the 7d1e7d4 conformance test:")
+    shifts = {m[4]: ([int(m[1]), int(m[2]), int(m[3])], int(m[5])) for m in re.finditer(
+        r"move up by 2 \(T-09\.2 :(\d+), T-05\.2 :(\d+), T-07\.2 :(\d+); with (E-\d) \(b\) as well, by (\d+)\)", pack)}
+    later = {b["id"]: b for b in allb if b["id"] in ("T-09.1", "T-09.2", "T-05.1", "T-05.2", "T-07.1", "T-07.2")}
+    both_lines = [later[s]["line"] - shifts["E-4"][1] for s in ("T-09.2", "T-05.2", "T-07.2")]
+    for label, e1b, e4b, lines in (("E-1 (b)", True, False, shifts["E-4"][0]), ("E-4 (b)", False, True, shifts["E-1"][0]),
+                                   ("E-1 (b) with E-4 (b)", True, True, both_lines)):
+        texts = {CONF: git_show(CONF)}
+        vrep: list[str] = []
+        good = apply_group(texts, t03_as_stated(allb, pack, e1b, e4b), f"{label}: T-03 as stated", vrep)
+        for imp, chk, ln in (("T-09.1", "T-09.2", lines[0]), ("T-05.1", "T-05.2", lines[1]), ("T-07.1", "T-07.2", lines[2])):
+            good &= apply_group(texts, [later[imp], {**later[chk], "line": ln}], f"{label}: stage {chk[:4]}", vrep)
+        ok &= good
+        print("\n".join(vrep))
+    e14 = export("E1b-E4b-stage-T03")
+    eg = selected(allb, {**RECOMMENDED, 1: "b", 4: "b"})
+    texts = e_texts(eg)
+    apply_group(texts, eg, "", None)
+    write(e14, "ADU-PLAN.md", texts["ADU-PLAN.md"])
+    scaffold(e14, STAGES[0], True)
+    write(e14, "tests/support/doubles.py", read(e14, "tests/support/doubles.py") + TOKEN_DIRECTORY)
+    conf = {CONF: read(e14, CONF)}
+    apply_group(conf, t03_as_stated(allb, pack, True, True), "", None)
+    nulls = {"tests/test_nulls.py": read(e14, "tests/test_nulls.py")}
+    apply_group(nulls, [b for b in allb if b["id"] in ("T-03.7", "T-03.8", "T-03.9", "T-03.10")], "", None)
+    write(e14, CONF, conf[CONF])
+    write(e14, "tests/test_nulls.py", nulls["tests/test_nulls.py"])
+    r = pytest(e14, "tests/test_ports.py")
+    print(f"E-1b.3: tests/test_ports.py with a stand-in TokenDirectory appended to doubles.py (VACUOUS unchanged): "
+          f"exit {r.returncode}: {last(r.stdout, r'passed|failed|error')}")
+    print(f"E-1 (b) with E-4 (b), stage T-03 (the Null deleted, the identity stand-in bound, TokenDirectory injected "
+          f"in the 401/501 test): {gate(e14)}")
+
+    # 6, continued. E-2b.3: tests/test_layering.py with a stand-in src/app/refusals.py, joined to the ports layer or not
+    print("\nE-2b.3, tests/test_layering.py with a stand-in src/app/refusals.py on the 7d1e7d4 tree:")
+    e2 = export("E2b-layering")
+    layering = read(e2, "tests/layering.json")
+    joined = layering.replace('"ports": ["app.ports"],', '"ports": ["app.ports", "app.refusals"],')
+    assert joined.count('"app.refusals"') == 1
+    planted = REFUSALS_MODULE + "\nfrom app.identity import null_directory  # noqa: E402,F401  (planted)\n"
+    for label, lay, module in (("joined to the ports layer as E-2b.3 says", joined, REFUSALS_MODULE),
+                               ("joined, with an import of identity planted in the module", joined, planted),
+                               ("not joined, the same import planted", layering, planted)):
+        write(e2, "tests/layering.json", lay)
+        write(e2, "src/app/refusals.py", module)
+        r = pytest(e2, "tests/test_layering.py", "--tb=line")
+        why = first(r.stdout + r.stderr, r"refusals")
+        print(f"{label}: exit {r.returncode}: {last(r.stdout, r'passed|failed|error')}"
+              f"{' | ' + why[:130] if r.returncode else ''}")
+
+    # 6, continued. E-8 (b)'s point: the adapter's opt-in determinism scan on the 7d1e7d4 tree
+    print(f"\nE-8 (b), the adapter's determinism scan on the 7d1e7d4 tree (--package src/app): {scan(h)}")
+
     # 7. the stages, in the derived order, on export A (the recommended options' plan text)
     print(f"\nbaseline (export A, the recommended plan text, no stage yet): {gate(a)}")
     stand_in_tests = 0
@@ -1951,14 +2212,14 @@ def main() -> int:
                 (a / dl["file"]).unlink()
                 srep.append(f"{dl['id']:9} {dl['file']} deleted")
         print("\n".join(srep))
-        if first_stage:  # N-1's twin: E-6b.10's clause, with the wiring right and broken as R1 broke it
+        if first_stage:  # the clause's twins: E-6b.10's clause, with the wiring right and broken as R1 broke it
             clause = "tests/identity/test_identity_service.py"
             for label, deps in [("wiring right", DEPS), *MUTATIONS]:
                 write(a, "src/app/api/deps.py", deps)
                 r = pytest(a, clause, "--tb=line")
                 failed = first(r.stdout, r"(Error|assert|\.py:\d+)")
-                print(f"N-1 twin, {label}: {clause}: exit {r.returncode}: {last(r.stdout, r'passed|failed|error')}"
-                      f"{' | ' + failed[-120:] if r.returncode else ''}")
+                print(f"E-6b.10's clause, {label}: {clause}: exit {r.returncode}: "
+                      f"{last(r.stdout, r'passed|failed|error')}{' | ' + failed[-120:] if r.returncode else ''}")
                 if label.startswith("require_caller"):
                     print(f"  the full gate with that wiring (R1 measured 44 passed and HTTP 500): {gate(a)}")
             write(a, "src/app/api/deps.py", DEPS)
@@ -1976,6 +2237,65 @@ def main() -> int:
     print(f"E-10 twin, the same four files renamed tests/<domain>/test_service.py: {gate(a)}")
     for d in DOMAINS:
         (a / f"tests/{d}/test_service.py").rename(a / f"tests/{d}/test_{d}_service.py")
+    print(f"E-8 (a), the determinism scan on the staged tree (the identity stand-in draws from secrets): {scan(a)}")
+
+    # 7, continued. the API twins (R2 N-1): on a copy of the staged tree, the state at ADU-07's close, the routers of
+    #    ADU-04, ADU-06, ADU-10 and ADU-08 land in turn; at ADU-08 the stubs module is deleted
+    api = SCRATCH / "API-twins"
+    shutil.rmtree(api, ignore_errors=True)
+    shutil.copytree(a, api)
+    v12 = "tests/identity/test_v12_clause.py"
+    write(api, v12, V12_CLAUSE_TEST)
+    contract = json.loads(read(api, "contracts/openapi.json"))
+    ops = [o["operationId"] for p in contract["paths"].values() for o in p.values()
+           if isinstance(o, dict) and "operationId" in o]
+    probe = first(read(api, clause), r"/__probe__")
+    stub_refs = first(read(api, clause), r"contract_stubs")
+    print(f"\nthe API twins: E-6b.10's stand-in test registers {probe.split(chr(34))[1]}; lines of it naming "
+          f"contract_stubs: {'none' if stub_refs.startswith('(no line') else stub_refs}")
+
+    def both_clauses(label: str) -> None:
+        r1, r2 = pytest(api, clause, "--tb=line"), pytest(api, v12, "--tb=line")
+        why = first(r2.stdout, r"(Error|assert|\.py:\d+)")
+        print(f"{label}: E-6b.10's clause: exit {r1.returncode}: {last(r1.stdout, r'passed|failed|error')} | v1.2's "
+              f"clause: exit {r2.returncode}: {last(r2.stdout, r'passed|failed|error')}"
+              f"{' | ' + why[-100:] if r2.returncode else ''}")
+
+    both_clauses(f"API twin, ADU-07's close ({len(ops)} of {len(ops)} operations stubbed)")
+    main0, stubs0 = read(api, "src/app/main.py"), read(api, "src/app/api/contract_stubs.py")
+    served: list[str] = []
+    for unit, prefix in API_UNITS:
+        served += [o for o in ops if o.startswith(prefix)]
+        write(api, "src/app/api/routers_standin.py", ROUTERS.replace("__SERVED__", repr(sorted(served))))
+        if unit != "ADU-08":  # the stubs module stops registering the served operations; main.py includes the routers
+            stubs = stubs0.replace("from app.api import schemas\n", "from app.api import routers_standin, schemas\n")
+            stubs = stubs.replace("            if method not in METHODS:\n",
+                                  "            if method not in METHODS or op[\"operationId\"] in routers_standin.SERVED:\n")
+            assert stubs.count("routers_standin") == 2
+            write(api, "src/app/api/contract_stubs.py", stubs)
+            main = main0.replace("from app.api import contract_stubs\n", "from app.api import contract_stubs, routers_standin\n")
+            main = main.replace("    contract_stubs.register(app)\n", "    contract_stubs.register(app)\n    routers_standin.register(app)\n")
+            assert main.count("routers_standin") == 2
+        else:  # the last API unit: the stubs module is deleted, and main.py no longer imports it
+            main = main0.replace("from app.api import contract_stubs\n", "from app.api import routers_standin, schemas\n")
+            main = main.replace("CONTRACT = contract_stubs.CONTRACT\n", "CONTRACT = schemas.CONTRACT\n")
+            main = main.replace("    contract_stubs.register(app)\n", "    routers_standin.register(app)\n")
+            main, n = re.subn(r"    @app\.exception_handler\(contract_stubs\.NotBuilt\)\n(?:.*\n){4}\n", "", main)
+            assert n == 1 and "contract_stubs" not in main
+            (api / "src/app/api/contract_stubs.py").unlink()
+        write(api, "src/app/main.py", main)
+        both_clauses(f"API twin, {unit} landed ({len(served)} of {len(ops)} operations served by a router, "
+                     f"{len(ops) - len(served)} stubbed)")
+    refs = run(["git", "grep", "--no-index", "-I", "-n", "contract_stubs", "--", "src"], api)
+    print(f"  in the last twin: src/app/api/contract_stubs.py exists: {(api / 'src/app/api/contract_stubs.py').exists()}; "
+          f"references to contract_stubs under src/: {refs.stdout.strip() or 'none'}")
+    for label, deps in MUTATIONS:
+        write(api, "src/app/api/deps.py", deps)
+        r = pytest(api, clause, "--tb=line")
+        failed = first(r.stdout, r"(Error|assert|\.py:\d+)")
+        print(f"  the last twin, E-6b.10's clause, {label}: exit {r.returncode}: "
+              f"{last(r.stdout, r'passed|failed|error')}{' | ' + failed[-110:] if r.returncode else ''}")
+    write(api, "src/app/api/deps.py", DEPS)
 
     # 8. the simulated apply: the recommended rulings, and E-5 (b), with the ids substituted as D-2 allocates them
     for label, r, mapping, full in (("recommended", RECOMMENDED, MAP_A, True),
@@ -1988,7 +2308,7 @@ def main() -> int:
         used = set()
         for f, t in texts.items():
             t = re.sub(r"\b[DQO]-p\d+\b", lambda m: (used.add(m[0]), mapping[m[0]])[1], t)
-            t = t.replace("<apply-date>", "2026-11-12").replace("docs/VERIFICATION-<id>.md", "docs/VERIFICATION-R2.md")
+            t = t.replace("<apply-date>", "2026-11-12").replace("docs/VERIFICATION-<id>.md", "docs/VERIFICATION-R3.md")
             write(tree, f, t)
         left = [f for f in texts if re.search(r"\b(ADU|Q|D|FB|O|MK)-p\d+\b", read(tree, f))]
         print(f"\nsimulated apply, {label}: {len(eg) + len(bgroup)} blocks into {len(texts)} files; ids substituted: "
@@ -2010,7 +2330,7 @@ if __name__ == "__main__":
 ~~~
 
 #### B-4.4 The simulated apply (part 8 of B-4.3's run)
-These are the apply's own checks (D-2 steps 4 and 6), run on a scratch export of 7d1e7d4. The blocks of a ruling were applied first, with the ids substituted as D-2 allocates them if main took none, `<apply-date>` as 2026-11-12 and the report as docs/VERIFICATION-R2.md. The export's journal is the snapshot's, so `adu status` names that journal's last block (2026-11-07 20:20), not the apply's; and the STATUS Log line D-2 writes is not simulated. From B-4.3's output:
+These are the apply's own checks (D-2 steps 4 and 6), run on a scratch export of 7d1e7d4. The blocks of a ruling were applied first, with the ids substituted as D-2 allocates them if main took none, `<apply-date>` as 2026-11-12 and the report as docs/VERIFICATION-R3.md. The export's journal is the snapshot's, so `adu status` names that journal's last block (2026-11-07 20:20), not the apply's; and the STATUS Log line D-2 writes is not simulated. From B-4.3's output:
 
 ~~~text
 simulated apply, recommended: 94 blocks into 7 files; ids substituted: D-p1→D-12, D-p2→D-13, D-p3→D-14, D-p4→D-15, D-p5→D-16, D-p6→D-17, D-p7→D-18, O-p1→O-02, Q-p1→Q-08, Q-p2→Q-09, Q-p3→Q-10, Q-p4→Q-11, Q-p5→Q-12, Q-p6→Q-13; provisional ids left: none
@@ -2020,7 +2340,7 @@ $ adu derived render -> exit 0: derived blocks rendered (0 file(s) rewritten)
 $ adu derived check -> exit 0: derived blocks OK
 $ adu pins check -> exit 0: pins OK (1 pinned)
 $ adu status
-ADU status — Team Rota · 2026-11-12 10:38
+ADU status — Team Rota · 2026-11-12 21:41
 Now: ADU-03 — Identity service · size M · layer 3 (domain services) · position 5/18 in the derived order
 Depends: ADU-01 ✅, ADU-02 ✅, ADU-16 ✅
 Consumes through mocks: MK-01 (SchedulingPort ← ADU-05, in-process), MK-02 (Notifier ← ADU-09, in-process)
@@ -2064,7 +2384,7 @@ Q-p1 … Q-p6, in full, are the text B-2.7 enters into OPEN-QUESTIONS.md (each w
 - **Q-p2 (blocking ADU-03):** how it receives its collaborators across the identity ↔ scheduling cycle. Recommended (b): the composition root's `Ports` container, read at call time.
 - **Q-p3 (blocking ADU-03):** the token and salt source against "No randomness in the product". Recommended (a): an injected `secrets`-based source and a DECISIONS row amending ARCHITECTURE.md:45.
 - **Q-p4 (blocking ADU-03):** the returned values and their home. Recommended (a): the contract's Member fields, values defined in identity's service module; PRODUCT-DESIGN.md:18 reworded editorially.
-- **Q-p5 (non-blocking; owed before ADU-04):** the API units' wall on the same test and the helpers in contract_stubs.py, with ADU-04's route to the IdentityService and the commit no API arm sees. Recommended (b): one re-cut before ADU-04. It is entered `**Blocking:** no`, and the Owed row O-p1 due ADU-04 (E-5a.14 or E-5b.1) and ADU-04's pointer (B-3.16) carry the duty, because `adu status` would stop ADU-03 on a blocking question (R1 N-2; plugin FB-32).
+- **Q-p5 (non-blocking; owed before ADU-04):** the API units' wall on the same test and the helpers in contract_stubs.py, which main.py imports too, with the route of ADU-04's router and ADU-11's command to the IdentityService, and the commit no API arm sees. Recommended (b): one re-cut before ADU-04, whose 501 loop never imports the stubs module (plugin FB-34). It is entered `**Blocking:** no`, and the Owed row O-p1 due ADU-04 (E-5a.14 or E-5b.1) and ADU-04's pointer (B-3.16) carry the duty, because `adu status` would stop ADU-03 on a blocking question (R1 N-2; plugin FB-32).
 - **Q-p6 (non-blocking for ADU-03; before ADU-09):** the four `tests/<domain>/test_service.py` fail collection together (R1; plugin FB-33). Ruled in this apply as E-10, recommended (a): unique basenames.
 
 The probe behind Q-p1 (scratch; `python -I`, the project's venv):
@@ -2119,7 +2439,7 @@ For the apply step's `adu chase "<old>" "<new>"`. Hits were found with `git grep
 | old term / id / count | new | where it is expected to appear, and the disposition |
 |---|---|---|
 | "test_contract_conformance.py still passes" | "the NullDirectory import and its binding go", plus the conformance `amends` line | ADU-PLAN.md:151 only → B-3.3 |
-| "the contract unit's tests stay green unchanged" | "the contract unit's tests and tests/test_nulls.py pass in the gate after exactly the edits this entry's amends declare on them, each made under the operator's grant (Q-07)" | ADU-PLAN.md:159 only → B-3.5 |
+| "the contract unit's tests stay green unchanged" | "the contract unit's tests and tests/test_nulls.py pass in the gate after exactly the edits this entry's amends declare on them, each made under the operator's grant (Q-07), which the gate checks at this unit's close and no test of this file repeats" | ADU-PLAN.md:159 only → B-3.5 |
 | "and its test_nulls test are deleted" | the widened arm text | ADU-PLAN.md:159, :188, :216, :246 → B-3.5, B-3.8, B-3.11, B-3.14 |
 | "the <Null> test is deleted with its stub" | the full four-place edit | ADU-PLAN.md:153, :184, :210, :242 → B-3.4, B-3.7, B-3.10, B-3.13 |
 | "stay green unchanged" for the identity tests and the scheduling tests | stays | ADU-PLAN.md:188, :216, :246: true as written — those suites use the doubles and no retirement edits them (the B-4.3 stages confirm the gate stays green) |
@@ -2129,7 +2449,7 @@ For the apply step's `adu chase "<old>" "<new>"`. Hits were found with `git grep
 | "golden still equal" / "golden unchanged" / "the 501 placeholder … gone once the last router lands" | stays | ADU-PLAN.md:128, :273, :299, :325, :349, :357: not retirements of a Null; the API units' wall is Q-p5 |
 | `Refused` (new term, defined by D-p2) | `src/app/ports.py` `Refused(reason, detail="", **extra)` | ADU-PLAN.md:160, :161 name it; B-2.3 defines it. "refuses <code>" in the arms of ADU-05, ADU-07 and ADU-09 means `Refused(<code>)`: stays |
 | `IdentityService` (term gains a section) | design/INTERFACES.md §IdentityService | ADU-PLAN.md:145, :151, :235, :258, :268: stays, now resolvable |
-| "the five protocols" | stays | ADU-PLAN.md:99 (ADU-16's arm), tests/test_ports.py:1 (its docstring) and VERSIONS.md:90 (a History row): `Refused` is an exception like `TransferRefused`, not a protocol, and §Refused is a section of its own after "## Protocols" (B-2.3) |
+| "the five protocols" / "five protocols" | stays | ADU-PLAN.md:99 (ADU-16's arm) and tests/test_ports.py:1 (its docstring) read "the five protocols"; VERSIONS.md:90, a History heading, reads "five protocols" without "the"; SESSION-JOURNAL.md:153 ("the five protocols") and :105 ("five protocols") are a ledger's records (`git grep` at 7d1e7d4). `Refused` is an exception like `TransferRefused`, not a protocol, and §Refused is a section of its own after "## Protocols" (B-2.3) |
 | "one test per Null" | stays | tests/test_nulls.py:1, the module docstring of ADU-16's completed test: no retirement edits it, and ADU-07 removes the file (T-07.3); ADU-PLAN.md:102 as the row above says |
 | "No randomness in the product" | the ruled text of E-8 | design/ARCHITECTURE.md:45 only → E-8a.2 or E-8b.2 |
 | "a member as the team list shows it" | the pm-lead's wording (E-9.P) | design/PRODUCT-DESIGN.md:18 → the pm-lead's patch, not this apply; design/DESIGN-REVIEW-7.md:36 is a record and stays |
@@ -2146,51 +2466,77 @@ For the apply step's `adu chase "<old>" "<new>"`. Hits were found with `git grep
 
 ## Part D — prompts
 
-### D-1 The verify prompt (round R2)
+### D-1 The verify prompt (round R3)
 For a fresh `claude --plugin-dir C:\dev\adu-lifecycle --agent adu-lifecycle:verifier`, started from a PowerShell inside `C:\dev\team-rota`:
 
 ~~~text
-Verification round R2 for Team Rota: /adu-lifecycle:verify docs/PACK-q07-retire-amends.md
+Verification round R3 for Team Rota: /adu-lifecycle:verify docs/PACK-q07-retire-amends.md
 
-You are a fresh verifier; you wrote neither this pack nor round R1's report, and you change nothing in the repository except your report and your journal block.
+You are a fresh verifier. You wrote neither this pack nor round R1's or R2's report, and you change nothing in the repository except your report and your journal block.
 
-1. `adu status`: expect Now: ADU-03 and Q-07 open and blocking (the pack answers Q-07; it does not open ADU-03). Then confirm three variables before any `uv` or python command: `$env:UV_PROJECT_ENVIRONMENT` is `C:\dev\team-rota-data\.venv` (the User-level variable names another project's venv); `$env:PYTHONUTF8` is empty; and `$env:ADU_PLUGIN_ROOT` is `C:\dev\adu-lifecycle` (in Git Bash, `echo $ADU_PLUGIN_ROOT`). Without the last, every scratch gate shows 4 failures in tests/test_method.py (plugin FB-19), which are not the pack's. Then the interpreter line, `uv run python -c "import sys, locale; print(sys.prefix, locale.getpreferredencoding(False), sys.flags.utf8_mode)"`: expect `C:\dev\team-rota-data\.venv cp1252 0`. A bare `python -c …` may print `C:\Python314 cp1252 0`: that is the system interpreter, not the gate's, and not a finding. `git status --short` is expected to show `?? uv.lock` only (Q-05): the pack v1.2 is committed.
+1. Start checks.
+   - `adu status`: expect Now: ADU-03 and Q-07 open and blocking. The pack answers Q-07; it does not open ADU-03.
+   - Before any `uv` or python command, confirm three variables:
+     - `$env:UV_PROJECT_ENVIRONMENT` is `C:\dev\team-rota-data\.venv` (the User-level variable names another project's venv);
+     - `$env:PYTHONUTF8` is empty;
+     - `$env:ADU_PLUGIN_ROOT` is `C:\dev\adu-lifecycle` (in Git Bash, `echo $ADU_PLUGIN_ROOT`). Without it, every scratch gate shows 4 failures in tests/test_method.py (plugin FB-19), which are not the pack's.
+   - The interpreter line, `uv run python -c "import sys, locale; print(sys.prefix, locale.getpreferredencoding(False), sys.flags.utf8_mode)"`: expect `C:\dev\team-rota-data\.venv cp1252 0`. A bare `python -c …` may print `C:\Python314 cp1252 0`: that is the system interpreter, not the gate's, and not a finding.
+   - `git status --short` is expected to show `?? uv.lock` only (Q-05): the pack v1.3 is committed.
+   - The plugin is expected at ae191e2. If it has moved, `git -C C:\dev\adu-lifecycle diff --stat 4b63bb0 HEAD` should still list FEEDBACK.md only.
 2. Snapshot gate: `adu snapshot check 7d1e7d4`. Exit 2 → the report is the command's output and `VERDICT: STOP — STALE`; nothing else is verified.
-3. Read the pack (v1.2) in full, then docs/VERIFICATION-R1.md in full. Then OPEN-QUESTIONS.md:53–59 (Q-07), and the SESSION-JOURNAL.md blocks of: 2026-11-07 20:20 (the hand-over that raised Q-07); the pack's drafting sessions (2026-11-08 08:39, v1.0; 2026-11-08 18:34, v1.1; 2026-11-12, v1.2); and 2026-11-08 22:45 (verification R1). Then the plugin's FEEDBACK.md rows FB-28 and FB-31 to FB-33 (C:\dev\adu-lifecycle\FEEDBACK.md).
-4. Round R1's dispositions. For each, report CARRIED OUT / PARTLY / NOT CARRIED OUT, with the pack's line where it is carried out; this is section 1 of your report.
-   a. N-1: E-6b.10 appends R1's clause (docs/VERIFICATION-R1.md:177) to ADU-03's arm 1 (post-B ADU-PLAN.md:161), with "under D-p3" written as "under the request's current session of design/INTERFACES.md (Domain services)". B-4.3 rehearses the twin: the stand-in test of the clause fails with `require_caller` not depending on `get_session` and with `get_session` sync, and passes with the wiring right. Re-run that twin yourself.
-   b. N-2: Q-p5 is entered `**Blocking:** no` (B-2.7). The Owed row O-p1, due ADU-04, is written in STATUS.md's columns (O | Due | Where | Approval | Status) by E-5a.14 or E-5b.1, with the Approval cell naming the E-5 ruling and plugin FB-32 cited. ADU-04's pointer is B-3.16. B-5, E-5, E-5a.1 and D-2 are aligned. On your own simulated apply with ids substituted, `adu status` prints "Open blocking questions: none" with Now: ADU-03 (B-4.4 shows the pack's).
-   c. M-1: E-2b.8–E-2b.18, including R1's E-5 (a) and E-5 (b) cases.
-   d. M-2: E-3b.5 (without E-2 (b)) and E-3b.6.
-   e. M-3: E-1b.1–E-1b.4, with B-2.4's string as it is and the doubles line's stated position; and E-4 (b), written as E-4b.1.
-   f. Each Note of R1 §5, and each cosmetic remark in R1 §2–§3: rows 40, 63, 79, 81, 82 and 83, §2.6 on B-2.3, E-7, E-8 and E-9, and §3 on B-3.3 and T-03.6. The pack's header (line 3) maps each to where it is handled; confirm each there.
-   g. Q-p6: entered by B-2.7 and ruled as E-10. Check four things: the complete text of options (a)–(d); each option's roster consequences (E-10's table); a recommendation with reasons; and the recommended option rehearsed (with all four stages applied, the four service test files collect together and the gate is green).
-5. Claims, each CONFIRMED / WRONG / UNVERIFIABLE with file and line, as R1 §2 did:
-   a. every B-block (B-2.1–B-2.9, B-3.1–B-3.14, B-3.16) against the 7d1e7d4 blob (`git show 7d1e7d4:<file>`): text character for character with line endings normalised, unique in its file, starting at the stated line;
+3. Read, in this order:
+   - the pack (v1.3), in full;
+   - docs/VERIFICATION-R2.md, in full;
+   - docs/VERIFICATION-R1.md, §1 and §5 at least;
+   - OPEN-QUESTIONS.md:53–59 (Q-07);
+   - the SESSION-JOURNAL.md blocks of 2026-11-07 20:20 (the hand-over that raised Q-07); the pack's drafting sessions (2026-11-08 08:39, v1.0; 2026-11-08 18:34, v1.1; 2026-11-12 10:28 and 10:40, v1.2; and the v1.3 block of 2026-11-12); and the two verifications (2026-11-08 22:45, R1; 2026-11-12 16:08, R2);
+   - the plugin's FEEDBACK.md rows FB-28, FB-29 and FB-31 to FB-34 (C:\dev\adu-lifecycle\FEEDBACK.md).
+4. The earlier rounds' dispositions; this is section 1 of your report. Report each finding and note of R2 (docs/VERIFICATION-R2.md §5) as CARRIED OUT / PARTLY / NOT CARRIED OUT, with the pack's file and line where it is carried out. Confirm that R1's dispositions, which R2 found carried out (R2 §1), still hold in v1.3: re-check each changed block, and compare each unchanged one with v1.2 (commit 1745ed2).
+   a. R2's N-1. E-6b.10 and E-6a.9 assert the request path through a route ADU-03's own test registers, never through a stubbed operation (plugin FB-34). E-6 gives the reasons and names the thirteen later units it was checked against. Check that list against each unit's entry in ADU-PLAN.md (positions 6–18 of the derived order): what each unit adds, amends or deletes, and whether any of it touches a surface the clause asserts through. Re-run the twins yourself:
+      - the stand-in test of the clause passes with the wiring right;
+      - it fails with `require_caller` not depending on `get_session`, and with `get_session` sync;
+      - it passes in the four API twins (the routers of ADU-04, ADU-06, ADU-10 and ADU-08 landed in turn, the stubs module deleted in the last), where v1.2's stand-in fails;
+      - it still fails under both mutations in the last twin.
+   b. R2's notes. The header's line 3 maps each to where the pack carries it:
+      - E-10's (c) grant cell, E-10c.3, B-4.1 and A-2's roster row: pyproject.toml lies outside `code_roots`, and the guard is asked about it at 7d1e7d4;
+      - E-8 (b)'s scan line: src/app/synthetic.py:12, with the scan run in B-4.3;
+      - the places that now say they are rehearsed (E-1 (b), E-4 (b), E-1b.3, E-2b.3: B-4.3, part 6) or composed as text only (E-7 (a), E-8 (b), E-9 (c), E-7b.1);
+      - ADU-11's route to `seed_admin`: E-6b.1, E-6a.1, E-6's prose and Q-p5's first point;
+      - Part C's "five protocols" row;
+      - D-2 step 6's STATUS.md line.
+   c. The header's line 4: the search of the whole pack for FB-34's class. Confirm that each of its four findings is carried where it says (Q-p5's Conflict and option (b) in B-2.7; B-3.5, B-3.8, B-3.11, B-3.14), and that its "checked" list matches the pack.
+5. Claims, each CONFIRMED / WRONG / UNVERIFIABLE with file and line, as R1 §2 and R2 §2 did:
+   a. every B-block (B-2.1–B-2.9, B-3.1–B-3.14, B-3.16) against the 7d1e7d4 blob (`git show 7d1e7d4:<file>`): the text character for character with line endings normalised, unique in its file, starting at the stated line;
    b. every T-block (B-2.T) against the file as the previous T-stage leaves it, starting from 7d1e7d4 for T-03. Each E-block against the text as B leaves it: a conditional block under its condition, and a block "on the text E-xx writes" after the other ruled blocks of its file;
-   c. Part A-2's table, row by row, its new rows included: plugin scripts/lib/ledgers.mjs:26–27 and :83–85; scripts/adu.mjs:81–82, :85–86 and :398; scripts/lib/plan.mjs:181, :214, :219 and :234 (the plugin at C:\dev\adu-lifecycle);
-   d. the guard, as R1 checked it, and for the new rosters. Under E-10 (a), the renamed test path is allowed and the old one refused. Under E-10 (b), `tests/identity/__init__.py` is allowed; under E-10 (c), `pyproject.toml`; under E-1 (b), `tests/support/doubles.py`;
+   c. Part A-2's table, row by row, its new rows included: src/app/main.py:16, :24, :72–78; src/app/api/contract_stubs.py:28–29, :46; src/app/api/deps.py:33; contracts/openapi.json's paths; ADU-PLAN.md:128, :273, :281, :299, :307, :325, :331, :349, :358, :507, :510; plugin scripts/adu.mjs:689–691 with adu.toml:7; plugin FEEDBACK.md:39;
+   d. the guard, as R2 checked it, for the recommended rosters and for each option's own. pyproject.toml is allowed in every tree, as E-10 (c) now says;
    e. every amendment names the file and the assertion it falsifies, in both directions;
-   f. that no arm is weakened: each rewritten arm, E-6a.9 and E-6b.10 included, against the arm it replaces and against ADU-02's arms (ADU-PLAN.md:126–133) and ADU-16's (:99–104); say how each can fail;
-   g. as R1's 4g: B-2.3 and the completed texts of E-6–E-9 each settle exactly their point. Then the same for E-10's options: each changes only what its column of E-10's table says, and the table is true (which units' `tests:`, arms' `file:`, T-blocks and plan lines change; whether a completed unit's file or a protected path is touched; whether a grant is needed);
-   h. what the pack does not claim. List each thing the pack leaves unrehearsed, or states only by arithmetic or by reading, and check that it says so where it relies on it. At least:
-      - E-6 (a)'s clause (E-6a.9) is not rehearsed;
-      - the T-text of E-1 (b) and E-4 (b) is stated, not rehearsed: its line shifts are arithmetic;
-      - the stand-in services, the stand-in tests, the illustrative `Refused` and the illustrative current session are scaffolding, not proposed text;
-      - E-10 (b) and (c) are measured with stand-in files on the 7d1e7d4 tree, not through the four stages;
-      - E-9.P is the pm-lead's and is not applied.
+   f. that no arm is weakened. Check each rewritten arm, E-6a.9 and E-6b.10 included, against the arm it replaces and against ADU-02's arms (ADU-PLAN.md:126–133) and ADU-16's (:99–104), and say how each can fail. Check E-6b.10 and E-6a.9 against v1.2's clause as well: what v1.2's caught that v1.3's does not, if anything;
+   g. as R2's 4g: B-2.3 and the completed texts of E-6–E-10 each settle exactly their point, and E-10's table is true;
+   h. what the pack does not claim, in two parts; keep both.
+      (i) The pack's own unrehearsed reliances. List each thing it leaves unrehearsed, or states only by arithmetic or by reading, and check that it says so where it relies on it. At least:
+         - E-6 (a)'s clause (E-6a.9) is not rehearsed;
+         - the constructors of E-7 (a) and E-8 (b), and the values of E-9 (c), are composed as text only;
+         - these are scaffolding, not proposed text: the stand-in services and their tests, the stand-in routers of the API twins, the illustrative `Refused`, the illustrative current session, the stand-in `TokenDirectory` and the stand-in `src/app/refusals.py`;
+         - E-10 (b) and (c) are measured with stand-in files on the 7d1e7d4 tree, not through the four stages;
+         - E-9.P is the pm-lead's and is not applied.
+      (ii) An independent search of your own for what no block, question, option or Owed row covers. First, FB-34's class across the pack and the plan: any arm, amends assertion, T-block, D-p row or option that asserts through, or depends on, a Null, a stub, a placeholder answer, a mock or another artefact that a later unit of ADU-PLAN.md removes or replaces. Check each against every later unit's entry, not ADU-04's alone. Then anything else a later session would meet that the pack neither settles nor enters as a question or an Owed row. Report what you searched and what you found, "none" included.
 6. Measurements, in your own scratchpad, never in the repository:
    (i) `git archive 7d1e7d4` into a scratch folder, apply B-3, and run `adu plan check` and `adu plan order` with the working directory inside the copy. Repeat with the recommended options' plan text (B-3, E-6 (b), E-10 (a)), and compare both with B-3.15. Then check as many of the other rulings' plan texts as you judge needed; B-4.3 runs all of them.
-   (ii) Re-run B-4.3's rehearsal (the pack's script, or your own equivalent). Compare, per stage, the gate count, the lint and the twins (v1.1's two, the N-1 twin and the E-10 twin). Compare the 1,088 rulings and the E-10 option measurements.
+   (ii) Re-run B-4.3's rehearsal (the pack's script, or your own equivalent). Compare:
+      - per stage, the gate count, the lint and the twins: v1.1's two, the clause's two mutations, the four API twins and the E-10 twin;
+      - part 6's rehearsals of E-1 (b), E-4 (b), E-1b.3 and E-2b.3, and the scan;
+      - the 1,088 rulings and the E-10 option measurements.
+      Build at least the clause's twins with your own scaffold too, independent of the pack's stand-ins.
    (iii) Your own simulated apply of the recommended rulings with ids substituted (D-12 … D-18, Q-08 … Q-13 and O-02, if main took none): `adu ledger lint`, `adu plan check`, `adu derived render` and `adu derived check`, `adu pins check`, `adu status`. Then the same under E-5 (b): `adu status` lists the allocated Q-p1 … Q-p4 as blocking and Q-p5 as non-blocking.
-   (iv) The ContextVar probe of B-5 and the current-session probe of E-6 need re-running only if a pack line about them changed since R1. None did; say so if you skip them.
+   (iv) The ContextVar probe of B-5 and the current-session probe of E-6 need re-running only if a pack line about them changed since R2. None did; say so if you skip them.
    Table: the pack's value · yours · verdict per cell.
 7. Optional, once: `uv run pytest tests/ -q -m "not timing" -p no:cacheprovider` at HEAD, expect `46 passed`; `git status --short` unchanged afterwards.
-8. The report: docs/VERIFICATION-R2.md, named by hand, because `adu next-id V` crashes with EISDIR, and would print V-1, not R2, if it ran (plugin FB-31). Use the skill's report shape, with section 1 holding R1's dispositions (item 4), each with file and line. The verdict is the last line and the token VERDICT appears nowhere else; `adu verdict check docs/VERIFICATION-R2.md` passes. Then your journal block. Write nothing else.
+8. The report: docs/VERIFICATION-R3.md, named by hand. `adu next-id V` crashes with EISDIR, and if it ran it would print V-1, not R3 (plugin FB-31). Use the skill's report shape, with section 1 holding the earlier rounds' dispositions (item 4), each with file and line. The verdict is the last line, and the token VERDICT appears nowhere else; `adu verdict check docs/VERIFICATION-R3.md` passes. Then your journal block. Write nothing else.
 ~~~
 
 ### D-2 The apply prompt
-For a fresh `claude --plugin-dir C:\dev\adu-lifecycle --agent adu-lifecycle:release-manager`, started from a PowerShell inside `C:\dev\team-rota`, after round R2's report and the operator's rulings on Part E:
+For a fresh `claude --plugin-dir C:\dev\adu-lifecycle --agent adu-lifecycle:release-manager`, started from a PowerShell inside `C:\dev\team-rota`, after round R3's report and the operator's rulings on Part E:
 
 ~~~text
 Design-change loop, stage 4 (apply) for Team Rota: /adu-lifecycle:change-design apply docs/PACK-q07-retire-amends.md
@@ -2198,7 +2544,7 @@ Design-change loop, stage 4 (apply) for Team Rota: /adu-lifecycle:change-design 
 First, the interpreter line: `uv run python -c "import sys, locale; print(sys.prefix, locale.getpreferredencoding(False), sys.flags.utf8_mode)"` prints `C:\dev\team-rota-data\.venv cp1252 0` (a bare `python -c …` may print `C:\Python314 …`, the system interpreter, which is not the gate's).
 
 Preconditions — stop and tell me if any fails:
-- docs/VERIFICATION-R2.md, for this pack at v1.2, ends `VERDICT: READY` or `VERDICT: READY WITH MECHANICAL ADAPTATIONS`.
+- docs/VERIFICATION-R3.md, for this pack at v1.3, ends `VERDICT: READY` or `VERDICT: READY WITH MECHANICAL ADAPTATIONS`.
 - My rulings on Part E (E-1 … E-10) are pasted at the end of this prompt, verbatim. There is one option for each of E-1, E-2, E-3, E-4, E-5 and E-10. There is one for each of E-6 … E-9 if E-5 is (a), and none if it is (b).
 - `adu snapshot check 7d1e7d4` exits 0.
 - `$env:UV_PROJECT_ENVIRONMENT` is `C:\dev\team-rota-data\.venv`, `$env:PYTHONUTF8` is empty, and `$env:ADU_PLUGIN_ROOT` is `C:\dev\adu-lifecycle`.
@@ -2211,7 +2557,7 @@ Preconditions — stop and tell me if any fails:
      - E-5 (b) with E-10 (d): D-12, D-13.
    - Questions, from `adu next-id Q`: Q-p1 … Q-p6 are Q-08 … Q-13 if main took none. Each is an entry, whether entered open or resolved, so each takes its id.
    - Owed rows, from `adu next-id O`: O-p1 is O-02 if main took none. O-p2 exists only under E-10 (d), and takes the next id (O-03).
-   - Replace every provisional id, every `<apply-date>` and every `docs/VERIFICATION-<id>.md` (→ docs/VERIFICATION-R2.md) in the text you apply. Never renumber to dodge a number main took.
+   - Replace every provisional id, every `<apply-date>` and every `docs/VERIFICATION-<id>.md` (→ docs/VERIFICATION-R3.md) in the text you apply. Never renumber to dodge a number main took.
 2. Apply B-2.1–B-2.9, B-3.1–B-3.14 and B-3.16 block by block: bottom-up within each file, right to left within a line, each `replace exactly` matching character for character with line endings normalised. A miss is a stop, not a guess.
    - For each bracket, apply the blocks of the option I ruled, on top of B. Of the conditional blocks, apply those whose heading's condition my rulings meet. A block "on the text E-xx writes" goes after the other blocks of its file.
    - Shared anchors: the DECISIONS rows go E-10, E-9, E-8, E-7, E-6, and the Owed rows of STATUS.md go E-10 (d), then E-5, so each stands in id order.
@@ -2220,17 +2566,17 @@ Preconditions — stop and tell me if any fails:
    - Do not apply B-2.T: those edits belong to the retiring units' sessions, each under its own grant.
    - Do not apply E-9.P either: it is the pm-lead's patch of PRODUCT-DESIGN.md:18. Record it in the application report as the pm-lead's to make.
 3. Chase every row of Part C with `adu chase "<old>" "<new>"`; change each hit or record in the application report why it stays.
-4. Make round R2's mechanical adaptations, if it lists any, in the governing documents (never in the pack). Then run:
+4. Make round R3's mechanical adaptations, if it lists any, in the governing documents (never in the pack). Then run:
    - `adu derived render`;
    - `adu plan check`: expect `plan OK: 18 units` and the order of B-3.15;
    - `adu derived check`, `adu ledger lint`, and `adu pins check` (no pinned file changes);
    - `adu status`: expect "Open blocking questions: none" under E-5 (a), or the allocated Q-p1 … Q-p4 under E-5 (b), and the Owed row or rows listed.
 5. Versions as the blocks write them: ADU-PLAN 1.2 → 1.3; design/INTERFACES.md 1.0.1 → 1.1 (it gains the Current row it lacked); design/ARCHITECTURE.md 1.1 → 1.2 under E-5 (a), and under E-5 (b) only with E-2 (b). Q-07 is resolved as B-2.6–B-2.7 write it.
-6. Run the gate once, `uv run pytest tests/ -q -m "not timing"`, then the lint, `uv run ruff check`, and report the last line of each. Expect `46 passed …` (STATUS.md:40; this loop changes no test) and `All checks passed!`; any other count or any lint finding is a stop. Then write your journal block and a STATUS Log line ending `backward: n/a (documents only)`. I commit with the message `docs: apply pack q07-retire-amends (ADU-PLAN v1.3, INTERFACES v1.1, ARCHITECTURE v1.2)`, without ARCHITECTURE v1.2 when it did not move.
+6. Run the gate once, `uv run pytest tests/ -q -m "not timing"`, then the lint, `uv run ruff check`, and report the last line of each. Expect `46 passed …` (the gate line `adu status` cites: STATUS.md:40 before the apply, moved to :41 by the Owed row it writes, or to :42 by both rows under E-10 (d); this loop changes no test) and `All checks passed!`; any other count or any lint finding is a stop. Then write your journal block and a STATUS Log line ending `backward: n/a (documents only)`. I commit with the message `docs: apply pack q07-retire-amends (ADU-PLAN v1.3, INTERFACES v1.1, ARCHITECTURE v1.2)`, without ARCHITECTURE v1.2 when it did not move.
 7. NEXT in your journal block, under E-5 (a): the ADU-03 hand-over is next. The oversight session regenerates `adu handover ADU-03` and checks it against the entry; its section A expects "Open blocking questions: none". The hand-over must say:
    - "design updated: ADU-PLAN v1.3 (ADU-03's amends, tests and arm 1; the same pattern in ADU-09, ADU-05, ADU-07), INTERFACES v1.1 (§Refused, §Domain services — the request's session and IdentityService, the retirement paragraph), ARCHITECTURE v1.2 (§Layers, §Persistence and concurrency rules)";
    - in its first section, the two grants the session asks me for (`tests/api/test_contract_conformance.py`, `tests/test_nulls.py`), since the guard does not honour amends on a completed unit's test (plugin FB-28);
-   - in its roster, the amends files, which C1 omits (plugin FB-30 (1)). Under E-6 (b) that is src/app/db.py and src/app/api/deps.py, which need no grant because they are not tests. Under E-1 (b) it is tests/support/doubles.py, under E-2 (b) src/app/refusals.py and tests/layering.json, and under E-10 (c) pyproject.toml. Under E-10 (a), its test file is tests/identity/test_identity_service.py;
+   - in its roster, the amends files, which C1 omits (plugin FB-30 (1)). Under E-6 (b) that is src/app/db.py and src/app/api/deps.py, which need no grant because they are not tests. Under E-1 (b) it is tests/support/doubles.py, under E-2 (b) src/app/refusals.py and tests/layering.json, and under E-10 (c) pyproject.toml, which lies outside the guard's code roots, so the session, not the guard, keeps its edit to the declared line. Under E-10 (a), its test file is tests/identity/test_identity_service.py;
    - that the Owed row O-p1 (allocated), due ADU-04, is listed by `adu status` and is not ADU-03's; under E-10 (d), O-p2 is due ADU-09.
    The pm-lead's E-9.P patch follows in a pm-lead session and does not block ADU-03.
    Under E-5 (b), ADU-03 still does not open: I rule the allocated Q-p1 … Q-p4 first, and the ADU-03 hand-over follows their loop.
@@ -2244,7 +2590,7 @@ Each bracket's options have their text in this pack. An option without text stop
 
 **1. Which double answers `Bearer tok_1` in the 401/501 test.** No existing double resolves `tok_1` as constructed (Part A-2).
 [(a) recommended: `FakeMemberDirectory`, configured in the test with `add(1, "Member 1", "member", token="tok_1")`, the same Caller the Null gave; nothing but the test changes (T-03.2, T-03.4, B-3.3, B-2.4)
-| (b) a new double `TokenDirectory` in tests/support/doubles.py that resolves any `tok_<id>` as the Null did — blocks E-1b.1–E-1b.4 below. ADU-03 gains an `amends` line for tests/support/doubles.py, after its tests/test_nulls.py line (a `files` path of ADU-16, so no grant). The session's text changes too: T-03.2 reads `from support.doubles import FixedClock, TokenDirectory  # noqa: E402`, and T-03.4's three lines become `    client = TestClient(create_app(workspace=tmp_path, member_directory=TokenDirectory()))`, so the later conformance lines move up by 2 (T-09.2 :108, T-05.2 :106, T-07.2 :106; with E-4 (b) as well, by 4). The consequence: the Null's behaviour lives on under another name, and tests/test_ports.py does not cover the new double
+| (b) a new double `TokenDirectory` in tests/support/doubles.py that resolves any `tok_<id>` as the Null did — blocks E-1b.1–E-1b.4 below. ADU-03 gains an `amends` line for tests/support/doubles.py, after its tests/test_nulls.py line (a `files` path of ADU-16, so no grant). The session's text changes too: T-03.2 reads `from support.doubles import FixedClock, TokenDirectory  # noqa: E402`, and T-03.4's three lines become `    client = TestClient(create_app(workspace=tmp_path, member_directory=TokenDirectory()))`, so the later conformance lines move up by 2 (T-09.2 :108, T-05.2 :106, T-07.2 :106; with E-4 (b) as well, by 4), as rehearsed in B-4.3, part 6. The consequence: the Null's behaviour lives on under another name, and tests/test_ports.py does not cover the new double
 | (c) the real IdentityService with an admin seeded in tmp_path and the token sign_in issues — no text in this pack: the edit depends on Q-p1–Q-p4; choosing it stops the apply]
 
 #### E-1b.1 · design/INTERFACES.md:126
@@ -2268,7 +2614,7 @@ the 401/501 test builds its app with create_app(workspace=tmp_path, member_direc
 ~~~
 
 #### E-1b.3 · ADU-PLAN.md:154
-The doubles line goes after ADU-03's tests/test_nulls.py line, beside its other ADU-16 lines.
+The doubles line goes after ADU-03's tests/test_nulls.py line, beside its other ADU-16 lines. Rehearsed (B-4.3, part 6): with a stand-in `TokenDirectory` appended to doubles.py and `VACUOUS` unchanged, tests/test_ports.py stays green.
 replace exactly (within the line):
 ~~~text
 the other Nulls' imports, entries and tests are unchanged", q: Q-07 }
@@ -2315,6 +2661,7 @@ files: ["src/app/identity/service.py", "src/app/identity/repo.py", "src/app/refu
 ~~~
 
 #### E-2b.3 · ADU-PLAN.md:155
+Rehearsed (B-4.3, part 6): with a stand-in `src/app/refusals.py` and this join, tests/test_layering.py stays green unchanged. A planted import of identity in the module is caught once it is joined, and escapes without the join.
 replace exactly:
 ~~~text
   - { unit: ADU-16, file: src/app/ports.py, assertion: "gains Refused(reason, detail, **extra), the one domain refusal (design/INTERFACES.md, Refused); nothing else in the module changes and tests/test_ports.py stays green unchanged", q: Q-07 }
@@ -2546,7 +2893,7 @@ tests assert `.reason` (the contract's
 
 **4. The composition-root test's name and the module docstring, which say "binds a Null per port".** Both are false from ADU-03 on.
 [(a) recommended: ADU-03 renames the test to `test_the_composition_root_binds_an_implementation_per_port_and_an_injectable_clock` and rewords the docstring (T-03.5, T-03.1). The new name holds in every state, Nulls included, so no later unit renames again. `git grep` finds no other reference to the old name
-| (b) both unchanged: the session drops T-03.1 and T-03.5, and B-3.3's conformance line loses its rename clause (block E-4b.1 below); the later conformance lines move up by 2 (T-09.2 :108, T-05.2 :106, T-07.2 :106; with E-1 (b) as well, by 4) — consequence: a test whose name states what is no longer true]
+| (b) both unchanged: the session drops T-03.1 and T-03.5, and B-3.3's conformance line loses its rename clause (block E-4b.1 below); the later conformance lines move up by 2 (T-09.2 :108, T-05.2 :106, T-07.2 :106; with E-1 (b) as well, by 4), as rehearsed in B-4.3, part 6 — consequence: a test whose name states what is no longer true]
 
 #### E-4b.1 · ADU-PLAN.md:152
 replace exactly (within the line):
@@ -2704,7 +3051,7 @@ replace exactly (within the line):
 with:
 ~~~text
 | operator, 2026-11-07 17:37, release M1: "0-01 approved" | open |
-| O-p1 | ADU-04 | Q-p5: the API units' wall on tests/api/test_contract_conformance.py and the helpers of src/app/api/contract_stubs.py is ruled in a design-change loop before ADU-04 opens (ADU-PLAN.md, ADU-04's pointer); Q-p5 is entered non-blocking because `adu status` reads `**Blocking:** yes` as a stop for every unit, not ADU-04 alone (plugin FB-32) | operator, <apply-date>: the ruling of E-5 (a) on docs/PACK-q07-retire-amends.md v1.2 (Q-p5 entered open and non-blocking, owed before ADU-04) | open |
+| O-p1 | ADU-04 | Q-p5: the API units' wall on tests/api/test_contract_conformance.py and the helpers of src/app/api/contract_stubs.py is ruled in a design-change loop before ADU-04 opens (ADU-PLAN.md, ADU-04's pointer); Q-p5 is entered non-blocking because `adu status` reads `**Blocking:** yes` as a stop for every unit, not ADU-04 alone (plugin FB-32) | operator, <apply-date>: the ruling of E-5 (a) on docs/PACK-q07-retire-amends.md v1.3 (Q-p5 entered open and non-blocking, owed before ADU-04) | open |
 ~~~
 
 #### E-5b.1 · STATUS.md:31
@@ -2716,16 +3063,36 @@ replace exactly (within the line):
 with:
 ~~~text
 | operator, 2026-11-07 17:37, release M1: "0-01 approved" | open |
-| O-p1 | ADU-04 | Q-p5: the API units' wall on tests/api/test_contract_conformance.py and the helpers of src/app/api/contract_stubs.py is ruled in a design-change loop before ADU-04 opens (ADU-PLAN.md, ADU-04's pointer); Q-p5 is entered non-blocking because `adu status` reads `**Blocking:** yes` as a stop for every unit, not ADU-04 alone (plugin FB-32) | operator, <apply-date>: the ruling of E-5 (b) on docs/PACK-q07-retire-amends.md v1.2 (Q-p5 entered open and non-blocking, owed before ADU-04) | open |
+| O-p1 | ADU-04 | Q-p5: the API units' wall on tests/api/test_contract_conformance.py and the helpers of src/app/api/contract_stubs.py is ruled in a design-change loop before ADU-04 opens (ADU-PLAN.md, ADU-04's pointer); Q-p5 is entered non-blocking because `adu status` reads `**Blocking:** yes` as a stop for every unit, not ADU-04 alone (plugin FB-32) | operator, <apply-date>: the ruling of E-5 (b) on docs/PACK-q07-retire-amends.md v1.3 (Q-p5 entered open and non-blocking, owed before ADU-04) | open |
 ~~~
 
 **6. How the IdentityService, bound once, reaches the request's session (Q-p1).** B-2.7 states the question in full. Each option's blocks complete design/INTERFACES.md §Domain services and §IdentityService (as B-2.3 leaves them), write D-p3, amend design/ARCHITECTURE.md:42, add the request path through the composition root's own directory to ADU-03's arm 1, and write Q-p1's resolution.
-[(a) explicit: every IdentityService operation takes the session it runs in as its first parameter, and the MemberDirectory methods read through short sessions of their own — blocks E-6a.1–E-6a.9. There is no change to the ports, deps.py or db.py. The consequences: each request opens a second session for the directory's reads, and those reads see committed state only; the Notifier's and the transfer's writes in the caller's transaction get no mechanism, so ADU-09 and ADU-05 each need a design-change loop before they open (this apply enters no question for that: E-5 (a) enters Q-p5 alone). ADU-03's arm 1 gains the request path through the directory's own session (E-6a.9), which no gate test exercises before ADU-04 otherwise
-| (b) recommended: a request-scoped current session — blocks E-6b.1–E-6b.10. `db.current_session()` answers it; the async dependency `deps.get_session` makes it current for a request, and `db.unit_of_work(engine)` for the operator's command and for tests. With none current, a method raises `db.NoCurrentSession`. The API layer commits a write before it answers. ADU-03 gains two `amends` lines, for src/app/db.py (ADU-01's) and src/app/api/deps.py (ADU-02's); neither is a test, so neither needs a grant, and the order is unchanged (B-4.3). ADU-03's arm 1 gains R1's clause (E-6b.10): a request carrying a token `sign_in` issued, through the directory `create_app(workspace=tmp_path)` binds, answers 501 not_built, and a method with no session current raises `db.NoCurrentSession`. A broken wiring of deps.py therefore fails ADU-03's own tests, where R1 measured a green gate with every authenticated request answering 500 (R1 N-1; rehearsed in B-4.3)
+[(a) explicit: every IdentityService operation takes the session it runs in as its first parameter, and the MemberDirectory methods read through short sessions of their own — blocks E-6a.1–E-6a.9. There is no change to the ports, deps.py or db.py. The consequences: each request opens a second session for the directory's reads, and those reads see committed state only; the Notifier's and the transfer's writes in the caller's transaction get no mechanism, so ADU-09 and ADU-05 each need a design-change loop before they open (this apply enters no question for that: E-5 (a) enters Q-p5 alone). ADU-03's arm 1 gains the request path through the directory's own session (E-6a.9), through the same route of the test's own as (b)'s, which no gate test exercises before ADU-04 otherwise
+| (b) recommended: a request-scoped current session — blocks E-6b.1–E-6b.10. `db.current_session()` answers it; the async dependency `deps.get_session` makes it current for a request, and `db.unit_of_work(engine)` for the operator's command and for tests. With none current, a method raises `db.NoCurrentSession`. The API layer commits a write before it answers. ADU-03 gains two `amends` lines, for src/app/db.py (ADU-01's) and src/app/api/deps.py (ADU-02's); neither is a test, so neither needs a grant, and the order is unchanged (B-4.3). ADU-03's arm 1 gains the request path (E-6b.10). With the identity service `create_app(workspace=tmp_path)` binds, a route the test registers itself on that app answers 200 with the seeded admin's id for a token `sign_in` issued, and 401 unauthenticated for `Bearer garbage`. The route sits at a path the contract does not declare and takes its caller from `Depends(app.api.deps.require_caller)`. A method with no session current raises `db.NoCurrentSession`. A broken wiring of deps.py therefore fails ADU-03's own tests, where R1 measured a green gate with every authenticated request answering 500 (R1 N-1; rehearsed in B-4.3). The route is the test's own because every stub is replaced by a later unit while ADU-03's test is immutable (R2 N-1; plugin FB-34). It is R2's first fix, refined, and not the second, which keeps a pin on a temporary state and cannot be met after ADU-08. The reasons in full, and the thirteen later units it was checked against, follow the bracket
 | (c) per-request construction — no text: it changes the shape of ADU-02's composition root (`app.state.ports` would hold factories) and with it the `isinstance` checks of ADU-02's completed test (tests/api/test_contract_conformance.py:105–118). This loop does not open that wall; choosing (c) stops the apply]
 
+**Why the request path goes through a route of the test's own (R2 N-1; plugin FB-34).** v1.2's clause sent its request to a stubbed operation. Every stub is replaced by a later unit (ADU-PLAN.md:273, :299, :325, :349), and ADU-08 deletes the module, while ADU-03's test becomes immutable once ADU-03 is ✅ (hard rule 1). The API unit that serves the operation the test sends would turn ADU-03's test red, and after ADU-08 no stubbed operation would be left to send (measured by R2, and again in B-4.3, part 7). R2 offered two fixes.
+1. **Chosen: R2's first fix, refined.** The clause asserts only through surfaces ADU-03 owns, or that no later unit is planned to remove:
+   - `create_app`, ADU-02's composition root;
+   - the identity service on `Ports.member_directory`, ADU-03's own binding line, which no later unit replaces;
+   - `seed_admin`, `sign_in` and `caller_for_token`, ADU-03's own;
+   - `db.unit_of_work`, `db.NoCurrentSession` and `require_caller`'s dependency on `get_session`: ADU-03's own amendments of db.py and deps.py, which no later entry amends;
+   - `require_caller` itself and the 401 Problem it raises: ADU-02's, pinned by the contract and asserted again by ADU-04's second arm;
+   - and the route, the test's own.
+
+   It refines R2's wording in four ways. The route takes `Depends(app.api.deps.require_caller)` by name, because `contract_stubs.CALLER_DEP`, the same dependency, lives in the module ADU-08 deletes. It sits at a path the contract does not declare, so no router of a later unit claims it (no contract path begins with a parameter, Part A-2). It answers the id `seed_admin` returned, not only 200, so a token resolved to the wrong member fails. And the arm says that the clause sends no request to a contract operation and imports nothing from the stubs module, so the session's test cannot drift back to one.
+2. **Not chosen: R2's second fix** (keep the words, and name ADU-03's test inside Q-p5's wall). It would keep an arm that pins a temporary state, FB-29's class, which this loop exists to remove. It would add ADU-03's test to the grants of the four API units. And after ADU-08 no stubbed operation is left, so no edit could meet the clause: ADU-08 would have to rewrite it.
+3. **Checked against the landing of each of the thirteen later units, in the derived order.**
+   - **ADU-09, ADU-05, ADU-07** rebind only their own lines of `src/app/main.py`; under E-7 (a) they also set `identity.notifier` and `identity.scheduling`. `seed_admin` and `sign_in` emit nothing and call no port (ADU-03 arms 2 and 6; §IdentityService). So the clause never reaches the Notifier or the SchedulingPort bound beside the directory, Null or real. It runs in each later stage's gate in B-4.3.
+   - **ADU-04, ADU-06, ADU-10, ADU-08**: the first three move their operations out of the stubs; ADU-08 moves its own and deletes the module. The clause sends no request to any of them and imports nothing from the module. The four API twins of B-4.3 land them in turn.
+   - **ADU-12, ADU-17, ADU-13, ADU-14** change only frontend/, with ADU-12's amendments of adu.toml and CLAUDE.md.
+   - **ADU-11** adds src/app/cli.py, which builds the app with `create_app` and changes nothing in it.
+   - **ADU-15** adds src/app/serve.py, which serves the built frontend in `app serve`. It amends cli.py, frontend/vite.config.ts, frontend/package.json, tests/conftest.py and adu.toml. It mounts nothing on the app `create_app` returns (Part A-2), so nothing stands before the test's route.
+
+   No later entry amends src/app/api/deps.py or src/app/db.py. One condition is written where it is decided: Q-p5's loop keeps `Ports.member_directory` bound to the identity service itself (Q-p5, its first point).
+
 Under (b), outside a request (E-6b.1 states it in full; in short):
-- **The seed command (ADU-11, `app seed-admin`)** builds the app with `create_app(workspace)` and calls `seed_admin` inside `with db.unit_of_work(db.engine_for(app.state.workspace)):`. The block commits when `seed_admin` returns, and the command then prints the id (exit 0). `Refused("team_not_empty")` rolls the block back, and the command prints the reason and exits 2.
+- **The seed command (ADU-11, `app seed-admin`)** builds the app with `create_app(workspace)` and calls `seed_admin` on the identity service that app binds as `Ports.member_directory` (ADU-03 arm 1), inside `with db.unit_of_work(db.engine_for(app.state.workspace)):`. Whether the command reaches it there or through another binding is Q-p5's first point, ruled before ADU-04 opens and so before ADU-11 (derived position 17). The block commits when `seed_admin` returns, and the command then prints the id (exit 0). `Refused("team_not_empty")` rolls the block back, and the command prints the reason and exits 2.
 - **A test of ADU-03** wraps each call in `with db.unit_of_work(db.engine_for(tmp_path)):` and reads back in a second unit of work. A refusal is asserted with `pytest.raises(Refused)` around the block, which leaves it rolled back. No test sets the ContextVar itself.
 - **When no session is current**, every MemberDirectory and IdentityService method raises `db.NoCurrentSession` from `db.current_session()`. None opens a session quietly.
 
@@ -2989,7 +3356,7 @@ A point the arms, the domain spec and the contract do not settle is marked open 
 
 **The request's session (D-p3).** Every service, and every port implementation `src/app/main.py` binds, reads and writes in the current session, `db.current_session()`, and never opens, commits or closes one. With no session current, `db.current_session()` raises `db.NoCurrentSession`; a service method lets it propagate and never opens a session quietly. Exactly three owners make a session current:
 - **A request.** `deps.get_session` is an async generator dependency. It opens the request's one session on `engine_of(request)`, makes it current with `db.use_session(session)` for the whole request, and yields it. On the way out it restores the previous current session and closes this one, which rolls back whatever was not committed. It is async because a ContextVar set in a sync dependency is not visible to the endpoint. `require_caller` depends on it, so `caller_for_token` reads the request's session. The API layer commits a write after the service returns and before it answers, never in the dependency's exit: FastAPI runs that exit after the response is sent, so a failure there would leave a 200 standing. Both behaviours are measured in docs/PACK-q07-retire-amends.md, Part E-6.
-- **The operator's command.** `app seed-admin` (ADU-11) builds the app with `create_app(workspace)` and calls `seed_admin` inside `with db.unit_of_work(db.engine_for(app.state.workspace)):`. The block commits when `seed_admin` returns, and the command then prints the id (exit 0). `Refused("team_not_empty")` rolls the block back, and the command prints the reason and exits 2.
+- **The operator's command.** `app seed-admin` (ADU-11) builds the app with `create_app(workspace)` and calls `seed_admin` on the identity service that app binds as `Ports.member_directory` (ADU-03 arm 1), inside `with db.unit_of_work(db.engine_for(app.state.workspace)):`. Whether the command reaches it there or through another binding is Q-p5's first point, ruled before ADU-04 opens and so before ADU-11. The block commits when `seed_admin` returns, and the command then prints the id (exit 0). `Refused("team_not_empty")` rolls the block back, and the command prints the reason and exits 2.
 - **A test.** A service unit's tests (ADU-03's first) wrap each call in `with db.unit_of_work(db.engine_for(tmp_path)):` and read back in a second unit of work. A refusal is asserted with `pytest.raises(Refused)` around the block, which leaves it rolled back. No test sets the ContextVar itself; a test calls a service outside a unit of work only to assert `db.NoCurrentSession`.
 ```
 # src/app/db.py gains (ADU-03, by amendment of ADU-01's module; layer 1, so every service, the API and the CLI reach it):
@@ -3073,7 +3440,7 @@ design/INTERFACES.md §Refused |
 with:
 ~~~text
 design/INTERFACES.md §Refused |
-| D-p3 | **The request's session is the current session: every service and every port implementation reads and writes in `db.current_session()` and never opens, commits or closes one; with none current it raises `db.NoCurrentSession` and never opens one quietly.** A request makes its one session current in the async dependency `deps.get_session` (`db.use_session`), on which `require_caller` depends. The API layer commits a write after the service returns and before it answers. The operator's command and the tests run in `db.unit_of_work(engine)` (commit on return, rollback on raise). ADU-03 adds `NoCurrentSession`, `current_session`, `use_session` and `unit_of_work` to `src/app/db.py` (ADU-01's module) and rewrites `get_session` in `src/app/api/deps.py` (ADU-02's), both by declared amendment. The transfer (ADU-05) and the Notifier (ADU-09) write in the same session. | <apply-date>, operator: Q-p1 option (b), Part E-6 of docs/PACK-q07-retire-amends.md v1.2. It is the one mechanism that also serves the Notifier's and the transfer's writes in the caller's transaction (R-swaps-04; design/INTERFACES.md §SchedulingPort, §Notifier). Measured on fastapi 0.162.0 with the repository's engine: a ContextVar set in a sync dependency is not visible to the endpoint. Set in an async generator dependency, it is seen by sync dependencies and the endpoint, kept apart across concurrent requests and reset cleanly on exit. That exit runs after the response is sent (a raise there still answers 200), hence the commit before the answer. design/INTERFACES.md §Domain services; design/ARCHITECTURE.md §Persistence and concurrency rules |
+| D-p3 | **The request's session is the current session: every service and every port implementation reads and writes in `db.current_session()` and never opens, commits or closes one; with none current it raises `db.NoCurrentSession` and never opens one quietly.** A request makes its one session current in the async dependency `deps.get_session` (`db.use_session`), on which `require_caller` depends. The API layer commits a write after the service returns and before it answers. The operator's command and the tests run in `db.unit_of_work(engine)` (commit on return, rollback on raise). ADU-03 adds `NoCurrentSession`, `current_session`, `use_session` and `unit_of_work` to `src/app/db.py` (ADU-01's module) and rewrites `get_session` in `src/app/api/deps.py` (ADU-02's), both by declared amendment. The transfer (ADU-05) and the Notifier (ADU-09) write in the same session. | <apply-date>, operator: Q-p1 option (b), Part E-6 of docs/PACK-q07-retire-amends.md v1.3. It is the one mechanism that also serves the Notifier's and the transfer's writes in the caller's transaction (R-swaps-04; design/INTERFACES.md §SchedulingPort, §Notifier). Measured on fastapi 0.162.0 with the repository's engine: a ContextVar set in a sync dependency is not visible to the endpoint. Set in an async generator dependency, it is seen by sync dependencies and the endpoint, kept apart across concurrent requests and reset cleanly on exit. That exit runs after the response is sent (a raise there still answers 200), hence the commit before the answer. design/INTERFACES.md §Domain services; design/ARCHITECTURE.md §Persistence and concurrency rules |
 ~~~
 
 #### E-6b.9 · OPEN-QUESTIONS.md:65
@@ -3085,18 +3452,18 @@ replace exactly:
 with:
 ~~~text
 **Recommendation:** (b), ruled once for all four services: it is the only option that also serves the Notifier's and the transfer's atomic writes.
-**Resolution:** option (b), the operator, <apply-date>, on Part E-6 of docs/PACK-q07-retire-amends.md v1.2 (verified in docs/VERIFICATION-<id>.md): the request's session is the current session. The async `deps.get_session` makes it current for a request, and `db.unit_of_work` for the operator's command and the tests. Every service reads it through `db.current_session()`, which raises `db.NoCurrentSession` when none is current. The API layer commits a write before it answers. It lives in D-p3, design/INTERFACES.md §Domain services (the request's session) and §IdentityService, design/ARCHITECTURE.md §Persistence and concurrency rules, and ADU-03's amends of src/app/db.py and src/app/api/deps.py (ADU-PLAN v1.3).
+**Resolution:** option (b), the operator, <apply-date>, on Part E-6 of docs/PACK-q07-retire-amends.md v1.3 (verified in docs/VERIFICATION-<id>.md): the request's session is the current session. The async `deps.get_session` makes it current for a request, and `db.unit_of_work` for the operator's command and the tests. Every service reads it through `db.current_session()`, which raises `db.NoCurrentSession` when none is current. The API layer commits a write before it answers. It lives in D-p3, design/INTERFACES.md §Domain services (the request's session) and §IdentityService, design/ARCHITECTURE.md §Persistence and concurrency rules, and ADU-03's amends of src/app/db.py and src/app/api/deps.py (ADU-PLAN v1.3).
 ~~~
 
 #### E-6b.10 · ADU-PLAN.md:161
-Why: R1 N-1. E-6b.6's db.py and deps.py lines need an ADU-03 arm that fails when they are wired wrong. This is R1's clause, appended before the arm's closing quote. Its "under D-p3" is written as "under the request's current session of design/INTERFACES.md (Domain services)", because the plan may carry no provisional id (B-3; plugin scripts/lib/plan.mjs:160). The arm's file stays as E-10 rules it.
+Why: R1 N-1 and R2 N-1. E-6b.6's db.py and deps.py lines need an ADU-03 arm that fails when they are wired wrong (R1). That arm must assert only through surfaces ADU-03 owns, or that no later unit removes, never through a stubbed operation (R2; plugin FB-34); the reasons and the units checked are E-6's. The clause is appended before the arm's closing quote, after B-3.5's gate note. Its "under D-p3" is written as "under the request's current session of design/INTERFACES.md (Domain services)", because the plan may carry no provisional id (B-3; plugin scripts/lib/plan.mjs:160). The arm's file stays as E-10 rules it.
 replace exactly (within the line):
 ~~~text
-imports app.identity.null_directory; the contract unit's tests and tests/test_nulls.py pass in the gate after exactly the edits this entry's amends declare on them, each made under the operator's grant (Q-07)
+imports app.identity.null_directory; the contract unit's tests and tests/test_nulls.py pass in the gate after exactly the edits this entry's amends declare on them, each made under the operator's grant (Q-07), which the gate checks at this unit's close and no test of this file repeats
 ~~~
 with:
 ~~~text
-imports app.identity.null_directory; the contract unit's tests and tests/test_nulls.py pass in the gate after exactly the edits this entry's amends declare on them, each made under the operator's grant (Q-07); under the request's current session of design/INTERFACES.md (Domain services), with the identity service bound by create_app(workspace=tmp_path), a request to a stubbed operation answers 501 not_built with Bearer <a token sign_in issued in that workspace> and 401 unauthenticated with Bearer garbage (require_caller reads the request's current session), and an IdentityService method called with no session current raises db.NoCurrentSession
+imports app.identity.null_directory; the contract unit's tests and tests/test_nulls.py pass in the gate after exactly the edits this entry's amends declare on them, each made under the operator's grant (Q-07), which the gate checks at this unit's close and no test of this file repeats; under the request's current session of design/INTERFACES.md (Domain services), with the identity service bound by create_app(workspace=tmp_path), a route the test registers itself on that app, at a path the contract does not declare and taking its caller from Depends(app.api.deps.require_caller), answers 200 with the id seed_admin returned for Bearer <the token sign_in issued in that workspace> and 401 unauthenticated for Bearer garbage (require_caller reads the request's current session); the clause sends no request to an operation of the contract and imports nothing from src/app/api/contract_stubs.py, so it holds while the API units move their operations out of the stubs and after ADU-08 deletes that module; and an IdentityService method called with no session current raises db.NoCurrentSession
 ~~~
 
 #### E-6a.1 · design/INTERFACES.md:88
@@ -3110,7 +3477,7 @@ A point the arms, the domain spec and the contract do not settle is marked open 
 
 **The request's session (D-p3).** Every IdentityService operation takes the session it runs in as its first parameter after `self` (`session: Session`). It writes only in that session and never commits:
 - The API layer passes the request's one session from `deps.get_session` and commits a write after the service returns and before it answers.
-- The operator's command (ADU-11) opens `db.session_for(db.engine_for(app.state.workspace))` and passes it to `seed_admin`. It commits and prints the id; on `Refused("team_not_empty")` it rolls back, prints the reason and exits 2.
+- The operator's command (ADU-11) opens `db.session_for(db.engine_for(app.state.workspace))` and passes it to `seed_admin` on the identity service that app binds as `Ports.member_directory` (ADU-03 arm 1); whether the command reaches it there or through another binding is Q-p5's first point, ruled before ADU-04 opens and so before ADU-11. It commits and prints the id; on `Refused("team_not_empty")` it rolls back, prints the reason and exits 2.
 - A test passes a session it opened on `db.engine_for(tmp_path)`.
 
 The MemberDirectory methods, whose signatures `src/app/ports.py` pins without a session (tests/test_ports.py:21), each open a short session of their own on `engine()`. They see committed state only, never the caller's uncommitted writes. There is no current session, so none can be missing. This does not serve the Notifier's and the transfer's writes in the caller's transaction (§SchedulingPort, §Notifier): ADU-09 and ADU-05 each settle their mechanism in a design-change loop before they open.
@@ -3187,7 +3554,7 @@ design/INTERFACES.md §Refused |
 with:
 ~~~text
 design/INTERFACES.md §Refused |
-| D-p3 | **Every IdentityService operation takes the session it runs in as its first parameter and never commits; the MemberDirectory methods, whose signatures the ports pin without a session (tests/test_ports.py:21), each read in a short session of their own on the workspace's engine and see committed state only.** The API layer passes the request's session from `deps.get_session` and commits a write before it answers; the operator's command and the tests pass a session they opened. The Notifier's and the transfer's writes in the caller's transaction are not served: ADU-09 and ADU-05 each settle theirs in a design-change loop before they open. | <apply-date>, operator: Q-p1 option (a), Part E-6 of docs/PACK-q07-retire-amends.md v1.2. No change to the ports, `src/app/api/deps.py` or `src/app/db.py`. The directory's reads are the one exception to one session per request (design/ARCHITECTURE.md §Persistence and concurrency rules); design/INTERFACES.md §Domain services |
+| D-p3 | **Every IdentityService operation takes the session it runs in as its first parameter and never commits; the MemberDirectory methods, whose signatures the ports pin without a session (tests/test_ports.py:21), each read in a short session of their own on the workspace's engine and see committed state only.** The API layer passes the request's session from `deps.get_session` and commits a write before it answers; the operator's command and the tests pass a session they opened. The Notifier's and the transfer's writes in the caller's transaction are not served: ADU-09 and ADU-05 each settle theirs in a design-change loop before they open. | <apply-date>, operator: Q-p1 option (a), Part E-6 of docs/PACK-q07-retire-amends.md v1.3. No change to the ports, `src/app/api/deps.py` or `src/app/db.py`. The directory's reads are the one exception to one session per request (design/ARCHITECTURE.md §Persistence and concurrency rules); design/INTERFACES.md §Domain services |
 ~~~
 
 #### E-6a.8 · OPEN-QUESTIONS.md:65
@@ -3199,27 +3566,27 @@ replace exactly:
 with:
 ~~~text
 **Recommendation:** (b), ruled once for all four services: it is the only option that also serves the Notifier's and the transfer's atomic writes.
-**Resolution:** option (a), the operator, <apply-date>, on Part E-6 of docs/PACK-q07-retire-amends.md v1.2 (verified in docs/VERIFICATION-<id>.md): every IdentityService operation takes its session as the first parameter, and the MemberDirectory methods read in short sessions of their own (committed state only). The Notifier's and the transfer's writes in the caller's transaction are left to ADU-09's and ADU-05's own loops. It lives in D-p3, design/INTERFACES.md §Domain services and §IdentityService, and design/ARCHITECTURE.md §Persistence and concurrency rules.
+**Resolution:** option (a), the operator, <apply-date>, on Part E-6 of docs/PACK-q07-retire-amends.md v1.3 (verified in docs/VERIFICATION-<id>.md): every IdentityService operation takes its session as the first parameter, and the MemberDirectory methods read in short sessions of their own (committed state only). The Notifier's and the transfer's writes in the caller's transaction are left to ADU-09's and ADU-05's own loops. It lives in D-p3, design/INTERFACES.md §Domain services and §IdentityService, and design/ARCHITECTURE.md §Persistence and concurrency rules.
 ~~~
 
 #### E-6a.9 · ADU-PLAN.md:161
-Why: under (a) too, no gate test sends a token through the composition root's own directory before ADU-04 (R1 §5, N-1, last point). The clause is (a)'s form of E-6b.10's.
+Why: under (a) too, no gate test sends a token through the composition root's own directory before ADU-04 (R1 §5, N-1, last point). The clause is (a)'s form of E-6b.10's, through the same route of the test's own, for the same reasons (R2 N-1; E-6).
 replace exactly (within the line):
 ~~~text
-imports app.identity.null_directory; the contract unit's tests and tests/test_nulls.py pass in the gate after exactly the edits this entry's amends declare on them, each made under the operator's grant (Q-07)
+imports app.identity.null_directory; the contract unit's tests and tests/test_nulls.py pass in the gate after exactly the edits this entry's amends declare on them, each made under the operator's grant (Q-07), which the gate checks at this unit's close and no test of this file repeats
 ~~~
 with:
 ~~~text
-imports app.identity.null_directory; the contract unit's tests and tests/test_nulls.py pass in the gate after exactly the edits this entry's amends declare on them, each made under the operator's grant (Q-07); with the identity service bound by create_app(workspace=tmp_path), a request to a stubbed operation answers 501 not_built with Bearer <a token sign_in issued in that workspace> and 401 unauthenticated with Bearer garbage (caller_for_token reads in a short session of its own on the workspace's engine)
+imports app.identity.null_directory; the contract unit's tests and tests/test_nulls.py pass in the gate after exactly the edits this entry's amends declare on them, each made under the operator's grant (Q-07), which the gate checks at this unit's close and no test of this file repeats; with the identity service bound by create_app(workspace=tmp_path), a route the test registers itself on that app, at a path the contract does not declare and taking its caller from Depends(app.api.deps.require_caller), answers 200 with the id seed_admin returned for Bearer <the token sign_in issued in that workspace> and 401 unauthenticated for Bearer garbage (caller_for_token reads in a short session of its own on the workspace's engine); the clause sends no request to an operation of the contract and imports nothing from src/app/api/contract_stubs.py, so it holds while the API units move their operations out of the stubs and after ADU-08 deletes that module
 ~~~
 
 **7. How the IdentityService receives its collaborators (Q-p2).** B-2.7 states the question in full. The arms name a clock, a SchedulingPort and a Notifier. Identity consumes scheduling (IR-05) and notifications (IR-10), and each of those consumes MemberDirectory (IR-06, IR-04): two cycles at the service level. Both design/ARCHITECTURE.md:18 ("two cycles (identity ↔ scheduling, scheduling ↔ swaps)") and design/INTERFACES.md:92 (post-B :129) omit identity ↔ notifications, so each option amends both (E-7a.5–.6, E-7b.4–.5, the same text in each). Each option's blocks also write the constructor's collaborator lines, D-p4 and Q-p2's resolution.
-[(a) constructor values, `IdentityService(clock, scheduling, notifier, …)` — blocks E-7a.1–E-7a.6. ADU-09 and ADU-05 construct their services with the identity service and then set `identity.notifier` and `identity.scheduling` in main.py. The consequence is two attribute sets after construction, a seam that design/INTERFACES.md:82 ("each provider unit replaces its own line by amendment") does not describe; E-7a.4 names it in that heading (post-B :117)
+[(a) constructor values, `IdentityService(clock, scheduling, notifier, …)` — blocks E-7a.1–E-7a.6. ADU-09 and ADU-05 construct their services with the identity service and then set `identity.notifier` and `identity.scheduling` in main.py. The consequence is two attribute sets after construction, a seam that design/INTERFACES.md:82 ("each provider unit replaces its own line by amendment") does not describe; E-7a.4 names it in that heading (post-B :117). Its constructor is composed as text with each option of E-6 and E-8 (B-4.3, part 3) and is not run with a stand-in; B-4.3 runs (b)'s
 | (b) recommended: the composition root's bindings, read at call time — `IdentityService(bound, …)`, where `bound` is a zero-argument callable answering an object with `.clock`, `.scheduling` and `.notifier` (`main.Ports`, read structurally), and main.py binds `IdentityService(lambda: app.state.ports, …)` — blocks E-7b.1–E-7b.5. Each provider still replaces only its own line, and no setter exists. v1.0 put this as "receives the composition root's `Ports` container". The container cannot be passed itself, because the service is built inside the container's own constructor (src/app/main.py:52–58); a callable answering it is the nearest form that keeps one line per port. Ruling (b) also rules the constructors of ADU-09's, ADU-05's and ADU-07's services: D-p4 says "Every later service is built the same way", which goes beyond Q-p2 as worded (the IdentityService alone)
 | (c) the collaborators passed with each call — no text: every API call site would carry them, the arms do not suggest it, and ADU-04's and ADU-11's call shapes would change with it; choosing it stops the apply]
 
 #### E-7b.1 · design/INTERFACES.md:94
-The constructor is written across three fragments of this one line, E-7's, E-6's and E-8's; any option of each composes with any option of the others (B-4.3 composes all 16).
+The constructor is written across three fragments of this one line, E-7's, E-6's and E-8's; any option of each composes with any option of the others (B-4.3 composes all 16 as text, part 3; only E-7 (b) with E-8 (a) is also run, with a stand-in service, in part 7).
 replace exactly (within the line):
 ~~~text
 def __init__(self, ...)                     # collaborators the arms name: a Clock, a SchedulingPort (IR-05), a Notifier (IR-10); how they are given: Q-p2;
@@ -3243,7 +3610,7 @@ design/INTERFACES.md §Refused |
 with:
 ~~~text
 design/INTERFACES.md §Refused |
-| D-p4 | **A domain service receives the composition root's bindings, not its collaborators one by one: `IdentityService(bound, …)` takes a zero-argument callable answering an object with `.clock`, `.scheduling` and `.notifier` (`Bindings`, a Protocol in identity's service module that `main.Ports` satisfies, so identity never imports main), and reads them at call time.** The composition root binds `IdentityService(lambda: app.state.ports, …)`; a test passes `lambda: SimpleNamespace(clock=…, scheduling=…, notifier=…)` holding the doubles. Every later service is built the same way, so each provider unit still replaces only its own line in `src/app/main.py` and no cycle needs a setter. | <apply-date>, operator: Q-p2 option (b), Part E-7 of docs/PACK-q07-retire-amends.md v1.2. The service-level cycles identity ↔ scheduling (IR-05 / IR-06) and identity ↔ notifications (IR-10 / IR-04) are closed by reading the bindings at call time, not by construction order. design/INTERFACES.md §Composition root bindings ("each provider unit replaces its own line by amendment") and §IdentityService |
+| D-p4 | **A domain service receives the composition root's bindings, not its collaborators one by one: `IdentityService(bound, …)` takes a zero-argument callable answering an object with `.clock`, `.scheduling` and `.notifier` (`Bindings`, a Protocol in identity's service module that `main.Ports` satisfies, so identity never imports main), and reads them at call time.** The composition root binds `IdentityService(lambda: app.state.ports, …)`; a test passes `lambda: SimpleNamespace(clock=…, scheduling=…, notifier=…)` holding the doubles. Every later service is built the same way, so each provider unit still replaces only its own line in `src/app/main.py` and no cycle needs a setter. | <apply-date>, operator: Q-p2 option (b), Part E-7 of docs/PACK-q07-retire-amends.md v1.3. The service-level cycles identity ↔ scheduling (IR-05 / IR-06) and identity ↔ notifications (IR-10 / IR-04) are closed by reading the bindings at call time, not by construction order. design/INTERFACES.md §Composition root bindings ("each provider unit replaces its own line by amendment") and §IdentityService |
 ~~~
 
 #### E-7b.3 · OPEN-QUESTIONS.md:72
@@ -3255,7 +3622,7 @@ replace exactly:
 with:
 ~~~text
 **Recommendation:** (b).
-**Resolution:** option (b), the operator, <apply-date>, on Part E-7 of docs/PACK-q07-retire-amends.md v1.2 (verified in docs/VERIFICATION-<id>.md): `IdentityService(bound, …)` takes a zero-argument callable answering the composition root's bindings (`.clock`, `.scheduling`, `.notifier`) and reads them at call time; main.py binds `IdentityService(lambda: app.state.ports, …)`. It lives in D-p4 and design/INTERFACES.md §IdentityService.
+**Resolution:** option (b), the operator, <apply-date>, on Part E-7 of docs/PACK-q07-retire-amends.md v1.3 (verified in docs/VERIFICATION-<id>.md): `IdentityService(bound, …)` takes a zero-argument callable answering the composition root's bindings (`.clock`, `.scheduling`, `.notifier`) and reads them at call time; main.py binds `IdentityService(lambda: app.state.ports, …)`. It lives in D-p4 and design/INTERFACES.md §IdentityService.
 ~~~
 
 #### E-7b.4 · design/INTERFACES.md:129
@@ -3300,7 +3667,7 @@ design/INTERFACES.md §Refused |
 with:
 ~~~text
 design/INTERFACES.md §Refused |
-| D-p4 | **`IdentityService(clock, scheduling, notifier, …)` receives its collaborators as constructor values.** The composition root passes the bound clock, SchedulingPort and Notifier; a test passes the doubles. ADU-09 and ADU-05, whose services consume MemberDirectory while identity consumes theirs, construct their service with the identity service and then set `identity.notifier` / `identity.scheduling` in `src/app/main.py`, each by its own `main.py` amendment. | <apply-date>, operator: Q-p2 option (a), Part E-7 of docs/PACK-q07-retire-amends.md v1.2. The cycles identity ↔ notifications (IR-10 / IR-04) and identity ↔ scheduling (IR-05 / IR-06) are closed by setting an attribute after construction, a seam design/INTERFACES.md §Composition root bindings names beside "each provider unit replaces its own line"; design/INTERFACES.md §IdentityService |
+| D-p4 | **`IdentityService(clock, scheduling, notifier, …)` receives its collaborators as constructor values.** The composition root passes the bound clock, SchedulingPort and Notifier; a test passes the doubles. ADU-09 and ADU-05, whose services consume MemberDirectory while identity consumes theirs, construct their service with the identity service and then set `identity.notifier` / `identity.scheduling` in `src/app/main.py`, each by its own `main.py` amendment. | <apply-date>, operator: Q-p2 option (a), Part E-7 of docs/PACK-q07-retire-amends.md v1.3. The cycles identity ↔ notifications (IR-10 / IR-04) and identity ↔ scheduling (IR-05 / IR-06) are closed by setting an attribute after construction, a seam design/INTERFACES.md §Composition root bindings names beside "each provider unit replaces its own line"; design/INTERFACES.md §IdentityService |
 ~~~
 
 #### E-7a.3 · OPEN-QUESTIONS.md:72
@@ -3312,7 +3679,7 @@ replace exactly:
 with:
 ~~~text
 **Recommendation:** (b).
-**Resolution:** option (a), the operator, <apply-date>, on Part E-7 of docs/PACK-q07-retire-amends.md v1.2 (verified in docs/VERIFICATION-<id>.md): the clock, the SchedulingPort and the Notifier are constructor values; ADU-09 and ADU-05 set `identity.notifier` and `identity.scheduling` after construction in main.py. It lives in D-p4 and design/INTERFACES.md §IdentityService.
+**Resolution:** option (a), the operator, <apply-date>, on Part E-7 of docs/PACK-q07-retire-amends.md v1.3 (verified in docs/VERIFICATION-<id>.md): the clock, the SchedulingPort and the Notifier are constructor values; ADU-09 and ADU-05 set `identity.notifier` and `identity.scheduling` after construction in main.py. It lives in D-p4 and design/INTERFACES.md §IdentityService.
 ~~~
 
 #### E-7a.4 · design/INTERFACES.md:117
@@ -3347,7 +3714,7 @@ The service graph has three cycles (identity ↔ scheduling, identity ↔ notifi
 
 **8. Where a salt and a bearer token come from (Q-p3).** B-2.7 states the question in full. Each option's blocks write the constructor's source line, amend design/ARCHITECTURE.md:45, write D-p5 and Q-p3's resolution.
 [(a) recommended: a `TokenSource` passed to the IdentityService — blocks E-8a.1–E-8a.4. The product's `SecretsSource` draws from the standard library's `secrets` (`token_urlsafe(32)`, `token_hex(8)`), and a test passes a deterministic source. There is no new dependency. ARCHITECTURE.md:45 gains the one exception. v1.0's wording, "never `random`", is narrowed to "a credential never comes from `random`", because `src/app/synthetic.py`, which is product code at layer 1, rightly takes a `random.Random(seed)`
-| (b) a `random.Random` passed in, the synthetic generator's pattern; the composition root passes `random.Random()` (seeded from the OS), a test a seeded one — blocks E-8b.1–E-8b.4. The consequence: Python's Mersenne Twister state can be recovered from enough of its outputs (624 32-bit words), so a member who collects their own tokens can predict other members' tokens. That is unacceptable for a credential. The adapter's opt-in determinism scan (plugin `adapters/python-fastapi-uv/determinism_scan.py`) is not enabled (`adu.toml` `[adapter]` has only `name`). Enabled, it would fail on `random` in the package under (b), but also today, on src/app/synthetic.py:70, so it does not tell (b) from the rest
+| (b) a `random.Random` passed in, the synthetic generator's pattern; the composition root passes `random.Random()` (seeded from the OS), a test a seeded one — blocks E-8b.1–E-8b.4. The consequence: Python's Mersenne Twister state can be recovered from enough of its outputs (624 32-bit words), so a member who collects their own tokens can predict other members' tokens. That is unacceptable for a credential. The adapter's opt-in determinism scan (plugin `adapters/python-fastapi-uv/determinism_scan.py`) is not enabled (`adu.toml` `[adapter]` has only `name`). Enabled, it would fail on `random` in the package under (b), but also today, on src/app/synthetic.py:12, where the fixture's generator imports `random` (measured on the 7d1e7d4 tree: B-4.3, part 6), so it does not tell (b) from the rest. (b)'s constructor is composed as text only (B-4.3, part 3), not run with a stand-in
 | (c) a salt derived from the email and a token derived by HMAC from a configured secret — no text: it needs an operator-held secret the design does not have (where it is configured, who holds it, how it is rotated), which is the operator's to define, not a mechanism this pack can write; choosing it stops the apply]
 
 #### E-8a.1 · design/INTERFACES.md:94
@@ -3386,7 +3753,7 @@ design/INTERFACES.md §Refused |
 with:
 ~~~text
 design/INTERFACES.md §Refused |
-| D-p5 | **Identity's bearer tokens and passcode salts come from a source passed to the IdentityService; the product's draws from the standard library's `secrets`.** `IdentityService(…, source)` takes a `TokenSource` (`token() -> str`, `salt() -> str`). The composition root passes `SecretsSource()` (`secrets.token_urlsafe(32)`, `secrets.token_hex(8)`, in `src/app/identity/service.py`), and a test passes a deterministic source. It is the one exception to "no randomness in the product" (design/ARCHITECTURE.md §Persistence and concurrency rules); a credential never comes from `random`. | <apply-date>, operator: Q-p3 option (a), Part E-8 of docs/PACK-q07-retire-amends.md v1.2. No new dependency (D-03; D-04: the salted SHA-256 from the standard library). CLAUDE.md hard rule 5 ("randomness only through a passed generator where the adapter says so"): the source is passed, and the adapter names no other source (its determinism scan is opt-in and not enabled: `adu.toml` `[adapter]` has only `name`). A seeded generator's tokens are predictable (Q-p3 (b)). design/INTERFACES.md §IdentityService |
+| D-p5 | **Identity's bearer tokens and passcode salts come from a source passed to the IdentityService; the product's draws from the standard library's `secrets`.** `IdentityService(…, source)` takes a `TokenSource` (`token() -> str`, `salt() -> str`). The composition root passes `SecretsSource()` (`secrets.token_urlsafe(32)`, `secrets.token_hex(8)`, in `src/app/identity/service.py`), and a test passes a deterministic source. It is the one exception to "no randomness in the product" (design/ARCHITECTURE.md §Persistence and concurrency rules); a credential never comes from `random`. | <apply-date>, operator: Q-p3 option (a), Part E-8 of docs/PACK-q07-retire-amends.md v1.3. No new dependency (D-03; D-04: the salted SHA-256 from the standard library). CLAUDE.md hard rule 5 ("randomness only through a passed generator where the adapter says so"): the source is passed, and the adapter names no other source (its determinism scan is opt-in and not enabled: `adu.toml` `[adapter]` has only `name`). A seeded generator's tokens are predictable (Q-p3 (b)). design/INTERFACES.md §IdentityService |
 ~~~
 
 #### E-8a.4 · OPEN-QUESTIONS.md:78
@@ -3401,7 +3768,7 @@ with:
 ~~~text
 **Options:** (a) the service takes a token-and-salt source in its constructor; the composition root passes one built on the standard library's `secrets` (no new dependency), tests pass a deterministic one, and a DECISIONS row amends ARCHITECTURE.md:45 to "no randomness in the product except the injected token and salt source (`secrets`); never `random`". (b) a seeded `random.Random` passed in, the synthetic generator's pattern. Consequence: reproducible, but a bearer token becomes guessable from the seed, which is unacceptable for a credential. (c) a deterministic salt (from the email) and a token derived by HMAC from a configured secret. Consequence: no randomness, but the secret is an operator-held configuration the design does not mention.
 **Recommendation:** (a).
-**Resolution:** option (a), the operator, <apply-date>, on Part E-8 of docs/PACK-q07-retire-amends.md v1.2 (verified in docs/VERIFICATION-<id>.md): a `TokenSource` passed to the IdentityService. The product's `SecretsSource` draws from the standard library's `secrets`, and tests pass a deterministic source. It lives in D-p5, design/INTERFACES.md §IdentityService and design/ARCHITECTURE.md §Persistence and concurrency rules (the one exception to "no randomness in the product").
+**Resolution:** option (a), the operator, <apply-date>, on Part E-8 of docs/PACK-q07-retire-amends.md v1.3 (verified in docs/VERIFICATION-<id>.md): a `TokenSource` passed to the IdentityService. The product's `SecretsSource` draws from the standard library's `secrets`, and tests pass a deterministic source. It lives in D-p5, design/INTERFACES.md §IdentityService and design/ARCHITECTURE.md §Persistence and concurrency rules (the one exception to "no randomness in the product").
 ~~~
 
 #### E-8b.1 · design/INTERFACES.md:94
@@ -3439,7 +3806,7 @@ design/INTERFACES.md §Refused |
 with:
 ~~~text
 design/INTERFACES.md §Refused |
-| D-p5 | **Identity's bearer tokens and passcode salts come from a `random.Random` passed to the IdentityService.** The composition root passes `random.Random()` (seeded from the OS), and a test passes `random.Random(<seed>)`. A salt is eight hex digits, as the fixture's are, and a token is `tok_` and 32 hex digits. It is the one exception to "no randomness in the product" (design/ARCHITECTURE.md §Persistence and concurrency rules). | <apply-date>, operator: Q-p3 option (b), Part E-8 of docs/PACK-q07-retire-amends.md v1.2. It follows the synthetic generator's pattern and needs no new dependency. Accepted with its consequence: the generator's state can be recovered from enough of its outputs, so tokens are predictable to a member who collects their own. design/INTERFACES.md §IdentityService |
+| D-p5 | **Identity's bearer tokens and passcode salts come from a `random.Random` passed to the IdentityService.** The composition root passes `random.Random()` (seeded from the OS), and a test passes `random.Random(<seed>)`. A salt is eight hex digits, as the fixture's are, and a token is `tok_` and 32 hex digits. It is the one exception to "no randomness in the product" (design/ARCHITECTURE.md §Persistence and concurrency rules). | <apply-date>, operator: Q-p3 option (b), Part E-8 of docs/PACK-q07-retire-amends.md v1.3. It follows the synthetic generator's pattern and needs no new dependency. Accepted with its consequence: the generator's state can be recovered from enough of its outputs, so tokens are predictable to a member who collects their own. design/INTERFACES.md §IdentityService |
 ~~~
 
 #### E-8b.4 · OPEN-QUESTIONS.md:78
@@ -3453,13 +3820,13 @@ with:
 ~~~text
 **Options:** (a) the service takes a token-and-salt source in its constructor; the composition root passes one built on the standard library's `secrets` (no new dependency), tests pass a deterministic one, and a DECISIONS row amends ARCHITECTURE.md:45 to "no randomness in the product except the injected token and salt source (`secrets`); never `random`". (b) a seeded `random.Random` passed in, the synthetic generator's pattern. Consequence: reproducible, but a bearer token becomes guessable from the seed, which is unacceptable for a credential. (c) a deterministic salt (from the email) and a token derived by HMAC from a configured secret. Consequence: no randomness, but the secret is an operator-held configuration the design does not mention.
 **Recommendation:** (a).
-**Resolution:** option (b), the operator, <apply-date>, on Part E-8 of docs/PACK-q07-retire-amends.md v1.2 (verified in docs/VERIFICATION-<id>.md): a `random.Random` passed to the IdentityService, `random.Random()` in the product and a seeded one in tests, accepted with the predictability its consequence states. It lives in D-p5, design/INTERFACES.md §IdentityService and design/ARCHITECTURE.md §Persistence and concurrency rules.
+**Resolution:** option (b), the operator, <apply-date>, on Part E-8 of docs/PACK-q07-retire-amends.md v1.3 (verified in docs/VERIFICATION-<id>.md): a `random.Random` passed to the IdentityService, `random.Random()` in the product and a seeded one in tests, accepted with the predictability its consequence states. It lives in D-p5, design/INTERFACES.md §IdentityService and design/ARCHITECTURE.md §Persistence and concurrency rules.
 ~~~
 
 **9. What the IdentityService answers, and where the values live (Q-p4).** B-2.7 states the question in full. One more fact belongs with it: design/PRODUCT-DESIGN.md:18 was added by DESIGN-REVIEW-7 finding 9 (design/DESIGN-REVIEW-7.md:36, which calls it line 17) so that the contract would read the write answers rather than invent them. The contract, cut afterwards, answers `Member` with the email (contracts/openapi.yaml:104, :144, :178). Only an admin calls the three writes (R-identity-08), and sign-in answers the signed-in member's own row, so the email reaches nobody the team list hides it from (R-identity-09). Each option's blocks complete the values comment of §IdentityService and write D-p6 and Q-p4's resolution.
 [(a) recommended: the contract wins, and the values are frozen dataclasses in src/app/identity/service.py — `MemberValue` (the contract's Member) from add_member, change_role and deactivate; `SignInValue` (token, member) from sign_in; `MemberSummary` from list_members — blocks E-9a.1–E-9a.3. The names are those B-2.3 already uses
 | (b) the design wins: the writes answer MemberSummary and the contract's three Member responses lose `email` — no text: it is a breaking contract change (D-07), which needs a design-change loop of its own and a regenerated golden, and this pack changes no pin; choosing it stops the apply
-| (c) the contract wins, and the values are plain dicts with exactly the contract's keys (`MemberValue` and the rest are aliases of `dict[str, object]`), answered by the API unchanged — blocks E-9c.1–E-9c.3. The consequence: no type checks a key, so a missing or misspelt one shows only in ADU-04's conformance check, and every other in-process value of this product is a frozen dataclass (src/app/ports.py)]
+| (c) the contract wins, and the values are plain dicts with exactly the contract's keys (`MemberValue` and the rest are aliases of `dict[str, object]`), answered by the API unchanged — blocks E-9c.1–E-9c.3. The consequence: no type checks a key, so a missing or misspelt one shows only in ADU-04's conformance check, and every other in-process value of this product is a frozen dataclass (src/app/ports.py). Its values are composed as text only (B-4.3, part 3), not run with a stand-in]
 
 **The editorial note on design/PRODUCT-DESIGN.md:18, under (a) or (c).** It is the pm-lead's edit, not the architect's and not the apply's. The pm-lead owns PRODUCT-DESIGN (D-02), and D-p6 records that the contract supersedes the line until the edit is made. It is not in this apply: the release manager does not apply E-9.P. It aligns the sentence with what the contract, pinned by the golden, already answers, but it also changes what the design text says a write answers. That may make it a requirement change, a minor bump to v1.8 by VERSIONS.md:4, rather than an editorial v1.7.1; which one is the pm-lead's call. The pm-lead may word it otherwise, as long as it says what D-p6 says. It blocks nothing: ADU-03 and ADU-04 follow D-p6.
 
@@ -3481,7 +3848,7 @@ design/INTERFACES.md §Refused |
 with:
 ~~~text
 design/INTERFACES.md §Refused |
-| D-p6 | **The IdentityService answers the contract's shapes as frozen values defined in `src/app/identity/service.py`: `MemberValue` (id, name, email, role, active — the contract's Member) from add_member, change_role and deactivate; `SignInValue` (token, member: MemberValue — the contract's Token) from sign_in; `MemberSummary` (id, name, role, active) from list_members; seed_admin answers the new id.** The API layer maps them onto the contract's schemas; no other domain consumes them in process (D-05). design/PRODUCT-DESIGN.md:18, "a member as the team list shows it", is superseded by the contract's Member: a write answers the member's row with the email (the contract comes before the design in CLAUDE.md's document authority, 6 before 7). The pm-lead rewords that line in a patch of PRODUCT-DESIGN, outside this apply. | <apply-date>, operator: Q-p4 option (a), Part E-9 of docs/PACK-q07-retire-amends.md v1.2. The contract wins because ADU-02's golden pins it (contracts/openapi.yaml:104, :144, :178 answer Member, and :44 Token; D-07: a breaking change is a design-change loop). Only an admin calls the three writes, and sign-in answers the caller's own row, so no email reaches anyone the team list hides it from (R-identity-08, R-identity-09). design/INTERFACES.md §IdentityService |
+| D-p6 | **The IdentityService answers the contract's shapes as frozen values defined in `src/app/identity/service.py`: `MemberValue` (id, name, email, role, active — the contract's Member) from add_member, change_role and deactivate; `SignInValue` (token, member: MemberValue — the contract's Token) from sign_in; `MemberSummary` (id, name, role, active) from list_members; seed_admin answers the new id.** The API layer maps them onto the contract's schemas; no other domain consumes them in process (D-05). design/PRODUCT-DESIGN.md:18, "a member as the team list shows it", is superseded by the contract's Member: a write answers the member's row with the email (the contract comes before the design in CLAUDE.md's document authority, 6 before 7). The pm-lead rewords that line in a patch of PRODUCT-DESIGN, outside this apply. | <apply-date>, operator: Q-p4 option (a), Part E-9 of docs/PACK-q07-retire-amends.md v1.3. The contract wins because ADU-02's golden pins it (contracts/openapi.yaml:104, :144, :178 answer Member, and :44 Token; D-07: a breaking change is a design-change loop). Only an admin calls the three writes, and sign-in answers the caller's own row, so no email reaches anyone the team list hides it from (R-identity-08, R-identity-09). design/INTERFACES.md §IdentityService |
 ~~~
 
 #### E-9a.3 · OPEN-QUESTIONS.md:85
@@ -3496,7 +3863,7 @@ with:
 ~~~text
 **Options:** (a) the contract wins, since ADU-02's golden pins it: the service returns a frozen value with the contract Member's fields for the three writes, (token, that value) for sign_in, and MemberSummary for list_members, all defined in src/app/identity/service.py (no other domain consumes them in process, D-05); PRODUCT-DESIGN.md:18 is read as "the member's row", and the pm-lead rewords it editorially. (b) the design wins: the writes answer MemberSummary, and the contract's three Member responses lose `email`. Consequence: a breaking contract change (D-07), so a design-change loop and a regenerated golden.
 **Recommendation:** (a).
-**Resolution:** option (a), the operator, <apply-date>, on Part E-9 of docs/PACK-q07-retire-amends.md v1.2 (verified in docs/VERIFICATION-<id>.md): the contract wins. The values are `MemberValue` (the contract's Member) from the three writes, `SignInValue` (token, member) from sign_in and `MemberSummary` from list_members, all frozen dataclasses in src/app/identity/service.py. It lives in D-p6 and design/INTERFACES.md §IdentityService. PRODUCT-DESIGN.md:18 is superseded, as D-p6 says, until the pm-lead's patch (E-9.P of the pack), which is not part of this apply.
+**Resolution:** option (a), the operator, <apply-date>, on Part E-9 of docs/PACK-q07-retire-amends.md v1.3 (verified in docs/VERIFICATION-<id>.md): the contract wins. The values are `MemberValue` (the contract's Member) from the three writes, `SignInValue` (token, member) from sign_in and `MemberSummary` from list_members, all frozen dataclasses in src/app/identity/service.py. It lives in D-p6 and design/INTERFACES.md §IdentityService. PRODUCT-DESIGN.md:18 is superseded, as D-p6 says, until the pm-lead's patch (E-9.P of the pack), which is not part of this apply.
 ~~~
 
 #### E-9c.1 · design/INTERFACES.md:102
@@ -3517,7 +3884,7 @@ design/INTERFACES.md §Refused |
 with:
 ~~~text
 design/INTERFACES.md §Refused |
-| D-p6 | **The IdentityService answers the contract's shapes as plain dicts with exactly the contract's keys: `MemberValue` ({id, name, email, role, active}) from add_member, change_role and deactivate; `SignInValue` ({token, member}) from sign_in; `MemberSummary` ({id, name, role, active}) from list_members — aliases of `dict[str, object]` in `src/app/identity/service.py`; seed_admin answers the new id.** The API layer answers them unchanged. design/PRODUCT-DESIGN.md:18 is superseded by the contract's Member: a write answers the member's row with the email (the contract comes before the design in CLAUDE.md's document authority, 6 before 7). The pm-lead rewords that line in a patch of PRODUCT-DESIGN, outside this apply. | <apply-date>, operator: Q-p4 option (c), Part E-9 of docs/PACK-q07-retire-amends.md v1.2. The contract wins, as in option (a). No type checks a key, so a missing or misspelt one shows only in ADU-04's conformance check; every other in-process value of this product is a frozen dataclass (src/app/ports.py). design/INTERFACES.md §IdentityService |
+| D-p6 | **The IdentityService answers the contract's shapes as plain dicts with exactly the contract's keys: `MemberValue` ({id, name, email, role, active}) from add_member, change_role and deactivate; `SignInValue` ({token, member}) from sign_in; `MemberSummary` ({id, name, role, active}) from list_members — aliases of `dict[str, object]` in `src/app/identity/service.py`; seed_admin answers the new id.** The API layer answers them unchanged. design/PRODUCT-DESIGN.md:18 is superseded by the contract's Member: a write answers the member's row with the email (the contract comes before the design in CLAUDE.md's document authority, 6 before 7). The pm-lead rewords that line in a patch of PRODUCT-DESIGN, outside this apply. | <apply-date>, operator: Q-p4 option (c), Part E-9 of docs/PACK-q07-retire-amends.md v1.3. The contract wins, as in option (a). No type checks a key, so a missing or misspelt one shows only in ADU-04's conformance check; every other in-process value of this product is a frozen dataclass (src/app/ports.py). design/INTERFACES.md §IdentityService |
 ~~~
 
 #### E-9c.3 · OPEN-QUESTIONS.md:85
@@ -3531,7 +3898,7 @@ with:
 ~~~text
 **Options:** (a) the contract wins, since ADU-02's golden pins it: the service returns a frozen value with the contract Member's fields for the three writes, (token, that value) for sign_in, and MemberSummary for list_members, all defined in src/app/identity/service.py (no other domain consumes them in process, D-05); PRODUCT-DESIGN.md:18 is read as "the member's row", and the pm-lead rewords it editorially. (b) the design wins: the writes answer MemberSummary, and the contract's three Member responses lose `email`. Consequence: a breaking contract change (D-07), so a design-change loop and a regenerated golden.
 **Recommendation:** (a).
-**Resolution:** option (c), the operator, <apply-date>, on Part E-9 of docs/PACK-q07-retire-amends.md v1.2 (verified in docs/VERIFICATION-<id>.md): the contract wins, and the values are plain dicts with exactly the contract's keys. It lives in D-p6 and design/INTERFACES.md §IdentityService. PRODUCT-DESIGN.md:18 is superseded, as D-p6 says, until the pm-lead's patch (E-9.P of the pack), which is not part of this apply.
+**Resolution:** option (c), the operator, <apply-date>, on Part E-9 of docs/PACK-q07-retire-amends.md v1.3 (verified in docs/VERIFICATION-<id>.md): the contract wins, and the values are plain dicts with exactly the contract's keys. It lives in D-p6 and design/INTERFACES.md §IdentityService. PRODUCT-DESIGN.md:18 is superseded, as D-p6 says, until the pm-lead's patch (E-9.P of the pack), which is not part of this apply.
 ~~~
 
 #### E-9.P · design/PRODUCT-DESIGN.md:18 (the pm-lead's text; not applied by this apply)
@@ -3563,7 +3930,7 @@ What each option changes:
 | T-blocks (B-2.T) | unchanged: they edit only the conformance test and test_nulls.py | unchanged | unchanged | unchanged |
 | a completed unit's file | none | none | ADU-00's pyproject.toml, by a declared amendment | none now; a later rename would edit ADU-03's completed test |
 | a protected path | none | none | none (adu.toml `[protected]`: adu.toml, PINS.lock, .claude/settings.json, CLAUDE.md, src/app/ledger.py) | none |
-| a grant | none | none | none: pyproject.toml is not a test, and the guard honours `amends` on a non-test file (plugin scripts/adu.mjs:692–693; asked in B-4.3) | none now; one later, if that loop renames ADU-03's file |
+| a grant | none | none | none: pyproject.toml is not a test, and it lies outside adu.toml's code_roots (adu.toml:7), so the guard applies no roster to it (plugin scripts/adu.mjs:689–691) and allows it in every tree, 7d1e7d4 included (asked in B-4.3). Its `amends` line keeps the edit in ADU-03's declared roster, which the session, not the guard, holds to (hard rule 6) | none now; one later, if that loop renames ADU-03's file |
 | the derived order | unchanged | unchanged | unchanged (ADU-00 is first) | unchanged |
 | the 46 completed tests | untouched | untouched (none sits in the new packages) | all imported in importlib mode from ADU-03 on (measured: 46 passed) | untouched |
 | plugin FB-33's proposed check (two `tests:` paths of one basename fail plan check) | passes | fails, unless the check learns packages | passes, by its import-mode exception | fails |
@@ -3866,7 +4233,7 @@ design/INTERFACES.md §Refused |
 with:
 ~~~text
 design/INTERFACES.md §Refused |
-| D-p7 | **A service unit's test file is named for its domain, `tests/<domain>/test_<domain>_service.py`, so no two test files share a basename.** ADU-03, ADU-09, ADU-05 and ADU-07 place their service tests at `tests/identity/test_identity_service.py`, `tests/notifications/test_notifications_service.py`, `tests/scheduling/test_scheduling_service.py` and `tests/swaps/test_swaps_service.py`. pytest's default import mode imports a test file under its basename, and tests/ holds no package, so two `test_service.py` fail collection. | <apply-date>, operator: Q-p6 option (a), Part E-10 of docs/PACK-q07-retire-amends.md v1.2. A plan edit of four units not yet built: no completed unit's file, no protected path, no grant. Unique basenames collect under every import mode and follow the naming plugin FB-33 proposes. Measured: four stand-in tests under these names collect with the gate green, and under one name fail with 3 errors. ADU-PLAN.md, the four entries |
+| D-p7 | **A service unit's test file is named for its domain, `tests/<domain>/test_<domain>_service.py`, so no two test files share a basename.** ADU-03, ADU-09, ADU-05 and ADU-07 place their service tests at `tests/identity/test_identity_service.py`, `tests/notifications/test_notifications_service.py`, `tests/scheduling/test_scheduling_service.py` and `tests/swaps/test_swaps_service.py`. pytest's default import mode imports a test file under its basename, and tests/ holds no package, so two `test_service.py` fail collection. | <apply-date>, operator: Q-p6 option (a), Part E-10 of docs/PACK-q07-retire-amends.md v1.3. A plan edit of four units not yet built: no completed unit's file, no protected path, no grant. Unique basenames collect under every import mode and follow the naming plugin FB-33 proposes. Measured: four stand-in tests under these names collect with the gate green, and under one name fail with 3 errors. ADU-PLAN.md, the four entries |
 ~~~
 
 #### E-10a.30 · OPEN-QUESTIONS.md:59
@@ -3898,7 +4265,7 @@ replace exactly:
 with:
 ~~~text
 **Recommendation:** (a), ruled in this loop (docs/PACK-q07-retire-amends.md, Part E-10): it edits plan text only, and it is cheapest before ADU-03 opens.
-**Resolution:** option (a), the operator, <apply-date>, on Part E-10 of docs/PACK-q07-retire-amends.md v1.2 (verified in docs/VERIFICATION-<id>.md): the four service test files are named `tests/<domain>/test_<domain>_service.py`. It lives in D-p7 and ADU-PLAN v1.3 (the `tests:` lines and arm files of ADU-03, ADU-09, ADU-05 and ADU-07).
+**Resolution:** option (a), the operator, <apply-date>, on Part E-10 of docs/PACK-q07-retire-amends.md v1.3 (verified in docs/VERIFICATION-<id>.md): the four service test files are named `tests/<domain>/test_<domain>_service.py`. It lives in D-p7 and ADU-PLAN v1.3 (the `tests:` lines and arm files of ADU-03, ADU-09, ADU-05 and ADU-07).
 ~~~
 
 #### E-10a.33 · VERSIONS.md:120
@@ -3979,7 +4346,7 @@ design/INTERFACES.md §Refused |
 with:
 ~~~text
 design/INTERFACES.md §Refused |
-| D-p7 | **Each service unit's test folder is a package: ADU-03, ADU-09, ADU-05 and ADU-07 each add `tests/<domain>/__init__.py` to their `files`, so pytest imports their `test_service.py` as `<domain>.test_service` and the four collect together.** No other test folder becomes a package. | <apply-date>, operator: Q-p6 option (b), Part E-10 of docs/PACK-q07-retire-amends.md v1.2. The test paths and arms stay as cut. Accepted with its consequences: four top-level packages named identity, notifications, scheduling and swaps are importable from tests/ (pyproject.toml's `pythonpath`), and four test files still share one basename, which the plan check plugin FB-33 proposes would refuse. ADU-PLAN.md, the four entries |
+| D-p7 | **Each service unit's test folder is a package: ADU-03, ADU-09, ADU-05 and ADU-07 each add `tests/<domain>/__init__.py` to their `files`, so pytest imports their `test_service.py` as `<domain>.test_service` and the four collect together.** No other test folder becomes a package. | <apply-date>, operator: Q-p6 option (b), Part E-10 of docs/PACK-q07-retire-amends.md v1.3. The test paths and arms stay as cut. Accepted with its consequences: four top-level packages named identity, notifications, scheduling and swaps are importable from tests/ (pyproject.toml's `pythonpath`), and four test files still share one basename, which the plan check plugin FB-33 proposes would refuse. ADU-PLAN.md, the four entries |
 ~~~
 
 #### E-10b.7 · OPEN-QUESTIONS.md:59
@@ -4011,7 +4378,7 @@ replace exactly:
 with:
 ~~~text
 **Recommendation:** (a), ruled in this loop (docs/PACK-q07-retire-amends.md, Part E-10): it edits plan text only, and it is cheapest before ADU-03 opens.
-**Resolution:** option (b), the operator, <apply-date>, on Part E-10 of docs/PACK-q07-retire-amends.md v1.2 (verified in docs/VERIFICATION-<id>.md): each service unit's `files:` gains `tests/<domain>/__init__.py`. It lives in D-p7 and ADU-PLAN v1.3 (the `files:` of ADU-03, ADU-09, ADU-05 and ADU-07).
+**Resolution:** option (b), the operator, <apply-date>, on Part E-10 of docs/PACK-q07-retire-amends.md v1.3 (verified in docs/VERIFICATION-<id>.md): each service unit's `files:` gains `tests/<domain>/__init__.py`. It lives in D-p7 and ADU-PLAN v1.3 (the `files:` of ADU-03, ADU-09, ADU-05 and ADU-07).
 ~~~
 
 #### E-10b.10 · VERSIONS.md:120
@@ -4066,7 +4433,7 @@ design/INTERFACES.md §Refused |
 with:
 ~~~text
 design/INTERFACES.md §Refused |
-| D-p7 | **The test suite is collected in pytest's importlib import mode: ADU-03 amends ADU-00's pyproject.toml so `[tool.pytest.ini_options]` gains `addopts = "--import-mode=importlib"`, and test files of one basename in different folders collect together.** ADU-03's `depends` gains ADU-00. | <apply-date>, operator: Q-p6 option (c), Part E-10 of docs/PACK-q07-retire-amends.md v1.2. One line, and it serves every later test file too. Accepted with its consequences: every completed unit's test is imported in the new mode from ADU-03 on (measured: the 46 pass), and test modules cannot import one another; pyproject.toml's `pythonpath` keeps `support` and `layering_scan` importable. pyproject.toml is neither pinned nor protected, and an `amends` of a non-test file needs no grant. ADU-PLAN.md, ADU-03's entry |
+| D-p7 | **The test suite is collected in pytest's importlib import mode: ADU-03 amends ADU-00's pyproject.toml so `[tool.pytest.ini_options]` gains `addopts = "--import-mode=importlib"`, and test files of one basename in different folders collect together.** ADU-03's `depends` gains ADU-00. | <apply-date>, operator: Q-p6 option (c), Part E-10 of docs/PACK-q07-retire-amends.md v1.3. One line, and it serves every later test file too. Accepted with its consequences: every completed unit's test is imported in the new mode from ADU-03 on (measured: the 46 pass), and test modules cannot import one another; pyproject.toml's `pythonpath` keeps `support` and `layering_scan` importable. pyproject.toml is neither pinned nor protected, and it lies outside the guard's code roots (adu.toml), so its declared amendment needs no grant. ADU-PLAN.md, ADU-03's entry |
 ~~~
 
 #### E-10c.4 · OPEN-QUESTIONS.md:59
@@ -4098,7 +4465,7 @@ replace exactly:
 with:
 ~~~text
 **Recommendation:** (a), ruled in this loop (docs/PACK-q07-retire-amends.md, Part E-10): it edits plan text only, and it is cheapest before ADU-03 opens.
-**Resolution:** option (c), the operator, <apply-date>, on Part E-10 of docs/PACK-q07-retire-amends.md v1.2 (verified in docs/VERIFICATION-<id>.md): ADU-03 amends ADU-00's pyproject.toml with `addopts = "--import-mode=importlib"`. It lives in D-p7 and ADU-PLAN v1.3 (ADU-03's `amends` and `depends`).
+**Resolution:** option (c), the operator, <apply-date>, on Part E-10 of docs/PACK-q07-retire-amends.md v1.3 (verified in docs/VERIFICATION-<id>.md): ADU-03 amends ADU-00's pyproject.toml with `addopts = "--import-mode=importlib"`. It lives in D-p7 and ADU-PLAN v1.3 (ADU-03's `amends` and `depends`).
 ~~~
 
 #### E-10c.7 · VERSIONS.md:120
@@ -4130,7 +4497,7 @@ replace exactly (within the line):
 with:
 ~~~text
 | operator, 2026-11-07 17:37, release M1: "0-01 approved" | open |
-| O-p2 | ADU-09 | Q-p6: the four service units' test files share the basename test_service.py and fail pytest collection together from ADU-09 on (plugin FB-33); ruled in a design-change loop before ADU-09 opens (ADU-PLAN.md, ADU-09's pointer); once ADU-03 is ✅, renaming tests/identity/test_service.py is an edit of a completed unit's test (hard rule 1, a grant) | operator, <apply-date>: the ruling of E-10 (d) on docs/PACK-q07-retire-amends.md v1.2 (Q-p6 deferred, entered non-blocking because `adu status` reads `**Blocking:** yes` as a stop for every unit, plugin FB-32) | open |
+| O-p2 | ADU-09 | Q-p6: the four service units' test files share the basename test_service.py and fail pytest collection together from ADU-09 on (plugin FB-33); ruled in a design-change loop before ADU-09 opens (ADU-PLAN.md, ADU-09's pointer); once ADU-03 is ✅, renaming tests/identity/test_service.py is an edit of a completed unit's test (hard rule 1, a grant) | operator, <apply-date>: the ruling of E-10 (d) on docs/PACK-q07-retire-amends.md v1.3 (Q-p6 deferred, entered non-blocking because `adu status` reads `**Blocking:** yes` as a stop for every unit, plugin FB-32) | open |
 ~~~
 
 #### E-10d.2 · ADU-PLAN.md:197
@@ -4167,7 +4534,7 @@ replace exactly:
 with:
 ~~~text
 **Recommendation:** (a), ruled in this loop (docs/PACK-q07-retire-amends.md, Part E-10): it edits plan text only, and it is cheapest before ADU-03 opens.
-**Ruling:** deferred, the operator, <apply-date>, on Part E-10 (d) of docs/PACK-q07-retire-amends.md v1.2 (verified in docs/VERIFICATION-<id>.md): a design-change loop rules it before ADU-09 opens. The Owed row O-p2 (STATUS.md, due ADU-09) and ADU-09's entry carry the duty (plugin FB-32).
+**Ruling:** deferred, the operator, <apply-date>, on Part E-10 (d) of docs/PACK-q07-retire-amends.md v1.3 (verified in docs/VERIFICATION-<id>.md): a design-change loop rules it before ADU-09 opens. The Owed row O-p2 (STATUS.md, due ADU-09) and ADU-09's entry carry the duty (plugin FB-32).
 **Resolution:** none yet.
 ~~~
 

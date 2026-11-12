@@ -474,3 +474,41 @@ The one pass is the control `test_the_forced_child_really_writes_strict_cp1252` 
 1. The operator commits: `git add docs/VERIFICATION-R2.md SESSION-JOURNAL.md` then `git commit -m "docs: verification R2 of pack q07-retire-amends v1.2 (STOP — MECHANICAL)"`.
 2. The architect revises the pack to v1.3 for N-1 (`/adu-lifecycle:change-design Q-07`, stage 1 again). That covers E-6b.10 and E-6a.9, B-4.3's stand-in test, and a twin in which a router serves the probed operation. The Notes are optional. Then a fresh verifier runs round R3.
 3. Nothing is applied; ADU-03 stays blocked on Q-07.
+
+## 2026-11-12 21:44 · design-change loop Q-07, stage 1 again (architect): pack v1.3 · done
+**Done:**
+- Start checks: `adu status` (Now: ADU-03; Q-07 open, blocking). The interpreter line printed `C:\dev\team-rota-data\.venv cp1252 0`, and `ADU_PLUGIN_ROOT` is `C:\dev\adu-lifecycle`. `adu snapshot check 7d1e7d4` → OK against HEAD 9fe1263 (0 commits of drift); the snapshot stays 7d1e7d4. Plugin HEAD is ae191e2 (FB-34 recorded); `git diff --stat 4b63bb0 ae191e2` lists FEEDBACK.md only.
+- Read docs/VERIFICATION-R2.md in full, pack v1.2 in full, docs/VERIFICATION-R1.md §1, the R2 verifier's block of 2026-11-12 16:08 and plugin FB-29 and FB-34. Also read the entries of the thirteen later units (ADU-PLAN.md:170–525), src/app/main.py, src/app/api/deps.py, src/app/api/contract_stubs.py and the contract's paths.
+- docs/PACK-q07-retire-amends.md revised to v1.3, dated 2026-11-12, `snapshot: 7d1e7d4`, status "verification pending (round R3)". Header line 3 maps each R2 finding to where it is handled; line 4 records the search for FB-34's class.
+  - R2 N-1: E-6b.10 and E-6a.9 assert the request path through a route ADU-03's own test registers. The route sits at a path the contract does not declare and takes its caller from `Depends(app.api.deps.require_caller)`; it answers 200 with the seeded admin's id for an issued token and 401 for `Bearer garbage`. The clause sends no request to a contract operation and imports nothing from the stubs module. E-6 gives the reasons for R2's first fix, refined, over the second, and the thirteen later units it was checked against.
+  - R2's notes: E-10 (c)'s grant reason (pyproject.toml outside `code_roots`) in E-10's table, E-10c.3, B-4.1 and A-2; E-8 (b)'s src/app/synthetic.py:12, now run; E-1 (b), E-4 (b), E-1b.3 and E-2b.3 rehearsed; E-7 (a), E-8 (b), E-9 (c) and E-7b.1 labelled as composed text; ADU-11's route to `seed_admin` (E-6b.1, E-6a.1, E-6, Q-p5); Part C's "five protocols" row; D-2 step 6's STATUS.md line.
+  - The class search found three more: Q-p5's option (b) read the stubs module, now reworded; ADU-06's, ADU-10's and ADU-08's response-validation arms and main.py's import of the stubs module, added to Q-p5's Conflict; and the four retirement arms' gate clause, which now says no test of the arm's file repeats it.
+  - A-2 gains seven rows and cites plugin ae191e2; A-3 gains FB-34's rule; the pack's references to itself read v1.3. D-1 is round R3's prompt, with 5h in both its parts; D-2's precondition is R3's verdict.
+- B-4.3's script extended (1049 lines) and re-run in full; its output (472 lines) is pasted into B-4.3, and B-3.15's and B-4.4's excerpts are taken from the same run. Results, all in scratch exports, never in the repository:
+  - Blocks: 196 replace blocks (B 24, T 24, E 148) and 1 deletion, each at its line. All 1,088 rulings compose with 0 failures, with the DECISIONS and Owed rows in id order and the open and blocking questions as expected. Plan check: the 144 distinct ADU-PLAN.md texts give `plan OK: 18 units`, one output, exit 0, the order as at 7d1e7d4.
+  - The guard answers as in v1.2. pyproject.toml is allowed at 7d1e7d4, with B-3 and under E-10 (c): it lies outside `code_roots`.
+  - E-10 as before: 3 errors as planned; 50 passed under (a) and under (b); 46 and 50 under (c).
+  - Part 6, new:
+    - E-1 (b), E-4 (b) and both: their T-text is applied, and T-09.2, T-05.2 and T-07.2 are found at :108/:106/:106 (either alone) and :106/:104/:104 (both): 32 of 32 checks OK. At stage T-03 with both, the gate is green (46 passed) and the lint clean; tests/test_ports.py passes with the stand-in TokenDirectory (4 passed).
+    - E-2b.3: tests/test_layering.py passes with refusals.py joined (7 passed). A planted import of identity is caught once joined (1 failed: "ports->identity: forbidden"), and escapes without the join (7 passed).
+    - The determinism scan finds src\app\synthetic.py:12 only, on the 7d1e7d4 tree and after the stages.
+  - Stages: the gate gives 46 / 45 / 44 / 43 passed, lint clean at each; v1.1's twins are unchanged.
+  - E-6b.10's clause: 2 passed with the wiring right. With `require_caller` cut off from `get_session` it is 1 failed, and the full gate 1 failed, 45 passed. With `get_session` sync it is 1 failed.
+  - The API twins:
+    - The clause's stand-in passes (2 passed) at ADU-07's close and with ADU-04, ADU-06, ADU-10 and ADU-08 landed (5, 11, 13 and 18 of 18 operations served by a router). The last twin deletes the stubs module, and no reference to it is left under src/.
+    - v1.2's stand-in passes at ADU-07's close and fails in each API twin: `assert (200, None) == (501, 'not_built')`.
+    - In the last twin the clause still fails under both mutations.
+  - Simulated apply, as in v1.2: `ledgers OK`, `plan OK`, derived render 0 files, `derived blocks OK`, `pins OK (1 pinned)`. `adu status` prints "Open blocking questions: none" with Now: ADU-03, Q-12 as non-blocking and O-02 due ADU-04. Under E-5 (b), Q-08 … Q-11 are listed as STOP.
+  - Checked after the paste: the pasted output equals the run's; the script in the pack is byte-identical to the one that ran; and a re-run of parts 1–3 on the final pack gives the same 255 lines.
+**Decisions:**
+- R2 N-1: R2's first fix, refined in four ways: `require_caller` taken from `app.api.deps` by name (`contract_stubs.CALLER_DEP` goes with ADU-08); a path outside the contract; the seeded admin's id, not only 200; and the arm forbids a contract request and a stubs import. The second fix was not chosen: it keeps a pin on a temporary state, adds ADU-03's test to four grants, and cannot be met after ADU-08.
+- The main.py import of the stubs module, and the other API units' validation arms, are entered in Q-p5's Conflict, not in a question of their own: they are the same wall, owed before ADU-04 (O-p1).
+- The four retirement arms keep their gate clause and say that no test of the arm's file repeats it, rather than dropping it: the gate still checks it at the unit's close.
+**Deviations flagged:**
+- A Bash heredoc for D-1's text failed to parse, as R2's journal reports for its own. The text was written into the scratchpad with the Write tool and spliced by a scratch script. The old output was replaced by a placeholder during drafting, and the placeholder by the new run's output.
+- Not committed. In the repository only docs/PACK-q07-retire-amends.md and this block were written; no governing document, code, test or protected path changed.
+**Tests at close:** none — documents only. The scratch gates above are measurements on exports, not this tree's gate.
+**NEXT:**
+1. The operator commits: `git add docs/PACK-q07-retire-amends.md SESSION-JOURNAL.md` then `git commit -m "docs: pack q07-retire-amends v1.3, snapshot 7d1e7d4 (after verification R2)"`.
+2. In a fresh `claude --plugin-dir C:\dev\adu-lifecycle --agent adu-lifecycle:verifier` started inside `C:\dev\team-rota`, paste Part D-1 of the pack (round R3; report docs/VERIFICATION-R3.md, named by hand, FB-31).
+3. After R3's verdict (READY, or READY WITH MECHANICAL ADAPTATIONS), rule E-1 … E-10; the apply is Part D-2. Nothing is applied before; ADU-03 stays blocked on Q-07.
