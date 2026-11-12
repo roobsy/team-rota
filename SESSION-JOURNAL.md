@@ -372,3 +372,56 @@ The one pass is the control `test_the_forced_child_really_writes_strict_cp1252` 
 1. The operator commits: `git add docs/VERIFICATION-R1.md SESSION-JOURNAL.md` then `git commit -m "docs: verification R1 of pack q07-retire-amends v1.1 (STOP — MECHANICAL)"`.
 2. The architect revises the pack to v1.2 (`/adu-lifecycle:change-design Q-07`, stage 1 again) for N-1 and N-2. M-1–M-3 and the Notes are optional, and Q-p6 is for the operator to rule on or defer. Then a fresh verifier runs round R2.
 3. Nothing is applied; ADU-03 stays blocked on Q-07.
+
+## 2026-11-12 10:28 · design-change loop Q-07, stage 1 again (architect): pack v1.2 · in progress
+**Done:**
+- Start checks: `adu status` (Now: ADU-03; Q-07 open, blocking). The interpreter line printed `C:\dev\team-rota-data\.venv cp1252 0`, and `ADU_PLUGIN_ROOT` is `C:\dev\adu-lifecycle`. `adu snapshot check 7d1e7d4` → OK against HEAD 99233a7 (0 commits of drift); the snapshot stays 7d1e7d4. Plugin HEAD is c77cbeb (FB-32 and FB-33 recorded); `git diff --stat 4b63bb0 c77cbeb` lists FEEDBACK.md only.
+- Read docs/VERIFICATION-R1.md in full, docs/PACK-q07-retire-amends.md v1.1 in full, and the verifier's block of 2026-11-08 22:45.
+- docs/PACK-q07-retire-amends.md revised to v1.2, dated 2026-11-12, `snapshot: 7d1e7d4`, status "verification pending (round R2)". Header line 3 maps each R1 finding to where it is handled.
+  - N-1: E-6b.10 appends R1's clause to ADU-03's arm 1, and E-6a.9 adds the same request path under E-6 (a).
+  - N-2: B-2.7 enters Q-p5 `**Blocking:** no`. E-5a.14 and E-5b.1 write the Owed row O-p1 due ADU-04 in STATUS.md's columns, with the Approval cell naming the E-5 ruling and plugin FB-32 cited. B-3.16 points ADU-04's entry to it. B-5, E-5, E-5a.1 and D-2 are aligned.
+  - M-1 → E-2b.8–.18; M-2 → E-3b.5–.6; M-3 → E-1b.1–.4; E-4 (b) is written as E-4b.1.
+  - Every R1 Note and cosmetic row: A-2, B-2.3, B-3.3, T-03.4, E-5, E-7 (E-7a.4–.6, E-7b.4–.5), E-8, E-9, Part C.
+  - Q-p6 (plugin FB-33): B-2.7 enters it, and E-10 rules it with options (a) rename, (b) `__init__.py`, (c) importlib and (d) defer, each with full text, and a roster-consequence table. (a) is recommended.
+  - D-1 is round R2's prompt; D-2 takes E-1 … E-10 and writes the Owed rows.
+- B-4.3's script rewritten for v1.2 (scratch: …\scratchpad\rehearsal\pack_rehearse.py). Its text checks are done: 196 replace blocks (B 24, T 24, E 148) and 1 deletion parsed; every block at its line, alone and in each of the 1,088 rulings, with 0 failures. Its full run (plan checks, guard, the E-10 measurements, the four stages with the N-1 and E-10 twins, the simulated apply) is still running.
+- Measured before the run, in scratch: as planned, four `tests/<domain>/test_service.py` give 3 collection errors ("import file mismatch"). Under (a) and (b), 50 passed. Under `--import-mode=importlib`, 46 passed without the files and 50 with them.
+**Decisions:**
+- R1's clause keeps its words except "under D-p3", written as "under the request's current session of design/INTERFACES.md (Domain services)": the plan may carry no provisional id (B-3; plugin scripts/lib/plan.mjs:160).
+- The Owed row is a block of each E-5 option, so its Approval cell names the option ruled. The pointer under ADU-04 names no id, for the same plan rule.
+- Adaptations that depend on another bracket are conditional blocks, "(with …)" / "(without …)", or blocks "on the text E-xx writes", never prose for the apply to carry.
+- E-10 recommends (a). It edits plan text only, touches nothing completed or protected, and needs no grant. It is safe under every import mode and under FB-33's proposed check, and cheapest before ADU-03 opens. (d) was added because R1's NEXT offered deferral; the plugin's own fix is noted as not offered.
+**Deviations flagged:**
+- D-1 "keeps item 4h": v1.1's D-1 had items 4a–4g only, so 4h (what the pack does not claim) is written new.
+- B-3.16 sits before B-3.15, so R1's references to B-3.15 (the plan check) still hold.
+- A `python3 -` heredoc used for a lookup hung (likely the Windows store alias) and runs on as a background task; stopping it was refused by the permission classifier. It writes nothing.
+- Not committed. In the repository only the pack and this block were written; no governing document, code, test or protected path changed.
+**Tests at close:** none — documents only. The scratch runs are measurements on exports, not this tree's gate.
+**NEXT:**
+1. This session: when the rehearsal ends, paste its output into B-4.3, B-3.15 and B-4.4, and append the closing block of this session.
+
+## 2026-11-12 10:40 · design-change loop Q-07, stage 1 again (architect): pack v1.2, rehearsal pasted · done
+**Done:**
+- Continues the 10:28 block of this session: the full rehearsal ran and its output is pasted.
+- B-4.3's script (803 lines) is re-run in full. Its output (416 lines) and the script are pasted into B-4.3, each byte-identical to the run. B-3.15's plan-check lines and guard lines are taken from the same output. B-4.4, the simulated apply, is new.
+- Results of the run, all in scratch exports, never in the repository:
+  - Blocks: 196 replace blocks (B 24, T 24, E 148) and 1 deletion, each at its line. All 1,088 rulings compose with 0 failures, the DECISIONS and Owed rows in id order and the open and blocking questions as expected.
+  - Plan check: 144 distinct ADU-PLAN.md texts give `plan OK: 18 units`, the same output and exit 0, with the order as at 7d1e7d4.
+  - The guard: the two completed tests are still refused at every stage of the change (FB-28). With the recommended plan text, ports.py, db.py, deps.py and tests/identity/test_identity_service.py are allowed and tests/identity/test_service.py refused. Under their options, tests/identity/__init__.py, pyproject.toml, tests/support/doubles.py, src/app/refusals.py and tests/layering.json are allowed.
+  - E-10 measured: 3 errors as planned; 50 passed under (a) and under (b); 46 passed under (c) without the files and 50 with them.
+  - Stages: gate 46 / 45 / 44 / 43 passed (44 / 42 / 40 / 38 of them the completed units' tests, as in v1.1, the rest the stand-ins' 2 / 3 / 4 / 5), lint clean at each. v1.1's twins are unchanged.
+  - N-1 twin: 2 passed with the wiring right. With `require_caller` cut off from `get_session` it is 1 failed, and the full gate 1 failed, 45 passed. With `get_session` sync it is 1 failed.
+  - E-10 twin: the four files under `test_service.py` give 3 errors.
+  - Simulated apply of the recommended rulings (D-12 … D-18, Q-08 … Q-13, O-02): `ledgers OK`, `plan OK`, derived render 0 files, `derived blocks OK`, `pins OK (1 pinned)`. `adu status` prints "Open blocking questions: none" with Now: ADU-03, Q-12 as non-blocking and O-02 due ADU-04. Under E-5 (b) it lists Q-08 … Q-11 as STOP and Q-12 as non-blocking.
+- `adu snapshot check 7d1e7d4` → OK against HEAD 99233a7 at close.
+**Decisions:**
+- The first full run's lint finding (E501, 112 > 110) was in the rehearsal's own stand-in test docstring, not in any pack text. The template was shortened and the whole script re-run, so the pasted output is one clean run.
+**Deviations flagged:**
+- This session wrote two journal blocks. The stop hook required one while the rehearsal still ran (10:28, in progress); this block closes it.
+- The `python3 -` background task of the 10:28 block may still be waiting. It writes nothing.
+- Not committed. In the repository only docs/PACK-q07-retire-amends.md and SESSION-JOURNAL.md changed; no governing document, code, test or protected path.
+**Tests at close:** none — documents only. The scratch gates above are measurements on exports, not this tree's gate.
+**NEXT:**
+1. The operator commits: `git add docs/PACK-q07-retire-amends.md SESSION-JOURNAL.md` then `git commit -m "docs: pack q07-retire-amends v1.2, snapshot 7d1e7d4"`.
+2. In a fresh `claude --plugin-dir C:\dev\adu-lifecycle --agent adu-lifecycle:verifier` started inside `C:\dev\team-rota`, paste Part D-1 of the pack (round R2; report docs/VERIFICATION-R2.md, named by hand, FB-31).
+3. After R2's verdict, rule E-1 … E-10; the apply is Part D-2.
