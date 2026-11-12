@@ -336,3 +336,39 @@ The one pass is the control `test_the_forced_child_really_writes_strict_cp1252` 
 1. The operator commits: `git add docs/PACK-q07-retire-amends.md SESSION-JOURNAL.md` then `git commit -m "docs: pack q07-retire-amends v1.1, snapshot 7d1e7d4"`.
 2. In a fresh `claude --plugin-dir C:\dev\adu-lifecycle --agent adu-lifecycle:verifier` started inside `C:\dev\team-rota`, paste Part D-1 of the pack.
 3. Rule E-1 … E-9 after the verdict.
+
+## 2026-11-08 22:45 · verification R1 · done
+**Done:**
+- Start checks: `adu status` (Now: ADU-03; Q-07 open, blocking); the three variables as D-1 names them; interpreter line `C:\dev\team-rota-data\.venv cp1252 0`; `git status --short` `?? uv.lock`; `adu role set verifier`. `adu snapshot check 7d1e7d4` → OK (0 commits of drift).
+- Read the pack v1.1 in full, Q-07 (OPEN-QUESTIONS.md:53–59) and the journal blocks of 2026-11-07 20:20 and 2026-11-08 08:39 and 18:34. No earlier verification report exists.
+- Checked every claim in docs/VERIFICATION-R1.md:
+  - all 109 replace blocks and 1 deletion, with my own line parser: B against the 7d1e7d4 blobs, T stage by stage, E on post-B, and the 16 combinations alone and with E-2 (b) + E-3 (b);
+  - every row of A-2;
+  - the guard;
+  - the amendments in both directions;
+  - the arms against ADU-02's and ADU-16's;
+  - B-2.3 and E-6–E-9 against the arms, R-identity-01..09, the contract and ARCHITECTURE.
+- Measured in the scratchpad only:
+  - `adu plan check`/`order` with B-3, + E-2 (b), + E-6 (b), and both;
+  - the pack's rehearsal re-run, identical apart from timings;
+  - my own stand-ins and current-session scaffold (gate 44/42/40/38);
+  - wiring mutations;
+  - both pack probes re-run, plus my own probe;
+  - a simulated apply with ids D-12…D-17 and Q-08…Q-12.
+- Gate once at HEAD: `46 passed, 1 warning in 17.89s`; `git status --short` unchanged.
+**Decisions:** none; the verifier rules nothing. Findings:
+- S: none.
+- N-1: E-6 (b)'s db.py/deps.py amendments have no ADU-03 arm. Measured: with `require_caller` not depending on `get_session`, the ADU-03-stage gate is 44 passed while authenticated requests answer 500.
+- N-2: Q-p5 entered "**Blocking:** yes" makes `adu status` print "Open blocking questions: Q-12 … — STOP" with Now: ADU-03, against E-5 (a) and D-2.
+- M-1–M-3: the non-recommended E-2 (b), E-3 (b) and E-1 (b) leave text unadjusted.
+- Provisional Q-p6, outside the pack: four `tests/<domain>/test_service.py` collide at collection (pytest 9.2.0), first at ADU-09.
+**Deviations flagged:**
+- The report was written through Bash heredocs; this session had no Write tool.
+- `adu next-id V` was not run (FB-31); the id R1 was named by hand, as D-1 says.
+- The plugin is at 2855b8c, not 4b63bb0; adu.mjs is unchanged between them.
+- No governing document, code or test changed. The only files written are docs/VERIFICATION-R1.md and this block; the scratch work is under the session scratchpad.
+**Tests at close:** gate `46 passed, 1 warning in 17.89s`; lint `All checks passed!`; `adu verdict check docs/VERIFICATION-R1.md` → `verdict OK: VERDICT: STOP — MECHANICAL`.
+**NEXT:**
+1. The operator commits: `git add docs/VERIFICATION-R1.md SESSION-JOURNAL.md` then `git commit -m "docs: verification R1 of pack q07-retire-amends v1.1 (STOP — MECHANICAL)"`.
+2. The architect revises the pack to v1.2 (`/adu-lifecycle:change-design Q-07`, stage 1 again) for N-1 and N-2. M-1–M-3 and the Notes are optional, and Q-p6 is for the operator to rule on or defer. Then a fresh verifier runs round R2.
+3. Nothing is applied; ADU-03 stays blocked on Q-07.
