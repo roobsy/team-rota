@@ -425,3 +425,52 @@ The one pass is the control `test_the_forced_child_really_writes_strict_cp1252` 
 1. The operator commits: `git add docs/PACK-q07-retire-amends.md SESSION-JOURNAL.md` then `git commit -m "docs: pack q07-retire-amends v1.2, snapshot 7d1e7d4"`.
 2. In a fresh `claude --plugin-dir C:\dev\adu-lifecycle --agent adu-lifecycle:verifier` started inside `C:\dev\team-rota`, paste Part D-1 of the pack (round R2; report docs/VERIFICATION-R2.md, named by hand, FB-31).
 3. After R2's verdict, rule E-1 … E-10; the apply is Part D-2.
+
+## 2026-11-12 16:08 · verification R2 · done
+**Done:**
+- Start checks:
+  - `adu status`: Now: ADU-03; Q-07 open, blocking.
+  - The three variables are as D-1 names them, and the interpreter line prints `C:\dev\team-rota-data\.venv cp1252 0`.
+  - `git status --short` shows `?? uv.lock`; `adu role set verifier` ran.
+  - `adu snapshot check 7d1e7d4` → OK against HEAD 1745ed2 (0 commits of drift).
+- Read in full: pack v1.2 and docs/VERIFICATION-R1.md. Also read Q-07 (OPEN-QUESTIONS.md:53–59); the journal blocks of 2026-11-07 20:20, 2026-11-08 08:39, 18:34 and 22:45, and 2026-11-12 10:28 and 10:40; and plugin FEEDBACK.md rows FB-28 and FB-31–FB-33.
+- docs/VERIFICATION-R2.md checks:
+  - R1's dispositions;
+  - every B-, T- and E-block;
+  - A-2, row by row;
+  - the guard;
+  - the amendments, in both directions;
+  - the arms;
+  - E-10's table;
+  - what the pack leaves unrehearsed.
+- Measured, in the scratchpad only:
+  - the pack's script, re-run: its output equals the pasted output apart from timings and paths;
+  - my own parser and my own composition of the 1,088 rulings;
+  - `adu plan check` and `adu plan order` over all 144 plan texts;
+  - a 12 × 8 guard grid;
+  - E-10 with my own stand-ins;
+  - my own N-1 scaffold and twins;
+  - a simulated apply on an export of HEAD, with D-12…D-18, Q-08…Q-13 and O-02.
+- Gate once at HEAD: `46 passed, 1 warning in 20.44s`; lint clean; `git status --short` unchanged.
+**Decisions:** none; the verifier rules nothing. Findings:
+- S: none.
+- N-1: E-6b.10 (and E-6a.9) tie ADU-03's arm 1 to "a request to a stubbed operation".
+  - The API units move every operation out of the stubs, and ADU-08 deletes the stubs module. ADU-03's completed test would then go red, and no entry declares that edit.
+  - Measured: the clause as worded fails once a router serves the probed operation. A form that registers its own probe route passes, and still fails under both twins.
+- Notes:
+  - the reason E-10 (c) gives for needing no grant (pyproject.toml is outside `code_roots`);
+  - E-8 (b)'s scan line (:12, not :70);
+  - several places that do not say they are unrehearsed;
+  - ADU-11's route to `seed_admin`.
+- R1's N-1, N-2, M-1–M-3, Notes and Q-p6 were all carried out.
+**Deviations flagged:**
+- The report was written in parts through Bash heredocs, then assembled from the scratchpad: one long heredoc failed to parse. This session has no Write tool.
+- `adu next-id V` was not run (FB-31); the id R2 was named by hand.
+- The B-5 and E-6 probes were not re-run: their sections are byte-identical to v1.1.
+- Two copies of the pack's text were written to `/tmp/` by mistake during a comparison. They were outside the repository and were deleted at once.
+- In the repository, only docs/VERIFICATION-R2.md and this block were written; all other scratch work is under the session scratchpad.
+**Tests at close:** gate `46 passed, 1 warning in 20.44s`; lint `All checks passed!`; `adu verdict check docs/VERIFICATION-R2.md` → `verdict OK: VERDICT: STOP — MECHANICAL`.
+**NEXT:**
+1. The operator commits: `git add docs/VERIFICATION-R2.md SESSION-JOURNAL.md` then `git commit -m "docs: verification R2 of pack q07-retire-amends v1.2 (STOP — MECHANICAL)"`.
+2. The architect revises the pack to v1.3 for N-1 (`/adu-lifecycle:change-design Q-07`, stage 1 again). That covers E-6b.10 and E-6a.9, B-4.3's stand-in test, and a twin in which a router serves the probed operation. The Notes are optional. Then a fresh verifier runs round R3.
+3. Nothing is applied; ADU-03 stays blocked on Q-07.
