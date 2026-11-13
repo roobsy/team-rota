@@ -512,3 +512,53 @@ The one pass is the control `test_the_forced_child_really_writes_strict_cp1252` 
 1. The operator commits: `git add docs/PACK-q07-retire-amends.md SESSION-JOURNAL.md` then `git commit -m "docs: pack q07-retire-amends v1.3, snapshot 7d1e7d4 (after verification R2)"`.
 2. In a fresh `claude --plugin-dir C:\dev\adu-lifecycle --agent adu-lifecycle:verifier` started inside `C:\dev\team-rota`, paste Part D-1 of the pack (round R3; report docs/VERIFICATION-R3.md, named by hand, FB-31).
 3. After R3's verdict (READY, or READY WITH MECHANICAL ADAPTATIONS), rule E-1 … E-10; the apply is Part D-2. Nothing is applied before; ADU-03 stays blocked on Q-07.
+
+## 2026-11-13 17:49 · verification R3 · done
+**Done:**
+- Start checks:
+  - `adu status`: Now: ADU-03; Q-07 open, blocking.
+  - The three variables are as D-1 names them, and the interpreter line prints `C:\dev\team-rota-data\.venv cp1252 0`.
+  - `git status --short` shows `?? uv.lock`.
+  - The plugin is at ae191e2; `git diff --stat 4b63bb0 HEAD` lists FEEDBACK.md only.
+  - `adu snapshot check 7d1e7d4` → OK against HEAD d38925b (0 commits of drift); `adu role set verifier` ran.
+- Read: pack v1.3 in full; docs/VERIFICATION-R2.md in full; docs/VERIFICATION-R1.md; Q-07 (OPEN-QUESTIONS.md:53–59); the journal blocks of 2026-11-07 20:20, 2026-11-08 08:39, 18:34 and 22:45, and 2026-11-12 10:28, 10:40, 16:08 and 21:44; plugin FEEDBACK.md rows FB-28, FB-29 and FB-31–FB-34; and the ADU-PLAN.md entries of every unit.
+- docs/VERIFICATION-R3.md checks:
+  - R2's N-1 and its six notes;
+  - the header's line-4 search;
+  - R1's dispositions against v1.3, by an own block-by-block diff with v1.2;
+  - every B-, T- and E-block;
+  - A-2, row by row;
+  - the guard;
+  - the amendments, in both directions;
+  - the arms;
+  - E-10's table;
+  - what the pack does not claim, in both parts.
+- Measured, in the scratchpad only:
+  - the pack's script, re-run: its output equals the pasted run apart from timings, addresses and paths;
+  - my own parser and my own composition of the 1,088 rulings;
+  - `adu plan check` and `adu plan order` over all 144 plan texts;
+  - an 18 × 10 guard grid;
+  - my own scaffold of the clause's twins and of four API twins;
+  - my own simulated apply on an export of HEAD (D-12…D-18, Q-08…Q-13, O-02), and under E-5 (b);
+  - `adu derived check` after a gate change in adu.toml.
+- Gate once at HEAD: `46 passed, 1 warning in 26.34s`; lint clean; `git status --short` unchanged.
+**Decisions:** none; the verifier rules nothing. Findings:
+- S: none. N: none. R2's N-1 and notes are carried out, and R1's dispositions hold in v1.3.
+- M-1: the apply step enters this round's provisional Q-p7, non-blocking, with the next Q id (Q-14 if main took none).
+- Q-p7 lies outside the pack, in M4, and comes from the search for FB-34's class. ADU-12's arms pin the placeholder routes, the gate string and D-09's exact set, and ADU-17's pins a placeholder page; ADU-17, ADU-13, ADU-14 and ADU-15 change each of them. ADU-15 also changes adu.toml's gate without declaring CLAUDE.md, whose derived block then goes stale (measured).
+- Notes:
+  - E-6's unit list leaves out ADU-05's conftest amendment, which is harmless;
+  - E-6b.10's "an IdentityService method" can be met by a test of one method;
+  - A-2 :59's wording is looser than the condition the clause needs;
+  - four option-variant blocks go unnamed in the header's checked list.
+**Deviations flagged:**
+- The report was written in parts through Bash heredocs in the scratchpad and then concatenated: this session has no Write tool, and long heredocs fail to parse here, as R2's and the architect's blocks report.
+- `adu next-id V` was not run (FB-31); the id R3 was named by hand.
+- The B-5 and E-6 probes were not re-run: their sections are byte-identical to v1.2.
+- My own scaffold's lint findings (one F401, two E501) are in my scratch files, not in pack text.
+- In the repository, only docs/VERIFICATION-R3.md and this block were written; all other work is under the session scratchpad.
+**Tests at close:** gate `46 passed, 1 warning in 26.34s`; lint `All checks passed!`; `adu verdict check docs/VERIFICATION-R3.md` → `verdict OK` on its last line, READY WITH MECHANICAL ADAPTATIONS.
+**NEXT:**
+1. The operator commits: `git add docs/VERIFICATION-R3.md SESSION-JOURNAL.md` then `git commit -m "docs: verification R3 of pack q07-retire-amends v1.3 (READY WITH MECHANICAL ADAPTATIONS)"`.
+2. The operator rules E-1 … E-10 (Part E).
+3. The apply is Part D-2, in a fresh release-manager session with the rulings pasted. Its step 4 makes M-1: Q-p7, from docs/VERIFICATION-R3.md §6, entered with the next Q id. Nothing is applied before that, and ADU-03 stays blocked on Q-07 until the apply resolves it.
