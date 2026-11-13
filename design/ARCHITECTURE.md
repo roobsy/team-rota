@@ -1,5 +1,5 @@
 # ARCHITECTURE — Team Rota
-v1.1 · owned by the architect (`/adu-lifecycle:design-architecture`). The walls a unit may not cross, written so the layering ratchet (`tests/test_layering.py`) fails the build when one does. Rests on D-03..D-06 and D-09 (the frontend toolchain).
+v1.2 · owned by the architect (`/adu-lifecycle:design-architecture`). The walls a unit may not cross, written so the layering ratchet (`tests/test_layering.py`) fails the build when one does. Rests on D-03..D-06, D-09 (the frontend toolchain), D-14 (the request's session) and D-16 (the token and salt source).
 
 ## Stack and adapter
 Adapters: `python-fastapi-uv` (API) and `react-vite-vitest` (UI), see `adu.toml`. Runtime: Python 3.12, FastAPI, SQLAlchemy 2 over SQLite (one file per workspace, in-memory never shared across tests). UI: React 18 + Vite + TypeScript, calling the API only through the client generated from `contracts/openapi.yaml`. Auth in this version: sign-in by email and passcode (stored as a salted SHA-256 from the standard library — no new dependency) issuing one opaque bearer token per member; the API layer resolves it once per request into the `Caller` value every service receives (D-04, IR-11).
@@ -15,7 +15,7 @@ Adapters: `python-fastapi-uv` (API) and `react-vite-vitest` (UI), see `adu.toml`
 | 5 | UI | `frontend/src/` | the generated client only (`frontend/src/client/`) |
 | 6 | cross-cutting / packaging | `src/app/main.py` (composition root), `src/app/cli.py` (the operator's commands), `src/app/serve.py` | everything |
 
-A domain service imports another domain only through a protocol in `src/app/ports.py` (`MemberDirectory`, `SchedulingPort`, `SwapsPort`, `Notifier`, `Clock`) bound in the composition root — never the other domain's `service.py`. The service graph has two cycles (identity ↔ scheduling, scheduling ↔ swaps); they are legal only across these ports, and `tests/layering.json` forbids every direct cross-domain import.
+A domain service imports another domain only through a protocol in `src/app/ports.py` (`MemberDirectory`, `SchedulingPort`, `SwapsPort`, `Notifier`, `Clock`) bound in the composition root — never the other domain's `service.py`. The service graph has three cycles (identity ↔ scheduling, identity ↔ notifications, scheduling ↔ swaps); they are legal only across these ports, and `tests/layering.json` forbids every direct cross-domain import.
 
 ## Allowed edges (the ratchet's configuration, `tests/layering.json`)
 - 3 → 4, 3 → 5, 3 → 6, 1 → anything above, 2 → 3/4/6: forbidden (asserted zero).
@@ -39,14 +39,14 @@ A domain service imports another domain only through a protocol in `src/app/port
 Nothing else is installed by a unit (hard rule 2); a new package is a DECISIONS row first.
 
 ## Persistence and concurrency rules
-- One session and one write transaction per request, opened by the API layer (`src/app/api/deps.py`) and shared by every service the request touches (the transfer, the decision and their notifications commit together, R-swaps-04); compute first (rules, overlap checks), then write; never hold the write across a computation.
+- One session and one write transaction per request, opened by the API layer (`src/app/api/deps.py`) and shared by every service the request touches (the transfer, the decision and their notifications commit together, R-swaps-04); compute first (rules, overlap checks), then write; never hold the write across a computation. That session is current for the whole request (D-14). The async dependency `deps.get_session` makes it current; every service and port implementation reads and writes in `db.current_session()` and never opens, commits or closes one; and the API layer commits a write before it answers, never in the dependency's exit, which runs after the response is sent. The operator's command and the tests run in `db.unit_of_work(engine)`; with no session current a service raises `db.NoCurrentSession`.
 - SQLite file per workspace under a `pathlib.Path`; tests get a fresh file in `tmp_path`, never a shared in-memory engine.
 - The clock is injected (`Clock` protocol in `src/app/ports.py`); no service calls `datetime.now()` directly — the swap deadline (R-swaps-01) and expiry (R-swaps-06) are only testable with a controlled clock.
-- No randomness in the product; the synthetic generator (`src/app/synthetic.py`) takes a `random.Random(seed)` and reproduces byte for byte.
+- No randomness in the product except identity's token and salt source: the composition root passes the IdentityService a `TokenSource`, and the product's (`SecretsSource`) draws from the standard library's `secrets` (D-16); a credential never comes from `random`; the synthetic generator (`src/app/synthetic.py`) takes a `random.Random(seed)` and reproduces byte for byte.
 - No non-loopback network at test time; the UI tests use the generated client against the mock server or MSW handlers built from the contract's examples.
 
 ## Protected paths
 None beyond the method's own (`adu.toml`, `PINS.lock`, `.claude/settings.json`, `CLAUDE.md`). The adapter's default `src/app/ledger.py` does not exist in this product and is removed from `[protected].paths` on the operator's approval (D-06) — a protected path that names no file is a rule nobody can test.
 
 ## Decisions
-D-03 (stack and roster) · D-04 (sign-in by email and passcode; one bearer token per member; the caller resolved once per request) · D-05 (the layering law and the five ports) · D-06 (protected paths) · D-09 (the frontend toolchain).
+D-03 (stack and roster) · D-04 (sign-in by email and passcode; one bearer token per member; the caller resolved once per request) · D-05 (the layering law and the five ports) · D-06 (protected paths) · D-09 (the frontend toolchain) · D-14 (the request's session) · D-16 (the token and salt source).

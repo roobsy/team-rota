@@ -9,9 +9,10 @@ Scheme: `vMAJOR.MINOR` — a requirement changed (design-change loop, operator d
 | CLAUDE.md | 1.0 | constitution |
 | design/PRODUCT-BRIEF.md | 1.0 | purpose (content-pinned, D-01) |
 | design/PRODUCT-DESIGN.md | 1.7 | product design (agreed, D-02) |
-| design/ARCHITECTURE.md | 1.1 | architecture contract |
+| design/ARCHITECTURE.md | 1.2 | architecture contract |
 | contracts/openapi.yaml | 1.1 | API contract |
-| ADU-PLAN.md | 1.2 | the plan |
+| design/INTERFACES.md | 1.1 | in-process interfaces (the ports, the domain services, the traceability) |
+| ADU-PLAN.md | 1.3 | the plan |
 
 ## History
 <!-- ### YYYY-MM-DD — DOC vX / DOC vY: <ID> — <summary>, then a table | Document | From | To | What changed | -->
@@ -115,3 +116,10 @@ Scheme: `vMAJOR.MINOR` — a requirement changed (design-change loop, operator d
 | Document | From | To | What changed |
 |---|---|---|---|
 | ADU-PLAN.md | 1.1 | 1.2 | ADU-00 gains the FB-01 acceptance arm on tests/test_layering.py (the defect session, under Q-06 option 1, ruled by the operator; committed in c56ea77 with no version until this row): a requirement added, hence the minor bump. M1's usable-path cell is corrected to ADU-02's own arm (ADU-PLAN.md:129): 401 unauthenticated without a token, 501 not_built with one, and sign-in 501, as the operator's use-it run showed. ADU-11's entry carries the O-01 pointer (FB-02). |
+
+### 2026-11-13 — ADU-PLAN v1.3, INTERFACES v1.1, ARCHITECTURE v1.2: Q-07, D-12–D-17 — the retirement edits under grants, Refused, IdentityService and its session, collaborators, token source and values, the service units' test files (Q-13 → D-18)
+| Document | From | To | What changed |
+|---|---|---|---|
+| ADU-PLAN.md | 1.2 | 1.3 | ADU-03, ADU-09, ADU-05, ADU-07: amends gain tests/api/test_contract_conformance.py and widen tests/test_nulls.py, each edited under the operator's grant (D-12); ADU-03 amends src/app/ports.py (Refused, D-13); ADU-03 amends src/app/db.py and src/app/api/deps.py (the request's current session, D-14); the four retirement arms rewritten so they can be met; the Shape-of-the-cut sentence on retirement; ADU-04's entry points to the Owed row of Q-12 (O-02); the four service units' test files renamed tests/<domain>/test_<domain>_service.py (Q-13, D-18); a requirement changed, hence the minor bump |
+| design/INTERFACES.md | 1.0.1 | 1.1 | §Refused; §Domain services with IdentityService (signatures from ADU-03's arms, R-identity-01..09 and the contract; the session, the constructor and collaborators, the token and salt source and the returned values as ruled, D-14–D-17); the retirement paragraph under the composition-root bindings; US-identity-005's trace names IdentityService.seed_admin; first row in Current |
+| design/ARCHITECTURE.md | 1.1 | 1.2 | §Layers: the service graph's cycles name identity ↔ notifications (IR-10 / IR-04) beside the other two (with D-15); §Persistence and concurrency rules: the request's session (D-14), and the token and salt source as the one exception to "no randomness in the product" (D-16); the header and §Decisions name the decisions it now rests on: a requirement changed, hence the minor bump |

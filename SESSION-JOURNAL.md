@@ -562,3 +562,48 @@ The one pass is the control `test_the_forced_child_really_writes_strict_cp1252` 
 1. The operator commits: `git add docs/VERIFICATION-R3.md SESSION-JOURNAL.md` then `git commit -m "docs: verification R3 of pack q07-retire-amends v1.3 (READY WITH MECHANICAL ADAPTATIONS)"`.
 2. The operator rules E-1 … E-10 (Part E).
 3. The apply is Part D-2, in a fresh release-manager session with the rulings pasted. Its step 4 makes M-1: Q-p7, from docs/VERIFICATION-R3.md §6, entered with the next Q id. Nothing is applied before that, and ADU-03 stays blocked on Q-07 until the apply resolves it.
+
+## 2026-11-13 20:58 · design-change loop Q-07, stage 4: apply of pack q07-retire-amends v1.3 (release manager) · done
+**Done:**
+- Start checks:
+  - The interpreter line printed `C:\dev\team-rota-data\.venv cp1252 0`. `UV_PROJECT_ENVIRONMENT`, `PYTHONUTF8` (empty) and `ADU_PLUGIN_ROOT` are as the prompt names them.
+  - docs/VERIFICATION-R3.md (pack v1.3 at 7d1e7d4) ends `VERDICT: READY WITH MECHANICAL ADAPTATIONS`.
+  - `adu snapshot check 7d1e7d4` → OK against HEAD 5b19ad8 (0 commits of drift), exit 0.
+  - `git status --short` → `?? uv.lock`; `adu role set release-manager` ran.
+- The operator's rulings, verbatim: E-1 (a), E-2 (a), E-3 (a), E-4 (a), E-5 (a), E-6 (b), E-7 (b), E-8 (a), E-9 (a), E-10 (a), and "E-11 (yes: Owed row O-03 due ADU-12 for Q-p7.)". This is the pack's recommended set, and every ruled option has text in the pack.
+- Ids, from `adu next-id D|Q|O` at HEAD (D-12, Q-08, O-02: main took none):
+  - D-p1 … D-p7 → D-12 … D-18;
+  - Q-p1 … Q-p6 → Q-08 … Q-13, and R3's Q-p7 → Q-14;
+  - O-p1 → O-02, and E-11's row → O-03.
+  - Afterwards `adu next-id` answers D-19, Q-15 and O-04.
+- Applied B-2.1–B-2.9, B-3.1–B-3.14 and B-3.16, then the 70 ruled E-blocks: E-5a.1–.14, E-6b.1–.10, E-7b.1–.5, E-8a.1–.4, E-9a.1–.3 and E-10a.1–.34.
+  - A scratch script did it. Each block occurs once in its file and starts at its stated line: B against the 7d1e7d4 blob, which equals the working tree; E against the text as B leaves it.
+  - Blocks went bottom-up and right to left. The shared DECISIONS anchor went E-10 first and E-6 last, so DECISIONS.md:17–23 stand D-12 … D-18.
+  - Before substitution, design/INTERFACES.md:87–139 is byte-identical to the pack's composed excerpt (pack :1007–1059), and the OPEN-QUESTIONS headings and Owed rows agree with it.
+  - Not applied: B-2.T (the retiring sessions', each under its grant) and E-9.P (the pm-lead's patch of design/PRODUCT-DESIGN.md:18).
+- E-11: the operator's row is STATUS.md:33, O-03 due ADU-12, directly after O-02, with only the ids and the date substituted. R3's M-1: Q-14 is entered at OPEN-QUESTIONS.md:103–108 as R3 §6 writes it, non-blocking.
+- Chase: every Part C row ran through `adu chase`, and so did "↔", `get_session`, "randomness", `<apply-date>` and `VERIFICATION-<id>`. No provisional id is left outside the pack, the verification reports and this journal. Each hit is changed, or stays with its reason, in docs/APPLICATION-REPORT-q07-retire-amends.md §3.
+- Checks after the apply:
+  - `adu derived render` → 0 files rewritten. `adu plan check` → `plan OK: 18 units`, and `adu plan order` is identical to B-3.15's 18 lines.
+  - `adu derived check` → `derived blocks OK`; `adu ledger lint` → `ledgers OK`; `adu pins check` → `pins OK (1 pinned)`; `adu release check` → `release check OK`.
+  - `adu status`: Now ADU-03. "Open blocking questions: none". Non-blocking: Q-02, Q-03, Q-05, Q-12 and Q-14. Owed: O-01 due ADU-11, O-02 due ADU-04 and O-03 due ADU-12. The last gate run is cited at STATUS.md:42.
+- Versions: ADU-PLAN 1.2 → 1.3; design/INTERFACES.md 1.0.1 → 1.1, with its first Current row; design/ARCHITECTURE.md 1.1 → 1.2. Q-07 is resolved → D-12.
+- docs/APPLICATION-REPORT-q07-retire-amends.md written from the plugin's template: the mapping, the changes, the chase, M-1 and E-11, the line mapping, what was not applied, and the findings.
+**Decisions:**
+- O-03's Approval cell quotes E-11 with the ids substituted ("…for Q-14."), as the prompt instructs and `adu ledger lint` requires. The operator's literal words are `E-11 (yes: Owed row O-03 due ADU-12 for Q-p7.)`.
+- Q-14 and O-03 keep their ADU-PLAN.md citations as at 7d1e7d4 (:406, :407, :411, :436 …), entered character for character. In v1.3 every plan line from the old :285 on is +8, and the report's §4 maps each cited line.
+- ADU-PLAN.md:2's "cut … on 2026-11-07 from … design/INTERFACES.md v1.0.1 and design/ARCHITECTURE.md v1.1" is a chase hit Part C does not list. It stays: it is dated provenance and true as written, and VERSIONS.md holds the current versions. It is an editorial candidate for the next plan patch, with INTERFACES.md:2's stale "each with a `Null<Interface>` in the contract unit" (Part C).
+**Deviations flagged:**
+- This block is appended before the gate and its Tests line filled after, as the journal's header and the session protocol require. The prompt's step 6 lists the gate first.
+- The STATUS Log line is typed in the shape of the M1 close line, because `adu log-line` takes only an ADU-nn.
+- `adu audit` is not one of the apply's checks. After the apply it reports 13 "dangling" findings; on a HEAD export it reports none of that kind (its one finding there is O-01, owed). All 13 are "plugin FB-28/32/33/34" citations, which the audit reads as this project's FEEDBACK ids. This is plugin feedback, for the operator to carry upstream.
+- No grant was asked for or used. No test, code, contract or protected path changed, and the pack was not edited. Not committed: the operator commits.
+**Tests at close:** gate `46 passed, 1 warning in 15.97s` (`uv run pytest tests/ -q -m "not timing"`, run once, after this block was appended; the interpreter line printed `C:\dev\team-rota-data\.venv cp1252 0`). That is the count STATUS.md:42 records, and this loop changed no test. Lint `All checks passed!` (`uv run ruff check`). `git status --short` was unchanged by both. STATUS Log line: STATUS.md:43.
+**NEXT:**
+1. The operator commits: `git add ADU-PLAN.md DECISIONS.md OPEN-QUESTIONS.md STATUS.md VERSIONS.md design/ARCHITECTURE.md design/INTERFACES.md docs/APPLICATION-REPORT-q07-retire-amends.md SESSION-JOURNAL.md`, then `git commit -m "docs: apply pack q07-retire-amends (ADU-PLAN v1.3, INTERFACES v1.1, ARCHITECTURE v1.2)"`. `uv.lock` stays untracked (Q-05).
+2. The ADU-03 hand-over. The oversight session regenerates `adu handover ADU-03` and checks it against the entry (ADU-PLAN.md:138–172); its section A expects "Open blocking questions: none". The hand-over must say:
+   - "design updated: ADU-PLAN v1.3 (ADU-03's amends, tests and arm 1; the same pattern in ADU-09, ADU-05, ADU-07), INTERFACES v1.1 (§Refused, §Domain services — the request's session and IdentityService, the retirement paragraph), ARCHITECTURE v1.2 (§Layers, §Persistence and concurrency rules)";
+   - in its first section, the two grants the session asks the operator for, `tests/api/test_contract_conformance.py` and `tests/test_nulls.py`, because the guard does not honour `amends` on a completed unit's test (plugin FB-28);
+   - in its roster, the `amends` files, which C1 omits (plugin FB-30 (1)): src/app/main.py, src/app/ports.py, src/app/identity/null_directory.py (deleted), and under E-6 (b) src/app/db.py and src/app/api/deps.py. None of these needs a grant, because none is a test. Its test file is tests/identity/test_identity_service.py (E-10 (a));
+   - that O-02, due ADU-04, is listed by `adu status` and is not ADU-03's, and neither is O-03, due ADU-12.
+   The pm-lead's E-9.P patch follows in a pm-lead session and does not block ADU-03.
