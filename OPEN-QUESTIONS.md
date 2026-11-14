@@ -130,7 +130,7 @@ Today nothing compares a written text with the example, because ADU-02's conform
 **Recommendation:** (a), by the oversight session; R-notifications-01 says the emitting domain names the people, and a silent skip of an id nobody can hold hides nothing a reader of the roster would see.
 **Resolution:** none yet.
 
-### Q-18 · 2026-11-14 · ADU-05 · open
+### Q-18 · 2026-11-14 · ADU-05 · resolved → operator's ruling (no document change)
 **Conflict:** ADU-05's hand-over says the scheduling service's returned values come from "the arms, the contract's six operations and schemas, the spec, D-14, D-15 and D-17's reading". It gives that reading as "a service's values are the contract's shapes as frozen dataclasses in its service module, identity's precedent", and says to stop on any point those sources leave open. Two values are open, because the arms and the contract give them different layouts:
 1. **The board.**
    - ADU-05 arm 5 (ADU-PLAN.md:226), R-scheduling-05 (design/domains/scheduling/spec.md:11) and US-scheduling-004 arm 1 (stories/US-scheduling-004.md:11) give `{start_date, state, shifts: [{id, date, start, end, slots, holders}]}`. The week's fields sit at the top, and each shift's fields sit beside its holders.
@@ -187,7 +187,7 @@ No frozen value can take both layouts without carrying each field twice. tests/s
   - publish: forbidden · not_found · week_published, unfilled_slots.
   - board: not_found, then week_draft for a member on a draft week (it needs the week to exist).
 
-**Resolution:** none yet.
+**Resolution:** option (a), the operator, 2026-11-14, in the ADU-05 session, verbatim: "Q-18: (a). The arms' layout: BoardValue(start_date, state, shifts), each shift a ShiftRow(id, week_start, date, start, end, slots, holders); create_shift answers the same ShiftRow with holders=(); ADU-06 maps the board onto the contract's Board. The "Assumed under every option" list in Q-18 is accepted as written. D-17 names the IdentityService only: for this service the arms come first, and the contract only where the arms are silent."
 
 ### Q-19 · 2026-11-14 · ADU-05 · open
 **Conflict:** design/INTERFACES.md §SchedulingPort (:38–44) and ADU-05 arm 6 (ADU-PLAN.md:227) leave three cases of the port open:
@@ -206,4 +206,5 @@ No arm names these cases, and nothing reaches them today: swaps (ADU-07) passes 
 - (c) The architect writes the answers into INTERFACES §SchedulingPort, and the unit that next touches scheduling adds the tests.
 
 **Recommendation:** (a) for the build, (c) at the next INTERFACES patch.
-**Resolution:** none yet.
+**Ruling:** option (a) for the build, the operator, 2026-11-14, in the ADU-05 session, verbatim: "Q-19: (a) for this unit's build, not pinned by a test. (c) stays owed: the architect writes the three answers into design/INTERFACES.md §SchedulingPort at the next INTERFACES patch, together with Q-15 and Q-17."
+**Resolution:** none yet — (c) owed at the next INTERFACES patch.
