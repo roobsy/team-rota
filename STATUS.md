@@ -11,7 +11,7 @@ Legend: ☐ planned · 🔨 in progress (at most one) · ✅ done = green under 
 | ADU-02 | Contract unit — served contract, golden pin, composition root | ✅ | 2026-11-07 08:50 | 2026-11-07 08:55 | 42 |
 | ADU-03 | Identity service | ✅ | 2026-11-13 21:24 | 2026-11-14 07:20 | 161 |
 | ADU-04 | Identity API | ☐ | | | |
-| ADU-05 | Scheduling service | ☐ | | | |
+| ADU-05 | Scheduling service | 🔨 | 2026-11-14 14:30 | | |
 | ADU-06 | Scheduling API | ☐ | | | |
 | ADU-07 | Swaps service | ☐ | | | |
 | ADU-08 | Swaps API | ☐ | | | |

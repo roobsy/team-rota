@@ -129,3 +129,81 @@ Today nothing compares a written text with the example, because ADU-02's conform
 **Options:** (a) confirm the skip: a recipient unknown to identity receives nothing, as an inactive one; the architect writes it into R-notifications-03 and INTERFACES' Notifier invariants in the next patch, and the unit that next touches notifications adds the test; (b) an unknown recipient is a fault of the emitter: notify raises (MemberNotFound), so an emitter's bug is loud — a behaviour change of a completed unit, made in a defect session.
 **Recommendation:** (a), by the oversight session; R-notifications-01 says the emitting domain names the people, and a silent skip of an id nobody can hold hides nothing a reader of the roster would see.
 **Resolution:** none yet.
+
+### Q-18 · 2026-11-14 · ADU-05 · open
+**Conflict:** ADU-05's hand-over says the scheduling service's returned values come from "the arms, the contract's six operations and schemas, the spec, D-14, D-15 and D-17's reading". It gives that reading as "a service's values are the contract's shapes as frozen dataclasses in its service module, identity's precedent", and says to stop on any point those sources leave open. Two values are open, because the arms and the contract give them different layouts:
+1. **The board.**
+   - ADU-05 arm 5 (ADU-PLAN.md:226), R-scheduling-05 (design/domains/scheduling/spec.md:11) and US-scheduling-004 arm 1 (stories/US-scheduling-004.md:11) give `{start_date, state, shifts: [{id, date, start, end, slots, holders}]}`. The week's fields sit at the top, and each shift's fields sit beside its holders.
+   - The contract's `Board` (contracts/openapi.yaml:795) is `{week: Week, shifts: [BoardShift]}`. `BoardShift` (:787) is `{shift: Shift, holders}`, and `Shift` (:730) also requires `week_start`.
+   - ADU-06's arm (ADU-PLAN.md:313) has GET board answer "the Board shape".
+2. **create_shift's answer.**
+   - ADU-05 arm 2 (ADU-PLAN.md:223) says "the response is the shift with its holder-rows", and ADU-06's arm (:311) says "201 the shift with holder-rows".
+   - The contract's 201 (contracts/openapi.yaml:236) is `Shift`, `{id, week_start, date, start, end, slots}`, with no holders. The contract's description (:12) says "Every write answers the row it created or changed as its list or the board shows it".
+
+No frozen value can take both layouts without carrying each field twice. tests/scheduling/test_scheduling_service.py reads the value's attributes, so it pins one layout. That file becomes immutable at ADU-05's ✅, and ADU-06 then maps from whichever layout it pins. ADU-09 settled Q-16 by the authority order (the plan, 4, before the contract, 6). This hand-over also names D-17's contract-shape reading as a source, so the order alone does not settle the layout.
+**Blocking:** yes. ADU-05 (Now) is blocked: its arms 2, 5, 7 and 8 assert these values. No test has been drafted and no code written.
+**Options:**
+- (a) The arms' layout:
+  - `BoardValue(start_date, state, shifts)`, each shift a `ShiftRow(id, week_start, date, start, end, slots, holders)`; create_shift answers the same `ShiftRow` with `holders=()`.
+  - `week_start` is the one field the arms do not name. It is kept so that create_shift's value carries every field the contract's `Shift` requires, and ADU-06's "201 the shift with holder-rows" is that row unchanged. ADU-06 maps the board onto `{week, shifts: [{shift, holders}]}`.
+  - Consequence: D-17's contract-shape reading is not applied to the board or the shift row (a journal Decision), and no document changes.
+- (b) The contract's layout:
+  - `BoardValue(week: WeekValue, shifts)`, each shift a `BoardShiftValue(shift: ShiftValue, holders)`, where `ShiftValue` is the contract's `Shift`. create_shift answers `BoardShiftValue(shift, holders=())` ("as … the board shows it", :12).
+  - ADU-06's 201 flattens it to `Shift` plus holders. The contract's `Shift` admits that, since it does not set `additionalProperties: false`.
+  - Consequence: arm 5's `{start_date, state, shifts: [{id, …, holders}]}` is read as content, not layout. Either the architect rewords ADU-05 arms 2 and 5 (and R-scheduling-05's notation) in a plan patch, or the operator rules that reading in session.
+- (c) As (a) without `week_start`, so each shift has exactly the arms' six fields, and ADU-06 takes week_start from the path. Consequence: create_shift's value does not carry the contract's `Shift` on its own.
+
+**Recommendation:** (a).
+- The arms are normative and agree with the spec and the story.
+- ADU-06's own arm already answers create_shift with holder-rows, which is (a)'s row.
+- D-17's text names only the IdentityService. Its rationale is that "the API layer maps them onto the contract's schemas", and under every option that mapping is one function in ADU-06.
+
+**Assumed under every option.** Each comes from the contract and D-17's reading, as ADU-09's values did; the ruling may change any of them:
+- Return values:
+  - assign answers `AssignmentValue(id, shift_id, member_id)` (the contract's Assignment).
+  - unassign answers None (204).
+  - publish answers `WeekValue(start_date, state)` (Week).
+  - list_weeks answers `WeeksValue(weeks, current)` (Weeks).
+  - A holder-row is `HolderValue(assignment_id, member_id, name, pending, requestable)` (Holder).
+- Publish refusals:
+  - `Refused("unfilled_slots").extra["unfilled"]` holds `UnfilledShift(shift_id, date, start, unfilled)` rows.
+  - Publish's `week_published` carries `unfilled=()`, as the contract's PublishProblem example does (:344).
+- Dates and times are the model's `date` and `time`, and the API layer formats them, as ADU-09's `created_at` is the model's datetime.
+- create_shift takes `start` and `end` as `str | None` and `slots` as `int | None`, and the service validates them. The contract reads them leniently (:8–9), and arm 2's "times of day … at most 23:59" can only fail on text.
+- Construction (D-15):
+  - `SchedulingService(bound)`, where `bound` is a zero-argument callable answering `.clock`, `.member_directory`, `.swaps` and `.notifier`. `Bindings` is a Protocol of those four in src/app/scheduling/service.py, which main.Ports satisfies.
+  - main.py binds `SchedulingService(lambda: app.state.ports)`, and the same object implements ports.SchedulingPort.
+- Signatures. The names are the contract's operationIds. Every operation takes the `Caller` (design/INTERFACES.md §Domain services):
+  - `create_shift(caller, start_date, date, start, end, slots)`
+  - `assign(caller, shift_id, member_id)`
+  - `unassign(caller, assignment_id)`
+  - `publish(caller, start_date)`
+  - `board(caller, start_date, mine=False)`
+  - `list_weeks(caller)`
+- Refusal order. It comes from PRODUCT-DESIGN's cross-cutting rules, which the contract's description (:9) refers to: forbidden → not_found → state (`week_published` first) → validation, and within a bucket the arms' order. forbidden means `caller.role` is neither admin nor planner, as identity checks `caller.role`.
+  - create_shift: forbidden · week_published · not_week_start, outside_week, invalid_interval, invalid_slots.
+  - assign: forbidden · not_found (the shift, then the member, whose `is_active` answers None) · week_published, already_assigned, overlapping_shift, shift_full, member_inactive (R-scheduling-07).
+  - unassign: forbidden · not_found · week_published.
+  - publish: forbidden · not_found · week_published, unfilled_slots.
+  - board: not_found, then week_draft for a member on a draft week (it needs the week to exist).
+
+**Resolution:** none yet.
+
+### Q-19 · 2026-11-14 · ADU-05 · open
+**Conflict:** design/INTERFACES.md §SchedulingPort (:38–44) and ADU-05 arm 6 (ADU-PLAN.md:227) leave three cases of the port open:
+1. What `transfer(assignment_id, to_member_id)` does when `to_member_id` names no member. `MemberDirectory.is_active` answers None for such an id (:22), and `TransferRefused.reason` "is one of the two enumerated codes and nothing else" (:44).
+2. Which reason `transfer` answers when the counterpart is both inactive and holds an intersecting slot.
+3. What `holds_intersecting_shift(member_id, shift_id)` answers for a shift_id that names no shift.
+
+No arm names these cases, and nothing reaches them today: swaps (ADU-07) passes ids it read from scheduling and checks the counterpart at request time.
+**Blocking:** no. No arm asserts these cases. The operator is asked to rule it together with Q-18, and the next session builds that ruling without pinning it in a test (Q-17's pattern).
+**Options:**
+- (a) The quiet answers:
+  1. counterpart_inactive, since None is "not active", as the Notifier reads it (Q-17).
+  2. counterpart_overlap. Arm 6 and R-scheduling-02's "Testable as" list it first, and on assign R-scheduling-07 puts member_inactive after the overlap checks.
+  3. False: no slot intersects a shift that does not exist.
+- (b) A loud failure: (1) raises `ports.MemberNotFound` and (3) raises `LookupError`, so a caller's bug is loud.
+- (c) The architect writes the answers into INTERFACES §SchedulingPort, and the unit that next touches scheduling adds the tests.
+
+**Recommendation:** (a) for the build, (c) at the next INTERFACES patch.
+**Resolution:** none yet.

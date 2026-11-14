@@ -750,3 +750,55 @@ The one pass is the control `test_the_forced_child_really_writes_strict_cp1252` 
 **Ledgers, with the operator's approval:** O-04 (due ADU-10, Q-16), the operator in this session, verbatim: "O-04 approved: Owed row due ADU-10 for Q-16." Raised: Q-17 (non-blocking), the Notifier's skip of a recipient unknown to identity, which ADU-09 chose and nothing pins.
 **Tests at close:** none run by this session; no code or test changed.
 **NEXT:** ADU-05 in a fresh `claude --plugin-dir C:\dev\adu-lifecycle --agent adu-lifecycle:developer` inside `C:\dev\team-rota`, from the oversight session's hand-over; expected gate after the unit: 239 of today's 241 (less the NullSchedulingPort case of the shared parametrised test and test_null_scheduling_port_does_nothing_observable) plus ADU-05's new gate tests; the timing test is deselected by the gate.
+
+## 2026-11-14 14:36 · ADU-05 · blocked
+**Done:**
+- Start checks:
+  - `adu status`: Now ADU-05, open blocking questions none, plan check OK, no other 🔨 row.
+  - Interpreter line: `C:\dev\team-rota-data\.venv cp1252 0`.
+- Read:
+  - The last journal block (2026-11-14 14:20, hand-over ADU-05) and Q-02, Q-03, Q-05, Q-12, Q-14, Q-15, Q-16 and Q-17, all open and non-blocking.
+  - The ADU-05 entry (ADU-PLAN.md:200–230).
+  - design/INTERFACES.md: §SchedulingPort, §SwapsPort, §Notifier, §Refused, §Domain services, §IdentityService, and §Composition root bindings with the retirement paragraph.
+  - design/ARCHITECTURE.md §Persistence and concurrency rules, and DECISIONS D-12 … D-18.
+  - The scheduling spec, US-scheduling-001 … 006 and US-notifications-001.
+  - The contract's six scheduling operations and their schemas.
+  - PRODUCT-DESIGN's cross-cutting rules and Reason codes table: the refusal order the contract's description refers to.
+  - Code: src/app/synthetic.py (`seeded_week`, `load_fixture`), src/app/ports.py, src/app/models.py, src/app/db.py, src/app/main.py and src/app/identity/service.py.
+  - Tests: tests/support/doubles.py, tests/conftest.py and tests/test_tiers.py.
+  - T-05.1 … T-05.6 of docs/PACK-q07-retire-amends.md (from line 450). Each target occurs at its stated line at HEAD: tests/api/test_contract_conformance.py:24 and :108; tests/test_nulls.py:11, :15, :24 and :30.
+  - ADU-06's arms (ADU-PLAN.md:311, :313), only to quote them in Q-18.
+  - The rest of what this session read, each for its reason:
+    - src/app/identity/repo.py: the repo pattern, and Q-15's sqlalchemy import.
+    - src/app/scheduling/null_port.py and src/app/swaps/null_port.py: the Null retired and the mock consumed (MK-01, MK-03).
+    - tests/layering_scan.py and tests/layering.json: arm 6's layering assertion, and the scheduling → swaps edge, which is forbidden.
+    - pyproject.toml: pytest's `pythonpath`, for the timing script's `--measure` mode.
+    - The docstring of tests/notifications/test_notifications_service.py: the test-file pattern to hand the qa-engineer.
+    - The pack's rehearsal stand-ins (docs/PACK-q07-retire-amends.md:1540–1600 and :1740–1770), found while searching for any recorded SchedulingService shape. They hold only a stand-in SchedulingPort and the rebinding line, so no board shape is recorded there.
+    - OPEN-QUESTIONS.md's Q-04 and Q-07 (after Q-18 was written): how a ruling is recorded.
+- STATUS.md:14 marks ADU-05 🔨 at 2026-11-14 14:30.
+- I stopped before the tests: the sources the hand-over names leave the layout of the board and of create_shift's answer open (Q-18, blocking). Nothing else was done:
+  - No qa-engineer draft, test file or source file was written.
+  - No grant was recorded or used.
+  - src/app/main.py, src/app/scheduling/null_port.py, tests/conftest.py and the two completed tests are untouched.
+**Decisions:** none taken. The parts of the derivation that are settled are written into Q-18's "Assumed under every option": the construction (D-15), the six signatures, the other four values, create_shift's inputs, the date and time types, and the refusal order per operation. The three port cases no arm names are Q-19, so one ruling of Q-18 and Q-19 covers the service's whole interface.
+**Deviations flagged:**
+- Q-18 (raised, blocking): the layout of the board and of create_shift's answer. The arms give `{start_date, state, shifts: [{id, date, start, end, slots, holders}]}` and "the shift with its holder-rows". The contract gives `Board`, `BoardShift` and `Shift`, which is what the hand-over's D-17 reading asks for. The raiser recommends (a): the arms' layout, with `week_start` kept on the shift row.
+- Q-19 (raised, non-blocking): three port cases no arm names:
+  - transfer to an unknown member;
+  - which reason transfer answers when the counterpart both overlaps and is inactive;
+  - holds_intersecting_shift for an unknown shift.
+  The raiser recommends (a), pinned by no test.
+- Timing route (information for the architect; no question): the plan's arm as written can still be built.
+  - US-scheduling-004's timing arm says "50 sequential calls through the in-process test client". ADU-05's arm 7 does not.
+  - The board's route answers 501 until ADU-06, and ADU-06's entry has no timing arm.
+  - So ADU-05 can only time the service call, and no unit measures the HTTP-level figure.
+- No Log line was written. `adu log-line` needs a gate count and duration, and for a session that ran no gate its line reads "done · 0 tests · gate in 0:00", which would be untrue.
+- uv.lock stays untracked (Q-05). Nothing is committed.
+**Tests at close:** none run; no code or test changed (only STATUS.md, OPEN-QUESTIONS.md and this block).
+**NEXT:**
+1. The operator rules on Q-18, and Q-19 with it.
+2. The ruling is recorded in OPEN-QUESTIONS.md before anything is built, the way Q-07 records one: a `**Ruling:**` line with the operator's words, and the heading changed from `open` to `resolved → …`. Until Q-18 is resolved, `adu status` prints "Open blocking questions: Q-18 … STOP", and every session stops on that.
+   - Options (a) and (c) change no document: this session records the ruling if the operator gives it here, otherwise the oversight session does.
+   - Option (b) rewords ADU-05's arms 2 and 5: it goes through `/adu-lifecycle:change-design Q-18`, and that loop's apply step resolves the entry.
+3. A fresh ADU-05 hand-over that quotes the ruling starts at step (1), the qa-engineer's draft. ADU-05 stays 🔨 (Started 2026-11-14 14:30), and the operator decides whether that session restamps it.
