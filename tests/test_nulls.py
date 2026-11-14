@@ -8,14 +8,12 @@ from datetime import datetime
 import pytest
 
 from app import ports
-from app.notifications.null_notifier import NullNotifier
 from app.scheduling.null_port import NullSchedulingPort
 from app.swaps.null_port import NullSwapsPort
 
 REPLACED = {
     NullSchedulingPort: "ADU-05",
     NullSwapsPort: "ADU-07",
-    NullNotifier: "ADU-09",
 }
 
 
@@ -25,7 +23,6 @@ def test_each_null_names_its_provider_and_satisfies_its_protocol(cls: type) -> N
     proto = {
         NullSchedulingPort: ports.SchedulingPort,
         NullSwapsPort: ports.SwapsPort,
-        NullNotifier: ports.Notifier,
     }[cls]
     assert isinstance(cls(), proto)
 
@@ -45,9 +42,3 @@ def test_null_swaps_port_answers_nothing_pending_and_nothing_requestable() -> No
     assert NullSwapsPort().view(1, True, [(5, 1, datetime(2026, 11, 9, 8))]) == {
         5: ports.AssignmentView(pending=None, requestable=False)
     }
-
-
-def test_null_notifier_records_and_writes_nothing() -> None:  # deleted by ADU-09
-    n = NullNotifier()
-    n.notify(ports.MemberAdded(member_id=1, role="admin"))
-    assert len(n.sent) == 1 and type(n.sent[0]).__name__ == "MemberAdded"

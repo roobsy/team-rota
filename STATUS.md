@@ -15,7 +15,7 @@ Legend: ☐ planned · 🔨 in progress (at most one) · ✅ done = green under 
 | ADU-06 | Scheduling API | ☐ | | | |
 | ADU-07 | Swaps service | ☐ | | | |
 | ADU-08 | Swaps API | ☐ | | | |
-| ADU-09 | Notifications service | ☐ | | | |
+| ADU-09 | Notifications service | 🔨 | 2026-11-14 08:08 | | |
 | ADU-10 | Notifications API | ☐ | | | |
 | ADU-11 | Operator command — seed the first admin | ☐ | | | |
 | ADU-12 | UI foundation — the Vite scaffold, the shell and the anchor lint | ☐ | | | |
@@ -42,3 +42,4 @@ Legend: ☐ planned · 🔨 in progress (at most one) · ✅ done = green under 
 2026-11-07 17:37 · M1 closed · tag m1-foundations (c56ea77) · gate 46 passed in 28.77s (the operator's) · timing none (46 deselected, no timing arm) · backward series 0, 0, 0, 0, 2
 2026-11-13 21:00 · design-change loop Q-07, stage 4 (apply of pack q07-retire-amends v1.3: ADU-PLAN v1.3, INTERFACES v1.1, ARCHITECTURE v1.2) · done · 46 tests (none changed) · gate 46 passed in 15.97s (this session's run, not the operator's) · backward: n/a (documents only)
 2026-11-13 21:52 · ADU-03 · done · 161 tests · gate in 19.74s · backward: 7 (src/app/api/deps.py (ADU-02), src/app/db.py (ADU-01), src/app/identity/null_directory.py (ADU-16), src/app/main.py (ADU-02), src/app/ports.py (ADU-16), tests/api/test_contract_conformance.py (ADU-02), tests/test_nulls.py (ADU-16))
+2026-11-14 08:35 · ADU-09 · done · 241 tests · gate in 23.32s · backward: 4 (src/app/main.py (ADU-02), src/app/notifications/null_notifier.py (ADU-16), tests/api/test_contract_conformance.py (ADU-02), tests/test_nulls.py (ADU-16))

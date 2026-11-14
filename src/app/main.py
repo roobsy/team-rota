@@ -16,7 +16,7 @@ from fastapi.openapi.utils import get_openapi
 from app.api import contract_stubs
 from app.api.deps import ProblemError, problem_response
 from app.identity.service import IdentityService, SecretsSource
-from app.notifications.null_notifier import NullNotifier
+from app.notifications.service import NotificationsService
 from app.ports import Clock, MemberDirectory, Notifier, SchedulingPort, SwapsPort, SystemClock
 from app.scheduling.null_port import NullSchedulingPort
 from app.swaps.null_port import NullSwapsPort
@@ -55,7 +55,8 @@ def create_app(
         member_directory=member_directory or IdentityService(lambda: app.state.ports, SecretsSource()),
         scheduling=scheduling or NullSchedulingPort(),  # replaced by ADU-05
         swaps=swaps or NullSwapsPort(),  # replaced by ADU-07
-        notifier=notifier or NullNotifier(),  # replaced by ADU-09
+        # ADU-09: the notifications service reads the clock and the member directory at call time (D-15)
+        notifier=notifier or NotificationsService(lambda: app.state.ports),
         clock=clock or SystemClock(),
     )
     app.state.workspace = FsPath(workspace or os.environ.get("ROTA_WORKSPACE", ".rota"))

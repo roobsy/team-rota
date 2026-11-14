@@ -21,7 +21,6 @@ from support.doubles import FakeMemberDirectory, FixedClock  # noqa: E402
 from app import ports  # noqa: E402
 from app.api import contract_stubs  # noqa: E402
 from app.main import create_app  # noqa: E402
-from app.notifications.null_notifier import NullNotifier  # noqa: E402
 from app.scheduling.null_port import NullSchedulingPort  # noqa: E402
 from app.swaps.null_port import NullSwapsPort  # noqa: E402
 
@@ -107,7 +106,7 @@ def test_the_composition_root_binds_an_implementation_per_port_and_an_injectable
     p = app.state.ports
     assert isinstance(p.member_directory, ports.MemberDirectory)
     assert isinstance(p.scheduling, NullSchedulingPort)
-    assert isinstance(p.swaps, NullSwapsPort) and isinstance(p.notifier, NullNotifier)
+    assert isinstance(p.swaps, NullSwapsPort) and isinstance(p.notifier, ports.Notifier)
     assert isinstance(p.clock, ports.SystemClock)
     fixed = FixedClock(datetime(2026, 11, 5, 9))
     app2 = create_app(workspace=tmp_path, clock=fixed)
