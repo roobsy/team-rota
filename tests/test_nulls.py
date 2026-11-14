@@ -8,11 +8,9 @@ from datetime import datetime
 import pytest
 
 from app import ports
-from app.scheduling.null_port import NullSchedulingPort
 from app.swaps.null_port import NullSwapsPort
 
 REPLACED = {
-    NullSchedulingPort: "ADU-05",
     NullSwapsPort: "ADU-07",
 }
 
@@ -21,21 +19,9 @@ REPLACED = {
 def test_each_null_names_its_provider_and_satisfies_its_protocol(cls: type) -> None:
     assert f"replaced by {REPLACED[cls]}, class not shape" in (cls.__doc__ or "")
     proto = {
-        NullSchedulingPort: ports.SchedulingPort,
         NullSwapsPort: ports.SwapsPort,
     }[cls]
     assert isinstance(cls(), proto)
-
-
-def test_null_scheduling_port_does_nothing_observable() -> None:  # deleted by ADU-05
-    p = NullSchedulingPort()
-    with pytest.raises(ports.AssignmentNotFound):
-        p.assignment(1)
-    assert (
-        p.holds_intersecting_shift(1, 1) is False
-        and p.has_assignment_after(1, datetime(2026, 11, 5, 9)) is False
-    )
-    assert p.transfer(1, 2) is None
 
 
 def test_null_swaps_port_answers_nothing_pending_and_nothing_requestable() -> None:  # deleted by ADU-07

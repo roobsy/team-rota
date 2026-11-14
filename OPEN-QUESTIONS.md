@@ -208,3 +208,15 @@ No arm names these cases, and nothing reaches them today: swaps (ADU-07) passes 
 **Recommendation:** (a) for the build, (c) at the next INTERFACES patch.
 **Ruling:** option (a) for the build, the operator, 2026-11-14, in the ADU-05 session, verbatim: "Q-19: (a) for this unit's build, not pinned by a test. (c) stays owed: the architect writes the three answers into design/INTERFACES.md §SchedulingPort at the next INTERFACES patch, together with Q-15 and Q-17."
 **Resolution:** none yet — (c) owed at the next INTERFACES patch.
+
+### Q-20 · 2026-11-14 · ADU-05 · open
+**Conflict:** design/INTERFACES.md §SchedulingPort leaves a fourth port case open, which Q-19 does not name: what `transfer(assignment_id, to_member_id)` does when `assignment_id` names no assignment. `transfer` "raises TransferRefused(reason), reason in {counterpart_overlap, counterpart_inactive}" (:41), and "`TransferRefused.reason` is one of the two enumerated codes and nothing else" (:44), so neither code fits. Only `assignment` is documented to raise `AssignmentNotFound` (:39). ADU-05 arm 6 (ADU-PLAN.md:227) and US-scheduling-006 name no such case. Returning None would tell swaps (IR-02) that a transfer happened when nothing moved.
+**Blocking:** no. No arm asserts the case, and nothing reaches it today: swaps (ADU-07) passes an assignment id it read from scheduling in the same session. It decides one branch of `transfer` in src/app/scheduling/service.py, so it is ruled before that branch is written.
+**Options:**
+- (a) `transfer` raises `ports.AssignmentNotFound(assignment_id)`, the port's existing signal for an id that names no assignment (as `assignment` does); nothing is written. Loud, and no third TransferRefused code.
+- (b) `transfer` returns None and changes nothing. Consequence: swaps records an approval as if the holder had changed.
+- (c) Either, built and not pinned by a test now; the architect writes the answer into INTERFACES §SchedulingPort with Q-19's (c) at the next INTERFACES patch.
+
+**Recommendation:** (a) for this unit's build, not pinned by a test (Q-19's pattern), and (c) at the next INTERFACES patch.
+**Ruling:** options (a) and (c), the operator, 2026-11-14, in the ADU-05 session, answering the session's question with the option "(a)+(c) (Recommended)": `transfer` raises `ports.AssignmentNotFound(assignment_id)` and writes nothing, built and not pinned by a test; the architect writes the answer into design/INTERFACES.md §SchedulingPort with Q-19's (c) at the next INTERFACES patch.
+**Resolution:** none yet — (c) owed at the next INTERFACES patch.

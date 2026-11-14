@@ -824,3 +824,145 @@ The one pass is the control `test_the_forced_child_really_writes_strict_cp1252` 
 **Done:** After the operator's rulings of Q-18 (option (a), resolved, OPEN-QUESTIONS.md:133–190) and Q-19 (option (a) for the build, (c) owed, :192–209), `adu handover ADU-05` checked again (D-0) at `87c5f29`: Now ADU-05 (🔨 since 14:30), open blocking questions none; the pack's T-05.1–T-05.6 still match the two completed tests at their stated lines (no code or test changed since 14:20). The first hand-over's source order was wrong: it named D-17's contract-shape reading as a source for every service value, which D-17 does not say (it names the IdentityService), and that is how Q-18 arose; the second hand-over states the order the documents give (CLAUDE.md's authority: the plan's arms, then the design, then the contract only where the arms are silent) and quotes both rulings. Added to the D-0 check from now on: every value shape an arm states is compared with the contract's before the hand-over is given.
 **Tests at close:** none run by this session; no code or test changed.
 **NEXT:** ADU-05 in a fresh `claude --plugin-dir C:\dev\adu-lifecycle --agent adu-lifecycle:developer` inside `C:\dev\team-rota`, from the second hand-over; expected gate after the unit: 239 of today's 241 plus ADU-05's new gate tests; the timing test is deselected by the gate and run once, reported.
+
+## 2026-11-14 20:39 · ADU-05 · done
+**Done:**
+- Start checks:
+  - `adu status` (18:11): Now ADU-05, open blocking questions none, plan check OK.
+  - Interpreter line: `C:\dev\team-rota-data\.venv cp1252 0`.
+  - ADU-05 is 🔨 since 2026-11-14 14:30; its row is left as it is.
+- Read:
+  - The journal blocks of 14:36, 15:43 and 18:05, and the open questions Q-02, Q-03, Q-05, Q-12, Q-14, Q-15, Q-16, Q-17, Q-18 (resolved) and Q-19.
+  - The ADU-05 entry (ADU-PLAN.md:200–231).
+  - design/INTERFACES.md: §SchedulingPort, §SwapsPort, §Notifier, §Refused, §Domain services, §IdentityService, and §Composition root bindings with the retirement paragraph.
+  - design/ARCHITECTURE.md, and DECISIONS D-12 … D-18.
+  - The scheduling spec, US-scheduling-001 … 006 and US-notifications-001.
+  - PRODUCT-DESIGN's cross-cutting rules, Reason codes and Permissions.
+  - The contract's six scheduling operations and their schemas.
+  - Code: src/app/ports.py, models.py, db.py, synthetic.py, main.py, identity/service.py and identity/repo.py, scheduling/null_port.py and swaps/null_port.py.
+  - Tests: tests/support/doubles.py, tests/conftest.py, tests/test_tiers.py, tests/layering_scan.py, tests/layering.json, and the head of tests/notifications/test_notifications_service.py (the pattern).
+  - docs/PACK-q07-retire-amends.md T-05.1 … T-05.6.
+- Baseline gate on the untouched tree: `241 passed, 1 warning in 20.70s`.
+- Q-20 was raised (non-blocking) and ruled in session before any code (Deviations below).
+- Tests first:
+  - Before any implementation body existed, the qa-engineer subagent drafted tests/scheduling/test_scheduling_service.py (183 items) and tests/scheduling/test_board_timing.py (9 items: test_board_p95, plus 8 gate items testing its band and nearest-rank logic).
+  - Inputs: the arms, the Q-18/Q-19/Q-20 rulings and the public interface only. It wrote no test for the Q-19 or Q-20 cases.
+  - Red before the module existed: 2 collection errors, `ImportError: cannot import name 'service' from 'app.scheduling'`.
+  - The qa-engineer's own check: against a throwaway stand-in in its scratchpad (not used here), 31 seeded faults were caught except the one it labels in the module docstring, a write before a Refused inside the caller's unit of work, which the prescribed rollback hides.
+  - I reviewed both files against the arms and the rulings and accepted them unchanged.
+  - ECHO labels: the FakeSwapsPort configuration of arm 5 (BOARD_VIEWS) and of arm 8. The oracles are which rows carry the values and the `view` call.
+- Implementation:
+  - src/app/scheduling/rules.py: pure functions (week start, within week, HH:MM time of day, interval, slots, half-open intersection, start instant, current week).
+  - src/app/scheduling/repo.py: Week, Shift and Assignment rows in the passed session; it never reads members.
+  - src/app/scheduling/service.py: `SchedulingService(bound)`, `Bindings` and the seven frozen values.
+  - With the service and before the retirement, tests/scheduling ran 187 passed, 5 failed: exactly arm 1's retirement assertions.
+- tests/conftest.py: TIMING_NODES registers `tests/scheduling/test_board_timing.py::test_board_p95` with "sibling: tests/scheduling/test_scheduling_service.py::test_arm8_the_board_over_seeded_week_has_21_shifts_42_rows_5_pending_and_the_admins_requestable" (4 lines added).
+- src/app/main.py binds `SchedulingService(lambda: app.state.ports)` as `Ports.scheduling`; the NullSchedulingPort import and binding are gone.
+- src/app/scheduling/null_port.py is deleted (retires MK-01), a working-tree deletion that is not staged. tests/scheduling then ran 191 passed, 1 failed: the import scan, offenders `['tests/api/test_contract_conformance.py', 'tests/test_nulls.py']`.
+- The two grants below were recorded at 21:14.
+- The scratchpad script `apply_t05.py` applied T-05.1 … T-05.6. It extracts each block verbatim from the pack, checks that it occurs exactly once at its stated line, and replaces whole lines bottom-up in the file's own CRLF endings.
+- `git diff -- tests/api/test_contract_conformance.py` shows exactly T-05.1 (the import line deleted) and T-05.2 (`NullSchedulingPort` → `ports.SchedulingPort`).
+- `git diff -- tests/test_nulls.py` shows exactly T-05.3 … T-05.6, nothing else.
+- `git ls-files --eol` is unchanged (i/lf w/crlf).
+- `git grep null_port` over the tracked files of src/ and tests/, outside tests/scheduling, now names only swaps' Null (MK-03, ADU-07's). tests/scheduling/test_scheduling_service.py names the retired module only as string constants, for its import scan and the scan's twin. `python tests/layering_scan.py` exits 0; `uv run ruff check`: All checks passed!
+- Arm 7, measured and journaled before the timing tier (`-m timing`) was run, though not before test_board_p95 first asserted the threshold (Deviations below). `uv run python tests/scheduling/test_board_timing.py --measure` printed
+  `n=50 shifts=21 holder_rows=42 · min=1.022 ms · p50=1.073 ms · p95=1.259 ms (nearest rank) · max=1.491 ms · verdict: pass (threshold 300 ms, tolerance 50 ms)`, exit 0 (5 untimed warm-ups).
+**Grant (hard rule 1), operator, 2026-11-14 21:14, in session:** tests/api/test_contract_conformance.py (ADU-02's completed test), lines 24 and 108 only.
+- Permitted: exactly the edits T-05.1 and T-05.2 of docs/PACK-q07-retire-amends.md (B-2.T, from line 450), character for character, and nothing else.
+  - T-05.1 deletes the NullSchedulingPort import line.
+  - T-05.2 changes the class check `isinstance(p.scheduling, NullSchedulingPort)` to `isinstance(p.scheduling, ports.SchedulingPort)`.
+- The operator's words in this session's prompt: "Grant 1: tests/api/test_contract_conformance.py — exactly the edits T-05.1 and T-05.2 of docs/PACK-q07-retire-amends.md, character for character, and nothing else. Reason: Q-07 ruled option 1; D-12."
+- Measurement. Setup: src/app/scheduling/null_port.py deleted and the scheduling service bound. Result:
+  - `uv run pytest tests/test_nulls.py tests/api/test_contract_conformance.py` stops at collection: `ModuleNotFoundError: No module named 'app.scheduling.null_port'`.
+  - test_arm1_no_module_under_src_or_tests_imports_the_null_scheduling_port fails with offenders `['tests/api/test_contract_conformance.py', 'tests/test_nulls.py']`; tests/scheduling runs 191 passed, 1 failed.
+- The guard does not honour `amends` on a completed unit's test (plugin FB-28).
+- Machine grant: `adu grant add d9f8f5d5-f206-4bbb-8400-5587c0dea2ef tests/api/test_contract_conformance.py "Q-07 ruled option 1; D-12: T-05.1-T-05.2 only"`.
+
+**Grant (hard rule 1), operator, 2026-11-14 21:14, in session:** tests/test_nulls.py (ADU-16's completed test), lines 11, 15, 24 and 30–40 only.
+- Permitted: exactly the edits T-05.3 … T-05.6 of the same pack, character for character, and nothing else. They delete:
+  - the NullSchedulingPort import;
+  - its REPLACED entry;
+  - its protocol-map entry;
+  - test_null_scheduling_port_does_nothing_observable, with the two blank lines that follow it.
+- The operator's words: "Grant 2: tests/test_nulls.py — exactly the edits T-05.3 … T-05.6 of the same pack, character for character, and nothing else. Reason: Q-07 ruled option 1; D-12."
+- Measurement: the same collection error and import scan, both naming tests/test_nulls.py.
+- Machine grant: `adu grant add d9f8f5d5-f206-4bbb-8400-5587c0dea2ef tests/test_nulls.py "Q-07 ruled option 1; D-12: T-05.3-T-05.6 only"`.
+
+**Decisions:**
+- The interface is Q-18's ruling and its accepted "Assumed under every option" list (OPEN-QUESTIONS.md:133–190):
+  - `SchedulingService(bound)`, where `Bindings` is a Protocol of clock, member_directory, swaps and notifier in service.py, which main.Ports satisfies (D-15).
+  - The six operations, named by the contract's operationIds.
+  - Values: `ShiftRow` (with week_start; create_shift answers holders=()), `HolderValue`, `BoardValue`, `AssignmentValue`, `WeekValue`, `WeeksValue` and `UnfilledShift`. All are frozen dataclasses whose sequences are tuples, with the model's date and time.
+  - The refusal order per operation (R-scheduling-07 for assign).
+  - D-17 is not applied to these values (Q-18's ruling).
+- Sessions (D-14): every method, port methods included, takes `db.current_session()` before any check. The transfer sets the holder and flushes in the caller's session and commits nothing (INTERFACES §SchedulingPort invariants).
+- Forbidden is `caller.role` not in admin or planner (Q-18; PRODUCT-DESIGN, The caller and Permissions); unassign is forbidden to members too (US-scheduling-002 arm 7).
+- Identity is reached only through MemberDirectory (IR-06, IR-12; D-05):
+  - assign reads `is_active` once: None is not_found, False is member_inactive (Q-18's list; R-scheduling-07's order).
+  - A holder's name is `name_of`, asked once per member per board.
+  - WeekPublished's recipient_ids are `active_member_ids()`, deduplicated in their order (US-notifications-001; the Notifier dedupes too, INTERFACES §Notifier).
+- create_shift's inputs (Q-18's list; the contract reads them leniently, contracts/openapi.yaml:8–9):
+  - start and end are accepted only as `HH:MM` text from 00:00 to 23:59 (the contract's Shift and ShiftCreate say "HH:MM"; R-scheduling-01 says "at most 23:59"). Anything else (missing, not text, 24:00) is invalid_interval, as is end not after start.
+  - slots is an int of at least 1, a bool excluded.
+  - A refused first shift creates no week: every check comes before the first write (INTERFACES §Refused).
+- The board (R-scheduling-05, -06; IR-07):
+  - Shifts come by date, start, then id from the repo's query; holder-rows come by assignment id.
+  - `SwapsPort.view` is called once per board with the caller, `week.state == "published"` and (assignment id, holder id, start instant) for every row shown; under mine, only the shown shifts' rows.
+  - A draft board is passed `week_published=False`.
+  - Each row reads `views[assignment_id]`, so an answer swaps omits raises rather than defaulting silently (IR-07: "per assignment").
+- list_weeks: newest first; members see published weeks only. current is computed over all published weeks for every role, by `clock.now().date()` (R-scheduling-06).
+- Publish:
+  - forbidden · not_found · week_published (with `unfilled=()`, the contract's PublishProblem example) · unfilled_slots (rows in board order, `unfilled` = free slots).
+  - The state is written before notify, in the same session.
+- The SchedulingPort:
+  - `holder_ids` are the shift's current holders in assignment-id order, the assignment's own holder included (IR-01).
+  - `has_assignment_after` is strictly after `now` (INTERFACES:42 "after now").
+- Cases no test pins (built as ruled):
+  - Q-19 (a): transfer to an id that names no member answers counterpart_inactive (None is not active); when both hold, overlap is checked before inactive; holds_intersecting_shift for an unknown shift answers False.
+  - Q-20 (a): transfer of an unknown assignment raises AssignmentNotFound and writes nothing.
+- Refusal details are plain sentences following the contract's examples; tests assert `.reason` only (INTERFACES §Refused).
+- Arm 7's bindings are the sibling's doubles (FakeMemberDirectory from the fixture, an unconfigured FakeSwapsPort, SpyNotifier, FixedClock at the fixture's clock), as the hand-over directs for tests. So the figure is scheduling's own cost.
+- Each timed call runs in its own unit of work, and the clock is read around the board call itself (arm 7's "around each call of the board operation").
+- `--measure` exits 1 on red, else 0; a within-tolerance result passes with a `warnings.warn` report line. The qa-engineer's choices; no convention in the repo.
+
+**Deviations flagged:**
+- Q-20 (raised, non-blocking; ruled in session). The question: what `transfer` does with an `assignment_id` that names no assignment. INTERFACES:41/:44 allow only the two TransferRefused codes, and Q-19 did not name this case.
+- Ruling: options (a) and (c), the operator, 2026-11-14, answering the session's question with "(a)+(c) (Recommended)":
+  - (a) `transfer` raises `ports.AssignmentNotFound` and writes nothing; it is built and not pinned by a test.
+  - (c) the architect writes the answer into INTERFACES §SchedulingPort with Q-19's (c).
+- Recorded in OPEN-QUESTIONS.md. (c) for Q-19 and Q-20 is owed at the next INTERFACES patch.
+- Measure-then-assert was not kept to the letter. The hand-over asks for the `--measure` figures to be in this block "before the test asserts the threshold".
+  - My two unfiltered runs of `uv run pytest tests/scheduling -q` (187 passed, 5 failed; then 191 passed, 1 failed) collected all 192 items, test_board_p95 among them. So the node asserted p95 ≤ 300 ms and passed in both, before `--measure` was run and journaled.
+  - The qa-engineer also ran the file against its scratchpad stand-in. It reports about 6 ms there and does not quote that as a calibration.
+  - Nothing in the test was set from those runs: THRESHOLD_MS=300, TOLERANCE_MS=50, N=50, WARMUPS=5 and SEED=20261107 are the arm's own values, written before any run.
+  - The figures above (p95 1.259 ms) were journaled before the timing tier was run.
+  - The unit's later runs used the gate's `-m "not timing"`.
+- Line endings of the new files: service.py is w/crlf (my reflow script wrote it in Python's text mode); repo.py, rules.py and the two test files are w/lf. With core.autocrlf=true, `git add` normalises all of them to LF in the index and warns about CRLF for the LF ones. Nothing was changed for it.
+- The timing route, information for the architect as the 14:36 block noted. US-scheduling-004's timing arm says "through the in-process test client"; ADU-05 arm 7 times the service call, which is what is measured here. The board's route answers 501 until ADU-06, and ADU-06 has no timing arm, so no unit measures the HTTP-level figure.
+- Weak checks the test module labels: a Refused read-back inside the prescribed rollback catches only a service that commits by itself or writes through its own session. The transfer refusals are the exception: they are caught inside a unit of work that commits, so "the assignment unchanged" is a full check.
+- Q-15 (open, non-blocking): src/app/scheduling/repo.py and service.py import sqlalchemy (`select`, `Session`), as identity's do. No package is added (hard rule 2).
+- ADU-PLAN.md's derived Mocks block still lists MK-01 as active. ADU-PLAN.md is outside this roster, so its regeneration (`adu derived render`) belongs to the closure, as at ADU-03 and ADU-09.
+- uv.lock stays untracked (Q-05). Q-02, O-01 … O-04 are not this unit's. Nothing is committed.
+
+**Tests at close:** run once each, after this block was appended; the interpreter line printed `C:\dev\team-rota-data\.venv cp1252 0`.
+- Gate (`uv run pytest tests/ -q -m "not timing"`): `430 passed, 1 deselected, 1 warning in 28.37s`.
+  - 239 of the earlier 241, plus the 191 gate items of tests/scheduling (183 of test_scheduling_service.py and 8 of test_board_timing.py).
+  - The two that left are the NullSchedulingPort case of the shared parametrised test and test_null_scheduling_port_does_nothing_observable, both in tests/test_nulls.py.
+  - The one deselected is test_board_p95.
+  - The warning is the starlette `httpx` deprecation the earlier gates show.
+- Lint (`uv run ruff check`): `All checks passed!`
+- Timing tier (`uv run pytest tests/ -q -m timing`, reported, never gating): `1 passed, 430 deselected, 1 warning in 0.86s`. Verdict pass, with no within-tolerance line; the figures are the `--measure` run above (p95 1.259 ms). The node had already run and passed twice in this session's unfiltered tests/scheduling runs, before `--measure` (Deviations).
+- Log line from `adu log-line ADU-05 --tests 430 --duration 28.37s`, appended under STATUS.md `## Log`. It reports backward: 5, the declared amends: main.py, null_port.py, test_contract_conformance.py, conftest.py and test_nulls.py.
+- This is not the operator's run: ✅ is written from theirs.
+
+**NEXT:**
+1. The operator runs the gate `uv run pytest tests/ -q -m "not timing"` and the lint `uv run ruff check` under their own hands, and reviews the diff.
+2. The operator commits by name:
+   - src/app/scheduling/service.py, repo.py and rules.py;
+   - the deletion of src/app/scheduling/null_port.py;
+   - src/app/main.py;
+   - tests/scheduling/test_scheduling_service.py and tests/scheduling/test_board_timing.py;
+   - tests/conftest.py, tests/api/test_contract_conformance.py and tests/test_nulls.py;
+   - STATUS.md, SESSION-JOURNAL.md and OPEN-QUESTIONS.md (Q-20).
+   `uv.lock` stays untracked (Q-05).
+3. The closure prompt from `adu handover ADU-05 --closure` writes ✅ from the pasted gate output and regenerates the derived Mocks block (MK-01 retired).

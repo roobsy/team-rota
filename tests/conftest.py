@@ -19,6 +19,10 @@ CALIBRATION_NODES: dict[str, str] = {
 #: exact node ids of wall-clock budget arms, each naming its deterministic sibling in the gate
 TIMING_NODES: dict[str, str] = {
     # "tests/test_cli.py::TestTheChainFitsItsBudget::test_whole_chain": "sibling: tests/test_cli_chain.py",
+    "tests/scheduling/test_board_timing.py::test_board_p95": (  # ADU-05 arm 7
+        "sibling: tests/scheduling/test_scheduling_service.py::"
+        "test_arm8_the_board_over_seeded_week_has_21_shifts_42_rows_5_pending_and_the_admins_requestable"
+    ),
 }
 
 

@@ -18,7 +18,7 @@ from app.api.deps import ProblemError, problem_response
 from app.identity.service import IdentityService, SecretsSource
 from app.notifications.service import NotificationsService
 from app.ports import Clock, MemberDirectory, Notifier, SchedulingPort, SwapsPort, SystemClock
-from app.scheduling.null_port import NullSchedulingPort
+from app.scheduling.service import SchedulingService
 from app.swaps.null_port import NullSwapsPort
 
 CONTRACT = contract_stubs.CONTRACT
@@ -53,7 +53,9 @@ def create_app(
         # ADU-03: the identity service reads these bindings at call time (D-15); its tokens and salts come
         # from the standard library's secrets (D-16)
         member_directory=member_directory or IdentityService(lambda: app.state.ports, SecretsSource()),
-        scheduling=scheduling or NullSchedulingPort(),  # replaced by ADU-05
+        # ADU-05: the scheduling service reads the clock, the member directory, swaps and the notifier at
+        # call time (D-15)
+        scheduling=scheduling or SchedulingService(lambda: app.state.ports),
         swaps=swaps or NullSwapsPort(),  # replaced by ADU-07
         # ADU-09: the notifications service reads the clock and the member directory at call time (D-15)
         notifier=notifier or NotificationsService(lambda: app.state.ports),
