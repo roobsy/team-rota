@@ -106,3 +106,10 @@ Entry format:
 **Options:** (a) a design-change loop before ADU-12 rewords ADU-12's arms at :406, :407 and :411 and ADU-17's at :436, so that each asserts only what still holds after ADU-17, ADU-13, ADU-14 and ADU-15 land, and adds CLAUDE.md to ADU-15's amends beside adu.toml: plan text of units not yet built. (b) Q-07's pattern: ADU-17, ADU-13, ADU-14 and ADU-15 each declare the completed test they break (ADU-12's, and for ADU-13 ADU-17's) in their amends and edit it under the operator's grant. (c) left to the oversight session's D-0 check of ADU-12's hand-over.
 **Recommendation:** none from the verifier; the architect's.
 **Resolution:** none yet.
+
+### Q-15 · 2026-11-14 · ADU-03 (the unit's deviation 2; raised by the oversight session) · open
+**Conflict:** design/ARCHITECTURE.md:31 admits `sqlalchemy` at layer 1 only ("| sqlalchemy | 1 | D-03 |"), but layer-4 modules have imported it since ADU-02 (src/app/api/deps.py:11 and src/app/api/contract_stubs.py:20, `from sqlalchemy.orm import Session`), and ADU-03's layer-3 `src/app/identity/repo.py` and `service.py` import it for their queries and session type; ADU-09, ADU-05 and ADU-07's repos will too. No package outside the roster was added (hard rule 2 holds), and the layering scan, which checks the product's own modules, is green; the roster's Layer column is wider in practice than it reads.
+**Blocking:** no — the package is in the roster and the gate is green; the row's wording is what is open.
+**Options:** (a) the architect widens the row to "| sqlalchemy | 1, 3, 4 | D-03 |" in the next ARCHITECTURE patch (editorial: it records the practice D-03 admitted, every repository and the request's session); (b) only layer 1 may import sqlalchemy, and repos reach the database through helpers in `src/app/db.py` and `models.py` — a design change that rewrites ADU-02's and ADU-03's completed modules.
+**Recommendation:** (a), by the oversight session.
+**Resolution:** none yet.
