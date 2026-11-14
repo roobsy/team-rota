@@ -1000,3 +1000,8 @@ The one pass is the control `test_the_forced_child_really_writes_strict_cp1252` 
 1. The operator commits by name: `git add STATUS.md ADU-PLAN.md SESSION-JOURNAL.md`, then `git commit -m "ADU-05: closure"`. `uv.lock` stays untracked (Q-05).
 2. ADU-07 — Swaps service, the last unit of M2. Its first action: the oversight session generates and checks `adu handover ADU-07` (the D-0 check against ADU-07's plan entry) and gives the operator the hand-over for a fresh developer session.
 3. ADU-07 closes M2. After ADU-07's closure comes `/adu-lifecycle:release M2`.
+
+## 2026-11-14 22:00 · hand-over ADU-07 (oversight) · blocked
+**Done:** ADU-05 closed on `main` (`a686806` the unit, `2fe488d` the closure; the operator's gate `430 passed, 1 deselected, 1 warning in 36.90s`, `All checks passed!`, timing reported `1 passed, 430 deselected, 1 warning in 1.03s`). D-0 check of `adu handover ADU-07`: T-07.1 and T-07.2 match the conformance test at its stated lines; T-07.3 deletes tests/test_nulls.py whole; ADU-03's, ADU-09's and ADU-05's completed tests carry the Nulls' import lines as string literals in their scanners' falsification twins (e.g. tests/scheduling/test_scheduling_service.py:468), so ADU-07's "no module imports a Null" must be checked by parsing imports (ast), as those three are. The new step of the D-0 check (every value shape an arm states, against the contract) found R-swaps-09's request row and the contract's SwapRequest and Decision differing in three fields: raised as Q-21, blocking ADU-07, for the operator's ruling before the hand-over.
+**Tests at close:** none run by this session; no code or test changed.
+**NEXT:** the operator rules Q-21 in the oversight session; the oversight session records the ruling and gives the ADU-07 hand-over.
