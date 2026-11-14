@@ -41,6 +41,16 @@ class TransferRefused(Exception):
         self.reason = reason
 
 
+class Refused(Exception):
+    """The one domain refusal (D-13; design/INTERFACES.md, Refused): reason is a code of PRODUCT-DESIGN's
+    Reason codes table, detail the refusal's plain sentence, extra the fields a story names. It carries no
+    HTTP status (the API layer maps the reason to its bucket's status, D-07); a refusal changes nothing."""
+
+    def __init__(self, reason: str, detail: str = "", **extra: object) -> None:
+        super().__init__(reason)
+        self.reason, self.detail, self.extra = reason, detail, extra
+
+
 @dataclass(frozen=True)
 class Caller:
     member_id: int

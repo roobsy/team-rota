@@ -9,7 +9,7 @@ Legend: ☐ planned · 🔨 in progress (at most one) · ✅ done = green under 
 | ADU-00 | Scaffold and method guard | ✅ | 2026-11-07 08:38 | 2026-11-07 08:40 | 10 |
 | ADU-01 | Data model and the seeded fixture | ✅ | 2026-11-07 08:41 | 2026-11-07 08:44 | 16 |
 | ADU-02 | Contract unit — served contract, golden pin, composition root | ✅ | 2026-11-07 08:50 | 2026-11-07 08:55 | 42 |
-| ADU-03 | Identity service | ☐ | | | |
+| ADU-03 | Identity service | 🔨 | 2026-11-13 21:24 | | |
 | ADU-04 | Identity API | ☐ | | | |
 | ADU-05 | Scheduling service | ☐ | | | |
 | ADU-06 | Scheduling API | ☐ | | | |
@@ -41,3 +41,4 @@ Legend: ☐ planned · 🔨 in progress (at most one) · ✅ done = green under 
 2026-11-07 16:43 · Defect session FB-01 · done · 46 tests (4 new) · gate 46 passed in 15s · backward: 2 (tests/layering_scan.py (ADU-00), tests/test_layering.py (ADU-00))
 2026-11-07 17:37 · M1 closed · tag m1-foundations (c56ea77) · gate 46 passed in 28.77s (the operator's) · timing none (46 deselected, no timing arm) · backward series 0, 0, 0, 0, 2
 2026-11-13 21:00 · design-change loop Q-07, stage 4 (apply of pack q07-retire-amends v1.3: ADU-PLAN v1.3, INTERFACES v1.1, ARCHITECTURE v1.2) · done · 46 tests (none changed) · gate 46 passed in 15.97s (this session's run, not the operator's) · backward: n/a (documents only)
+2026-11-13 21:52 · ADU-03 · done · 161 tests · gate in 19.74s · backward: 7 (src/app/api/deps.py (ADU-02), src/app/db.py (ADU-01), src/app/identity/null_directory.py (ADU-16), src/app/main.py (ADU-02), src/app/ports.py (ADU-16), tests/api/test_contract_conformance.py (ADU-02), tests/test_nulls.py (ADU-16))

@@ -3,7 +3,7 @@ request shared by every service of the request, and the Problem refusal shape of
 
 from __future__ import annotations
 
-from collections.abc import Iterator
+from collections.abc import AsyncIterator
 
 from fastapi import Depends, Request
 from fastapi.responses import JSONResponse
@@ -30,9 +30,27 @@ def problem_response(status: int, reason: str, title: str, detail: str, **extra:
     )
 
 
-def require_caller(request: Request, creds: HTTPAuthorizationCredentials | None = Depends(bearer)) -> Caller:
+async def get_session(request: Request) -> AsyncIterator[Session]:
+    """The request's one session (D-14), current (db.use_session) for the whole request. FastAPI caches the
+    dependency, so every dependent of the request shares it. It is async because a ContextVar set in a sync
+    dependency is not visible to the endpoint. On the way out the previous current session is restored and
+    this one closed, which rolls back what was not committed. It never commits: the API layer commits a write
+    before it answers, because this exit runs after the response is sent."""
+    session = db.session_for(engine_of(request))
+    try:
+        with db.use_session(session):
+            yield session
+    finally:
+        session.close()
+
+
+def require_caller(
+    request: Request,
+    creds: HTTPAuthorizationCredentials | None = Depends(bearer),
+    _session: Session = Depends(get_session),
+) -> Caller:
     """unauthenticated before anything else: no token, an unknown token or an inactive member's token
-    (R-identity-06)."""
+    (R-identity-06). It depends on the request's session, so caller_for_token reads it (D-14)."""
     token = creds.credentials if creds else None
     caller = request.app.state.ports.member_directory.caller_for_token(token) if token else None
     if caller is None:
@@ -45,12 +63,3 @@ def engine_of(request: Request):
     if app.state.engine is None:
         app.state.engine = db.engine_for(app.state.workspace)
     return app.state.engine
-
-
-def get_session(request: Request) -> Iterator[Session]:
-    """One session per request; FastAPI caches the dependency, so every dependent of the request shares it."""
-    session = db.session_for(engine_of(request))
-    try:
-        yield session
-    finally:
-        session.close()

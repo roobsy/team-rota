@@ -15,7 +15,7 @@ from fastapi.openapi.utils import get_openapi
 
 from app.api import contract_stubs
 from app.api.deps import ProblemError, problem_response
-from app.identity.null_directory import NullDirectory
+from app.identity.service import IdentityService, SecretsSource
 from app.notifications.null_notifier import NullNotifier
 from app.ports import Clock, MemberDirectory, Notifier, SchedulingPort, SwapsPort, SystemClock
 from app.scheduling.null_port import NullSchedulingPort
@@ -50,7 +50,9 @@ def create_app(
         openapi_tags=CONTRACT.get("tags"),
     )
     app.state.ports = Ports(
-        member_directory=member_directory or NullDirectory(),  # replaced by ADU-03
+        # ADU-03: the identity service reads these bindings at call time (D-15); its tokens and salts come
+        # from the standard library's secrets (D-16)
+        member_directory=member_directory or IdentityService(lambda: app.state.ports, SecretsSource()),
         scheduling=scheduling or NullSchedulingPort(),  # replaced by ADU-05
         swaps=swaps or NullSwapsPort(),  # replaced by ADU-07
         notifier=notifier or NullNotifier(),  # replaced by ADU-09

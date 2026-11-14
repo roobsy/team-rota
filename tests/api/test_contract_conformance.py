@@ -1,6 +1,6 @@
 """ADU-02 arms 3, 4, 5, 7: the served contract against contracts/openapi.json; auth on every operation; every
-x-synthetic example validates against the schemas; the composition root binds a Null per port and the
-clock."""
+x-synthetic example validates against the schemas; the composition root binds an implementation of each
+port (the Null until its provider lands) and the clock."""
 
 from __future__ import annotations
 
@@ -16,11 +16,10 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "tests"))
 
-from support.doubles import FixedClock  # noqa: E402
+from support.doubles import FakeMemberDirectory, FixedClock  # noqa: E402
 
 from app import ports  # noqa: E402
 from app.api import contract_stubs  # noqa: E402
-from app.identity.null_directory import NullDirectory  # noqa: E402
 from app.main import create_app  # noqa: E402
 from app.notifications.null_notifier import NullNotifier  # noqa: E402
 from app.scheduling.null_port import NullSchedulingPort  # noqa: E402
@@ -58,7 +57,9 @@ def test_every_contract_operation_is_served_with_the_same_identity_and_nothing_e
 def test_every_operation_except_sign_in_answers_401_without_a_token_and_501_not_built_with_one(
     tmp_path: Path,
 ) -> None:
-    client = TestClient(create_app(workspace=tmp_path))
+    directory = FakeMemberDirectory()  # member 1 with token tok_1, the caller the 501 loop needs (Q-07)
+    directory.add(1, "Member 1", "member", token="tok_1")
+    client = TestClient(create_app(workspace=tmp_path, member_directory=directory))
     for (method, path), op in contract_ops().items():
         url = contract_stubs.example_path(path)
         body = contract_stubs.example_body(op)
@@ -99,10 +100,13 @@ def test_an_example_that_breaks_its_schema_is_caught() -> None:
         contract_stubs.validate_example({"$ref": "#/components/schemas/Member"}, {"id": "x"})
 
 
-def test_the_composition_root_binds_a_null_per_port_and_an_injectable_clock(tmp_path: Path) -> None:
+def test_the_composition_root_binds_an_implementation_per_port_and_an_injectable_clock(
+    tmp_path: Path,
+) -> None:
     app = create_app(workspace=tmp_path)
     p = app.state.ports
-    assert isinstance(p.member_directory, NullDirectory) and isinstance(p.scheduling, NullSchedulingPort)
+    assert isinstance(p.member_directory, ports.MemberDirectory)
+    assert isinstance(p.scheduling, NullSchedulingPort)
     assert isinstance(p.swaps, NullSwapsPort) and isinstance(p.notifier, NullNotifier)
     assert isinstance(p.clock, ports.SystemClock)
     fixed = FixedClock(datetime(2026, 11, 5, 9))

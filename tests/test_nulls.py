@@ -8,13 +8,11 @@ from datetime import datetime
 import pytest
 
 from app import ports
-from app.identity.null_directory import NullDirectory
 from app.notifications.null_notifier import NullNotifier
 from app.scheduling.null_port import NullSchedulingPort
 from app.swaps.null_port import NullSwapsPort
 
 REPLACED = {
-    NullDirectory: "ADU-03",
     NullSchedulingPort: "ADU-05",
     NullSwapsPort: "ADU-07",
     NullNotifier: "ADU-09",
@@ -25,22 +23,11 @@ REPLACED = {
 def test_each_null_names_its_provider_and_satisfies_its_protocol(cls: type) -> None:
     assert f"replaced by {REPLACED[cls]}, class not shape" in (cls.__doc__ or "")
     proto = {
-        NullDirectory: ports.MemberDirectory,
         NullSchedulingPort: ports.SchedulingPort,
         NullSwapsPort: ports.SwapsPort,
         NullNotifier: ports.Notifier,
     }[cls]
     assert isinstance(cls(), proto)
-
-
-def test_null_directory_resolves_synthetic_tokens_and_answers_the_empty_value() -> None:  # deleted by ADU-03
-    d = NullDirectory()
-    assert d.caller_for_token("tok_7") == ports.Caller(
-        member_id=7, name="Member 7", role="member", active=True
-    )
-    assert d.caller_for_token("tok_admin").role == "admin" and d.caller_for_token("garbage") is None
-    assert d.is_active(7) is True and d.role_of(7) == "member" and d.name_of(7) == "Member 7"
-    assert d.active_member_ids() == [] and d.decider_ids() == []
 
 
 def test_null_scheduling_port_does_nothing_observable() -> None:  # deleted by ADU-05
