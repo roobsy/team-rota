@@ -1,7 +1,7 @@
 # STATUS — Team Rota
 Legend: ☐ planned · 🔨 in progress (at most one) · ✅ done = green under the operator's own hands and committed. Stamps are ISO local date-time. Read this file with `adu status`; never re-derive what it says.
 
-## Now: ADU-03
+## Now: ADU-09
 
 ## ADU ledger
 | ADU | Title | St | Started | Completed | Tests |
@@ -9,7 +9,7 @@ Legend: ☐ planned · 🔨 in progress (at most one) · ✅ done = green under 
 | ADU-00 | Scaffold and method guard | ✅ | 2026-11-07 08:38 | 2026-11-07 08:40 | 10 |
 | ADU-01 | Data model and the seeded fixture | ✅ | 2026-11-07 08:41 | 2026-11-07 08:44 | 16 |
 | ADU-02 | Contract unit — served contract, golden pin, composition root | ✅ | 2026-11-07 08:50 | 2026-11-07 08:55 | 42 |
-| ADU-03 | Identity service | 🔨 | 2026-11-13 21:24 | | |
+| ADU-03 | Identity service | ✅ | 2026-11-13 21:24 | 2026-11-14 07:20 | 161 |
 | ADU-04 | Identity API | ☐ | | | |
 | ADU-05 | Scheduling service | ☐ | | | |
 | ADU-06 | Scheduling API | ☐ | | | |

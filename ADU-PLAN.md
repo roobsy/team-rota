@@ -19,7 +19,7 @@ The entry format and its rules are documented in the plugin's `templates/plan/ad
 ## Mocks
 <!-- derived: plan mocks -->
 Mock | interface | kind | consumer | provider | status
-MK-04 | MemberDirectory | in-process | ADU-02 | ADU-03 | active (provider not built)
+MK-04 | MemberDirectory | in-process | ADU-02 | ADU-03 | retired
 MK-01 | SchedulingPort | in-process | ADU-03 | ADU-05 | active (provider not built)
 MK-02 | Notifier | in-process | ADU-03 | ADU-09 | active (provider not built)
 MK-03 | SwapsPort | in-process | ADU-05 | ADU-07 | active (provider not built)

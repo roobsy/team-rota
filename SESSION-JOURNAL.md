@@ -642,3 +642,34 @@ The one pass is the control `test_the_forced_child_really_writes_strict_cp1252` 
 - Q-02 (non-blocking) is built as written: deactivation does not touch the member's open requests. uv.lock stays untracked (Q-05). Nothing is committed.
 **Tests at close:** gate `161 passed, 1 warning in 19.74s` (`uv run pytest tests/ -q -m "not timing"`, run once, after this block was appended; the interpreter line printed `C:\dev\team-rota-data\.venv cp1252 0`). That is 44 of the 46 earlier tests (46 less the NullDirectory case of the shared parametrised test and test_null_directory_resolves_synthetic_tokens_and_answers_the_empty_value) plus the 117 cases of tests/identity/test_identity_service.py. The warning is the starlette `httpx` deprecation the earlier gates show. Lint `All checks passed!` (`uv run ruff check`). Not the operator's run: ✅ is written from theirs.
 **NEXT:** the operator runs the gate `uv run pytest tests/ -q -m "not timing"` and the lint `uv run ruff check` under their own hands, reviews the diff, and commits by name (`uv.lock` stays untracked, Q-05); then the closure prompt from `adu handover ADU-03 --closure`, which writes ✅ from the pasted gate output.
+
+## 2026-11-14 07:20 · ADU-03 closure · done
+**Done:**
+- Start checks. `adu status` showed Now ADU-03, no open blocking questions and plan check OK. The last journal block is 2026-11-13 21:50 · ADU-03 · done, and its Tests at close counts 161 (SESSION-JOURNAL.md:643). HEAD was ee12929 ("ADU-03: Identity service"), and `git status --short` showed only `?? uv.lock`.
+- The operator's three lines, verbatim. The operator ran them under their own hands, in a fresh PowerShell, on the tree they then committed:
+  - `interpreter: C:\dev\team-rota-data\.venv cp1252 0`
+  - `gate (uv run pytest tests/ -q -m "not timing"): 161 passed, 1 warning in 39.25s`
+  - `lint (uv run ruff check): All checks passed!`
+  Each meets the prompt's condition. The interpreter line is identical, the gate shows 161 passed with no failures (the count in ADU-03's block), and the lint is clean.
+- STATUS.md:12: ADU-03 is now ✅, Completed 2026-11-14 07:20, Tests 161. Started and the unit's Log line (STATUS.md:44) are unchanged, and no Log line was added.
+- STATUS.md:4: `## Now: ADU-09`, the unit after ADU-03 in `adu plan order` (6 of 18). ADU-09 stays ☐.
+- Owed: no row is due at ADU-03 (O-01 is due at ADU-11, O-02 at ADU-04, O-03 at ADU-12), so none changed.
+- Checks:
+  - `adu ledger lint`: `ledgers OK`.
+  - `adu derived check`: `ADU-PLAN.md: derived block "plan mocks" is stale (regenerate: adu derived render)`, exit 2. It named nothing else.
+  - `adu derived render`: `1 file(s) rewritten`. `git diff ADU-PLAN.md` shows one line: MK-04's status went from `active (provider not built)` to `retired`.
+  - Re-run: `adu derived check` gives `derived blocks OK` and `adu ledger lint` gives `ledgers OK`.
+  - `adu plan mocks`: `MK-04 | MemberDirectory | in-process | ADU-02 | ADU-03 | retired`. MK-01, MK-02 and MK-03 remain active (provider not built).
+- `adu status` after the change: Now ADU-09 — Notifications service · size S · layer 3 (domain services) · position 6/18. Depends: ADU-01, ADU-02, ADU-03 and ADU-16, all ✅.
+**Decisions:**
+- The Completed stamp is this session's clock when the row was written, in the ledger's `yyyy-MM-dd HH:mm` shape (STATUS.md:2: "Stamps are ISO local date-time"). The Tests cell is the operator's count.
+- ADU-PLAN.md was changed by `adu derived render` alone, never by hand. Its diff is the MK-04 line.
+**Deviations flagged:**
+- None from the prompt. No grant was asked for or used. No code, test, contract, plan text or protected path changed. uv.lock stays untracked (Q-05). Nothing is committed.
+- For information only, since timing never gates:
+  - The operator's gate took 39.25s; the unit session's took 19.74s.
+  - `adu status` still cites STATUS.md:43 as "Last gate run" (46 passed in 15.97s). It does not cite ADU-03's Log line at :44, because the `adu log-line` shape `gate in 19.74s` carries no pass count.
+**Tests at close:** this session ran no gate. The unit closes on the operator's gate `161 passed, 1 warning in 39.25s` and lint `All checks passed!` above. After this block was appended: `adu ledger lint` gave `ledgers OK`, `adu init --check` gave `init OK: manifest of 13 files present, pins match, ledgers lint clean`, and `adu derived check` gave `derived blocks OK`.
+**NEXT:**
+1. The operator commits by name: `git add STATUS.md ADU-PLAN.md SESSION-JOURNAL.md`, then `git commit -m "ADU-03: closure"`. `uv.lock` stays untracked (Q-05).
+2. ADU-09 — Notifications service. Its first action: the oversight session generates and checks `adu handover ADU-09` (the D-0 check against ADU-09's plan entry) and gives the operator the hand-over for a fresh developer session.
