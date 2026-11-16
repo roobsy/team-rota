@@ -19,7 +19,7 @@ from app.identity.service import IdentityService, SecretsSource
 from app.notifications.service import NotificationsService
 from app.ports import Clock, MemberDirectory, Notifier, SchedulingPort, SwapsPort, SystemClock
 from app.scheduling.service import SchedulingService
-from app.swaps.null_port import NullSwapsPort
+from app.swaps.service import SwapsService
 
 CONTRACT = contract_stubs.CONTRACT
 
@@ -56,7 +56,9 @@ def create_app(
         # ADU-05: the scheduling service reads the clock, the member directory, swaps and the notifier at
         # call time (D-15)
         scheduling=scheduling or SchedulingService(lambda: app.state.ports),
-        swaps=swaps or NullSwapsPort(),  # replaced by ADU-07
+        # ADU-07: the swaps service reads the clock, scheduling, the member directory and the notifier at
+        # call time (D-15)
+        swaps=swaps or SwapsService(lambda: app.state.ports),
         # ADU-09: the notifications service reads the clock and the member directory at call time (D-15)
         notifier=notifier or NotificationsService(lambda: app.state.ports),
         clock=clock or SystemClock(),

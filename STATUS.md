@@ -13,7 +13,7 @@ Legend: ☐ planned · 🔨 in progress (at most one) · ✅ done = green under 
 | ADU-04 | Identity API | ☐ | | | |
 | ADU-05 | Scheduling service | ✅ | 2026-11-14 14:30 | 2026-11-14 21:48 | 430 |
 | ADU-06 | Scheduling API | ☐ | | | |
-| ADU-07 | Swaps service | ☐ | | | |
+| ADU-07 | Swaps service | 🔨 | 2026-11-15 07:11 | | |
 | ADU-08 | Swaps API | ☐ | | | |
 | ADU-09 | Notifications service | ✅ | 2026-11-14 08:08 | 2026-11-14 09:04 | 241 |
 | ADU-10 | Notifications API | ☐ | | | |
@@ -45,3 +45,4 @@ Legend: ☐ planned · 🔨 in progress (at most one) · ✅ done = green under 
 2026-11-13 21:52 · ADU-03 · done · 161 tests · gate in 19.74s · backward: 7 (src/app/api/deps.py (ADU-02), src/app/db.py (ADU-01), src/app/identity/null_directory.py (ADU-16), src/app/main.py (ADU-02), src/app/ports.py (ADU-16), tests/api/test_contract_conformance.py (ADU-02), tests/test_nulls.py (ADU-16))
 2026-11-14 08:35 · ADU-09 · done · 241 tests · gate in 23.32s · backward: 4 (src/app/main.py (ADU-02), src/app/notifications/null_notifier.py (ADU-16), tests/api/test_contract_conformance.py (ADU-02), tests/test_nulls.py (ADU-16))
 2026-11-14 21:17 · ADU-05 · done · 430 tests · gate in 28.37s · backward: 5 (src/app/main.py (ADU-02), src/app/scheduling/null_port.py (ADU-16), tests/api/test_contract_conformance.py (ADU-02), tests/conftest.py (ADU-00), tests/test_nulls.py (ADU-16))
+2026-11-15 20:15 · ADU-07 · done · 632 tests · gate in 48.73s · backward: 4 (src/app/main.py (ADU-02), src/app/swaps/null_port.py (ADU-16), tests/api/test_contract_conformance.py (ADU-02), tests/test_nulls.py (ADU-16))

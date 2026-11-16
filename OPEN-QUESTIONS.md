@@ -227,3 +227,49 @@ No arm names these cases, and nothing reaches them today: swaps (ADU-07) passes 
 **Options:** (a) the row carries the contract's fields: `state` stored and `display_state` derived (expired included), `decision` None when there is none, and the decision value carries `request_id`; it satisfies every ADU-07 arm and R-swaps-09's content, and ADU-08 serves it without mapping; the spec's wording ("state (as displayed)", "or absent", the decision's fields) is aligned editorially by the pm-swaps session, owed. (b) the row is R-swaps-09 as written (one displayed `state`, no `decision` key when absent, no `request_id`), and ADU-08 maps it onto the contract, adding the stored state, which the row would then no longer carry.
 **Recommendation:** (a), by the oversight session: the arms already read the contract's way; the contract is pinned; the spec is the outlier, and its alignment is editorial.
 **Resolution:** option (a), the operator, 2026-11-14, in the oversight session, verbatim: "Q-21: (a)". The request row carries the contract's fields: `state` stored and `display_state` derived (expired included), `decision` None when there is none, and the decision value carries `request_id`. No document changes now; the editorial alignment of R-swaps-09's wording ("state (as displayed)", "or absent", the decision's fields) is owed to a pm-swaps session.
+
+### Q-22 · 2026-11-15 · ADU-07 · open
+**Conflict:** two points that tests/swaps/test_decide.py would pin. The file becomes immutable at ADU-07's ✅, and ADU-08 serves what it pins.
+1. **`party` on decide's answer.**
+   - R-swaps-09 (design/domains/swaps/spec.md:15) says "party: true when the viewer is the requester or the counterpart, else false (computed by the server)". The contract's `SwapRequest.party` (contracts/openapi.yaml:862) says "True when the caller is the requester or the counterpart (per viewer; always true in the caller's own list)". Q-21 (a) says party is "as R-swaps-09 and the contract name them".
+   - A decider is never a party: party_to_swap refuses one (R-swaps-05). So decide always answers `party: false`.
+   - The contract's three decide examples, `approved`, `refused` and `transfer_refused` (contracts/openapi.yaml:491–493), carry `party: true` with `decider_id: 3`, `requester_id: 2` and `counterpart_id: 4`. The product can never write that value (Q-16's class).
+   - For information, from the same read: the `mine` example (:528) lists request 502 (created 2026-11-01) before 501 (created 2026-11-07). The operation's own description (:518) and R-swaps-09 say "newest first by created_at then id descending".
+2. **Decide by a member who is a party, and by a member naming an unknown request.**
+   - ADU-07 arm 5 (ADU-PLAN.md:257) refuses "not_found, party_to_swap for the requester or the counterpart whatever their role, forbidden for a member". For a member-role party, both party_to_swap and forbidden apply, and the arm does not call its list an order.
+   - PRODUCT-DESIGN's cross-cutting rules (design/PRODUCT-DESIGN.md:14) order "unauthenticated → forbidden → not_found → own/party → state → deadline → validation", which gives forbidden in both cases.
+   - US-swaps-003 agrees: arm 3 (stories/US-swaps-003.md:13) says party_to_swap for a party "whether planner or admin", and arm 9 (:19) says "a member calling the action is refused with reason forbidden".
+**Blocking:** no. It was asked in session before test_decide.py was drafted, as Q-20 was.
+**Options:**
+- (a) Both points follow the design.
+  - (1) Decide's row carries `party` per viewer, so it is false for the decider, and test_decide.py pins it. The architect aligns the three decide examples (`party: false`) and the `mine` example's order in a contract change (D-07, D-11, the golden) before ADU-08 opens; owed, like O-04.
+  - (2) Decide's order is forbidden → not_found → party_to_swap → wrong_state → past_deadline → reason_required / invalid_reason. A member gets forbidden, party or not, known id or not. "whatever their role" is read as US-swaps-003's "whether planner or admin". test_decide.py pins forbidden for a member-role party and for a member naming an unknown id.
+- (b) As (a), but test_decide.py pins neither case of point 2. The service is built in the design's order, and the plan's arm 5 is reworded later.
+- (c) Point 1 as the contract's examples: decide answers `party: true`. This contradicts R-swaps-09, the schema's own description and Q-21 (a). Not recommended.
+**Recommendation:** (a). Every normative source (the arm read with its story, the cross-cutting order, R-swaps-09 and the schema text) agrees; the examples are the outlier, and they are `x-synthetic`.
+**Ruling:** option (a), the operator, 2026-11-15, in the ADU-07 session, answering the session's question with the option "(a) Design; pin both (Recommended)".
+- Decide's row carries `party` per viewer, false for the decider, and test_decide.py pins it.
+- Decide's order is forbidden → not_found → party_to_swap → wrong_state → past_deadline → reason_required / invalid_reason. test_decide.py pins forbidden for a member-role party and for a member naming an unknown id.
+- The architect aligns the three decide examples and the `mine` example's order in a contract change before ADU-08 opens. That is owed; an Owed row due ADU-08 is the operator's to approve, as O-04 was.
+**Resolution:** none yet. The contract alignment is owed before ADU-08 opens.
+
+### Q-23 · 2026-11-15 · ADU-07 · open
+**Conflict:** two wordings disagree with ADU-07's arms. The qa-engineer found them while drafting the unit's tests. The arms settle what was built (Q-18's source order: the yaml block first), but the documents still disagree.
+1. **"(swap_answered)".** swaps.answer's description (contracts/openapi.yaml:428) ends: "the requester, and on accept every eligible decider, is notified (swap_answered)".
+   - No such event exists. R-notifications-01 (design/domains/notifications/spec.md:7) names nine events, and `ports.EVENT_CODES` lists the same nine.
+   - The answer's events are swap_accepted and swap_declined. Arm 3 (ADU-PLAN.md:255) names SwapAccepted and SwapDeclined.
+2. **Inactive members on swap_approved.**
+   - R-notifications-01 gives swap_approved to "recipients: both members", and swap_refused to "both members, less any inactive one (R-notifications-03)".
+   - US-notifications-004 arm 1 (stories/US-notifications-004.md:11) says "on approval (swap_approved) both members receive one notification".
+   - ADU-07 arm 4 (ADU-PLAN.md:256) says "both notify both members less an inactive one (SwapApproved / SwapRefused)". The contract's decide description (contracts/openapi.yaml:472) says the same: "Both members are notified, less an inactive one".
+   - What is stored is the same under either reading: the Notifier skips an inactive recipient (R-notifications-03; ADU-09). Only the emitter's recipient_ids differ, and tests/swaps/test_decide.py::test_arm4_an_inactive_requester_is_left_out_of_the_outcome_event pins arm 4's reading.
+**Blocking:** no. Nothing built or tested depends on how this is resolved.
+**Options:**
+- (a) Align the wording with the arms.
+  - The architect replaces "(swap_answered)" with "(swap_accepted / swap_declined)" in the contract change Q-22 already owes before ADU-08 (D-07, D-11, the golden).
+  - The pm-lead adds "less any inactive one" to R-notifications-01's swap_approved recipients and to US-notifications-004 arm 1.
+- (b) Fix point 1 as in (a). Leave point 2 as written, since R-notifications-03 makes the two readings store the same rows. Record here that the emitter follows arm 4.
+- (c) Make the emitter name both members on swap_approved, as R-notifications-01 reads. This needs a grant on test_decide.py after ADU-07's ✅, and it contradicts arm 4 and the contract. Not recommended.
+**Recommendation:** (a). Every document then says what the product does, and point 1 travels with Q-22's contract change at no extra cost.
+**Ruling:** none yet.
+**Resolution:** none yet.

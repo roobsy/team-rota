@@ -1011,3 +1011,142 @@ The one pass is the control `test_the_forced_child_really_writes_strict_cp1252` 
 **Owed, not blocking:** the editorial alignment of R-swaps-09 with Q-21 (a), by a pm-swaps session.
 **Tests at close:** none run by this session; no code or test changed.
 **NEXT:** ADU-07 in a fresh `claude --plugin-dir C:\dev\adu-lifecycle --agent adu-lifecycle:developer` inside `C:\dev\team-rota`, from the oversight session's hand-over; expected gate after the unit: 428 of today's 430 (tests/test_nulls.py's two leave with the file) plus ADU-07's new gate tests; after its closure, /adu-lifecycle:release M2.
+
+## 2026-11-15 19:00 · ADU-07 · done
+**Done:**
+- Start checks:
+  - `adu status` (07:03): Now ADU-07, open blocking questions none, plan check OK.
+  - Interpreter line: `C:\dev\team-rota-data\.venv cp1252 0`.
+  - ADU-07 is marked 🔨 in STATUS.md at 2026-11-15 07:11.
+- Read:
+  - The journal blocks of 2026-11-14 22:00 and 22:10.
+  - OPEN-QUESTIONS.md Q-02, Q-03 and Q-15 … Q-21.
+  - The ADU-07 entry and its note (ADU-PLAN.md:233–266).
+  - design/INTERFACES.md (all sections the hand-over names), design/ARCHITECTURE.md, and DECISIONS D-12 … D-18.
+  - The swaps spec, US-swaps-001 … 005, US-notifications-002 … 004, the notifications spec R-notifications-01 … 03, and PRODUCT-DESIGN's cross-cutting rules and Reason codes.
+  - The contract's five swaps operations and their schemas.
+  - Code: src/app/ports.py, models.py, db.py, main.py, synthetic.py, swaps/null_port.py, the scheduling service, repo and rules (the pattern), and the public methods of the identity and notifications services.
+  - Tests: tests/support/doubles.py, tests/conftest.py, tests/layering.json, tests/test_nulls.py, the Null lines of tests/api/test_contract_conformance.py, and the arrangement, import scan and D-14 parts of tests/scheduling/test_scheduling_service.py.
+  - docs/PACK-q07-retire-amends.md T-07.1 … T-07.3.
+- Baseline gate on the untouched tree: `430 passed, 1 deselected, 1 warning in 38.49s`.
+- Q-22 raised and ruled in session before any test was drafted (Deviations below).
+- Tests first: the qa-engineer subagent drafted both test files before any implementation body existed.
+  - tests/swaps/test_swaps_service.py: 40 functions, 150 tests. Arms 1, 2, 3, 7, 8 and 9, plus D-14.
+  - tests/swaps/test_decide.py: 19 functions, 54 tests. Arms 4, 5, 6 and 10.
+  - Each docstring maps every arm to its tests. Its inputs were the arms, Q-21 (a), Q-22 (a) and the public interface below.
+  - At hand-back both files failed at collection (`cannot import name 'service' from 'app.swaps'`), and only that.
+  - The qa-engineer's own check, reported and not re-run here, used a stand-in service in a scratchpad copy of the repo:
+    - all 204 pass on a correct stand-in;
+    - it seeded 76 faults and all 76 were caught.
+  - ECHO and VACUOUS: none.
+  - I reviewed both files against the arms and Q-21/Q-22 and changed nothing.
+- Implemented src/app/swaps/rules.py, repo.py and service.py.
+  - Before the binding: 198 passed and 6 failed. The six were the arm-1 retirement tests and arm 10, which reaches the swaps service through create_app.
+- Retirement (MK-03):
+  - src/app/main.py binds `SwapsService(lambda: app.state.ports)`. The NullSwapsPort import and its binding are gone.
+  - src/app/swaps/null_port.py is deleted with a plain `rm`.
+  - Grant 1 was recorded, then T-07.1 and T-07.2 applied. Grant 2 was recorded, then tests/test_nulls.py was deleted. Both grant paragraphs are below.
+- Checks after the retirement:
+  - `uv run pytest tests/swaps tests/api/test_contract_conformance.py`: 210 passed.
+  - `python tests/layering_scan.py`: exit 0.
+  - `uv run ruff check`: All checks passed!
+  - `ruff format --check src/app/swaps tests/swaps`: clean, after `ruff format` wrapped three over-long lines in service.py.
+  - `git grep` finds no import of a Null under src/ or tests/. The remaining hits are docstrings and string literals in completed tests.
+  - The three new source files are CRLF in the working tree, like the rest, with core.autocrlf true.
+**Decisions:**
+- The interface handed to the qa-engineer. Names are the contract's operationIds and body fields; the values are Q-21 (a); construction follows D-15; sessions follow D-14.
+  - `SwapsService(bound)`, where `Bindings` is a Protocol of clock, scheduling, member_directory and notifier.
+  - `view(caller_id, week_published, assignments)`.
+  - `request(caller, assignment_id, counterpart_id, reason)`, `answer(caller, request_id, answer, reason=None)` and `decide(caller, request_id, outcome, reason=None)`.
+  - `mine(caller)` and `pending(caller)`.
+  - Frozen `RequestRow`, with the 17 required fields of the contract's SwapRequest, and `DecisionValue`, with the 6 of Decision. Both use the model's date, time and datetime, as Q-18's list does for scheduling.
+- Refusal orders:
+  - request: arm 2's.
+  - answer: not_found → not_counterpart → wrong_state → past_deadline → validation (arm 3; PRODUCT-DESIGN:14).
+  - decide: Q-22 (a).
+- Not pinned by a test:
+  - Q-19 and Q-20 cases.
+  - An outcome outside the enums (the API's invalid_request).
+  - An empty-string reason.
+  - An inactive requester on accept or decline.
+  - Q-02 and Q-03.
+- Built as follows where no arm pins it:
+  - An answer or outcome outside its two values is `invalid_request`, first in the validation bucket (PRODUCT-DESIGN:14, "Within the validation bucket invalid_request precedes every other code").
+  - An empty-string reason is not in any enum, so it is `invalid_reason`.
+  - An inactive requester on accept is still named in SwapAccepted, because the arm says "the requester". The Notifier skips an inactive recipient (R-notifications-03).
+- Design sources for the implementation:
+  - Open, expired and the deadline are derived on read from the clock and the shift's start instant, now < start − 24 h. That is R-swaps-01 and R-swaps-06, and PRODUCT-DESIGN, The clock. Nothing is ever stored as expired.
+  - The shift's date, start, start instant, week state and holders come from SchedulingPort.assignment (IR-01).
+  - Names, activeness and the deciders come from MemberDirectory (IR-09).
+  - forbidden is judged on the Caller's role (PRODUCT-DESIGN, The caller).
+  - view judges by the triples it is given and never calls scheduling (IR-07; INTERFACES, SwapsPort).
+- Recipients:
+  - SwapAccepted goes to the requester, plus `decider_ids()` less both parties, deduplicated (R-swaps-05).
+  - SwapApproved and SwapRefused go to both members whose `is_active` is true (arms 4 and 6).
+- Approve calls `SchedulingPort.transfer` before any write (R-swaps-04).
+  - A `TransferRefused` is caught. The Decision is then recorded refused with that reason by the caller, and the call succeeds (arm 6; PRODUCT-DESIGN:14, "approval whose transfer was refused succeeds").
+- Sessions: every method takes `db.current_session()` first and never commits (D-14). The bindings are read at call time (D-15).
+- mine and pending return lists of RequestRow, the order coming from the repository's ORDER BY.
+- What the two test files pin beyond the arms' words. The qa-engineer listed these for objection; I accepted them on review. They become immutable at ✅:
+  - A counterpart of any role is eligible. R-swaps-08 names no role.
+  - forbidden is judged on the Caller's role. The deciders told on accept are identity's `decider_ids()`.
+    - MAY is a planner by identity and a member by her Caller: she is notified on accept, and refused on decide and pending.
+    - LEE is the reverse: he may decide.
+  - A stored requested or accepted request past its deadline is not open (R-swaps-06), so a new request on that assignment answers past_deadline, not request_open.
+  - `view` accepts a single-pass iterator. It judges open and the deadline by the start instant it is given.
+  - A closed request keeps its stored state as its display_state after the deadline.
+  - Constructions, not rulings:
+    - "less an inactive one" on approve and refuse is shown with an inactive requester. R-identity-04 makes that unreachable in the product, and the construction stays clear of Q-02. An inactive counterpart appears only in arm 6's counterpart_inactive case.
+    - counterpart_self before counterpart_inactive is built with identity calling the requester inactive while the requester's Caller is active.
+  - Test machinery:
+    - `_refusal` reads the swaps tables through the caller's session as a Refused propagates.
+    - TransferWitness records what the session holds at transfer time.
+    - test_d14_a_write_commits_nothing_itself covers request, answer and decide.
+  - What the tests cannot see:
+    - whether the requester's name comes from `caller.name` or `name_of` (the service uses `name_of`);
+    - the order of recipient_ids;
+    - a write to a table other than swap_requests or decisions before a refusal.
+**Deviations flagged:**
+- Q-22, raised non-blocking and ruled in session. It has two points:
+  1. The contract's three decide examples (contracts/openapi.yaml:491–493) carry `party: true` for a decider. R-swaps-09, `SwapRequest.party` (:862) and Q-21 (a) give false. The `mine` example (:528) is also out of its own stated order (:518).
+  2. A member-role party calling decide: arm 5's "whatever their role" against the cross-cutting order and US-swaps-003.
+- Ruling: option (a), the operator, 2026-11-15, answering with "(a) Design; pin both (Recommended)".
+  - party is per viewer, false on decide, and pinned.
+  - forbidden comes first for a member, party or not, known id or not, and is pinned.
+  - The contract's examples are aligned by the architect before ADU-08 opens. That is owed; an Owed row due ADU-08 is the operator's to approve.
+- Q-23, raised non-blocking after the implementation. It covers two document points the qa-engineer named. The arms settle what was built (Q-18's source order), but the documents still disagree:
+  1. contracts/openapi.yaml:428, swaps.answer's description, says the parties are notified "(swap_answered)". That is not an event code (ports.EVENT_CODES; R-notifications-01). Arm 3 names SwapAccepted and SwapDeclined, and this unit emits those. This is a contract wording point.
+  2. R-notifications-01 and US-notifications-004 arm 1 give swap_approved to "both members", with no inactive carve-out. Arm 4 and the contract's decide description (:472) say both outcome events go to both members less an inactive one. The emitter follows the arm. What is stored is the same either way, because the Notifier skips an inactive recipient (R-notifications-03). This is a spec and story alignment point, not a contract one.
+  - Recommendation (a): align the wording with the arms. Point 1 goes with Q-22's contract change before ADU-08; point 2 is the pm-lead's. Not yet ruled.
+**Grant (hard rule 1), operator, 2026-11-15 20:08, in session:** tests/api/test_contract_conformance.py (ADU-02's completed test), lines 24 and 108 only.
+- Permitted: exactly the edits T-07.1 and T-07.2 of docs/PACK-q07-retire-amends.md, character for character, and nothing else.
+  - T-07.1 deletes the line `from app.swaps.null_port import NullSwapsPort  # noqa: E402`.
+  - T-07.2 changes the class check `isinstance(p.swaps, NullSwapsPort)` to `isinstance(p.swaps, ports.SwapsPort)`.
+- The operator's words in this session's prompt: "Grant 1: tests/api/test_contract_conformance.py — exactly the edits T-07.1 and T-07.2 of docs/PACK-q07-retire-amends.md, character for character, and nothing else. Reason: Q-07 ruled option 1; D-12."
+- Measurement. Setup: the swaps service bound in src/app/main.py and src/app/swaps/null_port.py deleted. Result:
+  - `uv run pytest tests/test_nulls.py tests/api/test_contract_conformance.py` stops at collection: `ModuleNotFoundError: No module named 'app.swaps.null_port'` (2 errors).
+  - test_arm1_no_module_under_src_or_tests_imports_a_null fails with offenders `{'tests/api/test_contract_conformance.py': ['app.swaps.null_port'], 'tests/test_nulls.py': ['app.swaps.null_port']}`.
+- The guard does not honour `amends` on a completed unit's test (plugin FB-28).
+- Machine grant: `adu grant add 24aac4fb-73b0-4c4f-b2f4-8bf2d64f9931 tests/api/test_contract_conformance.py "Q-07 ruled option 1; D-12: T-07.1-T-07.2 only"`.
+- Applied with the scratchpad's `apply_t07.py --apply`. `git diff -- tests/api/test_contract_conformance.py` shows exactly two hunks: line 24 deleted (T-07.1), and line 108 `NullSwapsPort` → `ports.SwapsPort` (T-07.2). Nothing else changed. `git ls-files --eol` still reads i/lf w/crlf.
+
+**Grant (hard rule 1), operator, 2026-11-15 20:10, in session:** tests/test_nulls.py (ADU-16's completed test), deleted whole.
+- Permitted: T-07.3 of docs/PACK-q07-retire-amends.md, "delete the file", and nothing else. Before the deletion the file held only what T-07.3 says it would (read in this session):
+  - the NullSwapsPort import;
+  - its two entries, REPLACED and the protocol map;
+  - test_each_null_names_its_provider_and_satisfies_its_protocol, parametrised over that one class;
+  - test_null_swaps_port_answers_nothing_pending_and_nothing_requestable.
+- The operator's words in this session's prompt: "Grant 2: tests/test_nulls.py — deleted whole, as T-07.3 of the same pack says (by then it holds only the NullSwapsPort import, its entries and its test). Reason: Q-07 ruled option 1; D-12; ADU-16 arm 4 ("the file as a whole is removed with the last Null")."
+- Measurement: the same collection error (`ModuleNotFoundError: No module named 'app.swaps.null_port'`) and the same scan offender, as in Grant 1.
+- The bash guard does not see a removal (the pack, T-07.3), so this paragraph and the machine grant are its record. The file is removed with a plain `rm`, and nothing is staged.
+- Machine grant: `adu grant add 24aac4fb-73b0-4c4f-b2f4-8bf2d64f9931 tests/test_nulls.py "Q-07 ruled option 1; D-12; ADU-16 arm 4: T-07.3, the file deleted whole"`.
+
+**Tests at close:**
+- gate `uv run pytest tests/ -q -m "not timing"`: `632 passed, 1 deselected, 1 warning in 48.73s`. The expected 632 is 430 at the baseline, less test_nulls.py's two tests (428), plus the unit's 204 (150 + 54). The one deselected test is the timing tier's.
+- lint `uv run ruff check`: `All checks passed!`
+- timing `uv run pytest tests/ -q -m timing`, run once and reported, never gating: `1 passed, 632 deselected, 1 warning in 0.93s`. The board timing test now runs with the real swaps service bound.
+- The warning is the existing StarletteDeprecationWarning from fastapi's testclient, the same as at the baseline.
+**NEXT:** the operator runs the gate under their own hands, reviews the diff and commits.
+- uv.lock stays untracked (Q-05).
+- A later session writes ✅ from the operator's pasted gate output.
+- Before ADU-08 opens: the architect aligns the contract's decide and mine examples (Q-22) and the "(swap_answered)" wording at contracts/openapi.yaml:428. An Owed row due ADU-08 for Q-22 is the operator's to approve.
