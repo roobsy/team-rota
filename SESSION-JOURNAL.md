@@ -1150,3 +1150,40 @@ The one pass is the control `test_the_forced_child_really_writes_strict_cp1252` 
 - uv.lock stays untracked (Q-05).
 - A later session writes ✅ from the operator's pasted gate output.
 - Before ADU-08 opens: the architect aligns the contract's decide and mine examples (Q-22) and the "(swap_answered)" wording at contracts/openapi.yaml:428. An Owed row due ADU-08 for Q-22 is the operator's to approve.
+
+## 2026-11-16 12:32 · ADU-07 closure · done
+**Done:**
+- Start checks. `adu status` showed Now ADU-07, no open blocking questions and plan check OK. The last journal block is 2026-11-15 19:00 · ADU-07 · done, and its Tests at close counts 632 (SESSION-JOURNAL.md:1145). HEAD was beec4ca ("ADU-07: Swaps service"), and `git status --short` showed only `?? uv.lock`.
+- The operator's four lines, verbatim. The operator ran them under their own hands, in a fresh PowerShell, on the tree they then committed:
+  - `interpreter: C:\dev\team-rota-data\.venv cp1252 0`
+  - `gate (uv run pytest tests/ -q -m "not timing"): 632 passed, 1 deselected, 1 warning in 40.97s seconds`
+  - `lint (uv run ruff check): All checks passed!`
+  - `timing tier, reported, never gating (uv run pytest tests/ -q -m timing): 1 passed, 632 deselected, 1 warning in 1.06s seconds`
+  The first three each meet the prompt's condition. The interpreter line is identical, the gate shows 632 passed with no failures (the count in ADU-07's block), and the lint is clean. The timing line is recorded as reported; it never gates.
+- STATUS.md:16: ADU-07 is now ✅, Completed 2026-11-16 12:32, Tests 632. Started (2026-11-15 07:11) and the unit's Log line (STATUS.md:48) are unchanged, and no Log line was added.
+- STATUS.md:4: `## Now: ADU-04`, Identity API, the unit after ADU-07 in `adu plan order` (9 of 18) and the first unit of M3 (ADU-PLAN.md:14: ADU-04, ADU-06, ADU-10, ADU-08). ADU-04 stays ☐ with no Started stamp. Every unit of M2 (ADU-PLAN.md:13: ADU-03, ADU-09, ADU-05, ADU-07) is now ✅.
+- Owed: no row is due at ADU-07 (O-01 is due at ADU-11, O-02 at ADU-04, O-03 at ADU-12, O-04 at ADU-10), so none changed.
+- Checks:
+  - `adu ledger lint`: `ledgers OK`.
+  - `adu derived check`: `ADU-PLAN.md: derived block "plan mocks" is stale (regenerate: adu derived render)`, exit 2. It named nothing else.
+  - `adu derived render`: `derived blocks rendered (1 file(s) rewritten)`. `git diff ADU-PLAN.md` shows one line: MK-03's status went from `active (provider not built)` to `retired`.
+  - Re-run: `adu derived check` gives `derived blocks OK` and `adu ledger lint` gives `ledgers OK`.
+  - `adu plan mocks`: `MK-04 | MemberDirectory | in-process | ADU-02 | ADU-03 | retired`, `MK-01 | SchedulingPort | in-process | ADU-03 | ADU-05 | retired`, `MK-02 | Notifier | in-process | ADU-03 | ADU-09 | retired` and `MK-03 | SwapsPort | in-process | ADU-05 | ADU-07 | retired`. All four mocks are retired, which is M2's "every in-process mock retired" (ADU-PLAN.md:13) as the registry reads it. The release session audits it.
+- `adu status` after the change: Now ADU-04 — Identity API · size M · layer 4 (API) · position 9/18. Depends: ADU-02 ✅ and ADU-03 ✅. Ledger row: planned. Open blocking questions: none.
+**Decisions:**
+- The Completed stamp is this session's clock when the row was written, in the ledger's `yyyy-MM-dd HH:mm` shape (STATUS.md:2: "Stamps are ISO local date-time"). The Tests cell is the operator's count.
+- ADU-PLAN.md was changed by `adu derived render` alone, never by hand. Its diff is the MK-03 line.
+- `## Now:` names ADU-04 as the derived order gives it, but that does not open ADU-04. The operator's prompt says "ADU-04 does not open before M2 is released".
+**Deviations flagged:**
+- None from the prompt. No grant was asked for or used. No code, test, contract, plan text or protected path changed. uv.lock stays untracked (Q-05). Nothing is committed.
+- For information only:
+  - The operator's gate and timing lines end "40.97s seconds" and "1.06s seconds" as pasted. They are recorded verbatim, doubled unit included.
+  - The operator's gate took 40.97s; the unit session's took 48.73s. The operator's timing tier took 1.06s; the unit session's took 0.93s. Timing never gates.
+  - `adu status` still cites STATUS.md:44 as "Last gate run" (46 passed in 15.97s), as at the earlier closures. It skips the newer Log lines because the `adu log-line` shape `gate in 48.73s` (STATUS.md:48) carries no pass count.
+  - The unit block's heading is stamped 2026-11-15 19:00, but its grants are stamped 20:08 and 20:10, and its Log line (STATUS.md:48) is stamped 20:15. This block is stamped after all three.
+  - Now is ADU-04, and O-02 is due at ADU-04: Q-12's design-change loop rules the API units' wall before ADU-04 opens. `adu status` lists it under Owed items, not as a stop. It is unchanged.
+  - The ADU-07 block's pointer stands. Before ADU-08 opens, the architect aligns the contract's decide and mine examples (Q-22) and the "(swap_answered)" wording at contracts/openapi.yaml:428 (Q-23 point 1, not yet ruled). An Owed row due ADU-08 for Q-22 is the operator's to approve, so none was added.
+**Tests at close:** this session ran no gate. The unit closes on the operator's gate `632 passed, 1 deselected, 1 warning in 40.97s seconds` and lint `All checks passed!` above. The operator's timing tier, `1 passed, 632 deselected, 1 warning in 1.06s seconds`, is recorded as reported. After this block was appended: `adu ledger lint` gave `ledgers OK`, `adu init --check` gave `init OK: manifest of 13 files present, pins match, ledgers lint clean`, and `adu derived check` gave `derived blocks OK`.
+**NEXT:** the M2 release, `/adu-lifecycle:release M2`, in a fresh release-manager session from the operator's gate, prepared by the oversight session; ADU-04 does not open before M2 is released.
+- First, the operator commits by name: `git add STATUS.md ADU-PLAN.md SESSION-JOURNAL.md`, then `git commit -m "ADU-07: closure"`. `uv.lock` stays untracked (Q-05).
+- Still owed after the release: O-02 (Q-12's design-change loop) before ADU-04 opens; the contract alignment of Q-22 and Q-23 point 1 before ADU-08 opens.
